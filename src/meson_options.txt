@@ -1,0 +1,2 @@
+option('build-simulator', type : 'boolean', value : true)
+option('build-tests', type : 'boolean', value : true)
