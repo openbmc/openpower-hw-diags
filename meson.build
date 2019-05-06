@@ -3,8 +3,10 @@ project('openpower-hw-diags', 'cpp',
         default_options: [
           'warning_level=3',
           'werror=true',
-          'cpp_std=c++17'
+          'cpp_std=c++14'
         ])
+
+incdir = include_directories('src')
 
 subdir('src')
 
