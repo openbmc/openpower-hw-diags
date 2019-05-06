@@ -1,1 +1,2 @@
 option('tests', type: 'feature', description: 'Build tests')
+option('gtests', type: 'feature', value: 'disabled', description: 'Build gtests')
