@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# This script will generate the sdbus server bindings for the hardware
+# diagnostics application.
+
+mkdir -p $MESON_SOURCE_ROOT/src/$2
+
+sdbus++ interface server-header    $1 > $2/server.hpp
+sdbus++ interface server-cpp       $1 > $2/server.cpp
+sdbus++ interface exception-header $1 > $2/error.hpp
+sdbus++ interface exception-cpp    $1 > $2/error.cpp

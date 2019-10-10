@@ -392,9 +392,23 @@ int handleSpecial(uint32_t i_proc, bool i_vital)
  */
 int handleCheckstop(pdbg_target * i_target)
 {
-    printf("chkstop: %s\n", pdbg_target_path(i_target));
-    return 1; // not handled
+    if (nullptr != i_target)
+    {
+        printf("checkstop: %s\n", pdbg_target_path(i_target));
+    }
+
+    // Notify hardware diagnostics of checkstop condition
+    auto bus = sdbusplus::bus::new_default_system();
+    auto method =
+         bus.new_method_call("org.open_power.hw.Diags",
+                            "/org/open_power/hw/Diags",
+                            "org.open_power.hw.Diags",
+                            "Checkstop");
+    auto reply = bus.call(method);
+
+    return 0; // handled
 }
+
 
 
 /**
