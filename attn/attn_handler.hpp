@@ -1,0 +1,99 @@
+#pragma once
+
+#include <libpdbg.h>
+#include <stdint.h>
+
+// The main attention types
+static const uint8_t ATTN_TYPE_VITAL       = 0;
+static const uint8_t ATTN_TYPE_CHECKSTOP   = 1;
+static const uint8_t ATTN_TYPE_SPECIAL     = 2;
+static const uint8_t ATTN_TYPE_RECOVERABLE = 3;
+
+// Attentions priority, highest priority attention(s) will be handled first
+static const uint8_t ATTN_PRIORITY_VITAL       = 40;
+static const uint8_t ATTN_PRIORITY_CHECKSTOP   = 30;
+static const uint8_t ATTN_PRIORITY_SPECIAL     = 20;
+static const uint8_t ATTN_PRIORITY_RECOVERABLE = 10;
+
+/**
+ * @brief  The main attention handler logic
+ *
+ * Check each processor for active attentions of type SBE Attention (vital),
+ * System Checkstop (checkstop) and Special Attention (special) and handle
+ * each as follows:
+ *
+ * vital:     TBD
+ * checkstop: Notify the hardware diagnostics application which will ... TBD
+ * special:   Determine if the special attention is a Breakpoint (BP),
+ *            Terminate Immediately (TI) or CoreCodeToSp (corecode). For each
+ *            special attention type, do the following:
+ *
+ *            BP: Clear the attention status and notify Cronus
+ *            TI: Write associated memory dump to a file
+ *            Corecode: Clear attention status.
+ *
+ * @return true = continue monitoring attention GPIO
+ */
+ bool attnHandler();
+
+
+/**
+ * @brief Send processor, core and thread to Cronus
+ *
+ * @param i_proc   Processor number with Special attention
+ * @param i_core   Core number with special attention
+ * @param i_thread Thread number with special attention
+ */
+void notifyCronus(uint32_t proc, uint32_t core, uint32_t thread);
+
+
+/**
+ * @brief Scom read to a specific core
+ *
+ * @param i_target  FSI target
+ * @param i_core    Core we are targeting
+ * @param i_address Scom address
+ * @param o_data    Data read by Scom
+ *
+ * @return non-zero = null
+ */
+int scomReadCore(pdbg_target *i_target, uint32_t i_core,
+                 uint64_t i_address, uint64_t &o_data);
+
+
+/**
+ * @brief Scom write to a specific core
+ *
+ * @param i_target  FSI target
+ * @param i_core    Core we are targeting
+ * @param i_address Scom address
+ * @param i_data    Data to write by Scom
+ *
+ * @return non-zero = error
+ */
+int scomWriteCore(pdbg_target *i_target, uint32_t i_core,
+                  uint64_t i_address, uint64_t i_data);
+
+
+/**
+ * @brief Read CFAM of a specific processor
+ *
+ * @param i_target  FSI target
+ * @param i_address CFAM address
+ * @param o_data    CFAM data read
+ *
+ * @return non-zero = error
+ */
+int cfamReadProc(pdbg_target *i_target, uint32_t i_address, uint32_t &o_data);
+
+
+/**
+ * @brief Write CFAM of a specific processor
+ *
+ * @param i_target  FSI target
+ * @param i_address CFAM address
+ * @param i_data    CFAM data to write
+ *
+ * @return non-zero = error
+ */
+int cfamWriteProc(pdbg_target *i_target, uint32_t i_address, uint32_t i_data);
