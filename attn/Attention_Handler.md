@@ -1,50 +1,48 @@
 # Hardware error attention handling design for POWER Systems
 
-Attentions are host error and debug breakpoint conditions that can be handled
-by software running on the BMC. The host alerts the BMC of these conditions
-via the attention GPIO pin. When the attention GPIO pin becomes active the
-BMC gpio handler daemon will launch the Attention Handler application (Attn).
-Attn then queries the hardware to determine the highest priority attention
-that needs to be handled and services it. Attn may handle multiple active
-attentions if possible.
 
-The following is a breakdown of the attention conditions that may be present
-and the actions Attn will take to service them. These are ordered by priority.
+Attentions are host error and debug breakpoint conditions that can be handled by software running on the BMC. The host alerts the BMC of these conditions via the Attention GPIO pin. The Attention Handler application (Attn) monitors this gpio for activity and services active attentions. When activity is detected on the Attention GPIO, Attn will query the hardware to determine the active attention that needs to be serviced.
 
-1. SBE Attention (vital). This attention indicates that the SBE
-is in a state that is considered non-functional. Attn will ... TBD
+***
+**The following logic is implemented in Attn to allow for controlling the flow of attention handling once an attention event has been detected**:
 
-2. System Checkstop (checkstop). This attention indicates an error condition
-in which the host cannot continue operating properly. Attn will launch the
-Hardware Diagnostics application (Hwdiags) and may provide Hwdiags with
-information needed to help it analyze the checkstop.
+- Attn can adjust the handling priority of active attention events.
 
-3. Special Attention (special). This attention indicates that one of the
-following conditions has occurred.
+- Attn can choose to defer or ignore handling of attention events.
 
-    a. Cronus Breakpoint (breakpoint). Attn will clear the associated
-    attention status bits and notify Cronus with the processor, core and
-    thread number associated with the event.
+- Attn can handle any number of active attentions per GPIO event.
 
-    b. PHYP Terminate Immediate (PHYP TI). Attn will ... TBD
+- Attn can continue monitoring or stop monitoring the attention GPIO.
 
-    c. OPAL Terminate Immediate (OPAL TI). Attn will ... TBD
+***
+**List of attention conditions and actions (by default priority)**
 
-    d. Core Code to SP (PHYP CoreCode). Attn will ... TBD
+1. SBE Attention (vital): This attention indicates that the SBE is in a state that is considered non-functional. Attn will log this event and *...TBD*
 
-    e. Other (instruction stop, core recovery handshake). Attention will log
-    this event and clear the associated attention status bits.
+2. System Checkstop (checkstop): This attention indicates an error condition in which the host cannot continue operating properly. Attn will launch the Hardware  Diagnostics application (Hwdiags) and may provide Hwdiags with information need ed to help it analyze the checkstop *...TBD*
 
-4. Recoverable Error. This attention indicates that a host error has occurred
-and the host is able to continue operating. Attn will log this condition and
-clear the associated attention status bits.
+3. Special Attention (special): This attention indicates that one of the following conditions has occurred.
 
-After handling the above attentions the application will exit via the return
-instruction. Attn does not take any command line parameters and returns a
-non-zero error code in the case of any error conditions encountered while
-handling the active attention(s).
+    - PHYP Breakpoint (breakpoint): Attn will send notification with the processor, core and thread number associated with the event.
 
-This application is built using the standard Meson/Ninja build setup and will
-dynamically links against the POWER Debug (pdbg) library (version #TBD).
+    - PHYP Terminate Immediate (PHYP TI): Attn will dump and re-ipl.
 
-This application can also be statically linked against pdbg (see meson.build).
+    - OPAL Terminate Immediate (OPAL TI): Attn will dump and re-ipl.
+
+    - Core Code to SP (PHYP CoreCode): Attn will log this event.
+
+    - Other (instruction stop, core recovery handshake): Attention will log these events.
+
+4. Recoverable Error (recoverable): This attention indicates that a host error has occurred and the host is able to continue operating. Attn will call Hwdiags.
+
+***
+**Command Line Interface**
+
+Attn supports the following command line interface *...TBD*
+
+***
+**Building**
+
+This application is built using the standard Meson/Ninja build setup.
+
+	meson build && cd build && ninja
