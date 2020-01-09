@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# This script will generate the sdbus server bindings for the hardware
+# diagnostics application.
+
+DBUS_IFACE_PATH=$1
+DBUS_BIND_PATH=$2
+
+mkdir -p $DBUS_BIND_PATH
+
+sdbus++ interface server-header $DBUS_IFACE_PATH > $DBUS_BIND_PATH/server.hpp
+sdbus++ interface server-cpp    $DBUS_IFACE_PATH > $DBUS_BIND_PATH/server.cpp
+sdbus++ error exception-header  $DBUS_IFACE_PATH > $DBUS_BIND_PATH/error.hpp
+sdbus++ error exception-cpp     $DBUS_IFACE_PATH > $DBUS_BIND_PATH/error.cpp
