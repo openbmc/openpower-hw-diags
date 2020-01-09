@@ -1,0 +1,30 @@
+description: >
+    Interface to the Openpower Hardware Diagnostics application
+methods:
+    - name: AnalyzeHardware
+      description: >
+        Request hardware diagnostics to analyze hardware state
+      returns:
+        - name: o_rc
+          type: int32
+          description: >
+            Return code.
+    - name: HandleAttention
+      description: >
+        Request hardware diagnostics to handle attention event
+      returns:
+        - name: o_rc
+          type: int32
+          description: >
+            Return code.
+enumerations:
+    - name: State
+      description: >
+        Identifies if the service has encountered an error or not.
+      values:
+        - name: Success
+          description: >
+            No error has been encountered.
+        - name: Error
+          description: >
+            The service has encountered an error.
