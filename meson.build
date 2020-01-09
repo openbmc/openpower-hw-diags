@@ -6,6 +6,11 @@ project('openpower-hw-diags', 'cpp',
           'cpp_std=c++17'
         ])
 
+# generate sdbus bindings for openpower-hw-diags application
+run_command(find_program('generate', required : true),
+                         'org.open_power.HwDiags',
+                         'org/open_power/HwDiags')
+
 subdir('src')
 subdir('attn')
 
