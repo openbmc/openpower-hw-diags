@@ -7,6 +7,9 @@
 
 using namespace phosphor::logging;
 
+namespace attn
+{
+
 /**
  * @brief Handle SBE vital attention
  *
@@ -218,4 +221,6 @@ void notifyCronus(uint32_t i_proc, uint32_t i_core, uint32_t i_thread)
     msg.append(params);
 
     msg.signal_send();
+}
+
 }
