@@ -1,0 +1,22 @@
+description: >
+    Interface to the Openpower Hardware Diagnostics appliication
+methods:
+    - name: Checkstop
+      description: >
+        Diagnose system checkstop
+      returns:
+        - name: o_rc
+          type: int32
+          description: >
+            Return code.
+enumerations:
+    - name: State
+      description: >
+        Identifies if the service has encountered an error or not.
+      values:
+        - name: Success
+          description: >
+            No error has been encountered.
+        - name: Error
+          description: >
+            The service has encountered an error.
