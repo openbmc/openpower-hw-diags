@@ -21,6 +21,7 @@ no_whole_archive = declare_dependency(link_args : '-Wl,--no-whole-archive')
 
 executable('attn_handler',
            'attn_main.cpp', 'attn_handler.cpp', 'attn_monitor.cpp',
+           'attn_logging.cpp',
            dependencies : [whole_archive, libpdbg,
                            no_whole_archive, sdbusplus, libgpiod],
            cpp_args : boost_args,
