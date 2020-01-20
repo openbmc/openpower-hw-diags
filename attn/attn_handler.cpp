@@ -1,5 +1,6 @@
 #include <libpdbg.h>
 
+#include <attn_logging.hpp>
 #include <phosphor-logging/log.hpp>
 #include <sdbusplus/bus.hpp>
 
@@ -143,18 +144,19 @@ void attnHandler()
  */
 int handleVital()
 {
-    int rc = 1; // vital attention handling not yet supported
+    int rc = 0; // vital attention supported
 
+    // Trace message
     std::stringstream ss; // log message stream
     ss << "[ATTN] vital" << std::endl;
     log<level::INFO>(ss.str().c_str());
 
-    if (0 != rc)
-    {
-        std::stringstream ss; // log message stream
-        ss << "[ATTN] vital NOT handled" << std::endl;
-        log<level::INFO>(ss.str().c_str());
-    }
+    // Additional log entry data can be stored as key/value pairs
+    std::map<std::string, std::string> additional;
+    additional["KEY1"] = "VALUE1";
+
+    // Add event to the log
+    logEntry("SBE Vital Attention", additional);
 
     return rc;
 }
@@ -164,34 +166,39 @@ int handleVital()
  */
 int handleCheckstop()
 {
-    int rc = 1; // checkstop handling not yet supported
+    int rc = 0; // checkstop attention supported
 
+    // Trace message
     std::stringstream ss; // log message stream
     ss << "[ATTN] checkstop" << std::endl;
     log<level::INFO>(ss.str().c_str());
 
-    if (0 != rc)
-    {
-        std::stringstream ss; // log message stream
-        ss << "[ATTN] checkstop NOT handled" << std::endl;
-        log<level::INFO>(ss.str().c_str());
-    }
+    // Additional log entry data can be stored as key/value pairs
+    std::map<std::string, std::string> additional;
+    additional["KEY1"] = "VALUE1";
+
+    // Add event to the log
+    logEntry("Checkstop Attention", additional);
 
     return rc;
 }
 
 /**
  * @brief Handle special attention
+ *
+ * Currently we are only handling PHYP breakpoint in which case we will
+ * add a trace message to the journal and notify the breakpoint handler
+ * of the event.
  */
 int handleSpecial()
 {
     int rc = 0; // special attention handling supported
 
+    // Trace message
     std::stringstream ss; // log message stream
-
     ss << "[ATTN] special" << std::endl;
 
-    // Currently we are only handling Cronus breakpoints
+    // Trace message
     ss << "[ATTN] breakpoint" << std::endl;
     log<level::INFO>(ss.str().c_str());
 
