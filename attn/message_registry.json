@@ -1,0 +1,84 @@
+{
+    "PELs":
+    [
+        {
+            "Name": "org.open_power.hw_diags.Error.Checkstop",
+            "Subsystem": "other_multiple_subsystems",
+
+            "SRC":
+            {
+                "ReasonCode": "0x3001",
+                "Words6To9":
+                {
+                    "6":
+                    {
+                        "Description": "Processor reporting attention",
+                        "AdditionalDataPropSource": "ATTN_PROC"
+                    },
+                    "7":
+                    {
+                        "Description": "CFAM register 0x1007 value",
+                        "AdditionalDataPropSource": "CFAM_1007"
+                    },
+                    "8":
+                    {
+                        "Description": "CFAM register 0x100d value",
+                        "AdditionalDataPropSOurce": "CFAM_100D"
+                    }
+                }
+            },
+
+            "Documentation":
+            {
+                "Message": "A checkstop event was reported on processor %1",
+                "MessageArgSources": [
+                    "SRCWord6"
+                ],
+                "Description": "Checkstop event message",
+                "Notes": [
+                    "The journal may contain more information"
+                ]
+            }
+        },
+
+        {
+            "Name": "org.open_power.hw_diags.Error.Vital",
+            "Subsystem": "other_multiple_subsystems",
+
+            "SRC":
+            {
+                "ReasonCode": "0x3001",
+                "Words6To9":
+                {
+                    "6":
+                    {
+                        "Description": "Processor reporting attention",
+                        "AdditionalDataPropSource": "ATTN_PROC"
+                    },
+                    "7":
+                    {
+                        "Description": "CFAM register 0x1007 value",
+                        "AdditionalDataPropSource": "CFAM_1007"
+                    },
+                    "8":
+                    {
+                        "Description": "CFAM register 0x100d value",
+                        "AdditionalDataPropSOurce": "CFAM_100D"
+                    }
+                }
+            },
+
+            "Documentation":
+            {
+                "Message": "A SBE vital event was reported on processor %1",
+                "MessageArgSources": [
+                    "SRCWord6"
+                ],
+                "Description": "SBE vital event message",
+                "Notes": [
+                    "The journal may contain more information"
+                ]
+            }
+        }
+    ]
+}
