@@ -1,5 +1,6 @@
 #include <../org/open_power/HwDiags/error.hpp>  // auto generated file
 #include <../org/open_power/HwDiags/server.hpp> // auto generated file
+#include <hei_main.hpp>
 #include <sdbusplus/server.hpp>
 
 #include <iostream>

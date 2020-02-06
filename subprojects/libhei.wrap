@@ -1,0 +1,3 @@
+[wrap-git]
+url = https://gerrit.openbmc-project.xyz/openbmc/openpower-libhei
+revision = 599da7c407bf036950f472ef57416d934b4a2d63
