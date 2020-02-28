@@ -12,6 +12,19 @@ subproject('libhei')
 
 incdir = include_directories('.')
 
+# check if building components with dbus support
+dbus_support = get_option('dbus')
+
+if not dbus_support.disabled()
+  bp_handler_src = files('bp_handler_cronus.cpp')
+  logging_src    = files('logging_phosphor.cpp')
+  ti_handler_src = files('ti_handler_mpipl.cpp')
+else
+  bp_handler_src = files('bp_handler.cpp')
+  logging_src    = files('logging.cpp')
+  ti_handler_src = files('ti_handler.cpp')
+endif
+
 subdir('analyzer')
 subdir('attn')
 

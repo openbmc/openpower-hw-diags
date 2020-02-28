@@ -1,1 +1,2 @@
 option('tests', type: 'feature', description: 'Build tests')
+option('dbus', type: 'feature', description: 'Dbus support', value: 'enabled')
