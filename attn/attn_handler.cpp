@@ -1,12 +1,13 @@
-#include <libpdbg.h>
-
+#include <Attention.hpp>
 #include <analyzer/analyzer_main.hpp>
 #include <bp_handler.hpp>
 #include <logging.hpp>
 #include <ti_handler.hpp>
 
+#include <algorithm>
 #include <iomanip>
 #include <sstream>
+#include <vector>
 
 namespace attn
 {
@@ -14,24 +15,26 @@ namespace attn
 /**
  * @brief Handle SBE vital attention
  *
+ * @param i_attention Attention object
  * @return 0 = success
  */
-int handleVital();
+int handleVital(Attention* i_attention);
 
 /**
  * @brief Handle checkstop attention
  *
+ * @param i_attention Attention object
  * @return 0 = success
  */
-int handleCheckstop();
+int handleCheckstop(Attention* i_attention);
 
 /**
  * @brief Handle special attention
  *
- * @param i_breakpoints true = breakpoint special attn handling enabled
+ * @param i_attention Attention object
  * @return 0 = success
  */
-int handleSpecial(bool i_breakpoints);
+int handleSpecial(Attention* i_attention);
 
 /**
  * @brief The main attention handler logic
@@ -40,6 +43,9 @@ int handleSpecial(bool i_breakpoints);
  */
 void attnHandler(bool i_breakpoints)
 {
+    // Vector of active attentions to be handled
+    std::vector<Attention> active_attentions;
+
     uint32_t isr_val, isr_mask;
     uint32_t proc;
 
@@ -88,35 +94,76 @@ void attnHandler(bool i_breakpoints)
                     // bit 0 on "left": bit 30 = SBE vital attention
                     if (isr_val & isr_mask & 0x00000002)
                     {
-                        handleVital();
+                        active_attentions.emplace_back(
+                            AttentionType::Vital, VitalPriorityDefault,
+                            handleVital, target, i_breakpoints);
                     }
 
                     // bit 0 on "left": bit 1 = checkstop
                     if (isr_val & isr_mask & 0x40000000)
                     {
-                        if (0 == handleCheckstop())
-                        {
-                            break;
-                        }
+                        active_attentions.emplace_back(
+                            AttentionType::Checkstop, CheckstopPriorityDefault,
+                            handleCheckstop, target, i_breakpoints);
                     }
 
                     // bit 0 on "left": bit 2 = special attention
                     if (isr_val & isr_mask & 0x20000000)
                     {
-                        handleSpecial(i_breakpoints);
+                        active_attentions.emplace_back(
+                            AttentionType::Special, SpecialPriorityDefault,
+                            handleSpecial, target, i_breakpoints);
                     }
                 } // cfam 0x100d valid
             }     // cfam 0x1007 valid
         }         // fsi target enabled
     }             // next processor
 
-    return; // checked all processors
+    // comparator function needed for heap creation
+    struct priorityLessThan
+    {
+        bool operator()(const Attention& left, const Attention& right) const
+        {
+            return (left.getPriority() < right.getPriority());
+        }
+    };
+
+    // convert to heap, this only ensures that highest priority is at front
+    if (!std::is_heap(active_attentions.begin(), active_attentions.end(),
+                      priorityLessThan()))
+    {
+        std::make_heap(active_attentions.begin(), active_attentions.end(),
+                       priorityLessThan());
+    }
+
+    // attempt to handle active attentions, stop when one has been handled or
+    // all have been attempted
+    while (active_attentions.front().isEnabled())
+    {
+        // handle highest priority attention
+        int status = active_attentions.front().handle();
+
+        // move attention to back of vector
+        std::pop_heap(active_attentions.begin(), active_attentions.end(),
+                      priorityLessThan());
+
+        // disable attention that we are attempting to handle
+        active_attentions.back().disable();
+
+        // if attention successfully handled, remove from vector, done
+        // handling attentions, unhandled attentions remain in vector
+        if (0 == status)
+        {
+            active_attentions.pop_back();
+            break;
+        }
+    }
 }
 
 /**
  * @brief Handle SBE vital attention
  */
-int handleVital()
+int handleVital(Attention* i_attention)
 {
     int rc = 1; // vital attention handling not yet supported
 
@@ -137,7 +184,7 @@ int handleVital()
 /**
  * @brief Handle checkstop attention
  */
-int handleCheckstop()
+int handleCheckstop(Attention* i_attention)
 {
     int rc = 0; // checkstop handling supported
 
@@ -154,10 +201,8 @@ int handleCheckstop()
 
 /**
  * @brief Handle special attention
- *
- * @param i_breakpoints true = breakpoint special attn handling enabled
  */
-int handleSpecial(bool i_breakpoints)
+int handleSpecial(Attention* i_attention)
 {
     int rc = 0; // special attention handling supported
 
@@ -168,7 +213,7 @@ int handleSpecial(bool i_breakpoints)
     // Right now we always handle breakpoint special attentions if breakpoint
     // attn handling is enabled. This will eventually check if breakpoint attn
     // handing is enabled AND there is a breakpoint pending.
-    if (true == i_breakpoints)
+    if (0 != (i_attention->getFlags() & enableBreakpoints))
     {
         ss << "breakpoint" << std::endl;
         log<level::INFO>(ss.str().c_str());
