@@ -2,6 +2,10 @@
 
 #include <libpdbg.h>
 
+#include <attn/attn_config.hpp>
+
+#include <bitset>
+
 namespace attn
 {
 
@@ -12,9 +16,6 @@ enum class AttentionType
     Checkstop,
     Vital
 };
-
-/** @brief attention handler configuration flags */
-inline constexpr uint32_t enableBreakpoints = (1 << 0);
 
 /**
  * @brief These objects contain information about an active attention.
@@ -29,13 +30,21 @@ inline constexpr uint32_t enableBreakpoints = (1 << 0);
 class Attention
 {
   public: // Constructors, destructor, assignment, etc.
-    /** @brief Default constructor. */
+    /** @brief Default constructor */
     Attention() = delete;
 
-    /** @brief Main constructors */
+    /** @brief Create attention object
+     *
+     * Create attention object for each active attention
+     *
+     * @param i_type     Attention type
+     * @param i_priority Attention handling priority
+     * @param i_target   Target with the active attention
+     * @param i_config   Attention handler configuration data
+     */
     Attention(AttentionType i_type, int i_priority,
               int (*i_handler)(Attention*), pdbg_target* i_target,
-              bool i_breakpoints);
+              Config* i_config);
 
     /** @brief Destructor */
     ~Attention() = default;
@@ -43,11 +52,8 @@ class Attention
     /** @brief Get attention priority */
     int getPriority() const;
 
-    /** @brief Get configuration flags */
-    uint32_t getFlags() const;
-
-    /** @brief Set configuration flags */
-    void setFlags(uint32_t i_flags);
+    /* @brief Get config object */
+    Config* getConfig() const;
 
     /* @brief Call attention handler function */
     int handle();
@@ -66,7 +72,7 @@ class Attention
     int iv_priority;               // attention priority
     int (*iv_handler)(Attention*); // handler function
     pdbg_target* iv_target;        // handler function target
-    uint32_t iv_flags = 0;         // configuration flags
+    Config* iv_config;             // configuration flags
 };
 
 } // namespace attn
