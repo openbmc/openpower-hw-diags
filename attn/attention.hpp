@@ -14,7 +14,12 @@ enum class AttentionType
 };
 
 /** @brief attention handler configuration flags */
-inline constexpr uint32_t enableBreakpoints = (1 << 0);
+inline constexpr uint32_t enableVital = (1 << 0); // vital handler enabled
+inline constexpr uint32_t enableCheckstop =
+    (1 << 1); // checkstop handler enabled
+inline constexpr uint32_t enableTerminate = (1 << 2); // TI handler enabled
+inline constexpr uint32_t enableBreakpoints =
+    (1 << 3); // breakpoint handler enabled
 
 /**
  * @brief These objects contain information about an active attention.
@@ -34,8 +39,8 @@ class Attention
 
     /** @brief Main constructors */
     Attention(AttentionType i_type, int i_priority,
-              int (*i_handler)(Attention*), pdbg_target* i_target,
-              bool i_breakpoints);
+              int (*i_handler)(Attention*), pdbg_target* i_target, bool i_vital,
+              bool i_checkstop, bool i_terminate, bool i_breakpoints);
 
     /** @brief Destructor */
     ~Attention() = default;
@@ -66,7 +71,9 @@ class Attention
     int iv_priority;               // attention priority
     int (*iv_handler)(Attention*); // handler function
     pdbg_target* iv_target;        // handler function target
-    uint32_t iv_flags = 0;         // configuration flags
+    uint32_t iv_flags =
+        enableVital | enableCheckstop | enableTerminate |
+        enableBreakpoints; // configuration flags (default settings)
 };
 
 } // namespace attn

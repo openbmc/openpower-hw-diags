@@ -6,15 +6,32 @@ namespace attn
 /** @brief Main constructor. */
 Attention::Attention(AttentionType i_type, int i_priority,
                      int (*i_handler)(Attention*), pdbg_target* i_target,
+                     bool i_vital, bool i_checkstop, bool i_terminate,
                      bool i_breakpoints) :
     iv_type(i_type),
     iv_priority(i_priority), iv_handler(i_handler), iv_target(i_target)
 
 {
     // set attention handler configuration flags
-    if (true == i_breakpoints)
+    if (false == i_vital)
     {
-        iv_flags |= enableBreakpoints;
+        iv_flags &= ~enableVital; // clear flag (vital handler disabled)
+    }
+
+    if (false == i_checkstop)
+    {
+        iv_flags &= ~enableCheckstop; // clear flag (checkstop handler disabled)
+    }
+
+    if (false == i_terminate)
+    {
+        iv_flags &= ~enableTerminate; // clear flag (TI handler disabled)
+    }
+
+    if (false == i_breakpoints)
+    {
+        iv_flags &=
+            ~enableBreakpoints; // clear flag (breakpoint handler disabled)
     }
 }
 

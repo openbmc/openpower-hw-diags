@@ -10,7 +10,7 @@ void bpHandler()
 {
     // trace message
     std::stringstream ss;
-    ss << "breakpoint handler";
+    ss << "breakpoint handler" << std::endl;
     log<level::INFO>(ss.str().c_str());
 }
 

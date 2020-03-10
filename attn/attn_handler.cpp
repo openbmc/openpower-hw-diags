@@ -41,7 +41,8 @@ int handleSpecial(Attention* i_attention);
  *
  * @param i_breakpoints true = breakpoint special attn handling enabled
  */
-void attnHandler(const bool i_breakpoints)
+void attnHandler(const bool i_vital, const bool i_checkstop,
+                 const bool i_terminate, const bool i_breakpoints)
 {
     // Vector of active attentions to be handled
     std::vector<Attention> active_attentions;
@@ -97,7 +98,8 @@ void attnHandler(const bool i_breakpoints)
                         active_attentions.emplace_back(
                             AttentionType::Vital,
                             static_cast<int>(AttentionType::Vital), handleVital,
-                            target, i_breakpoints);
+                            target, i_vital, i_checkstop, i_terminate,
+                            i_breakpoints);
                     }
 
                     // bit 0 on "left": bit 1 = checkstop
@@ -106,7 +108,8 @@ void attnHandler(const bool i_breakpoints)
                         active_attentions.emplace_back(
                             AttentionType::Checkstop,
                             static_cast<int>(AttentionType::Checkstop),
-                            handleCheckstop, target, i_breakpoints);
+                            handleCheckstop, target, i_vital, i_checkstop,
+                            i_terminate, i_breakpoints);
                     }
 
                     // bit 0 on "left": bit 2 = special attention
@@ -115,7 +118,8 @@ void attnHandler(const bool i_breakpoints)
                         active_attentions.emplace_back(
                             AttentionType::Special,
                             static_cast<int>(AttentionType::Special),
-                            handleSpecial, target, i_breakpoints);
+                            handleSpecial, target, i_vital, i_checkstop,
+                            i_terminate, i_breakpoints);
                     }
                 } // cfam 0x100d valid
             }     // cfam 0x1007 valid
@@ -150,17 +154,26 @@ void attnHandler(const bool i_breakpoints)
  */
 int handleVital(Attention* i_attention)
 {
-    int rc = 1; // vital attention handling not yet supported
+    int rc;
 
     std::stringstream ss; // log message stream
     ss << "vital" << std::endl;
     log<level::INFO>(ss.str().c_str());
 
-    if (0 != rc)
+    // if vital handling enabled, handle vital attention
+    if (0 == (i_attention->getFlags() & enableVital))
+    {
+        std::stringstream ss; // log message stream
+        ss << "vital handling disabled" << std::endl;
+        log<level::INFO>(ss.str().c_str());
+        rc = 1;
+    }
+    else
     {
         std::stringstream ss; // log message stream
         ss << "vital NOT handled" << std::endl;
         log<level::INFO>(ss.str().c_str());
+        rc = 1;
     }
 
     return rc;
@@ -171,15 +184,25 @@ int handleVital(Attention* i_attention)
  */
 int handleCheckstop(Attention* i_attention)
 {
-    int rc = 0; // checkstop handling supported
+    int rc;
 
     std::stringstream ss; // log message stream
     ss << "checkstop" << std::endl;
     log<level::INFO>(ss.str().c_str());
 
-    analyzer::analyzeHardware();
-
-    // TODO recoverable errors?
+    // if checkstop handling enabled, handle checkstop attention
+    if (0 == (i_attention->getFlags() & enableCheckstop))
+    {
+        std::stringstream ss; // log message stream
+        ss << "Checkstop handling disabled" << std::endl;
+        log<level::INFO>(ss.str().c_str());
+        rc = 1;
+    }
+    else
+    {
+        analyzer::analyzeHardware();
+        rc = 0;
+    }
 
     return rc;
 }
@@ -189,37 +212,54 @@ int handleCheckstop(Attention* i_attention)
  */
 int handleSpecial(Attention* i_attention)
 {
-    int rc = 0; // special attention handling supported
+    int rc = 1; // assume both TI and breakpoint handling disabled
 
     std::stringstream ss; // log message stream
-
     ss << "special" << std::endl;
 
-    // Right now we always handle breakpoint special attentions if breakpoint
-    // attn handling is enabled. This will eventually check if breakpoint attn
-    // handing is enabled AND there is a breakpoint pending.
-    if (0 != (i_attention->getFlags() & enableBreakpoints))
+    // get enablei/disable status for TI and breakpoints handling
+    bool terminate_enabled =
+        (0 != (i_attention->getFlags() & enableTerminate) ? true : false);
+    bool breakpoints_enabled =
+        (0 != (i_attention->getFlags() & enableBreakpoints) ? true : false);
+
+    // Until the special attention chipop is availabe we will treat the special
+    // attention as a TI. If TI handling is disabled we will treat the special
+    // attention as a breakpopint.
+
+    // if either TI or breakponts handling is enabled
+    if (!((false == breakpoints_enabled) && (false == terminate_enabled)))
     {
-        ss << "breakpoint" << std::endl;
-        log<level::INFO>(ss.str().c_str());
+        // TI attention gets priority over breakpoints, if enabled then handle
+        if (true == terminate_enabled)
+        {
+            ss << "TI (terminate immediately)" << std::endl;
+            log<level::INFO>(ss.str().c_str());
 
-        // Call the breakpoint special attention handler
-        bpHandler();
+            // Call TI special attention handler
+            tiHandler();
+            rc = 0;
+        }
+        else
+        {
+            // TI handling was disabled so handle breakpoint
+            if (true == breakpoints_enabled)
+            {
+                ss << "breakpoint" << std::endl;
+                log<level::INFO>(ss.str().c_str());
+
+                // Call the breakpoint special attention handler
+                bpHandler();
+                rc = 0;
+            }
+        }
     }
-    // Right now if breakpoint attn handling is not enabled we will treat the
-    // special attention as a TI. This will eventually be changed to check
-    // whether a TI is active and handle it regardless of whether breakpoint
-    // handling is enbaled or not.
-    else
+    if (0 != rc)
     {
-        ss << "TI (terminate immediately)" << std::endl;
+        std::stringstream ss; // log message stream
+        ss << "Special attn handling disabled" << std::endl;
         log<level::INFO>(ss.str().c_str());
-
-        // Call TI special attention handler
-        tiHandler();
     }
-
-    // TODO recoverable errors?
 
     return rc;
 }
