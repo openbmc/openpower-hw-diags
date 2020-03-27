@@ -7,10 +7,10 @@ namespace attn
 /** @brief configuration flags */
 enum AttentionFlag
 {
-    enVital,
-    enCheckstop,
-    enTerminate,
-    enBreakpoints,
+    enVital       = 0,
+    enCheckstop   = 1,
+    enTerminate   = 2,
+    enBreakpoints = 3,
     lastFlag
 };
 
@@ -37,9 +37,18 @@ class Config
     /** @brief Default destructor */
     ~Config() = default;
 
+    /** @brief Get state of flag */
     bool getFlag(AttentionFlag i_flag) const;
 
+    /** @brief Set configuration flag */
     void setFlag(AttentionFlag i_flag);
+
+    /** @brief Clear configuration flag */
+    void clearFlag(AttentionFlag i_flag);
+
+    /** @brief Set state of all configuration data */
+    void setConfig(bool i_vital, bool i_checkstop, bool i_terminate,
+                   bool i_breakpoints);
 
   private:
     std::bitset<lastFlag> iv_flags; // configuration flags
