@@ -37,9 +37,8 @@ class Attention
     Attention() = delete;
 
     /** @brief Main constructors */
-    Attention(AttentionType i_type,
-              int (*i_handler)(Attention*), pdbg_target* i_target,
-              Config* i_config);
+    Attention(AttentionType i_type, int (*i_handler)(Attention*),
+              pdbg_target* i_target, Config* i_config);
 
     /** @brief Destructor */
     ~Attention() = default;

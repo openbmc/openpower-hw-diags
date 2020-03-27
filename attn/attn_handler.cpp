@@ -99,9 +99,8 @@ void attnHandler(Config* i_config)
                     // bit 0 on "left": bit 30 = SBE vital attention
                     if (isr_val & isr_mask & 0x00000002)
                     {
-                        active_attentions.emplace_back(Attention::Vital,
-                                                       handleVital, target,
-                                                       i_config);
+                        active_attentions.emplace_back(
+                            Attention::Vital, handleVital, target, i_config);
                     }
 
                     // bit 0 on "left": bit 1 = checkstop
@@ -236,7 +235,7 @@ int handleSpecial(Attention* i_attention)
         }
     }
 
-    if ( RC_SUCCESS != rc)
+    if (RC_SUCCESS != rc)
     {
         log<level::INFO>("Special attn handling disabled");
     }
