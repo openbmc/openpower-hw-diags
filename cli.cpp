@@ -15,32 +15,72 @@ char* getCliSetting(char** i_begin, char** i_end, const std::string& i_setting)
 }
 
 /** @brief Parse command line for configuration flags */
-void parseConfig(char** i_begin, char** i_end, bool& i_vital, bool& i_checkstop,
-                 bool& i_terminate, bool& i_breakpoints)
+void parseConfig(char** i_begin, char** i_end, bool& o_vital, bool& o_checkstop,
+                 bool& o_terminate, bool& o_breakpoints)
 {
     char* setting;
 
-    setting = getCliSetting(i_begin, i_end, "--vital");
+    // --all on/off takes precedence over individual settings
+    setting = getCliSetting(i_begin, i_end, "--all");
     if (nullptr != setting)
     {
-        i_vital = std::string("off") == setting ? false : i_vital;
-    }
+        if (std::string("off") == setting)
+        {
+            o_vital       = false;
+            o_checkstop   = false;
+            o_terminate   = false;
+            o_breakpoints = false;
+        }
 
-    setting = getCliSetting(i_begin, i_end, "--checkstop");
-    if (nullptr != setting)
-    {
-        i_checkstop = std::string("off") == setting ? false : i_checkstop;
+        if (std::string("on") == setting)
+        {
+            o_vital       = true;
+            o_checkstop   = true;
+            o_terminate   = true;
+            o_breakpoints = true;
+        }
     }
-
-    setting = getCliSetting(i_begin, i_end, "--terminate");
-    if (nullptr != setting)
+    // Parse individual options
+    else
     {
-        i_terminate = std::string("off") == setting ? false : i_terminate;
-    }
+        setting = getCliSetting(i_begin, i_end, "--vital");
+        if (std::string("off") == setting)
+        {
+            o_vital = false;
+        }
+        if (std::string("on") == setting)
+        {
+            o_vital = true;
+        }
 
-    setting = getCliSetting(i_begin, i_end, "--breakpoints");
-    if (nullptr != setting)
-    {
-        i_breakpoints = std::string("off") == setting ? false : i_breakpoints;
+        setting = getCliSetting(i_begin, i_end, "--checkstop");
+        if (std::string("off") == setting)
+        {
+            o_checkstop = false;
+        }
+        if (std::string("on") == setting)
+        {
+            o_checkstop = true;
+        }
+
+        setting = getCliSetting(i_begin, i_end, "--terminate");
+        if (std::string("off") == setting)
+        {
+            o_terminate = false;
+        }
+        if (std::string("on") == setting)
+        {
+            o_terminate = true;
+        }
+
+        setting = getCliSetting(i_begin, i_end, "--breakpoints");
+        if (std::string("off") == setting)
+        {
+            o_breakpoints = false;
+        }
+        if (std::string("on") == setting)
+        {
+            o_breakpoints = true;
+        }
     }
 }

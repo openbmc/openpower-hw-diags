@@ -2,6 +2,13 @@
 
 #include <string>
 
+/** @brief structure for holding main args (for threads) */
+typedef struct
+{
+    int argc;
+    char** argv;
+} MainArgs_t;
+
 /*
  * @brief Search the command line arguments for an option
  *
