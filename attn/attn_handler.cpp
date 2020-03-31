@@ -58,37 +58,33 @@ void attnHandler(const bool i_breakpoints)
             proc = pdbg_target_index(target); // get processor number
 
             std::stringstream ss; // log message stream
-            ss << "checking processor " << proc << std::endl;
+            ss << "checking processor " << proc;
             log<level::INFO>(ss.str().c_str());
 
             // get active attentions on processor
             if (0 != fsi_read(target, 0x1007, &isr_val))
             {
-                std::stringstream ss; // log message stream
-                ss << "Error! cfam read 0x1007 FAILED" << std::endl;
-                log<level::INFO>(ss.str().c_str());
+                log<level::INFO>("Error! cfam read 0x1007 FAILED");
             }
             else
             {
                 std::stringstream ss; // log message stream
                 ss << "cfam 0x1007 = 0x";
                 ss << std::hex << std::setw(8) << std::setfill('0');
-                ss << isr_val << std::endl;
+                ss << isr_val;
                 log<level::INFO>(ss.str().c_str());
 
                 // get interrupt enabled special attentions mask
                 if (0 != fsi_read(target, 0x100d, &isr_mask))
                 {
-                    std::stringstream ss; // log message stream
-                    ss << "Error! cfam read 0x100d FAILED" << std::endl;
-                    log<level::INFO>(ss.str().c_str());
+                    log<level::INFO>("Error! cfam read 0x100d FAILED");
                 }
                 else
                 {
                     std::stringstream ss; // log message stream
                     ss << "cfam 0x100d = 0x";
                     ss << std::hex << std::setw(8) << std::setfill('0');
-                    ss << isr_mask << std::endl;
+                    ss << isr_mask;
                     log<level::INFO>(ss.str().c_str());
 
                     // bit 0 on "left": bit 30 = SBE vital attention
@@ -152,15 +148,12 @@ int handleVital(Attention* i_attention)
 {
     int rc = 1; // vital attention handling not yet supported
 
-    std::stringstream ss; // log message stream
-    ss << "vital" << std::endl;
-    log<level::INFO>(ss.str().c_str());
+
+    log<level::INFO>("vital");
 
     if (0 != rc)
     {
-        std::stringstream ss; // log message stream
-        ss << "vital NOT handled" << std::endl;
-        log<level::INFO>(ss.str().c_str());
+        log<level::INFO>("vital NOT handled");
     }
 
     return rc;
@@ -173,13 +166,10 @@ int handleCheckstop(Attention* i_attention)
 {
     int rc = 0; // checkstop handling supported
 
-    std::stringstream ss; // log message stream
-    ss << "checkstop" << std::endl;
-    log<level::INFO>(ss.str().c_str());
+    log<level::INFO>("checkstop");
 
     analyzer::analyzeHardware();
 
-    // TODO recoverable errors?
 
     return rc;
 }
@@ -191,17 +181,14 @@ int handleSpecial(Attention* i_attention)
 {
     int rc = 0; // special attention handling supported
 
-    std::stringstream ss; // log message stream
-
-    ss << "special" << std::endl;
+    log<level::INFO>("special");
 
     // Right now we always handle breakpoint special attentions if breakpoint
     // attn handling is enabled. This will eventually check if breakpoint attn
     // handing is enabled AND there is a breakpoint pending.
     if (0 != (i_attention->getFlags() & enableBreakpoints))
     {
-        ss << "breakpoint" << std::endl;
-        log<level::INFO>(ss.str().c_str());
+        log<level::INFO>("breakpoint");
 
         // Call the breakpoint special attention handler
         bpHandler();
@@ -212,8 +199,7 @@ int handleSpecial(Attention* i_attention)
     // handling is enbaled or not.
     else
     {
-        ss << "TI (terminate immediately)" << std::endl;
-        log<level::INFO>(ss.str().c_str());
+        log<level::INFO>("TI (terminate immediately)");
 
         // Call TI special attention handler
         tiHandler();
