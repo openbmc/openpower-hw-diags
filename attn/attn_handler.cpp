@@ -148,7 +148,6 @@ int handleVital(Attention* i_attention)
 {
     int rc = 1; // vital attention handling not yet supported
 
-
     log<level::INFO>("vital");
 
     if (0 != rc)
@@ -169,7 +168,6 @@ int handleCheckstop(Attention* i_attention)
     log<level::INFO>("checkstop");
 
     analyzer::analyzeHardware();
-
 
     return rc;
 }
