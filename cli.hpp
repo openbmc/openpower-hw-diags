@@ -1,5 +1,7 @@
 #pragma once
 
+#include <attn/attn_config.hpp>
+
 #include <string>
 
 /*
@@ -35,5 +37,4 @@ char* getCliSetting(char** i_begin, char** i_end, const std::string& i_setting);
  * @param i_terminate   TI handler enable option
  * @param i_breakpoints breakpoint handler enable option
  */
-void parseConfig(char** i_begin, char** i_end, bool& i_vital, bool& i_checkstop,
-                 bool& i_terminate, bool& i_breakpoints);
+void parseConfig(char** i_begin, char** i_end, attn::Config* o_config);
