@@ -57,6 +57,16 @@ void* threadListener(void* i_params)
     // initialize pdbg targets
     pdbg_targets_init(nullptr);
 
+    // always monitor the gpio by default
+    if (0 == pthread_create(&ptidGpio, NULL, &threadGpioMon, &attnConfig))
+    {
+        gpioMonEnabled = true;
+    }
+    else
+    {
+        pthread_exit(NULL);
+    }
+
     // This is the main listener loop. All the above code will be executed
     // only once. All other communtication with the attention handler will
     // originate from here via the message queue.
