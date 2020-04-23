@@ -18,8 +18,10 @@ void* threadListener(void* i_params);
 int sendCmdLine(int i_argc, char** i_argv);
 
 /**
- * @brief See if the listener thread message queue exists
+ * @brief Starts a new listener daemon
  *
- *  @return true if message queue exists, else false
+ * @param i_thread handle to the listener daemon process thread
+ *
+ * @return true if listener started
  */
-bool listenerMqExists();
+bool startListener(pthread_t* i_thread);
