@@ -7,19 +7,23 @@
  * @brief Attention handler application main()
  *
  * This is the main interface to the hardware diagnostics application. This
- * application will either be loaded as a daemon for monitoring the attention
- * gpio or it will be loaded as an application to analyze hardware and
- * diagnose hadrware error conditions.
+ * application will either be loaded as an application (--analyze) to analyze
+ * hardware or as a daemon (--daemon) for monitoring and handling the attention
+ * GPIO. The running daemon accepts commands to configure the GPIO monitor
+ * (--start, --stop), to configure the attention handler (--vital, --checkstop,
+ * --terminate, --breakpoints, --all) and to stop running (--close).
  *
  *     Usage:
- *        --analyze:              Analyze the hardware
- *        --start:                Start the attention handler
- *        --stop:                 Stop the attention handler
- *        --all <on|off>:         All attention handling
- *        --vital <on|off>:       Vital attention handling
- *        --checkstop <on|off>:   Checkstop attention handling
- *        --terminate <on|off>:   Terminate Immiediately attention handling
- *        --breakpoints <on|off>: Breakpoint attention handling
+ *        --analyze              Analyze the hardware
+ *        --daemon               Start the listener daemon
+ *        --start                Start the attention GPIO monitor
+ *        --stop                 Stop the attention GPIO monitor
+ *        --vital       <on|off> Vital attention handling
+ *        --checkstop   <on|off> Checkstop attention handling
+ *        --terminate   <on|off> TI attention handling
+ *        --breakpoints <on|off> Breakpoint attention handling
+ *        --all         <on|off> All attention handling
+ *        --close                Stop the listener daemon
  *
  *     Example: openpower-hw-diags --start --vital off
  *
@@ -35,20 +39,20 @@ int main(int argc, char* argv[])
     {
         printf("openpower-hw-diags <options>\n");
         printf("options:\n");
-        printf("  --analyze:              Analyze the hardware\n");
-        printf("  --start:                Start the attention handler\n");
-        printf("  --stop:                 Stop the attention handler\n");
-        printf("  --all <on|off>:         All attention handling\n");
-        printf("  --vital <on|off>:       Vital attention handling\n");
-        printf("  --checkstop <on|off>:   Checkstop attention handling\n");
-        printf("  --terminate <on|off>:   Terminate Immediately attention "
-               "handling\n");
-        printf("  --breakpoints <on|off>: Breakpoint attention handling\n");
+        printf("  --analyze              Analyze the hardware\n");
+        printf("  --daemon               Start the daemon\n");
+        printf("When daemon is running:\n");
+        printf("  --start                Start the attention gpio monitor\n");
+        printf("  --stop                 Stop the attention gpio monitor\n");
+        printf("  --vital       <on|off> Vital attention handling\n");
+        printf("  --checkstop   <on|off> Checkstop attention handling\n");
+        printf("  --terminate   <on|off> TI attention handling\n");
+        printf("  --breakpoints <on|off> Breakpoint attention handling\n");
+        printf("  --all         <on|off> All attention handling\n");
+        printf("  --close                Stop the daemon\n");
     }
     else
     {
-        // todo usage
-
         // Either analyze (application mode) or daemon mode
         if (true == getCliOption(argv, argv + argc, "--analyze"))
         {
@@ -57,62 +61,33 @@ int main(int argc, char* argv[])
         // daemon mode
         else
         {
-            // assume listener is not running
-            bool listenerStarted = false;
+            // assume not starting new daemon
             bool newListener     = false;
+            bool listenerStarted = true;
 
             pthread_t ptidListener; // handle to listener thread
 
-            // see if listener is already started
-            listenerStarted = listenerMqExists();
-
-            // listener is not running so start it
-            if (false == listenerStarted)
+            // start a new daemon
+            if (true == getCliOption(argv, argv + argc, "--daemon"))
             {
-                // create listener thread
-                if (0 ==
-                    pthread_create(&ptidListener, NULL, &threadListener, NULL))
+                newListener     = true;
+                listenerStarted = startListener(&ptidListener);
+            }
+
+            if (true == listenerStarted)
+            {
+                // send cmd line to listener thread
+                if (argc != sendCmdLine(argc, argv))
                 {
-                    listenerStarted = true;
-                    newListener     = true;
-                }
-                else
-                {
+                    printf("daemon not running\n");
                     rc = 1;
                 }
             }
 
-            // listener was running or just started
-            if (true == listenerStarted)
+            // if this is a new listener let it run until "stopped"
+            if (true == newListener)
             {
-                // If we created a new listener this instance of
-                // openpower-hw-diags will become our daemon (it will not exit
-                // until stopped).
-                if (true == newListener)
-                {
-                    bool listenerReady = false;
-
-                    // It may take some time for the listener to become ready,
-                    // we will wait until the message queue has been created
-                    // before starting to communicate with our daemon.
-                    while (false == listenerReady)
-                    {
-                        usleep(500);
-                        listenerReady = listenerMqExists();
-                    }
-                }
-
-                // send cmd line to listener thread
-                if (argc != sendCmdLine(argc, argv))
-                {
-                    rc = 1;
-                }
-
-                // if this is a new listener let it run until "stopped"
-                if (true == newListener)
-                {
-                    pthread_join(ptidListener, NULL);
-                }
+                pthread_join(ptidListener, NULL);
             }
         }
     }
