@@ -7,8 +7,10 @@ project('openpower-hw-diags', 'cpp',
           'cpp_args=-Wno-unused-parameter'
         ])
 
-# libhei is available as a subproject
-subproject('libhei')
+# libhei is available as a subproject, for when a library is not
+# available or you want to build locally for test/debug
+
+libhei_dep = dependency('hei', required : true)
 
 incdir = include_directories('.')
 

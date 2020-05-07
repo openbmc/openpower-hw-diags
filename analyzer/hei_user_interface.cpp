@@ -1,6 +1,6 @@
 /**
- * @file These are implementations of the user interfaces declared in
- *       hei_user_interface.hpp
+ * @file These are the implementations of the user interfaces declared
+ *       in hei_user_interface.hpp
  */
 
 #include <hei_user_interface.hpp>
@@ -13,10 +13,15 @@ namespace libhei
 ReturnCode registerRead(const Chip& i_chip, void* o_buffer, size_t& io_bufSize,
                         uint64_t i_regType, uint64_t i_address)
 {
-    ReturnCode rc = RC_SUCCESS;
+    ReturnCode rc{};
 
-    //    HEI_INF("registerRead(%p,%p,%lx,%lx,%lx)", i_chip.getChip(),
-    //             o_buffer, io_bufSize, i_regType, i_address);
+    HEI_ASSERT(nullptr != o_buffer);
+    HEI_ASSERT(0 != io_bufSize);
+
+    // TODO need real register read code
+    HEI_ERR("registerRead not implemented");
+
+    rc = RC_SUCCESS;
 
     return rc;
 }
@@ -28,10 +33,15 @@ ReturnCode registerRead(const Chip& i_chip, void* o_buffer, size_t& io_bufSize,
 ReturnCode registerWrite(const Chip& i_chip, void* i_buffer, size_t& io_bufSize,
                          uint64_t i_regType, uint64_t i_address)
 {
-    ReturnCode rc = RC_SUCCESS;
+    ReturnCode rc{};
 
-    //    HEI_INF("registerWrite(%p,%p,%lx,%lx,%lx)", i_chip.getChip(),
-    //             i_buffer, io_bufSize, i_regType, i_address);
+    HEI_ASSERT(nullptr != i_buffer);
+    HEI_ASSERT(0 != io_bufSize);
+
+    // TODO need real register write code
+    HEI_ERR("registerWrite not implemented");
+
+    rc = RC_SUCCESS;
 
     return rc;
 }
