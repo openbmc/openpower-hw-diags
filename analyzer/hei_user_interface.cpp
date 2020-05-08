@@ -14,10 +14,10 @@ namespace libhei
 
 //------------------------------------------------------------------------------
 
-ReturnCode registerRead(const Chip& i_chip, void* o_buffer, size_t& io_bufSize,
+bool registerRead(const Chip& i_chip, void* o_buffer, size_t& io_bufSize,
                         uint64_t i_regType, uint64_t i_address)
 {
-    ReturnCode rc{};
+    bool accessFailure = false;
 
     assert(nullptr != o_buffer);
     assert(0 != io_bufSize);
@@ -25,19 +25,17 @@ ReturnCode registerRead(const Chip& i_chip, void* o_buffer, size_t& io_bufSize,
     // TODO need real register read code
     printf("registerRead not implemented\n");
 
-    rc = RC_SUCCESS;
-
-    return rc;
+    return accessFailure;
 }
 
 //------------------------------------------------------------------------------
 
 #ifndef __HEI_READ_ONLY
 
-ReturnCode registerWrite(const Chip& i_chip, void* i_buffer, size_t& io_bufSize,
+bool registerWrite(const Chip& i_chip, void* i_buffer, size_t& io_bufSize,
                          uint64_t i_regType, uint64_t i_address)
 {
-    ReturnCode rc{};
+    bool accessFailure = false;
 
     assert(nullptr != i_buffer);
     assert(0 != io_bufSize);
@@ -45,9 +43,7 @@ ReturnCode registerWrite(const Chip& i_chip, void* i_buffer, size_t& io_bufSize,
     // TODO need real register write code
     printf("registerWrite not implemented\n");
 
-    rc = RC_SUCCESS;
-
-    return rc;
+    return accessFailure;
 }
 
 #endif
