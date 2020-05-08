@@ -1,8 +1,6 @@
-#include "attn_monitor.hpp"
-
-#include "attn_handler.hpp"
-
-#include <logging.hpp>
+#include <attn_handler.hpp>
+#include <attn_logging.hpp>
+#include <attn_monitor.hpp>
 
 namespace attn
 {
@@ -11,7 +9,7 @@ namespace attn
 void AttnMonitor::scheduleGPIOEvent()
 {
     std::string logMessage = "... waiting for events ...";
-    log<level::INFO>(logMessage.c_str());
+    trace<level::INFO>(logMessage.c_str());
 
     // Register async callback, note that callback is a
     // lambda function with "this" pointer captured
@@ -22,7 +20,7 @@ void AttnMonitor::scheduleGPIOEvent()
             {
                 std::string logMessage =
                     "GPIO Async wait error: " + std::string(ec.message());
-                log<level::INFO>(logMessage.c_str());
+                trace<level::INFO>(logMessage.c_str());
             }
             else
             {
@@ -42,7 +40,7 @@ void AttnMonitor::handleGPIOEvent()
                                  &gpioEvent) < 0)
     {
         logMessage = "GPIO line read failed";
-        log<level::INFO>(logMessage.c_str());
+        trace<level::INFO>(logMessage.c_str());
     }
     else
     {
@@ -56,13 +54,13 @@ void AttnMonitor::handleGPIOEvent()
             // gpio == 1, GPIO handler should not be executing
             case 1:
                 logMessage = "GPIO handler out of sync";
-                log<level::INFO>(logMessage.c_str());
+                trace<level::INFO>(logMessage.c_str());
                 break;
 
             // unexpected value
             default:
                 logMessage = "GPIO line unexpected value";
-                log<level::INFO>(logMessage.c_str());
+                trace<level::INFO>(logMessage.c_str());
         }
     }
     scheduleGPIOEvent(); // continue monitoring gpio
@@ -74,7 +72,7 @@ void AttnMonitor::requestGPIOEvent()
     if (0 != gpiod_line_request(iv_gpioLine, &iv_gpioConfig, 0))
     {
         std::string logMessage = "failed request for GPIO";
-        log<level::INFO>(logMessage.c_str());
+        trace<level::INFO>(logMessage.c_str());
     }
     else
     {
@@ -84,7 +82,7 @@ void AttnMonitor::requestGPIOEvent()
         if (gpioLineFd < 0)
         {
             std::string logMessage = "failed to get file descriptor";
-            log<level::INFO>(logMessage.c_str());
+            trace<level::INFO>(logMessage.c_str());
         }
         else
         {
