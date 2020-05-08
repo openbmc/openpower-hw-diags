@@ -15,7 +15,7 @@ namespace libhei
 //------------------------------------------------------------------------------
 
 bool registerRead(const Chip& i_chip, void* o_buffer, size_t& io_bufSize,
-                        uint64_t i_regType, uint64_t i_address)
+                  uint64_t i_regType, uint64_t i_address)
 {
     bool accessFailure = false;
 
@@ -33,7 +33,7 @@ bool registerRead(const Chip& i_chip, void* o_buffer, size_t& io_bufSize,
 #ifndef __HEI_READ_ONLY
 
 bool registerWrite(const Chip& i_chip, void* i_buffer, size_t& io_bufSize,
-                         uint64_t i_regType, uint64_t i_address)
+                   uint64_t i_regType, uint64_t i_address)
 {
     bool accessFailure = false;
 
