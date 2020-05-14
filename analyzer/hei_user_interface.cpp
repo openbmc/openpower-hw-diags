@@ -50,28 +50,28 @@ bool registerWrite(const Chip& i_chip, void* i_buffer, size_t& io_bufSize,
 
 //------------------------------------------------------------------------------
 
+// prints a single line to stdout
 void hei_inf(char* format, ...)
 {
     va_list args;
-
-    printf("I> ");
+    fprintf(stdout, "I> ");
     va_start(args, format);
-    vprintf(format, args);
+    vfprintf(stdout, format, args);
     va_end(args);
-    printf("\n");
+    fprintf(stdout, "\n");
 }
 
 //------------------------------------------------------------------------------
 
+// prints a single line to stderr
 void hei_err(char* format, ...)
 {
     va_list args;
-
-    printf("E> ");
+    fprintf(stderr, "E> ");
     va_start(args, format);
-    vprintf(format, args);
+    vfprintf(stderr, format, args);
     va_end(args);
-    printf("\n");
+    fprintf(stderr, "\n");
 }
 
 } // namespace libhei
