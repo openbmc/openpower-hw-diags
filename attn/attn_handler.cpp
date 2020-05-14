@@ -1,6 +1,7 @@
 #include <analyzer/analyzer_main.hpp>
 #include <attention.hpp>
 #include <attn_config.hpp>
+#include <attn_handler.hpp>
 #include <attn_logging.hpp>
 #include <bp_handler.hpp>
 #include <ti_handler.hpp>
@@ -13,15 +14,6 @@
 
 namespace attn
 {
-
-/** @brief Return codes */
-enum ReturnCodes
-{
-    RC_SUCCESS = 0,
-    RC_NOT_HANDLED,
-    RC_ANALYZER_ERROR,
-    RC_CFAM_ERROR
-};
 
 /**
  * @brief Handle SBE vital attention
@@ -65,12 +57,12 @@ void attnHandler(Config* i_config)
     uint32_t proc;
 
     // loop through processors looking for active attentions
-    log<level::INFO>("Attention handler started");
+    trace<level::INFO>("Attention handler started");
 
     pdbg_target* target;
     pdbg_for_each_class_target("fsi", target)
     {
-        log<level::INFO>("iterating targets");
+        trace<level::INFO>("iterating targets");
         if (PDBG_TARGET_ENABLED == pdbg_target_probe(target))
         {
             proc = pdbg_target_index(target); // get processor number
@@ -226,9 +218,8 @@ int handleCheckstop(Attention* i_attention)
         // errors that were isolated
         std::map<std::string, std::string> errors;
 
-        rc = analyzer::analyzeHardware(errors); // analyze hardware
-
-        if (RC_SUCCESS != rc)
+        // analyze errors
+        if (true != analyzer::analyzeHardware(errors))
         {
             rc = RC_ANALYZER_ERROR;
         }
