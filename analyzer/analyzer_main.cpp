@@ -1,5 +1,7 @@
 #include <hei_main.hpp>
 
+#include <map>
+
 namespace analyzer
 {
 
