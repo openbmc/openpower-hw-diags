@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
             {
                 // TODO - add error processing/display
 
-                printf("analyzer isolated %i errors", (int)errors.size());
+                printf("analyzer isolated %i error(s)\n", (int)errors.size());
             }
             else
             {

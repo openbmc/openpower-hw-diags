@@ -50,7 +50,7 @@ int main(int argc, char* argv[])
 
             rc = analyzer::analyzeHardware(errors); // analyze hardware
 
-            printf("analyzer isolated %i errors", (int)errors.size());
+            printf("analyzer isolated %i error(s)\n", (int)errors.size());
         }
         // daemon mode
         else
