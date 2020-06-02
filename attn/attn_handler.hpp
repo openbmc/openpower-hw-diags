@@ -5,6 +5,10 @@
 namespace attn
 {
 
+/** @brief Return codes */
+static constexpr int RC_SUCCESS     = 0;
+static constexpr int RC_NOT_SUCCESS = 1;
+
 /**
  * @brief The main attention handler logic
  *

@@ -1,6 +1,9 @@
+#include <libpdbg.h>
+
 #include <analyzer/analyzer_main.hpp>
 #include <attention.hpp>
 #include <attn_config.hpp>
+#include <attn_handler.hpp>
 #include <bp_handler.hpp>
 #include <logging.hpp>
 #include <ti_handler.hpp>
@@ -12,10 +15,6 @@
 
 namespace attn
 {
-
-/** @brief Return codes */
-static constexpr int RC_SUCCESS     = 0;
-static constexpr int RC_NOT_SUCCESS = 1;
 
 /**
  * @brief Handle SBE vital attention
@@ -64,7 +63,6 @@ void attnHandler(Config* i_config)
     pdbg_target* target;
     pdbg_for_each_class_target("fsi", target)
     {
-        log<level::INFO>("iterating targets");
         if (PDBG_TARGET_ENABLED == pdbg_target_probe(target))
         {
             proc = pdbg_target_index(target); // get processor number
@@ -213,19 +211,42 @@ int handleSpecial(Attention* i_attention)
 {
     int rc = RC_NOT_SUCCESS; // assume special attention handling disabled
 
-    // Until the special attention chipop is availabe we will treat the special
-    // attention as a TI. If TI handling is disabled we will treat the special
-    // attention as a breakpopint.
+    // buffer to hold TI info data
+    uint8_t tiData[1024];
 
-    // TI attention gets priority over breakpoints, if enabled then handle
-    if (true == (i_attention->getConfig()->getFlag(enTerminate)))
+    // TI info params
+    uint8_t* tiInfo           = &tiData[0];
+    uint32_t tiInfoLen        = 0;
+    pdbg_target* tiInfoTarget = i_attention->getTarget();
+
+    tiData[0] = 0; // set TI Area Valid = invalid
+
+    // use get TI info chipop to populate TI info data
+    sbe_mpipl_get_ti_info(tiInfoTarget, &tiInfo, &tiInfoLen);
+
+    // if TI Area Valid non-zero we can assume TI occurred
+    if (0 != tiData[0])
     {
-        log<level::INFO>("TI (terminate immediately)");
+        TiDataArea* tiDataArea = (TiDataArea*)tiInfo;
 
-        // Call TI special attention handler
-        tiHandler();
-        rc = RC_SUCCESS;
+        // trace a few known TI data area values
+        std::stringstream ss; // log message stream
+        ss << "TI data command = " << tiDataArea->command;
+        log<level::INFO>(ss.str().c_str());
+        ss << "TI data SRC format = " << tiDataArea->srcFormat;
+        log<level::INFO>(ss.str().c_str());
+        ss << "TI data hb_terminate_type = " << tiDataArea->hbTerminateType;
+        log<level::INFO>(ss.str().c_str());
+
+        if (true == (i_attention->getConfig()->getFlag(enTerminate)))
+        {
+            log<level::INFO>("TI (terminate immediately)");
+
+            // Call TI special attention handler
+            rc = tiHandler(tiDataArea);
+        }
     }
+    // TI area not valid, assume breakpoint
     else
     {
         if (true == (i_attention->getConfig()->getFlag(enBreakpoints)))
@@ -240,7 +261,7 @@ int handleSpecial(Attention* i_attention)
 
     if (RC_SUCCESS != rc)
     {
-        log<level::INFO>("Special attn handling disabled");
+        log<level::INFO>("Special attn not handled");
     }
 
     return rc;
