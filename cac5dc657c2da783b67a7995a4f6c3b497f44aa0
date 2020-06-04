@@ -1,0 +1,9 @@
+Ok-To-Test+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Code-Review+2: Zane Shelley <zshelle@us.ibm.com>
+Code-Review+1: Caleb N. Palmer <cnpalmer@linux.ibm.com>
+Verified+1: Jenkins <openbmc-ci-admin@ozlabs.org>
+Submitted-by: Zane Shelley <zshelle@us.ibm.com>
+Submitted-at: Thu, 04 Jun 2020 15:16:41 +0000
+Reviewed-on: https://gerrit.openbmc-project.xyz/c/openbmc/openpower-hw-diags/+/33194
+Project: openbmc/openpower-hw-diags
+Branch: refs/heads/master
