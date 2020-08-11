@@ -1,8 +1,10 @@
 #include <assert.h>
 #include <libpdbg.h>
+#include <unistd.h>
 
 #include <hei_main.hpp>
 #include <util/trace.hpp>
+#include <phosphor-logging/log.hpp>
 
 #include <algorithm>
 #include <fstream>
@@ -278,6 +280,66 @@ void __filterRootCause(std::vector<libhei::Signature>& io_list)
 
 //------------------------------------------------------------------------------
 
+bool __logError(const std::vector<libhei::Signature>& i_sigList,
+                const libhei::IsolationData& i_isoData)
+{
+    bool attnFound = false;
+
+    // Get numerical values for the root cause.
+    uint32_t word6 = 0; // [ 0: 7]: chip target type
+                        // [ 8:31]: chip FAPI position
+//    uint32_t word7 = 0; // TODO: chip target info
+    uint32_t word8 = 0; // [ 0:15]: node ID
+                        // [16:23]: node instance
+                        // [24:31]: bit position
+//    uint32_t word9 = 0; // [ 0: 7]: attention type
+
+    if (i_sigList.empty())
+    {
+        trace::inf("No active attentions found");
+    }
+    else
+    {
+        attnFound = true;
+
+        // The root cause attention is the first in the filtered list.
+        libhei::Signature root = i_sigList.front();
+
+        word6 = __trgt(root);
+        word8 = __sig(root);
+
+        trace::inf("Root cause attention: %s 0x%0" PRIx32 " %s",
+                   __path(root.getChip()), word8, __attn(root.getAttnType()));
+    }
+
+    // Get the log data.
+    std::map<std::string, std::string> logData;
+    logData["_PID"]      = std::to_string(getpid());
+    logData["SIGNATURE"] = std::to_string(word6);
+    logData["CHIP_ID"]   = std::to_string(word8);
+
+    // Get access to logging interface and method for creating log.
+    auto bus = sdbusplus::bus::new_default_system();
+
+    // Using direct create method (for additional data)
+    auto method = bus.new_method_call(
+        "xyz.openbmc_project.Logging", "/xyz/openbmc_project/logging",
+        "xyz.openbmc_project.Logging.Create", "Create");
+
+    // Attach additional data
+    method.append("org.open_power.HwDiags.Error.Checkstop",
+                  "xyz.openbmc_project.Logging.Entry.Level.Error",
+                  logData);
+
+    // Log the event.
+    // TODO: Should the reply be handled?
+    bus.call(method);
+
+    return attnFound;
+}
+
+//------------------------------------------------------------------------------
+
 bool analyzeHardware(std::map<std::string, std::string>& o_errors)
 {
     bool attnFound = false;
@@ -296,32 +358,25 @@ bool analyzeHardware(std::map<std::string, std::string>& o_errors)
     // Isolate attentions.
     trace::inf("Isolating errors: # of chips=%u", chipList.size());
     libhei::IsolationData isoData{};
-    libhei::isolate(chipList, isoData);
+//    libhei::isolate(chipList, isoData);
+
+using namespace libhei;
+    uint8_t m = 0;
+    for (const auto& chip : chipList)
+    {
+        isoData.addSignature(libhei::Signature{chip, (NodeId_t)(m%5+1), (Instance_t)(m%4), (BitPosition_t)(m%6), (AttentionType_t)(m%3+1)}); m++;
+        isoData.addSignature(libhei::Signature{chip, (NodeId_t)(m%5+1), (Instance_t)(m%4), (BitPosition_t)(m%6), (AttentionType_t)(m%3+1)}); m++;
+        isoData.addSignature(libhei::Signature{chip, (NodeId_t)(m%5+1), (Instance_t)(m%4), (BitPosition_t)(m%6), (AttentionType_t)(m%3+1)}); m++;
+        isoData.addSignature(libhei::Signature{chip, (NodeId_t)(m%5+1), (Instance_t)(m%4), (BitPosition_t)(m%6), (AttentionType_t)(m%3+1)}); m++;
+    }
 
     // Filter signatures to determine root cause. We'll need to make a copy of
     // the list so that the original list is maintained for the log.
     std::vector<libhei::Signature> sigList{isoData.getSignatureList()};
     __filterRootCause(sigList);
 
-    if (sigList.empty())
-    {
-        // Don't throw an error here because it could happen for during TI
-        // analysis. Attention Handler will need to determine if this is an
-        // actual problem.
-        trace::inf("No active attentions found");
-    }
-    else
-    {
-        attnFound = true;
-        trace::inf("Active attentions found: %d", sigList.size());
-
-        libhei::Signature root = sigList.front();
-        trace::inf("Root cause attention: %p 0x%04x%02x%02x %s",
-                   root.getChip().getChip(), root.getId(), root.getInstance(),
-                   root.getBit(), __attn(root.getAttnType()));
-
-        // TODO: generate log information
-    }
+    // Create and commit a log.
+    attnFound = __logError(sigList, isoData);
 
     // All done, clean up the isolator.
     trace::inf("Uninitializing isolator");
