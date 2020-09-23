@@ -268,10 +268,6 @@ int handleSpecial(Attention* i_attention)
         }
     }
 
-    // Note: If we want to support running this application on architectures
-    // of different endian-ness we need to handler that here. The TI data
-    // will always be written in big-endian order.
-
     // If TI area exists and is marked valid we can assume TI occurred
     if ((nullptr != tiInfo) && (0 != tiInfo[0]))
     {
@@ -281,12 +277,19 @@ int handleSpecial(Attention* i_attention)
 
         // trace a few known TI data area values
         std::stringstream ss; // log message stream
-        ss << "TI data command = " << tiDataArea->command;
+
+        ss << "TI data command = " << (uint8_t)tiDataArea->command;
         trace<level::INFO>(ss.str().c_str());
-        ss << "TI data SRC format = " << tiDataArea->srcFormat;
+        ss.clear();
+
+        ss << "TI data SRC format = " << (uint8_t)tiDataArea->srcFormat;
         trace<level::INFO>(ss.str().c_str());
-        ss << "TI data hb_terminate_type = " << tiDataArea->hbTerminateType;
+        ss.clear();
+
+        ss << "TI data hb_terminate_type = "
+           << (uint8_t)tiDataArea->hbTerminateType;
         trace<level::INFO>(ss.str().c_str());
+        ss.clear();
 
         if (true == (i_attention->getConfig()->getFlag(enTerminate)))
         {
