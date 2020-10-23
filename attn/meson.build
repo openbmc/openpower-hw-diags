@@ -6,6 +6,9 @@ boost_args = ['-DBOOST_ASIO_DISABLE_THREADS',
 # dependency to link sdbusplus support
 sdbusplus = dependency('sdbusplus', version : '>=1.0')
 
+# dependency needed for various dbus interfaces
+phosphor_dbus_interfaces = dependency('phosphor-dbus-interfaces')
+
 # dependency to link gpiod support
 libgpiod = dependency('libgpiod', version : '>=1.4.1')
 
@@ -32,12 +35,13 @@ endif
 # gather attention sources to be used here and elsewhere if needed
 attn_src = files('attn_main.cpp', 'attn_handler.cpp', 'attn_monitor.cpp',
                  'bp_handler.cpp', 'ti_handler.cpp', logging_src,
-                 'attention.cpp', 'attn_config.cpp')
+                 'attention.cpp', 'attn_config.cpp', 
+                 '../util/ffdc_file.cpp', '../util/temporary_file.cpp')
 
 # Create attention handler library
 attn = static_library('attn_handler',
                       attn_src,
                       include_directories : incdir,
-                      dependencies : [libpdbg, sdbusplus, libgpiod],
+                      dependencies : [libpdbg, sdbusplus, libgpiod, phosphor_dbus_interfaces],
                       cpp_args : [boost_args, test_arg],
                       install : true)
