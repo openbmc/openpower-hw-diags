@@ -1,8 +1,11 @@
 #pragma once
 
+#include <util/ffdc_file.hpp>
+
 #include <cstddef> // for size_t
 #include <map>
 #include <string>
+#include <vector>
 
 namespace attn
 {
@@ -44,5 +47,53 @@ void eventHwDiagsFail(int i_error);
 
 /** @brief commit attention handler failure event to log */
 void eventAttentionFail(int i_error);
+
+using FFDCTuple =
+    std::tuple<FFDCFormat, uint8_t, uint8_t, sdbusplus::message::unix_fd>;
+
+/**
+ * Create an FFDCFile object containing the specified lines of text data.
+ *
+ * Throws an exception if an error occurs.
+ *
+ * @param lines lines of text data to write to file
+ * @return FFDCFile object
+ */
+FFDCFile createFFDCFile(const std::vector<std::string>& lines);
+
+/**
+ * Create FFDCFile objects containing debug data to store in the error log.
+ *
+ * If an error occurs, the error is written to the journal but an exception
+ * is not thrown.
+ *
+ * @param journal system journal
+ * @return vector of FFDCFile objects
+ */
+std::vector<FFDCFile> createFFDCFiles();
+
+/**
+ * Create FFDCTuple objects corresponding to the specified FFDC files.
+ *
+ * The D-Bus method to create an error log requires a vector of tuples to
+ * pass in the FFDC file information.
+ *
+ * @param files FFDC files
+ * @return vector of FFDCTuple objects
+ */
+std::vector<FFDCTuple> createFFDCTuples(std::vector<FFDCFile>& files);
+
+/**
+ * Removes the specified FFDC files from the file system.
+ *
+ * Also clears the specified vector, removing the FFDCFile objects.
+ *
+ * If an error occurs, the error is written to the journal but an exception
+ * is not thrown.
+ *
+ * @param files FFDC files to remove
+ * @param journal system journal
+ */
+void removeFFDCFiles(std::vector<FFDCFile>& files);
 
 } // namespace attn
