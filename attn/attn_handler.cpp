@@ -68,10 +68,6 @@ void attnHandler(Config* i_config)
         {
             proc = pdbg_target_index(target); // get processor number
 
-            std::stringstream ss; // log message stream
-            ss << "checking processor " << proc;
-            trace<level::INFO>(ss.str().c_str());
-
             // The processor FSI target is required for CFAM read
             char path[16];
             sprintf(path, "/proc%d/fsi", proc);
@@ -82,59 +78,42 @@ void attnHandler(Config* i_config)
                 // get active attentions on processor
                 if (RC_SUCCESS != fsi_read(attnTarget, 0x1007, &isr_val))
                 {
-                    // event
-                    eventAttentionFail(RC_CFAM_ERROR);
-
-                    // trace
+                    // log cfam read error
                     trace<level::INFO>("Error! cfam read 0x1007 FAILED");
+                    eventAttentionFail(RC_CFAM_ERROR);
                 }
                 else
                 {
-                    std::stringstream ss; // log message stream
-                    ss << "cfam 0x1007 = 0x";
-                    ss << std::hex << std::setw(8) << std::setfill('0');
-                    ss << isr_val;
-                    trace<level::INFO>(ss.str().c_str());
-
                     // get interrupt enabled special attentions mask
                     if (RC_SUCCESS != fsi_read(attnTarget, 0x100d, &isr_mask))
                     {
-                        // event
-                        eventAttentionFail(RC_CFAM_ERROR);
-
-                        // trace
+                        // log cfam read error
                         trace<level::INFO>("Error! cfam read 0x100d FAILED");
+                        eventAttentionFail(RC_CFAM_ERROR);
                     }
                     else
                     {
-                        // CFAM 0x100d is expected to have bits set
-                        // corresponding to attentions that can generate an
-                        // attention interrupt.
-
-                        std::stringstream ss; // log message stream
-                        ss << "cfam 0x100d = 0x";
-                        ss << std::hex << std::setw(8) << std::setfill('0');
-                        ss << isr_mask;
-                        trace<level::INFO>(ss.str().c_str());
-
-                        // bit 0 on "left": bit 30 = SBE vital attention
-                        if (isr_val & isr_mask & 0x00000002)
+                        // SBE vital attention active and not masked?
+                        if (true ==
+                            activeAttn(isr_val, isr_mask, SBE_ATTN, proc))
                         {
                             active_attentions.emplace_back(Attention::Vital,
                                                            handleVital, target,
                                                            i_config);
                         }
 
-                        // bit 0 on "left": bit 1 = checkstop
-                        if (isr_val & isr_mask & 0x40000000)
+                        // Checkstop attention active and not masked?
+                        if (true ==
+                            activeAttn(isr_val, isr_mask, CHECKSTOP_ATTN, proc))
                         {
                             active_attentions.emplace_back(Attention::Checkstop,
                                                            handleCheckstop,
                                                            target, i_config);
                         }
 
-                        // bit 0 on "left": bit 2 = special attention
-                        if (isr_val & isr_mask & 0x20000000)
+                        // Special attention active and not masked?
+                        if (true ==
+                            activeAttn(isr_val, isr_mask, SPECIAL_ATTN, proc))
                         {
                             active_attentions.emplace_back(Attention::Special,
                                                            handleSpecial,
@@ -256,7 +235,6 @@ int handleSpecial(Attention* i_attention)
         {
             if (PDBG_TARGET_ENABLED == pdbg_target_probe(tiInfoTarget))
             {
-                trace<level::INFO>("calling sbe_mpipl_get_ti_info");
                 sbe_mpipl_get_ti_info(tiInfoTarget, &tiInfo, &tiInfoLen);
                 if (tiInfo == nullptr)
                 {
@@ -269,12 +247,12 @@ int handleSpecial(Attention* i_attention)
     // If TI area exists and is marked valid we can assume TI occurred
     if ((nullptr != tiInfo) && (0 != tiInfo[0]))
     {
-        trace<level::INFO>("TI info data present and valid");
-
         TiDataArea* tiDataArea = (TiDataArea*)tiInfo;
 
         // trace a few known TI data area values
         std::stringstream ss;
+        ss << std::hex << std::showbase;
+
         ss << std::hex << std::showbase;
 
         ss << "TI data command = " << (int)tiDataArea->command;
@@ -296,8 +274,6 @@ int handleSpecial(Attention* i_attention)
 
         if (true == (i_attention->getConfig()->getFlag(enTerminate)))
         {
-            trace<level::INFO>("TI (terminate immediately)");
-
             // Call TI special attention handler
             rc = tiHandler(tiDataArea);
         }
@@ -310,12 +286,8 @@ int handleSpecial(Attention* i_attention)
         // if configured to handle breakpoint as default special attention
         if (i_attention->getConfig()->getFlag(dfltBreakpoint))
         {
-            trace<level::INFO>("assuming breakpoint");
-
             if (true == (i_attention->getConfig()->getFlag(enBreakpoints)))
             {
-                trace<level::INFO>("breakpoint");
-
                 // Call the breakpoint special attention handler
                 bpHandler();
             }
@@ -327,8 +299,6 @@ int handleSpecial(Attention* i_attention)
 
             if (true == (i_attention->getConfig()->getFlag(enTerminate)))
             {
-                trace<level::INFO>("TI (terminate immediately)");
-
                 // Call TI special attention handler
                 rc = tiHandler(nullptr);
             }
@@ -344,6 +314,70 @@ int handleSpecial(Attention* i_attention)
     if (RC_SUCCESS != rc)
     {
         trace<level::INFO>("Special attn not handled");
+    }
+
+    return rc;
+}
+
+/** @brief Determine if attention is active and not masked */
+bool activeAttn(uint32_t i_val, uint32_t i_mask, uint32_t i_attn,
+                uint32_t i_proc)
+{
+    bool rc        = false; // assume attn masked and/or inactive
+    bool validAttn = true;  // known attention type
+
+    // if attention active
+    if (0 != (i_val & i_attn))
+    {
+        // trace proc with attn
+        std::stringstream ss;
+        ss << "Attn: proc " << i_proc;
+        trace<level::INFO>(ss.str().c_str());
+
+        // trace isr
+        ss.str(std::string());           // clear stream
+        ss << std::hex << std::showbase; // trace as hex vals
+        ss << "cfam 0x1007 = " << std::setw(8) << std::setfill('0') << i_val;
+        trace<level::INFO>(ss.str().c_str());
+
+        // trace true-mask
+        ss.str(std::string());           // clear stream
+        ss << std::hex << std::showbase; // trace as hex vals
+        ss << "cfam 0x100d = " << std::setw(8) << std::setfill('0') << i_mask;
+        trace<level::INFO>(ss.str().c_str());
+
+        ss.str(std::string()); // clear stream
+
+        switch (i_attn)
+        {
+            case SBE_ATTN:
+                ss << " SBE attn";
+                break;
+            case CHECKSTOP_ATTN:
+                ss << " Checkstop attn";
+                break;
+            case SPECIAL_ATTN:
+                ss << " Special attn";
+                break;
+            default:
+                ss << "Unknown attn";
+                validAttn = false;
+        }
+
+        // see if attention is masked
+        if (true == validAttn)
+        {
+            if (0 != (i_mask & i_attn))
+            {
+                rc = true; // attention active and not masked
+            }
+            else
+            {
+                ss << " masked";
+            }
+        }
+
+        trace<level::INFO>(ss.str().c_str()); // commit trace stream
     }
 
     return rc;
