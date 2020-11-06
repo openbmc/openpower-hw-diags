@@ -69,7 +69,6 @@ void transitionHost(const char* i_target)
     method.append(i_target);  // target unit to start
     method.append("replace"); // mode = replace conflicting queued jobs
 
-    trace<level::INFO>("transitioning host");
     trace<level::INFO>(i_target);
 
     bus.call_noreply(method); // start the service
@@ -152,8 +151,7 @@ void handleHbTi(TiDataArea* i_tiDataArea)
                 break;
             case TI_WITH_SRC:
                 // SRC is byte 2 and 3 of 4 byte srcWord12HbWord0
-                uint16_t hbSrc =
-                    (be32toh(i_tiDataArea->srcWord12HbWord0) >> 16);
+                uint16_t hbSrc = be32toh(i_tiDataArea->srcWord12HbWord0);
 
                 // trace some info
                 ss << "TI with SRC: " << (int)hbSrc;
