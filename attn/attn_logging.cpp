@@ -63,7 +63,7 @@ void event(EventType i_event, std::map<std::string, std::string>& i_additional)
                       i_additional);
 
         // log the event
-        auto reply = bus.call(method);
+        bus.call_noreply(method);
     }
 }
 
