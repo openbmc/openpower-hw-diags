@@ -29,7 +29,8 @@ endif
 # gather attention sources to be used here and elsewhere if needed
 attn_src = files('attn_main.cpp', 'attn_handler.cpp', 'attn_monitor.cpp',
                  'bp_handler.cpp', 'ti_handler.cpp', logging_src,
-                 'attention.cpp', 'attn_config.cpp')
+                 'attention.cpp', 'attn_config.cpp', 'vital_handler.cpp',
+                 'attn_common.cpp')
 
 # Create attention handler library
 attn = static_library('attn_handler',
