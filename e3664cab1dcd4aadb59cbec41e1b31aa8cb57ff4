@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8477a8df_52596720",
+        "filename": "attn/attn_common.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-01-05T21:23:20Z",
+      "side": 1,
+      "message": "can rebase on top of other commit that does this already",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "e3664cab1dcd4aadb59cbec41e1b31aa8cb57ff4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ba079a3_e6f131f1",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-01-05T21:23:20Z",
+      "side": 1,
+      "message": "use call_noreply if no reply expected",
+      "range": {
+        "startLine": 302,
+        "startChar": 0,
+        "endLine": 302,
+        "endChar": 1
+      },
+      "revId": "e3664cab1dcd4aadb59cbec41e1b31aa8cb57ff4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0221b56d_8d9d3e02",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-01-05T21:23:20Z",
+      "side": 1,
+      "message": "Needs to be changed for Hostboot.",
+      "range": {
+        "startLine": 226,
+        "startChar": 40,
+        "endLine": 226,
+        "endChar": 50
+      },
+      "revId": "e3664cab1dcd4aadb59cbec41e1b31aa8cb57ff4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
