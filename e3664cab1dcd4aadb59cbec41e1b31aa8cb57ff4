@@ -48,6 +48,23 @@
     },
     {
       "key": {
+        "uuid": "9bf0fc46_0db1b7b1",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000355
+      },
+      "writtenOn": "2021-01-05T21:24:29Z",
+      "side": 1,
+      "message": "For Hostboot -- referring to the 8 hex words of data starting at offset x10:\nx10 -- the 4 bytes are HEX version of the SRC word 11 \nSRC word 12 is not used in hostboot\n\nHence, it seems like you want to do 0x10 SRC Word 12  with zeroes here\nThen the rest of the words should match PHYP section  Word 13, Word 14 ... Word 19",
+      "revId": "e3664cab1dcd4aadb59cbec41e1b31aa8cb57ff4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0221b56d_8d9d3e02",
         "filename": "attn/ti_handler.cpp",
         "patchSetId": 1
