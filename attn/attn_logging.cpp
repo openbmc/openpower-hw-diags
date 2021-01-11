@@ -500,7 +500,7 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
 {
     // Create log event with aodditional data and FFDC data
     event(EventType::Terminate, i_additionalData,
-          createFFDCFiles(i_tiInfoData, 0x53));
+          createFFDCFiles(i_tiInfoData, 1024));
 }
 
 /** @brief Commit SBE vital event to log */
