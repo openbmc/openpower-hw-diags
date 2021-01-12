@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a52b75f3_32b07478",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-01-12T20:37:30Z",
+      "side": 1,
+      "message": "Update to be specific length for hostbost vs phyp.",
+      "range": {
+        "startLine": 500,
+        "startChar": 10,
+        "endLine": 500,
+        "endChar": 47
+      },
+      "revId": "d4c87097fa1078c01233329627e696d3e2c7ef36",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
