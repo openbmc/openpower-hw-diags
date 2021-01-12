@@ -33,17 +33,11 @@ static const size_t trace_msg_max_len = 255;
 template <level L>
 void trace(const char* i_message);
 
-/** @brief commit checkstop event to log */
-void eventCheckstop(std::map<std::string, std::string>& i_errors);
-
 /** @brief commit special attention TI event to log */
 void eventTerminate(std::map<std::string, std::string> i_additionalData);
 
 /** @brief commit SBE vital event to log */
 void eventVital();
-
-/** @brief commit analyzer failure event to log */
-void eventHwDiagsFail(int i_error);
 
 /** @brief commit attention handler failure event to log */
 void eventAttentionFail(int i_error);

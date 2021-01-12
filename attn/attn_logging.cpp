@@ -72,31 +72,6 @@ void event(EventType i_event, std::map<std::string, std::string>& i_additional)
     }
 }
 
-/** @brief commit checkstop event to log */
-void eventCheckstop(std::map<std::string, std::string>& i_errors)
-{
-    std::map<std::string, std::string> additionalData;
-
-    // TODO need multi-error/multi-callout stuff here
-
-    // if analyzer isolated errors
-    if (!(i_errors.empty()))
-    {
-        // FIXME TEMP CODE - begin
-
-        std::string signature = i_errors.begin()->first;
-        std::string chip      = i_errors.begin()->second;
-
-        additionalData["_PID"]      = std::to_string(getpid());
-        additionalData["SIGNATURE"] = signature;
-        additionalData["CHIP_ID"]   = chip;
-
-        // FIXME TEMP CODE -end
-
-        event(EventType::Checkstop, additionalData);
-    }
-}
-
 /** @brief commit special attention TI event to log */
 void eventTerminate(std::map<std::string, std::string> i_additionalData)
 {
@@ -111,16 +86,6 @@ void eventVital()
     additionalData["_PID"] = std::to_string(getpid());
 
     event(EventType::Vital, additionalData);
-}
-
-/** @brief commit analyzer failure event to log */
-void eventHwDiagsFail(int i_error)
-{
-    std::map<std::string, std::string> additionalData;
-
-    additionalData["_PID"] = std::to_string(getpid());
-
-    event(EventType::HwDiagsFail, additionalData);
 }
 
 /** @brief commit attention handler failure event to log */
@@ -139,11 +104,12 @@ std::string sdjGetFieldValue(sd_journal* journal, const char* field)
 {
     const char* data{nullptr};
     size_t length{0};
-    size_t prefix{0};
 
     // get field value
     if (0 == sd_journal_get_data(journal, field, (const void**)&data, &length))
     {
+        size_t prefix{0};
+
         // The data returned  by sd_journal_get_data will be prefixed with the
         // field name and "="
         const void* eq = memchr(data, '=', length);
