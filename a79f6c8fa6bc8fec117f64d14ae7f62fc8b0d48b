@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00bd4ecf_ee95fc0d",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-01-12T22:41:37Z",
+      "side": 1,
+      "message": "I tried using util::pdbg::getPibTrgt(), but it asserted `target` was not a of TYPE_PROC.",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 75
+      },
+      "revId": "a79f6c8fa6bc8fec117f64d14ae7f62fc8b0d48b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
