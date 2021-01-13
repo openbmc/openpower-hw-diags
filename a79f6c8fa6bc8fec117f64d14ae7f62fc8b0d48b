@@ -22,6 +22,30 @@
       "revId": "a79f6c8fa6bc8fec117f64d14ae7f62fc8b0d48b",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66fa2655_90a8bd5d",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-01-13T14:49:58Z",
+      "side": 1,
+      "message": "Maybe you used getPibTrgt(proc) instead of getPibTrget(target)? \nHowever, I explicitly did not switch to using the util function because it will assert (nullptr !\u003d pibTrgt). I would rather log this scenario and continue (line 74-78) since this would indicate a problem unrelated to attention handler and should not halt attention handler.",
+      "parentUuid": "00bd4ecf_ee95fc0d",
+      "range": {
+        "startLine": 69,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 75
+      },
+      "revId": "a79f6c8fa6bc8fec117f64d14ae7f62fc8b0d48b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
