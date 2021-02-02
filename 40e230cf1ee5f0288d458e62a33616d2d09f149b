@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac0e6d7a_7ec30e74",
+        "filename": "analyzer/create_pel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-02-02T21:23:01Z",
+      "side": 1,
+      "message": "data",
+      "range": {
+        "startLine": 161,
+        "startChar": 20,
+        "endLine": 161,
+        "endChar": 23
+      },
+      "revId": "40e230cf1ee5f0288d458e62a33616d2d09f149b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa0d177c_5a09a323",
+        "filename": "analyzer/create_pel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-02-02T21:23:01Z",
+      "side": 1,
+      "message": "register dump",
+      "range": {
+        "startLine": 198,
+        "startChar": 37,
+        "endLine": 198,
+        "endChar": 50
+      },
+      "revId": "40e230cf1ee5f0288d458e62a33616d2d09f149b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a630f1_ba4e6ff6",
+        "filename": "analyzer/util.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-02-02T21:23:01Z",
+      "side": 1,
+      "message": "hto32be()",
+      "range": {
+        "startLine": 32,
+        "startChar": 19,
+        "endLine": 32,
+        "endChar": 26
+      },
+      "revId": "40e230cf1ee5f0288d458e62a33616d2d09f149b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
