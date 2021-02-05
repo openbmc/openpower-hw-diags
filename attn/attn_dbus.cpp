@@ -131,7 +131,13 @@ void createPelRaw(const std::vector<uint8_t>& i_buffer)
     // Create FFDC file from buffer data
     util::FFDCFile pelFile{util::FFDCFormat::Text};
     auto fd = pelFile.getFileDescriptor();
-    write(fd, i_buffer.data(), i_buffer.size());
+
+    auto numBytes = write(fd, i_buffer.data(), i_buffer.size());
+    if (i_buffer.size() != (size_t)numBytes)
+    {
+        trace<level::INFO>("createPelRaw: not all bytes written");
+    }
+
     lseek(fd, 0, SEEK_SET);
 
     auto filePath = pelFile.getPath(); // path to ffdc file

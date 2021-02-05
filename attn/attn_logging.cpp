@@ -56,8 +56,13 @@ util::FFDCFile createFFDCRawFile(void* i_buffer, size_t i_size)
     util::FFDCFile file{util::FFDCFormat::Custom};
 
     // Write buffer to file and then reset file description file offset
-    int fd = file.getFileDescriptor();
-    write(fd, static_cast<char*>(i_buffer), i_size);
+    int fd        = file.getFileDescriptor();
+    auto numBytes = write(fd, static_cast<char*>(i_buffer), i_size);
+    if (i_size != (size_t)numBytes)
+    {
+        trace<level::INFO>("createFFDCRawFile: not all bytes written");
+    }
+
     lseek(fd, 0, SEEK_SET);
 
     return file;
@@ -89,7 +94,11 @@ util::FFDCFile createFFDCTraceFile(const std::vector<std::string>& lines)
         }
 
         // write buffer to file
-        write(fd, buffer.c_str(), buffer.size());
+        auto numBytes = write(fd, buffer.c_str(), buffer.size());
+        if (buffer.size() != (size_t)numBytes)
+        {
+            trace<level::INFO>("createFFDCTraceFile: not all bytes written");
+        }
     }
 
     // Seek to beginning of file so error logging system can read data
@@ -319,11 +328,18 @@ void event(EventType i_event, std::map<std::string, std::string>& i_additional,
 
                 // read information PEL into buffer
                 std::vector<uint8_t> buffer(pelSize);
-                read(pelFd, buffer.data(), buffer.size());
-                close(pelFd);
+                auto numBytes = read(pelFd, buffer.data(), buffer.size());
+                if (buffer.size() != (size_t)numBytes)
+                {
+                    trace<level::INFO>("event: Not all bytes read");
+                }
+                else
+                {
+                    // create PEL from buffer
+                    createPelCustom(buffer, i_additional);
+                }
 
-                // create PEL from buffer
-                createPelCustom(buffer, i_additional);
+                close(pelFd);
             }
         }
     }
