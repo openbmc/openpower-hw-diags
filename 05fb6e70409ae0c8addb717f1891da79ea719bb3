@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3626f14f_44f43c50",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000355
+      },
+      "writtenOn": "2021-02-09T18:54:39Z",
+      "side": 1,
+      "message": "Hostboot only for source flag",
+      "revId": "05fb6e70409ae0c8addb717f1891da79ea719bb3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e8d7b62_d8bd5015",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000355
+      },
+      "writtenOn": "2021-02-09T18:54:39Z",
+      "side": 1,
+      "message": "SRC is all 4 bytes\nReason Code would be last 2 bytes",
+      "revId": "05fb6e70409ae0c8addb717f1891da79ea719bb3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0af4a286_f073a75f",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000355
+      },
+      "writtenOn": "2021-02-09T18:54:39Z",
+      "side": 1,
+      "message": "Don\u0027t want HB dump for this, as hostboot is telling us to shutdown on purpose.",
+      "revId": "05fb6e70409ae0c8addb717f1891da79ea719bb3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9faf187_1f55400b",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000355
+      },
+      "writtenOn": "2021-02-09T18:54:39Z",
+      "side": 1,
+      "message": "Technically, we should never see this. They will use PLDM message instead.  So I am on the fence on whether it should have HB dump or not.",
+      "revId": "05fb6e70409ae0c8addb717f1891da79ea719bb3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
