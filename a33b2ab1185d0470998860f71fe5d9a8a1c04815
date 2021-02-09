@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c58a7ca_b70b1064",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000355
+      },
+      "writtenOn": "2021-02-09T19:26:17Z",
+      "side": 1,
+      "message": "PHYP can use all 32 bytes of ASCII data and in fact they usually do like this:\n\n  42373030 46313033 20202020 20202020 20202020 20202020 20202020 20202020    //// B700F103            \n\nIf they put a zero byte in there, you can cut it off there, but otherwise you need to handle all 32 bytes and append your own null character to end the string.",
+      "revId": "a33b2ab1185d0470998860f71fe5d9a8a1c04815",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
