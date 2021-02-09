@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5aea9c30_53896d9c",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000355
+      },
+      "writtenOn": "2021-02-09T19:44:51Z",
+      "side": 1,
+      "message": "Where are the default SRCs for OPAL and HOSTBOOT ?  Looks like hardcoded stuff is just for PHYP.",
+      "revId": "82c085ed24cf17b7487175eed824b02c2a94a3ab",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a208502c_43c40b66",
+        "filename": "attn/attn_handler.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000355
+      },
+      "writtenOn": "2021-02-09T19:44:51Z",
+      "side": 1,
+      "message": "Probably optimal to fill in SRC length as x48  (which is what PHYP, etc... should do)\n01A102A8 00000001 02000009 00000048",
+      "revId": "82c085ed24cf17b7487175eed824b02c2a94a3ab",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
