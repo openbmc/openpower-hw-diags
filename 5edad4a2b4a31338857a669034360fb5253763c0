@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "1e269bb0_d9a31a99",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-02-09T20:55:02Z",
+      "side": 1,
+      "message": "Consider outputting file name, size written, and size of the buffer to the trace.",
+      "range": {
+        "startLine": 63,
+        "startChar": 28,
+        "endLine": 63,
+        "endChar": 68
+      },
+      "revId": "5edad4a2b4a31338857a669034360fb5253763c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454cb71d_28464f77",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-02-09T20:55:02Z",
+      "side": 1,
+      "message": "Consider making this a more severe level.",
+      "range": {
+        "startLine": 63,
+        "startChar": 21,
+        "endLine": 63,
+        "endChar": 25
+      },
+      "revId": "5edad4a2b4a31338857a669034360fb5253763c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12146b37_dceeda22",
         "filename": "attn/attn_logging.cpp",
         "patchSetId": 2
