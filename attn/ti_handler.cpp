@@ -240,10 +240,11 @@ void handleHbTi(TiDataArea* i_tiDataArea)
             tiAdditionalData["Subsystem"] = std::to_string(
                 static_cast<uint8_t>(pel::SubsystemID::hostboot));
 
-            char srcChar[8];
-            memcpy(srcChar, &(i_tiDataArea->srcWord12HbWord0), 4);
-            memcpy(&srcChar[4], &(i_tiDataArea->asciiData1), 4);
-            tiAdditionalData["SrcAscii"] = std::string{srcChar};
+            // translate hex src value to ascii
+            std::stringstream src;
+            src << std::setw(8) << std::setfill('0') << std::hex
+                << be32toh(i_tiDataArea->srcWord12HbWord0);
+            tiAdditionalData["SrcAscii"] = src.str();
 
             eventTerminate(tiAdditionalData, (char*)i_tiDataArea);
         }
