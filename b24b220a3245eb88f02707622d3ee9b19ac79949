@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4a5d162_b6149ca4",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-02-10T17:36:59Z",
+      "side": 1,
+      "message": "Check if static structure",
+      "range": {
+        "startLine": 350,
+        "startChar": 0,
+        "endLine": 350,
+        "endChar": 21
+      },
+      "revId": "b24b220a3245eb88f02707622d3ee9b19ac79949",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
