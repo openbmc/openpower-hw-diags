@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f8a50f37_c3467493",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-02-10T03:10:54Z",
+      "side": 1,
+      "message": "Tracing these for debug use, we haven\u0027t decided yet on hostboot or hypervisor. Later we decide as follows:\n \nif ((0 \u003d\u003d i_tiDataArea-\u003ehbTerminateType) \u0026\u0026 \n    (0 \u003d\u003d i_tiDataArea-\u003esource) \u0026\u0026 \n    (0 !\u003d i_tiDataArea-\u003esrcFormat))\n{                                                                       \n    handlePhypTi(i_tiDataArea);\n}\nelse\n{                                                                    \n    handleHbTi(i_tiDataArea);\n}\n\nTraced here:\ntiDataArea-\u003ehbTerminateType \u003d TI info offset 0x0004 (HB only)\ntiDataArea-\u003esource \u003d TI info offset 0x000c (HB only)\ntiDataArea-\u003esrcFormat \u003d TI info offset 0x0008 (PHYP/OPAL)",
+      "parentUuid": "3626f14f_44f43c50",
+      "revId": "05fb6e70409ae0c8addb717f1891da79ea719bb3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2e8d7b62_d8bd5015",
         "filename": "attn/ti_handler.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "05fb6e70409ae0c8addb717f1891da79ea719bb3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b00442a_9cd92579",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-02-10T03:10:54Z",
+      "side": 1,
+      "message": "Ack - changed comment from SRC to Reason code and variable from hbSrc to reasonCode.",
+      "parentUuid": "2e8d7b62_d8bd5015",
+      "revId": "05fb6e70409ae0c8addb717f1891da79ea719bb3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ab4b0795_ff4f7392",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-02-10T03:10:54Z",
+      "side": 1,
+      "message": "Done - set hbDumpRequested \u003d false in this case",
+      "parentUuid": "0af4a286_f073a75f",
+      "revId": "05fb6e70409ae0c8addb717f1891da79ea719bb3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9faf187_1f55400b",
         "filename": "attn/ti_handler.cpp",
         "patchSetId": 3
@@ -67,6 +121,24 @@
       "revId": "05fb6e70409ae0c8addb717f1891da79ea719bb3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4e4e441_7558337b",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-02-10T03:10:54Z",
+      "side": 1,
+      "message": "Done - made a note in source code and I left hbDumpRequested \u003d\u003d true since this should not occur and the dump may help figure out why we hit this case.",
+      "parentUuid": "c9faf187_1f55400b",
+      "revId": "05fb6e70409ae0c8addb717f1891da79ea719bb3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
