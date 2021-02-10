@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "73b61816_a8263056",
+        "filename": "attn/attn_dbus.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-02-10T02:21:14Z",
+      "side": 1,
+      "message": "Ack - write() returns ssize_t which results in signed vs unsigned compare without the cast. In any case I changed numBytes type from auto to size_t to be more clear.",
+      "parentUuid": "7cde73ff_99942ca3",
+      "range": {
+        "startLine": 136,
+        "startChar": 27,
+        "endLine": 136,
+        "endChar": 35
+      },
+      "revId": "5edad4a2b4a31338857a669034360fb5253763c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e269bb0_d9a31a99",
         "filename": "attn/attn_logging.cpp",
         "patchSetId": 2
@@ -71,6 +95,54 @@
     },
     {
       "key": {
+        "uuid": "ea264019_94c652c7",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-02-10T02:21:14Z",
+      "side": 1,
+      "message": "Done - changed to ERROR (phosphor::logging::level::ERR)",
+      "parentUuid": "454cb71d_28464f77",
+      "range": {
+        "startLine": 63,
+        "startChar": 21,
+        "endLine": 63,
+        "endChar": 25
+      },
+      "revId": "5edad4a2b4a31338857a669034360fb5253763c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d3bba471_b7d65be7",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-02-10T02:21:14Z",
+      "side": 1,
+      "message": "Done - traced file path and bytes written vs expected",
+      "parentUuid": "1e269bb0_d9a31a99",
+      "range": {
+        "startLine": 63,
+        "startChar": 28,
+        "endLine": 63,
+        "endChar": 68
+      },
+      "revId": "5edad4a2b4a31338857a669034360fb5253763c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "12146b37_dceeda22",
         "filename": "attn/attn_logging.cpp",
         "patchSetId": 2
@@ -85,6 +157,24 @@
       "revId": "5edad4a2b4a31338857a669034360fb5253763c0",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa44124c_59739193",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-02-10T02:21:14Z",
+      "side": 1,
+      "message": "Ack - in this case the file read failed and we can\u0027t reliably create the custom pel however another pel will exist indicating a terminate event",
+      "parentUuid": "12146b37_dceeda22",
+      "revId": "5edad4a2b4a31338857a669034360fb5253763c0",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
