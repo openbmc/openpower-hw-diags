@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eccb19fc_e77b21b9",
+        "filename": "analyzer/create_pel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-02-16T20:40:31Z",
+      "side": 1,
+      "message": "write",
+      "range": {
+        "startLine": 105,
+        "startChar": 28,
+        "endLine": 105,
+        "endChar": 33
+      },
+      "revId": "7dafe7d28daa33ea975c916ceeb9e09dfd2cb91d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93905c0e_418a3f9e",
+        "filename": "analyzer/create_pel.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-02-16T20:40:31Z",
+      "side": 1,
+      "message": "callout",
+      "range": {
+        "startLine": 278,
+        "startChar": 19,
+        "endLine": 278,
+        "endChar": 37
+      },
+      "revId": "7dafe7d28daa33ea975c916ceeb9e09dfd2cb91d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
