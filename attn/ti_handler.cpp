@@ -1,4 +1,5 @@
 #include <attn/attn_common.hpp>
+#include <attn/attn_dbus.hpp>
 #include <attn/attn_handler.hpp>
 #include <attn/attn_logging.hpp>
 #include <attn/pel/pel_common.hpp>
@@ -383,6 +384,126 @@ bool autoRebootEnabled()
     }
 
     return autoReboot;
+}
+
+/**
+ * Call back for dump progress
+ *
+ * After requesting a dump from the dump mangager the attention handler
+ * registers this callback for changes to dump status. Once dump status is
+ * "Completed" the attention handler will transition the host.
+ *
+ * @param msg Dbus message associated with dump manager Progress interface
+ */
+void dumpStatusChanged(sdbusplus::message::message& msg)
+{
+    std::string interface;
+    std::map<std::string, std::variant<std::string, uint8_t>> property;
+
+    // parse property change message
+    msg.read(interface, property);
+
+    // If Status property changed to Completed transition the host
+    auto dumpStatus = property.find("Status");
+    if (dumpStatus != property.end())
+    {
+        const std::string* status =
+            std::get_if<std::string>(&(dumpStatus->second));
+
+        if ((nullptr != status) && ("xyz.openbmc_project.Common.Progress."
+                                    "OperationStatus.Completed" == *status))
+        {
+            transitionHost(HostState::Quiesce);
+        }
+        else
+        {
+            trace<level::INFO>("dump status changed: NOT Completed");
+        }
+    }
+    else
+    {
+        trace<level::INFO>("dump property change: NOT Status");
+    }
+}
+
+/**
+ * Register a callback for dump progress status changes
+ *
+ * The attention handler will register a dbus signal monitor to observe changes
+ * to dump manager properties.
+ *
+ * @param progressPath The dbus object path for dump progress interface
+ */
+void monitorDump(const std::string& progressPath)
+{
+    try
+    {
+        // using system dbus
+        auto bus = sdbusplus::bus::new_system();
+
+        // progress interface
+        constexpr auto progressInterface =
+            "xyz.openbmc_project.Common.Progress";
+
+        // create properties change match rule
+        std::unique_ptr<sdbusplus::bus::match_t> match =
+            std::make_unique<sdbusplus::bus::match_t>(
+                bus,
+                sdbusplus::bus::match::rules::propertiesChanged(
+                    progressPath, progressInterface),
+                [](auto& msg) { dumpStatusChanged(msg); });
+    }
+    catch (const sdbusplus::exception::SdBusError& e)
+    {
+        trace<level::ERROR>("monitorDump exception");
+        std::string traceMsg = std::string(e.what(), maxTraceLen);
+        trace<level::ERROR>(traceMsg.c_str());
+    }
+}
+
+/**
+ * Request a dump from the dump manager
+ *
+ * @param logId The id of the event log associated with this dump request
+ */
+void requestDump(const std::string& logId)
+{
+    constexpr auto path      = "org/openpower/dump";
+    constexpr auto interface = "xyz.openbmc_project.Dump.Create";
+    constexpr auto function  = "CreateDump";
+
+    sdbusplus::message::message method;
+
+    if (0 == dbusMethod(path, interface, function, method))
+    {
+        try
+        {
+            // additional dbus call parameters
+            method.append("com.ibm.Dump.Create.CreateParameters.DumpType",
+                          "com.ibm.Dump.Create.DumpType.Hostboot");
+            method.append("com.ibm.Dump.Create.CreateParameters.ErrorLogId",
+                          logId);
+
+            // using system dbus
+            auto bus      = sdbusplus::bus::new_system();
+            auto response = bus.call(method);
+
+            // reply will be string
+            std::string reply;
+
+            // parse dbus response into reply
+            response.read(reply);
+
+            // monitor dump progress
+            monitorDump(reply);
+        }
+        catch (const sdbusplus::exception::SdBusError& e)
+        {
+            trace<level::ERROR>("monitorDump exception");
+            std::string traceMsg = std::string(e.what(), maxTraceLen);
+            trace<level::ERROR>(traceMsg.c_str());
+        }
+    }
 }
 
 } // namespace attn
