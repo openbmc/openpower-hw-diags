@@ -8,7 +8,11 @@ using namespace analyzer;
 
 TEST(SericeData, TestSet1)
 {
-    ServiceData sd{};
+    libhei::Chip chip{"/proc0", 0xdeadbeef};
+    libhei::Signature rootCause{chip, 0xabcd, 0, 0,
+                                libhei::ATTN_TYPE_CHECKSTOP};
+
+    ServiceData sd{rootCause};
 
     sd.addCallout(std::make_shared<HardwareCallout>("Test location 1",
                                                     Callout::Priority::HIGH));
