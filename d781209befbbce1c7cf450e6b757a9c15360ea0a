@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49abe63d_1507eb29",
+        "filename": "analyzer/resolution.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-03-25T21:56:05Z",
+      "side": 1,
+      "message": "Note that the signature chip should never have a null target. Therefore, not checking for null here.",
+      "range": {
+        "startLine": 11,
+        "startChar": 9,
+        "endLine": 11,
+        "endChar": 66
+      },
+      "revId": "d781209befbbce1c7cf450e6b757a9c15360ea0a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
