@@ -66,17 +66,6 @@ void handlePhypTi(TiDataArea* i_tiDataArea)
 {
     trace<level::INFO>("PHYP TI");
 
-    if (autoRebootEnabled())
-    {
-        // If autoreboot is enabled we will start crash (mpipl) mode target
-        transitionHost(HostState::Crash);
-    }
-    else
-    {
-        // If autoreboot is disabled we will quiesce the host
-        transitionHost(HostState::Quiesce);
-    }
-
     // gather additional data for PEL
     std::map<std::string, std::string> tiAdditionalData;
 
@@ -101,6 +90,19 @@ void handlePhypTi(TiDataArea* i_tiDataArea)
         // TI data was not available This should not happen since we provide
         // a default TI info in the case where get TI info was not successful.
         eventAttentionFail((int)AttnSection::handlePhypTi | ATTN_INFO_NULL);
+    }
+
+    // We are finished creating the event log entries so transition host to
+    // the required state.
+    if (autoRebootEnabled())
+    {
+        // If autoreboot is enabled we will start crash (mpipl) mode target
+        transitionHost(HostState::Crash);
+    }
+    else
+    {
+        // If autoreboot is disabled we will quiesce the host
+        transitionHost(HostState::Quiesce);
     }
 }
 
