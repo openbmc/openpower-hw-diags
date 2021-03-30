@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4faf751a_c871c3ff",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000355
+      },
+      "writtenOn": "2021-03-30T15:10:14Z",
+      "side": 1,
+      "message": "I don\u0027t see the old HW server code rebooting on this.   So thinking we don\u0027t want \u0027terminateHost\u0027 active for this case.",
+      "revId": "c2cda91d5031a2721f72de706a52a7c01fd3854a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b343bb78_3863a373",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000355
+      },
+      "writtenOn": "2021-03-30T15:10:14Z",
+      "side": 1,
+      "message": "Is there only \"one dump property change\" per dump ?",
+      "revId": "c2cda91d5031a2721f72de706a52a7c01fd3854a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
