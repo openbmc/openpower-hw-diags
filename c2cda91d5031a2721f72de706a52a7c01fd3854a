@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c94a53fd_c8d6cc9c",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-03-30T15:47:29Z",
+      "side": 1,
+      "message": "Ok can change - in fsp system who shuts down the host? how?",
+      "parentUuid": "4faf751a_c871c3ff",
+      "revId": "c2cda91d5031a2721f72de706a52a7c01fd3854a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b343bb78_3863a373",
         "filename": "attn/ti_handler.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2021-03-30T15:10:14Z",
       "side": 1,
       "message": "Is there only \"one dump property change\" per dump ?",
+      "revId": "c2cda91d5031a2721f72de706a52a7c01fd3854a",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390063dc_73aa9b16",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 451,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-03-30T15:47:29Z",
+      "side": 1,
+      "message": "Could be multiple in theory.\nThe function dumpStatusChanged() will be called for every dump property change and dumpStatusChanged() will do property \u003d\u003d progress \u003d\u003d completed ? transition host : trace",
+      "parentUuid": "b343bb78_3863a373",
       "revId": "c2cda91d5031a2721f72de706a52a7c01fd3854a",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
