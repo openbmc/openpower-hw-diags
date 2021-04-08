@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b96c4d80_8bec2281",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-04-08T15:54:02Z",
+      "side": 1,
+      "message": "Done - fixed map keys to be valid, will re-visit using find or map.at() in another commit as this could be done in many places throughout this code where map is accessed",
+      "parentUuid": "867f7565_6d17f37d",
+      "range": {
+        "startLine": 242,
+        "startChar": 36,
+        "endLine": 243,
+        "endChar": 56
+      },
+      "revId": "3d30df01c8096746494bf925c5440b58d91109d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "46c0f06d_89007889",
         "filename": "attn/attn_logging.cpp",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2021-04-06T19:51:54Z",
       "side": 1,
       "message": "same as above",
+      "range": {
+        "startLine": 287,
+        "startChar": 38,
+        "endLine": 289,
+        "endChar": 40
+      },
+      "revId": "3d30df01c8096746494bf925c5440b58d91109d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dbc47d1_2d768932",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-04-08T15:54:02Z",
+      "side": 1,
+      "message": "Done - fixed map keys to be valid, will re-visit using either map.find() or map.at() in another commit as this could be done in many places throughout this code where map is accessed.",
+      "parentUuid": "46c0f06d_89007889",
       "range": {
         "startLine": 287,
         "startChar": 38,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "36592310_0497811b",
+        "filename": "attn/pel/extended_user_header.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-04-08T15:54:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66078819_e0baafe2",
+      "range": {
+        "startLine": 37,
+        "startChar": 5,
+        "endLine": 37,
+        "endChar": 7
+      },
+      "revId": "3d30df01c8096746494bf925c5440b58d91109d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b00f681_6229b41e",
         "filename": "attn/pel/extended_user_header.hpp",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2021-04-06T19:51:54Z",
       "side": 1,
       "message": "iv_ prefix",
+      "range": {
+        "startLine": 98,
+        "startChar": 12,
+        "endLine": 98,
+        "endChar": 13
+      },
+      "revId": "3d30df01c8096746494bf925c5440b58d91109d6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79106a46_e33165aa",
+        "filename": "attn/pel/extended_user_header.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-04-08T15:54:02Z",
+      "side": 1,
+      "message": "Can change this in another commit as it would be nice to have matching style in associated code (i.e. all the /attn/pel code)",
+      "parentUuid": "0b00f681_6229b41e",
       "range": {
         "startLine": 98,
         "startChar": 12,
