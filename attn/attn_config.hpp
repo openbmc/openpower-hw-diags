@@ -11,7 +11,7 @@ enum AttentionFlag
     enCheckstop    = 1,
     enTerminate    = 2,
     enBreakpoints  = 3,
-    dfltBreakpoint = 4,
+    dfltTi         = 4,
     lastFlag
 };
 
