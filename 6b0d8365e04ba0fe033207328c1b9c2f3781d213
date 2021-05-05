@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3b2917c_6ee1a14c",
+        "filename": "meson.build",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000009
+      },
+      "writtenOn": "2021-05-05T23:48:28Z",
+      "side": 1,
+      "message": "Hmm, I couldn\u0027t find a `sources` keyword documented here: https://mesonbuild.com/Reference-manual.html#executable\n\nHow does this work?",
+      "revId": "6b0d8365e04ba0fe033207328c1b9c2f3781d213",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
