@@ -69,6 +69,24 @@
       "revId": "6b0d8365e04ba0fe033207328c1b9c2f3781d213",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c7d5fb3_6d5e149a",
+        "filename": "meson.build",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-05-06T12:42:09Z",
+      "side": 1,
+      "message": "https://github.com/mesonbuild/meson/blob/master/docs/markdown/FAQ.md\nSee section titled: \"How do I tell Meson that my sources use generated headers?\"",
+      "parentUuid": "a0f1af73_77e5d8d3",
+      "revId": "6b0d8365e04ba0fe033207328c1b9c2f3781d213",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
