@@ -16,6 +16,24 @@
       "revId": "6b0d8365e04ba0fe033207328c1b9c2f3781d213",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f4c215_9f50cf85",
+        "filename": "meson.build",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-05-06T00:38:52Z",
+      "side": 1,
+      "message": "I think Meson combines source arguments (the .cpp files listed here) and anything in the \u0027sources\u0027 keyword, but honestly we could have just added buildinfo into the arguments right after \u0027cli.cpp\u0027.\n\nIf you put an unrecognized keyword, meson warns like this:\n\n../meson.build:24: WARNING: Passed invalid keyword argument \"george\".\nWARNING: This will become a hard error in the future.\n\nIf you put \u0027sources\u0027 it doesn\u0027t complain.  If an unknown file is put into the \u0027sources\u0027 keyword it does complain, so it must be recognizing it:\n\n../meson.build:24:0: ERROR: File src/george.cpp does not exist.\n\n(These experiments were done in another repo)",
+      "parentUuid": "e3b2917c_6ee1a14c",
+      "revId": "6b0d8365e04ba0fe033207328c1b9c2f3781d213",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
