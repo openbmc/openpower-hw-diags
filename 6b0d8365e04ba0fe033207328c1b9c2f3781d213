@@ -105,6 +105,24 @@
       "revId": "6b0d8365e04ba0fe033207328c1b9c2f3781d213",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2446385e_793ec2f2",
+        "filename": "meson.build",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-05-06T18:21:13Z",
+      "side": 1,
+      "message": "Meson documentation is not very helpful. It seems the `sources` keyword is optional and can be used for readability when needed. As far as I can tell, meson will simply merge the `sources` keyword with the rest of the sources list. So what you have will work. However, it is a bit confusing having both a list and the keyword. So I suggest either of the following:\n\n    sources : [ \u0027main_nl.cpp\u0027, \u0027cli.cpp\u0027, buildinfo ],\n    [ \u0027main_nl.cpp\u0027, \u0027cli.cpp\u0027, buildinfo ],\n    \u0027main_nl.cpp\u0027, \u0027cli.cpp\u0027, buildinfo,",
+      "parentUuid": "5bbf49a6_051eec91",
+      "revId": "6b0d8365e04ba0fe033207328c1b9c2f3781d213",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
