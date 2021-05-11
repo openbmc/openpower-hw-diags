@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4829b640_21c75ba6",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-05-11T19:43:33Z",
+      "side": 1,
+      "message": "This else may not be needed",
+      "range": {
+        "startLine": 255,
+        "startChar": 4,
+        "endLine": 256,
+        "endChar": 5
+      },
+      "revId": "6399f87ebe186405d00619c92af486ffc10a7533",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84768c41_2987d853",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-05-11T19:43:33Z",
+      "side": 1,
+      "message": "This may also be redundant and can be removed",
+      "range": {
+        "startLine": 263,
+        "startChar": 1,
+        "endLine": 264,
+        "endChar": 5
+      },
+      "revId": "6399f87ebe186405d00619c92af486ffc10a7533",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
