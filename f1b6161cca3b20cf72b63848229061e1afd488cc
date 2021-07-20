@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "49728000_b9c2d0e7",
+        "filename": "test/end2end/vital_handler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-07-20T19:22:12Z",
+      "side": 1,
+      "message": "remove if you can",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 50
+      },
+      "revId": "f1b6161cca3b20cf72b63848229061e1afd488cc",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
