@@ -512,7 +512,7 @@ void requestDump(const uint32_t logId)
             createParams["com.ibm.Dump.Create.CreateParameters.DumpType"] =
                 "com.ibm.Dump.Create.DumpType.Hostboot";
             createParams["com.ibm.Dump.Create.CreateParameters.ErrorLogId"] =
-                std::to_string(logId);
+                logId;
             method.append(createParams);
 
             // using system dbus
