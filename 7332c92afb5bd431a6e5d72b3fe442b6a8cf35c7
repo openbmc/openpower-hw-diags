@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30d0121b_e18fe505",
+        "filename": "analyzer/ras-data/ras-data-definition.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-07-22T17:23:48Z",
+      "side": 1,
+      "message": "concatenate",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 29
+      },
+      "revId": "7332c92afb5bd431a6e5d72b3fe442b6a8cf35c7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2bd13d9_ad26da16",
+        "filename": "analyzer/ras-data/ras-data-definition.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-07-22T17:23:48Z",
+      "side": 1,
+      "message": "We do have cases where we will need to specify the priorities here.",
+      "range": {
+        "startLine": 144,
+        "startChar": 1,
+        "endLine": 144,
+        "endChar": 37
+      },
+      "revId": "7332c92afb5bd431a6e5d72b3fe442b6a8cf35c7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
