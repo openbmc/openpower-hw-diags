@@ -197,6 +197,39 @@ void transitionHost(const HostState i_hostState)
     }
 }
 
+/** @brief Read state of autoreboot propertyi via dbus */
+bool autoRebootEnabled()
+{
+    bool autoReboot = false; // assume autoreboot attribute not available
+
+    try
+    {
+        // Use dbus get-property interface to read the autoreboot property
+        auto bus    = sdbusplus::bus::new_system();
+        auto method = bus.new_method_call(
+            "xyz.openbmc_project.Settings",
+            "/xyz/openbmc_project/control/host0/auto_reboot",
+            "org.freedesktop.DBus.Properties", "Get");
+
+        method.append("xyz.openbmc_project.Control.Boot.RebootPolicy",
+                      "AutoReboot");
+
+        auto reply = bus.call(method);
+
+        std::variant<bool> result;
+        reply.read(result);
+        autoReboot = std::get<bool>(result);
+    }
+    catch (const sdbusplus::exception::SdBusError& e)
+    {
+        trace::err("autoRebootEnbabled exception");
+        std::string traceMsg = std::string(e.what());
+        trace::err(traceMsg.c_str());
+    }
+
+    return autoReboot;
+}
+
 } // namespace dbus
 
 } // namespace util
