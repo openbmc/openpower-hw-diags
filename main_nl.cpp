@@ -7,6 +7,7 @@
 #include <attn/attn_main.hpp>
 #include <buildinfo.hpp>
 #include <cli.hpp>
+#include <util/dbus.hpp>
 
 /**
  * @brief Attention handler application main()
@@ -48,6 +49,44 @@ int main(int argc, char* argv[])
         if (true == getCliOption(argv, argv + argc, "--analyze"))
         {
             rc = analyzer::analyzeHardware(); // analyze hardware
+        }
+        // temp
+        else if (true == getCliOption(argv, argv + argc, "--util"))
+        {
+            if (true == getCliOption(argv, argv + argc, "hostrunningstate"))
+            {
+                util::dbus::HostRunningState runningState =
+                    util::dbus::hostRunningState();
+
+                if (util::dbus::HostRunningState::Started == runningState)
+                {
+                    printf("hostRunningState: STARTED\n");
+                }
+                if (util::dbus::HostRunningState::NotStarted == runningState)
+                {
+                    printf("hostRunningState: NOTSTARTED\n");
+                }
+                if (util::dbus::HostRunningState::Unknown == runningState)
+                {
+                    printf("hostRunningState: UNKNOWN\n");
+                }
+            }
+            if (true == getCliOption(argv, argv + argc, "transitionhost"))
+            {
+                util::dbus::transitionHost(util::dbus::HostState::Quiesce);
+            }
+            if (true == getCliOption(argv, argv + argc, "autoreboot"))
+            {
+                auto autoreboot = util::dbus::autoRebootEnabled();
+                if (true == autoreboot)
+                {
+                    printf("AutoRebootEnabled = TRUE\n");
+                }
+                else
+                {
+                    printf("AutoRebootEnabled = FALSE\n");
+                }
+            }
         }
         // daemon mode
         else
