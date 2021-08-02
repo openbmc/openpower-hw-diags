@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "909badf6_42a06fad",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000084
+      },
+      "writtenOn": "2021-08-02T14:28:43Z",
+      "side": 1,
+      "message": "In dbus it is uint64, that may be ok.",
+      "range": {
+        "startLine": 511,
+        "startChar": 60,
+        "endLine": 511,
+        "endChar": 68
+      },
+      "revId": "0126786ef912052c2391b5b3383d7b84ba257985",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
