@@ -22,6 +22,30 @@
       "revId": "0126786ef912052c2391b5b3383d7b84ba257985",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bd7d629_88e6aabb",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-08-02T14:41:22Z",
+      "side": 1,
+      "message": "from create.interface.yaml:\nenumerations:\n    - name: CreateParameters\n      description: \u003e\n          Additional parameters for creating the dump.\n...\n        - name: \u0027ErrorLogId\u0027\n          description: \u003e\n              The id of the log associated with action which triggered the\n              dump. The value should be a 32 bit unsigned integer. \u003c---- uint32",
+      "parentUuid": "909badf6_42a06fad",
+      "range": {
+        "startLine": 511,
+        "startChar": 60,
+        "endLine": 511,
+        "endChar": 68
+      },
+      "revId": "0126786ef912052c2391b5b3383d7b84ba257985",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
