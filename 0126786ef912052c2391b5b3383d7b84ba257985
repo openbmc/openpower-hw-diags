@@ -70,6 +70,30 @@
       "revId": "0126786ef912052c2391b5b3383d7b84ba257985",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaabfc0c_b9c9c5c6",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1000084
+      },
+      "writtenOn": "2021-08-03T02:31:45Z",
+      "side": 1,
+      "message": "Yes openpower error log id is 32bit, but the comment from community on the interface was to keep it as 64 bit and handle the actual size in implementation",
+      "parentUuid": "8134641e_de8ab0e0",
+      "range": {
+        "startLine": 511,
+        "startChar": 60,
+        "endLine": 511,
+        "endChar": 68
+      },
+      "revId": "0126786ef912052c2391b5b3383d7b84ba257985",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
