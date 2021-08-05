@@ -2,6 +2,7 @@
 #include <libpdbg.h>
 #include <unistd.h>
 
+#include <analyzer/analyzer_main.hpp>
 #include <analyzer/service_data.hpp>
 #include <hei_main.hpp>
 #include <phosphor-logging/log.hpp>
@@ -31,9 +32,10 @@ void initializeIsolator(std::vector<libhei::Chip>& o_chips);
  * @brief Will create and submit a PEL using the given data.
  * @param i_isoData   The data gathered during isolation (for FFDC).
  * @param i_servData  Data regarding service actions gathered during analysis.
+ * @return Tuple of BMC log id, platform log id
  */
-void createPel(const libhei::IsolationData& i_isoData,
-               const ServiceData& i_servData);
+std::tuple<uint32_t, uint32_t> createPel(const libhei::IsolationData& i_isoData,
+                                         const ServiceData& i_servData);
 
 //------------------------------------------------------------------------------
 
@@ -119,7 +121,8 @@ bool __filterRootCause(const libhei::IsolationData& i_isoData,
 
 //------------------------------------------------------------------------------
 
-bool __analyze(const libhei::IsolationData& i_isoData)
+bool __analyze(const libhei::IsolationData& i_isoData,
+               attn::DumpParameters& o_dumpParameters)
 {
     bool attnFound = false;
 
@@ -147,7 +150,12 @@ bool __analyze(const libhei::IsolationData& i_isoData)
             ProcedureCallout::NEXTLVL, Callout::Priority::HIGH));
 
         // Create and commit a PEL.
-        createPel(i_isoData, servData);
+        uint32_t logId = std::get<1>(createPel(i_isoData, servData));
+
+        // Populate dump parameters
+        o_dumpParameters.logId    = logId;
+        o_dumpParameters.unitId   = 0;
+        o_dumpParameters.dumpType = attn::DumpType::Hardware;
     }
 
     return attnFound;
@@ -155,7 +163,7 @@ bool __analyze(const libhei::IsolationData& i_isoData)
 
 //------------------------------------------------------------------------------
 
-bool analyzeHardware()
+bool analyzeHardware(attn::DumpParameters& o_dumpParameters)
 {
     bool attnFound = false;
 
@@ -174,7 +182,7 @@ bool analyzeHardware()
         libhei::isolate(chips, isoData);
 
         // Analyze the isolation data and perform service actions if needed.
-        attnFound = __analyze(isoData);
+        attnFound = __analyze(isoData, o_dumpParameters);
 
         // All done, clean up the isolator.
         trace::inf("Uninitializing isolator...");
