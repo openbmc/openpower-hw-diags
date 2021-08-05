@@ -276,8 +276,8 @@ std::string __getMessageSeverity(bool i_isCheckstop)
 
 //------------------------------------------------------------------------------
 
-void createPel(const libhei::IsolationData& i_isoData,
-               const ServiceData& i_servData)
+std::tuple<uint32_t, uint32_t> createPel(const libhei::IsolationData& i_isoData,
+                                         const ServiceData& i_servData)
 {
     // The message registry will require additional log data to fill in keywords
     // and additional log data.
@@ -313,28 +313,46 @@ void createPel(const libhei::IsolationData& i_isoData,
     std::vector<util::FFDCTuple> userData;
     util::transformFFDC(userDataFiles, userData);
 
-    // Get access to logging interface and method for creating log.
-    auto bus = sdbusplus::bus::new_default_system();
+    try
+    {
+        // Get access to logging interface and method for creating log.
+        auto bus = sdbusplus::bus::new_default_system();
 
-    // Using direct create method (for additional data).
-    auto method = bus.new_method_call(
-        "xyz.openbmc_project.Logging", "/xyz/openbmc_project/logging",
-        "xyz.openbmc_project.Logging.Create", "CreateWithFFDCFiles");
+        // Using direct create method (for additional data).
+        auto method = bus.new_method_call(
+            "org.open_power.Logging.PEL", "/xyz/openbmc_project/logging",
+            "xyz.openbmc_project.Logging.Create", "CreatePELWithFFDCFiles");
 
-    // The "Create" method requires manually adding the process ID.
-    logData["_PID"] = std::to_string(getpid());
+        // The "Create" method requires manually adding the process ID.
+        logData["_PID"] = std::to_string(getpid());
 
-    // Get the message registry entry for this failure.
-    auto message = __getMessageRegistry(isCheckstop);
+        // Get the message registry entry for this failure.
+        auto message = __getMessageRegistry(isCheckstop);
 
-    // Get the message severity for this failure.
-    auto severity = __getMessageSeverity(isCheckstop);
+        // Get the message severity for this failure.
+        auto severity = __getMessageSeverity(isCheckstop);
 
-    // Add the message, with additional log and user data.
-    method.append(message, severity, logData, userData);
+        // Add the message, with additional log and user data.
+        method.append(message, severity, logData, userData);
 
-    // Log the event.
-    bus.call_noreply(method);
+        // Response will be a tuple containing bmc-log-id, pel-log-id
+        std::tuple<uint32_t, uint32_t> response = {0, 0};
+
+        // Log the event.
+        reply = bus.call(method);
+
+        // Parse reply for response
+        reply.read(response);
+    }
+    catch (const sdbusplus::exception::SdBusError& e)
+    {
+        trace::err("Exception while creating event log entry");
+        std::string exceptionString = std::string(e.what());
+        trace::err(exceptionString.c_str());
+    }
+
+    // return tuple of {bmc-log-id, pel-log-id} or {0, 0} on error
+    return response;
 }
 
 } // namespace analyzer
