@@ -2,9 +2,10 @@
 
 #include <attn/attn_common.hpp>
 #include <attn/attn_dbus.hpp>
+#include <attn/attn_dump.hpp>
 #include <attn/attn_logging.hpp>
 #include <attn/pel/pel_minimal.hpp>
-#include <attn/ti_handler.hpp>
+//#include <attn/ti_handler.hpp>
 #include <phosphor-logging/log.hpp>
 
 namespace attn
