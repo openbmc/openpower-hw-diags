@@ -15,6 +15,13 @@ namespace analyzer
  */
 class RasDataParser
 {
+  private:
+    /** @brief Supported RAS data versions. */
+    enum SchemaVersion
+    {
+        VERSION_1 = 1,
+    };
+
   public:
     /** @brief Default constructor. */
     RasDataParser()
