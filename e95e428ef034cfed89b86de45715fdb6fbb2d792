@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c948e7d_23384af9",
+        "filename": "analyzer/ras-data/ras-data-parser.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-08-10T19:56:51Z",
+      "side": 1,
+      "message": "Kind of pointless. Can remove.",
+      "range": {
+        "startLine": 20,
+        "startChar": 9,
+        "endLine": 20,
+        "endChar": 22
+      },
+      "revId": "e95e428ef034cfed89b86de45715fdb6fbb2d792",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
