@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7406eb1_c369b2ee",
+        "filename": "analyzer/resolution.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-08-10T20:15:50Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 36,
+        "startChar": 26,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "1fb52e226a430f9c97496bbf9d8388e0a92a252d",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
