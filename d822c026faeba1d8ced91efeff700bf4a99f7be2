@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1e19d4f8_41d8b6ff",
+        "filename": "attn/attn_common.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-09-16T18:46:48Z",
+      "side": 1,
+      "message": "\"cfam read fail: 0x%08x\", l_cfamAddr",
+      "range": {
+        "startLine": 39,
+        "startChar": 36,
+        "endLine": 39,
+        "endChar": 52
+      },
+      "revId": "d822c026faeba1d8ced91efeff700bf4a99f7be2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
