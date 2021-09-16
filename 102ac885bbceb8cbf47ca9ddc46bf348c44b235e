@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf9f7468_8fff848c",
+        "filename": "attn/attn_handler.service.in",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2021-09-16T15:02:13Z",
+      "side": 1,
+      "message": "Whoops, it\u0027s \"obmc\"",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 13
+      },
+      "revId": "102ac885bbceb8cbf47ca9ddc46bf348c44b235e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
