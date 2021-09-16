@@ -34,23 +34,27 @@ void addHbStatusRegs()
             // get first debug reg (CFAM)
             if (RC_SUCCESS != fsi_read(fsiTarget, l_cfamAddr, &l_cfamData))
             {
-                eventAttentionFail((int)AttnSection::addHbStatusRegs |
-                                   ATTN_PDBG_CFAM);
+                std::string traceMsg =
+                    "cfam read fail: " + std::to_string(l_cfamAddr);
+                trace<level::ERROR>(traceMsg.c_str());
                 l_cfamData = 0xFFFFFFFF;
             }
 
             // Get SCOM regs next (just 2 of them)
             if (RC_SUCCESS != pib_read(pibTarget, l_scomAddr1, &l_scomData1))
             {
-                eventAttentionFail((int)AttnSection::addHbStatusRegs |
-                                   ATTN_PDBG_SCOM);
+
+                std::string traceMsg =
+                    "scom read fail: " + std::to_string(l_scomAddr1);
+                trace<level::ERROR>(traceMsg.c_str());
                 l_scomData1 = 0xFFFFFFFFFFFFFFFFull;
             }
 
             if (RC_SUCCESS != pib_read(pibTarget, l_scomAddr2, &l_scomData2))
             {
-                eventAttentionFail((int)AttnSection::addHbStatusRegs |
-                                   ATTN_PDBG_SCOM);
+                std::string traceMsg =
+                    "scom read fail: " + std::to_string(l_scomAddr2);
+                trace<level::ERROR>(traceMsg.c_str());
                 l_scomData2 = 0xFFFFFFFFFFFFFFFFull;
             }
         }
