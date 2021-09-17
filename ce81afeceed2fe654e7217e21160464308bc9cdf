@@ -16,6 +16,24 @@
       "revId": "ce81afeceed2fe654e7217e21160464308bc9cdf",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17cf73e2_9bcf242a",
+        "filename": "attn/attn_common.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-09-17T21:29:06Z",
+      "side": 1,
+      "message": "This is just in case the fsi_read() call at line 38 modified the value. Since the function failed we cannot trust what it gave us.",
+      "parentUuid": "0491b3e6_d252f604",
+      "revId": "ce81afeceed2fe654e7217e21160464308bc9cdf",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
