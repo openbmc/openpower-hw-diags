@@ -34,6 +34,24 @@
       "revId": "ce81afeceed2fe654e7217e21160464308bc9cdf",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d94a4baf_eb366fc7",
+        "filename": "attn/attn_common.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-09-17T21:39:47Z",
+      "side": 1,
+      "message": "The value may be changed by the call to fsi_read even if that call returns an error condition so it is set to a known, non-valid (assumed), value to indicate that the call failed. In this specific case, setting the initial value could have been skipped however the original author chose to initialize all his variables, including this one, when they were first defined. The same reasoning applies for the handling of pib_read of lscomAddr1 and lscomAddr2 (below).",
+      "parentUuid": "0491b3e6_d252f604",
+      "revId": "ce81afeceed2fe654e7217e21160464308bc9cdf",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
     }
   ]
 }
