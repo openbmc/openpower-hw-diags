@@ -1,6 +1,9 @@
 #include <stdio.h>
 
 #include <analyzer/resolution.hpp>
+#include <util/trace.hpp>
+
+#include <regex>
 
 #include "gtest/gtest.h"
 
@@ -8,9 +11,11 @@
 constexpr auto chip_str = "/proc0";
 
 // Unit paths
-constexpr auto proc_str = "";
-constexpr auto omi_str  = "pib/perv12/mc0/mi0/mcc0/omi0";
-constexpr auto core_str = "pib/perv39/eq7/fc1/core1";
+constexpr auto proc_str   = "";
+constexpr auto iolink_str = "pib/perv24/pauc0/iohs0/smpgroup0";
+constexpr auto omi_str    = "pib/perv12/mc0/mi0/mcc0/omi0";
+constexpr auto ocmb_str   = "pib/perv12/mc0/mi0/mcc0/omi0/ocmb0";
+constexpr auto core_str   = "pib/perv39/eq7/fc1/core1";
 
 // Local implementation of this function.
 namespace analyzer
@@ -44,6 +49,49 @@ std::string __getUnitPath(const std::string& i_chipPath,
 
 //------------------------------------------------------------------------------
 
+// Helper function to get the connected target Path on the other side of the
+// given bus.
+std::string __getConnectedPath(const std::string& i_rxPath,
+                               const callout::BusType& i_busType)
+{
+    std::string txPath{};
+
+    // Need to get the target type from the RX path.
+    const std::regex re{"(/proc0)(.*)/([a-z]+)([0-9]+)"};
+    std::smatch match;
+    std::regex_match(i_rxPath, match, re);
+    assert(5 == match.size());
+    std::string rxType = match[3].str();
+
+    if (callout::BusType::SMP_BUS == i_busType && "smpgroup" == rxType)
+    {
+        // Use the RX unit path on a different processor.
+        txPath = "/proc1" + match[2].str() + "/" + rxType + match[4].str();
+    }
+    else if (callout::BusType::OMI_BUS == i_busType && "omi" == rxType)
+    {
+        // Append the OCMB to the RX path.
+        txPath = i_rxPath + "/ocmb0";
+    }
+    else if (callout::BusType::OMI_BUS == i_busType && "ocmb" == rxType)
+    {
+        // Strip the OCMB off of the RX path.
+        txPath = match[1].str() + match[2].str();
+    }
+    else
+    {
+        // This would be a code bug.
+        throw std::logic_error("Unsupported config: i_rxTarget=" + i_rxPath +
+                               " i_busType=" + i_busType.getString());
+    }
+
+    assert(!txPath.empty()); // just in case we missed something above
+
+    return txPath;
+}
+
+//------------------------------------------------------------------------------
+
 void HardwareCalloutResolution::resolve(ServiceData& io_sd) const
 {
     // Get the location code and entity path for this target.
@@ -65,6 +113,39 @@ void HardwareCalloutResolution::resolve(ServiceData& io_sd) const
     ffdc["Target"]       = entityPath;
     ffdc["Priority"]     = iv_priority.getRegistryString();
     ffdc["Guard Type"]   = guard.getString();
+    io_sd.addCalloutFFDC(ffdc);
+}
+
+//------------------------------------------------------------------------------
+
+void ConnectedCalloutResolution::resolve(ServiceData& io_sd) const
+{
+    // Get the chip target path from the root cause signature.
+    auto chipPath = __getRootCauseChipPath(io_sd);
+
+    // Get the endpoint target path for the receiving side of the bus.
+    auto rxPath = __getUnitPath(chipPath, iv_unitPath);
+
+    // Get the endpoint target path for the transfer side of the bus.
+    auto txPath = __getConnectedPath(rxPath, iv_busType);
+
+    // Callout the TX endpoint.
+    nlohmann::json txCallout;
+    txCallout["LocationCode"] = txPath;
+    txCallout["Priority"]     = iv_priority.getUserDataString();
+    io_sd.addCallout(txCallout);
+
+    // Guard the TX endpoint.
+    Guard txGuard = io_sd.addGuard(txPath, iv_guard);
+
+    // Add the callout FFDC to the service data.
+    nlohmann::json ffdc;
+    ffdc["Callout Type"] = "Connected Callout";
+    ffdc["Bus Type"]     = iv_busType.getString();
+    ffdc["RX Target"]    = rxPath;
+    ffdc["TX Target"]    = txPath;
+    ffdc["Priority"]     = iv_priority.getRegistryString();
+    ffdc["Guard Type"]   = txGuard.getString();
     io_sd.addCalloutFFDC(ffdc);
 }
 
@@ -247,6 +328,77 @@ TEST(Resolution, HardwareCallout)
         "Guard Type": "FATAL",
         "Priority": "medium_group_A",
         "Target": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0"
+    }
+])";
+    EXPECT_EQ(s, j.dump(4));
+}
+
+TEST(Resolution, ConnectedCallout)
+{
+    auto c1 = std::make_shared<ConnectedCalloutResolution>(
+        callout::BusType::SMP_BUS, iolink_str, callout::Priority::MED_A, true);
+
+    auto c2 = std::make_shared<ConnectedCalloutResolution>(
+        callout::BusType::OMI_BUS, ocmb_str, callout::Priority::MED_B, true);
+
+    auto c3 = std::make_shared<ConnectedCalloutResolution>(
+        callout::BusType::OMI_BUS, omi_str, callout::Priority::MED_C, true);
+
+    libhei::Chip chip{chip_str, 0xdeadbeef};
+    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHECKSTOP};
+    ServiceData sd{sig, true};
+
+    nlohmann::json j{};
+    std::string s{};
+
+    c1->resolve(sd);
+    c2->resolve(sd);
+    c3->resolve(sd);
+
+    // Callout list
+    j = sd.getCalloutList();
+    s = R"([
+    {
+        "LocationCode": "/proc1/pib/perv24/pauc0/iohs0/smpgroup0",
+        "Priority": "A"
+    },
+    {
+        "LocationCode": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0",
+        "Priority": "B"
+    },
+    {
+        "LocationCode": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0/ocmb0",
+        "Priority": "C"
+    }
+])";
+    EXPECT_EQ(s, j.dump(4));
+
+    // Callout FFDC
+    j = sd.getCalloutFFDC();
+    s = R"([
+    {
+        "Bus Type": "SMP_BUS",
+        "Callout Type": "Connected Callout",
+        "Guard Type": "FATAL",
+        "Priority": "medium_group_A",
+        "RX Target": "/proc0/pib/perv24/pauc0/iohs0/smpgroup0",
+        "TX Target": "/proc1/pib/perv24/pauc0/iohs0/smpgroup0"
+    },
+    {
+        "Bus Type": "OMI_BUS",
+        "Callout Type": "Connected Callout",
+        "Guard Type": "FATAL",
+        "Priority": "medium_group_B",
+        "RX Target": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0/ocmb0",
+        "TX Target": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0"
+    },
+    {
+        "Bus Type": "OMI_BUS",
+        "Callout Type": "Connected Callout",
+        "Guard Type": "FATAL",
+        "Priority": "medium_group_C",
+        "RX Target": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0",
+        "TX Target": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0/ocmb0"
     }
 ])";
     EXPECT_EQ(s, j.dump(4));
