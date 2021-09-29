@@ -365,6 +365,10 @@ uint32_t event(EventType i_event,
             eventName  = "org.open_power.Attn.Error.Fail";
             eventValid = true;
             break;
+        case EventType::PhalSbeChipop:
+            eventName  = "org.open_power.Processor.Error.SbeChipOpFailure";
+            eventValid = true;
+            break;
         default:
             eventValid = false;
             break;
@@ -495,6 +499,27 @@ void eventAttentionFail(int i_error)
     // Create log event with additional data and FFDC data
     event(EventType::AttentionFail, additionalData,
           createFFDCFiles(nullptr, 0));
+}
+
+/**
+ * Commit SBE timeout event to log
+ *
+ * Create an event log indicating an SBE operation timed out.
+ *
+ * @param proc - processor that encountered the error
+ * @return event log ID
+ */
+uint32_t eventSbeTimeout(uint32_t proc)
+{
+    trace<level::ERROR>("SBE timeout while getting TI info");
+
+    // report proc number in event log entry
+    std::map<std::string, std::string> additionalData;
+    additionalData.emplace("SRC6", std::to_string(proc << 16));
+
+    // create event with additional data and no ffdc
+    return event(EventType::SbeTimeout, additionalData,
+                 createFFDCFiles(nullptr, 0));
 }
 
 /**
