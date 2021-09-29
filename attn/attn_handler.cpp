@@ -4,6 +4,8 @@ extern "C"
 #include <libpdbg_sbe.h>
 }
 
+#include <libphal.h>
+
 #include <analyzer/analyzer_main.hpp>
 #include <attn/attention.hpp>
 #include <attn/attn_common.hpp>
@@ -46,6 +48,16 @@ int handleSpecial(Attention* i_attention);
 
 /** @brief Determine if attention is active and not masked */
 bool activeAttn(uint32_t i_val, uint32_t i_mask, uint32_t i_attn);
+
+/** @brief Handle phal sbe exception */
+bool phalSbeExceptionHandler(openpower::phal::exception::SbeError& e,
+                             uint32_t procNum);
+
+/** @brief Get static TI info data based on host state */
+void getStaticTiInfo(uint8_t*& tiInfoPtr);
+
+/** @brief Check if TI info data is valid */
+bool tiInfoValid(uint8_t* tiInfo);
 
 /**
  * @brief The main attention handler logic
@@ -258,144 +270,85 @@ int handleSpecial(Attention* i_attention)
     uint32_t tiInfoLen    = 0;                        // length of TI info data
     pdbg_target* attnProc = i_attention->getTarget(); // proc with attention
 
-    bool tiInfoStatic = false; // assume TI info was provided (not created)
+    bool tiInfoStatic  = false; // assume TI info was provided (not created)
+    bool sbeErrorFatal = false; // assume sbe is ok
 
-    if (attnProc != nullptr)
+    // need proc target to get dynamic TI info
+    if (nullptr != attnProc ||
+        PDBG_TARGET_ENABLED == pdbg_target_probe(attnProc))
     {
-        // The processor PIB target is required for get TI info chipop
-        char path[16];
-        sprintf(path, "/proc%d/pib", pdbg_target_index(attnProc));
-        pdbg_target* tiInfoTarget = pdbg_target_from_path(nullptr, path);
-
-        if (nullptr != tiInfoTarget)
+        try
         {
-            if (PDBG_TARGET_ENABLED == pdbg_target_probe(tiInfoTarget))
+            // get dynamic TI info
+            openpower::phal::sbe::getTiInfo(attnProc, &tiInfo, &tiInfoLen);
+        }
+        catch (openpower::phal::exception::SbeError& e)
+        {
+            // library threw an exception
+            uint32_t procNum = pdbg_target_index(attnProc);
+            sbeErrorFatal    = phalSbeExceptionHandler(e, procNum);
+            rc               = RC_NOT_HANDLED;
+        }
+    }
+
+    // if no sbe error then handle special attention
+    if (false == sbeErrorFatal)
+    {
+        // dynamic TI info is not available
+        if (nullptr == tiInfo)
+        {
+            trace<level::INFO>("TI info data ptr is invalid");
+            getStaticTiInfo(tiInfo);
+            tiInfoStatic = true;
+        }
+
+        if (true == tiInfoValid(tiInfo))
+        {
+            // TI info is valid handle TI if support enabled
+            if (true == (i_attention->getConfig()->getFlag(enTerminate)))
             {
-                sbe_mpipl_get_ti_info(tiInfoTarget, &tiInfo, &tiInfoLen);
+                // Call TI special attention handler
+                rc = tiHandler((TiDataArea*)tiInfo);
+            }
+        }
+        else
+        {
+            trace<level::INFO>("TI info NOT valid");
 
-                // If TI info not available use default based on host state
-                if (nullptr == tiInfo)
+            // if configured to handle TI as default special attention
+            if (i_attention->getConfig()->getFlag(dfltTi))
+            {
+                // TI handling may be disabled
+                if (true == (i_attention->getConfig()->getFlag(enTerminate)))
                 {
-                    trace<level::INFO>("TI info data ptr is invalid");
-
-                    util::dbus::HostRunningState runningState =
-                        util::dbus::hostRunningState();
-
-                    std::string stateString = "host state unknown";
-
-                    if ((util::dbus::HostRunningState::Started ==
-                         runningState) ||
-                        (util::dbus::HostRunningState::Unknown == runningState))
-                    {
-                        if (util::dbus::HostRunningState::Started ==
-                            runningState)
-                        {
-                            stateString = "host started";
-                        }
-                        tiInfo = (uint8_t*)defaultPhypTiInfo;
-                    }
-                    else
-                    {
-                        stateString = "host not started";
-                        tiInfo      = (uint8_t*)defaultHbTiInfo;
-                    }
-
-                    // trace host state
-                    trace<level::INFO>(stateString.c_str());
-
-                    tiInfoStatic = true; // using our TI info
+                    // Call TI special attention handler
+                    rc = tiHandler((TiDataArea*)tiInfo);
+                }
+            }
+            // configured to handle breakpoint as default special attention
+            else
+            {
+                // breakpoint handling may be disabled
+                if (true == (i_attention->getConfig()->getFlag(enBreakpoints)))
+                {
+                    // Call the breakpoint special attention handler
+                    rc = bpHandler();
                 }
             }
         }
-    }
 
-    bool tiInfoValid = false; // TI area data not valid or not available
-
-    // If TI area exists and is marked valid we can assume TI occurred
-    if ((nullptr != tiInfo) && (0 != tiInfo[0]))
-    {
-        TiDataArea* tiDataArea = (TiDataArea*)tiInfo;
-
-        std::stringstream ss; // string stream object for tracing
-        std::string strobj;   // string object for tracing
-
-        // trace a few known TI data area values
-        ss.str(std::string()); // empty the stream
-        ss.clear();            // clear the stream
-        ss << "TI data command = 0x" << std::setw(2) << std::setfill('0')
-           << std::hex << (int)tiDataArea->command;
-        strobj = ss.str();
-        trace<level::INFO>(strobj.c_str());
-
-        // Another check for valid TI Info since it has been seen that
-        // tiInfo[0] != 0 but TI info is not valid
-        if (0xa1 == tiDataArea->command)
+        // release TI data buffer if not ours
+        if (false == tiInfoStatic)
         {
-            tiInfoValid = true;
-
-            // trace some more data since TI info appears valid
-            ss.str(std::string()); // empty the stream
-            ss.clear();            // clear the stream
-            ss << "TI data term-type = 0x" << std::setw(2) << std::setfill('0')
-               << std::hex << (int)tiDataArea->hbTerminateType;
-            strobj = ss.str();
-            trace<level::INFO>(strobj.c_str());
-
-            ss.str(std::string()); // empty the stream
-            ss.clear();            // clear the stream
-            ss << "TI data SRC format = 0x" << std::setw(2) << std::setfill('0')
-               << std::hex << (int)tiDataArea->srcFormat;
-            strobj = ss.str();
-            trace<level::INFO>(strobj.c_str());
-
-            ss.str(std::string()); // empty the stream
-            ss.clear();            // clear the stream
-            ss << "TI data source = 0x" << std::setw(2) << std::setfill('0')
-               << std::hex << (int)tiDataArea->source;
-            strobj = ss.str();
-            trace<level::INFO>(strobj.c_str());
-
-            if (true == (i_attention->getConfig()->getFlag(enTerminate)))
+            // sanity check
+            if (nullptr != tiInfo)
             {
-                // Call TI special attention handler
-                rc = tiHandler(tiDataArea);
+                free(tiInfo);
             }
         }
     }
 
-    // TI area is available but was not valid data
-    if (false == tiInfoValid)
-    {
-        trace<level::INFO>("TI info NOT valid");
-
-        // if configured to handle TI as default special attention
-        if (i_attention->getConfig()->getFlag(dfltTi))
-        {
-            // TI handling may be disabled
-            if (true == (i_attention->getConfig()->getFlag(enTerminate)))
-            {
-                // Call TI special attention handler
-                rc = tiHandler(nullptr);
-            }
-        }
-        // breakpoint is default special attention when TI info NOT valid
-        else
-        {
-            // breakpoint handling may be disabled
-            if (true == (i_attention->getConfig()->getFlag(enBreakpoints)))
-            {
-                // Call the breakpoint special attention handler
-                rc = bpHandler();
-            }
-        }
-    }
-
-    // release TI data buffer
-    if ((nullptr != tiInfo) && (false == tiInfoStatic))
-    {
-        free(tiInfo);
-    }
-
+    // trace non-successful exit condition
     if (RC_SUCCESS != rc)
     {
         trace<level::INFO>("Special attn not handled");
@@ -463,4 +416,129 @@ bool activeAttn(uint32_t i_val, uint32_t i_mask, uint32_t i_attn)
 
     return rc;
 }
+
+/**
+ * @brief Handle phal sbe exception
+ *
+ * @param[in] e - exception object
+ * @param[in] procNum - processor number associated with sbe exception
+ * @return true if exception consider fatal, else false
+ */
+bool phalSbeExceptionHandler(openpower::phal::exception::SbeError& e,
+                             uint32_t procNum)
+{
+    bool exceptionFatal = false; // assume non-fatal exception
+
+    // trace exception details
+    std::string traceMsg = std::string(e.what());
+    trace<level::ERROR>(traceMsg.c_str());
+
+    // Handle SBE timeout error
+    if (e.errType() == openpower::phal::exception::SBE_CMD_TIMEOUT)
+    {
+        // log SBE timeout event
+        uint32_t pelId = eventSbeTimeout(procNum);
+
+        // request sbe dump
+        requestDump(DumpParameters{pelId, 0, DumpType::SBE});
+
+        // request host transition
+        util::dbus::transitionHost(util::dbus::HostState::Quiesce);
+
+        exceptionFatal = true;
+    }
+
+    return exceptionFatal;
+}
+
+/**
+ * @brief Get static TI info data based on host state
+ *
+ * @param[out] tiInfo - pointer to static TI info data
+ */
+void getStaticTiInfo(uint8_t*& tiInfo)
+{
+    util::dbus::HostRunningState runningState = util::dbus::hostRunningState();
+
+    // assume host state is unknown
+    std::string stateString = "host state unknown";
+
+    if ((util::dbus::HostRunningState::Started == runningState) ||
+        (util::dbus::HostRunningState::Unknown == runningState))
+    {
+        if (util::dbus::HostRunningState::Started == runningState)
+        {
+            stateString = "host started";
+        }
+        tiInfo = (uint8_t*)defaultPhypTiInfo;
+    }
+    else
+    {
+        stateString = "host not started";
+        tiInfo      = (uint8_t*)defaultHbTiInfo;
+    }
+
+    // trace host state
+    trace<level::INFO>(stateString.c_str());
+}
+
+/**
+ * @brief Check if TI info data is valid
+ *
+ * @param[in] tiInfo - pointer to TI info data
+ * @return true if TI info data is valid, else false
+ */
+bool tiInfoValid(uint8_t* tiInfo)
+{
+    bool tiInfoValid = false; // assume TI info invalid
+
+    // TI info data[0] non-zero indicates TI info valid (usually)
+    if ((nullptr != tiInfo) && (0 != tiInfo[0]))
+    {
+        TiDataArea* tiDataArea = (TiDataArea*)tiInfo;
+
+        std::stringstream ss; // string stream object for tracing
+        std::string strobj;   // string object for tracing
+
+        // trace a few known TI data area values
+        ss.str(std::string()); // empty the stream
+        ss.clear();            // clear the stream
+        ss << "TI data command = 0x" << std::setw(2) << std::setfill('0')
+           << std::hex << (int)tiDataArea->command;
+        strobj = ss.str();
+        trace<level::INFO>(strobj.c_str());
+
+        // Another check for valid TI Info since it has been seen that
+        // tiInfo[0] != 0 but TI info is not valid
+        if (0xa1 == tiDataArea->command)
+        {
+            tiInfoValid = true;
+
+            // trace some more data since TI info appears valid
+            ss.str(std::string()); // empty the stream
+            ss.clear();            // clear the stream
+            ss << "TI data term-type = 0x" << std::setw(2) << std::setfill('0')
+               << std::hex << (int)tiDataArea->hbTerminateType;
+            strobj = ss.str();
+            trace<level::INFO>(strobj.c_str());
+
+            ss.str(std::string()); // empty the stream
+            ss.clear();            // clear the stream
+            ss << "TI data SRC format = 0x" << std::setw(2) << std::setfill('0')
+               << std::hex << (int)tiDataArea->srcFormat;
+            strobj = ss.str();
+            trace<level::INFO>(strobj.c_str());
+
+            ss.str(std::string()); // empty the stream
+            ss.clear();            // clear the stream
+            ss << "TI data source = 0x" << std::setw(2) << std::setfill('0')
+               << std::hex << (int)tiDataArea->source;
+            strobj = ss.str();
+            trace<level::INFO>(strobj.c_str());
+        }
+    }
+
+    return tiInfoValid;
+}
+
 } // namespace attn
