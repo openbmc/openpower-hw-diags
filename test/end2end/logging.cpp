@@ -48,4 +48,10 @@ uint32_t eventVital()
     return 0;
 }
 
+uint32_t eventSbeTimeout(uint32_t proc)
+{
+    std::cout << "event: sbe timeout proc " << proc << std::endl;
+    return 0;
+}
+
 } // namespace attn
