@@ -62,6 +62,7 @@ pel_src = files(
 attn_deps = [
     libgpiod,
     libpdbg_dep,
+    libphal_dep,
     sdbusplus_dep,
 ]
 
