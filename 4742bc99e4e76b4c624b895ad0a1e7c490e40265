@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df6b7b72_ba49dfd4",
+        "filename": "analyzer/ras-data/data/ras-data-p10-10.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2021-10-07T19:24:56Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 742,
+        "startChar": 0,
+        "endLine": 745,
+        "endChar": 10
+      },
+      "revId": "4742bc99e4e76b4c624b895ad0a1e7c490e40265",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
