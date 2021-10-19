@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "21b788e3_827641bb",
+        "filename": "attn/attn_logging.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 521,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-10-19T21:38:44Z",
+      "side": 1,
+      "message": "Done. Pushed missing change set. Enum was changed in latest change set.",
+      "parentUuid": "7995dc9e_3eca0582",
+      "range": {
+        "startLine": 521,
+        "startChar": 28,
+        "endLine": 521,
+        "endChar": 38
+      },
+      "revId": "4282ec0c86195d25ec76d9c3707ccbeccb484a9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51389438_58f0e0fb",
         "filename": "attn/attn_logging.hpp",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3307fc29_21ed762d",
+        "filename": "attn/attn_logging.hpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-10-19T21:38:44Z",
+      "side": 1,
+      "message": "Done. Pushed missing change set. Function name was changed in latest change set.",
+      "parentUuid": "51389438_58f0e0fb",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 24
+      },
+      "revId": "4282ec0c86195d25ec76d9c3707ccbeccb484a9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73ab99ff_a51a33a9",
         "filename": "test/end2end/logging.cpp",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2021-10-19T19:44:22Z",
       "side": 1,
       "message": "rename here too possibly?",
+      "range": {
+        "startLine": 51,
+        "startChar": 9,
+        "endLine": 51,
+        "endChar": 24
+      },
+      "revId": "4282ec0c86195d25ec76d9c3707ccbeccb484a9b",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aed46f09_16fca5e6",
+        "filename": "test/end2end/logging.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2021-10-19T21:38:44Z",
+      "side": 1,
+      "message": "Done. Pushed missing change set. Function name was changed in latest change set.",
+      "parentUuid": "73ab99ff_a51a33a9",
       "range": {
         "startLine": 51,
         "startChar": 9,
