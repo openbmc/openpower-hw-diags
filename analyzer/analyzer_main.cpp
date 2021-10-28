@@ -155,6 +155,35 @@ bool analyzeHardware(attn::DumpParameters& o_dumpParameters)
 
 //------------------------------------------------------------------------------
 
+bool analyzeCheckstopAttn(attn::DumpParameters& o_dumpParameters)
+{
+    // TODO: Will need to implement. For now call the existing function to avoid
+    //       interruption in support.
+    return analyzeHardware(o_dumpParameters);
+}
+
+//------------------------------------------------------------------------------
+
+void analyzeRecoverableAttn()
+{
+    // TODO: Will need to implement. For now call the existing function to avoid
+    //       interruption in support.
+    attn::DumpParameters dumpParameters;
+    analyzeHardware(dumpParameters);
+}
+
+//------------------------------------------------------------------------------
+
+void manualAnalysis()
+{
+    // TODO: Will need to implement. For now call the existing function to avoid
+    //       interruption in support.
+    attn::DumpParameters dumpParameters;
+    analyzeHardware(dumpParameters);
+}
+
+//------------------------------------------------------------------------------
+
 /**
  * @brief Get error isolator build information
  *

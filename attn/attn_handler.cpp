@@ -244,7 +244,7 @@ int handleCheckstop(Attention* i_attention)
         // Look for any attentions found in hardware. This will generate and
         // commit a PEL if any errors are found.
         DumpParameters dumpParameters;
-        if (true != analyzer::analyzeHardware(dumpParameters))
+        if (true != analyzer::analyzeCheckstopAttn(dumpParameters))
         {
             rc = RC_ANALYZER_ERROR;
         }
