@@ -60,7 +60,7 @@ int main(int argc, char* argv[])
         // Either analyze (application mode) or daemon mode
         if (true == getCliOption(argv, argv + argc, "--analyze"))
         {
-            rc = analyzer::analyzeHardware(); // analyze hardware
+            analyzer::manualAnalysis(); // analyze hardware
         }
         // daemon mode
         else
