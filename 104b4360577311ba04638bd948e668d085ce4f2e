@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7d00808_63ec1b7e",
+        "filename": "analyzer/filter-root-cause.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-10-29T17:05:31Z",
+      "side": 1,
+      "message": "!\u003d",
+      "range": {
+        "startLine": 280,
+        "startChar": 42,
+        "endLine": 280,
+        "endChar": 44
+      },
+      "revId": "104b4360577311ba04638bd948e668d085ce4f2e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95b2703f_8b8bf42a",
+        "filename": "analyzer/filter-root-cause.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-10-29T17:05:31Z",
+      "side": 1,
+      "message": "!\u003d",
+      "range": {
+        "startLine": 303,
+        "startChar": 38,
+        "endLine": 303,
+        "endChar": 40
+      },
+      "revId": "104b4360577311ba04638bd948e668d085ce4f2e",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
