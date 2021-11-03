@@ -8,6 +8,8 @@ extern "C"
 #include <libphal.H>
 #endif
 
+#include <config.h>
+
 #include <analyzer/analyzer_main.hpp>
 #include <attn/attention.hpp>
 #include <attn/attn_common.hpp>
