@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16c3f35e_2b62ddf1",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-11-03T16:22:58Z",
+      "side": 1,
+      "message": "should be included before line 7",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 19
+      },
+      "revId": "350e22e0143316cdf677923470b3ef6edce7e8c5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
