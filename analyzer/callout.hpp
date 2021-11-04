@@ -181,6 +181,43 @@ class ClockType
 inline const ClockType ClockType::OSC_REF_CLOCK_0{"OSC_REF_CLOCK_0"};
 inline const ClockType ClockType::OSC_REF_CLOCK_1{"OSC_REF_CLOCK_1"};
 
+/** @brief Container class for guard service actions. */
+class GuardType
+{
+  public:
+    /** Do not guard. */
+    static const GuardType NONE;
+
+    /** Guard on fatal error (cannot recover resource). */
+    static const GuardType FATAL;
+
+    /** Guard on non-fatal error (can recover resource). */
+    static const GuardType NON_FATAL;
+
+  private:
+    /**
+     * @brief Constructor from components.
+     * @param i_string The string representation of the procedure used for
+     *                 callouts.
+     */
+    explicit GuardType(const std::string& i_string) : iv_string(i_string) {}
+
+  private:
+    /** The string representation of the procedure used for callouts. */
+    const std::string iv_string;
+
+  public:
+    /** iv_string accessor */
+    std::string getString() const
+    {
+        return iv_string;
+    }
+};
+
+inline const GuardType GuardType::NONE{"NONE"};
+inline const GuardType GuardType::FATAL{"FATAL"};
+inline const GuardType GuardType::NON_FATAL{"NON_FATAL"};
+
 } // namespace callout
 
 } // namespace analyzer
