@@ -22,6 +22,30 @@
       "revId": "da8719f0fbd92920cdfcd62c60240ad20c75f5e3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4ef2576_1b797081",
+        "filename": "util/pdbg_callback.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2021-12-03T15:08:07Z",
+      "side": 1,
+      "message": "Fixed in new patch.",
+      "parentUuid": "f5fe49d3_9e3d0cbe",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 14
+      },
+      "revId": "da8719f0fbd92920cdfcd62c60240ad20c75f5e3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
