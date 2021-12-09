@@ -38,6 +38,7 @@ tests = [
   'bin_stream_test',
   'ffdc_file_test',
   'resolution_test',
+  'pdbg_dts_test',
 ]
 
 analyzer_src = files(
@@ -49,7 +50,11 @@ foreach t : tests
          executable(t.underscorify(),
                     [ files(t + '.cpp'), pdbg_test_dtb, analyzer_src ],
                     link_with : [ util_lib ],
-                    dependencies : [ libhei_dep, gtest_dep ],
+                    dependencies : [
+                      libpdbg_dep,
+                      libhei_dep,
+                      gtest_dep
+                    ],
                     cpp_args : test_arg,
                     include_directories : incdir),
          env : [ 'PDBG_DTB=' + pdbg_test_dtb.full_path() ])
