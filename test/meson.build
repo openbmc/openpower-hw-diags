@@ -9,6 +9,7 @@ tests = [
   'bin_stream_test',
   'ffdc_file_test',
   'resolution_test',
+  'pdbg_dts_test',
 ]
 
 analyzer_src = files(
@@ -21,7 +22,12 @@ if gtest.found()
     foreach t : tests
         test(t, executable(t.underscorify(), [ t + '.cpp', analyzer_src ],
                            link_with : [ util_lib ],
-                           dependencies : [ libhei_dep, gtest ],
+                           dependencies : [ 
+                            dependency('phosphor-logging'),
+                            libpdbg_dep,
+                            libhei_dep,
+                            gtest
+                           ],
                            cpp_args : test_arg,
                            include_directories : incdir))
     endforeach
