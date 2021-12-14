@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86e18bda_bdeb01d7",
+        "filename": "test/pdbg_dts_test.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2021-12-14T21:16:27Z",
+      "side": 1,
+      "message": "chipId",
+      "range": {
+        "startLine": 32,
+        "startChar": 24,
+        "endLine": 32,
+        "endChar": 30
+      },
+      "revId": "b273598a24f6fae4972668cf879cb4f7883cc641",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": true
+    }
+  ]
+}
