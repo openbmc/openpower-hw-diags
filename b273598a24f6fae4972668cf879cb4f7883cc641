@@ -22,6 +22,30 @@
       "revId": "b273598a24f6fae4972668cf879cb4f7883cc641",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b6b99d4_f5e349c4",
+        "filename": "test/pdbg_dts_test.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2021-12-16T19:52:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "86e18bda_bdeb01d7",
+      "range": {
+        "startLine": 32,
+        "startChar": 24,
+        "endLine": 32,
+        "endChar": 30
+      },
+      "revId": "b273598a24f6fae4972668cf879cb4f7883cc641",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4",
+      "unresolved": false
     }
   ]
 }
