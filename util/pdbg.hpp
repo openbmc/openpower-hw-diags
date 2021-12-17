@@ -1,6 +1,9 @@
 #pragma once
 
+extern "C"
+{
 #include <libpdbg.h>
+}
 
 #include <analyzer/callout.hpp>
 
@@ -144,6 +147,12 @@ std::string getPhysDevPath(pdbg_target* trgt);
  *         environments. If they do not exist, an empty vector is returned.
  */
 std::vector<uint8_t> getPhysBinPath(pdbg_target* trgt);
+
+/**
+ * @brief  Uses an SBE chip-op to query if there has been an LPC timeout.
+ * @return True, if there was an LPC timeout. False, otherwise.
+ */
+bool queryLpcTimeout(pdbg_target* target);
 
 } // namespace pdbg
 

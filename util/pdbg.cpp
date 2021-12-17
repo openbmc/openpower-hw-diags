@@ -1,6 +1,11 @@
 #include <assert.h>
 #include <config.h>
 
+extern "C"
+{
+#include <libpdbg_sbe.h>
+}
+
 #include <hei_main.hpp>
 #include <util/pdbg.hpp>
 #include <util/trace.hpp>
@@ -434,6 +439,24 @@ std::vector<uint8_t> getPhysBinPath(pdbg_target* target)
     }
 
     return binPath;
+}
+
+//------------------------------------------------------------------------------
+
+bool queryLpcTimeout(pdbg_target* target)
+{
+    // Must be a processor target.
+    assert(TYPE_PROC == getTrgtType(target));
+
+    uint32_t result = 0;
+    if (0 != sbe_lpc_timeout(util::pdbg::getPibTrgt(target), &result))
+    {
+        trace::err("sbe_lpc_timeout() failed: target=%s", getPath(target));
+        result = 0; // just in case
+    }
+
+    // 0 if no timeout, 1 if LPC timeout occurred.
+    return (0 != result);
 }
 
 //------------------------------------------------------------------------------
