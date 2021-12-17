@@ -1,3 +1,4 @@
+#include <analyzer/plugin/plugin.hpp>
 #include <analyzer/resolution.hpp>
 #include <util/pdbg.hpp>
 #include <util/trace.hpp>
@@ -123,7 +124,7 @@ pdbg_target* __getConnectedTarget(pdbg_target* i_rxTarget,
 
 //------------------------------------------------------------------------------
 
-void __calloutTarget(ServiceData& io_sd, pdbg_target* i_target,
+void __calloutTarget(ServiceData& io_servData, pdbg_target* i_target,
                      const callout::Priority& i_priority, bool i_guard)
 {
     nlohmann::json callout;
@@ -135,7 +136,7 @@ void __calloutTarget(ServiceData& io_sd, pdbg_target* i_target,
     // Check if guard info should be added.
     if (i_guard)
     {
-        auto guardType = io_sd.queryGuardPolicy();
+        auto guardType = io_servData.queryGuardPolicy();
 
         if (!(callout::GuardType::NONE == guardType))
         {
@@ -145,12 +146,13 @@ void __calloutTarget(ServiceData& io_sd, pdbg_target* i_target,
         }
     }
 
-    io_sd.addCallout(callout);
+    io_servData.addCallout(callout);
 }
 
 //------------------------------------------------------------------------------
 
-void __calloutBackplane(ServiceData& io_sd, const callout::Priority& i_priority)
+void __calloutBackplane(ServiceData& io_servData,
+                        const callout::Priority& i_priority)
 {
     // TODO: There isn't a device tree object for this. So will need to hardcode
     //       the location code for now. In the future, we will need a mechanism
@@ -161,18 +163,20 @@ void __calloutBackplane(ServiceData& io_sd, const callout::Priority& i_priority)
     callout["Priority"]     = i_priority.getUserDataString();
     callout["Deconfigured"] = false;
     callout["Guarded"]      = false;
-    io_sd.addCallout(callout);
+    io_servData.addCallout(callout);
 }
 
 //------------------------------------------------------------------------------
 
-void HardwareCalloutResolution::resolve(ServiceData& io_sd) const
+void HardwareCalloutResolution::resolve(const IsolationData&,
+                                        ServiceData& io_servData) const
 {
     // Get the target for the hardware callout.
-    auto target = __getUnitTarget(__getRootCauseChipTarget(io_sd), iv_unitPath);
+    auto target =
+        __getUnitTarget(__getRootCauseChipTarget(io_servData), iv_unitPath);
 
     // Add the actual callout to the service data.
-    __calloutTarget(io_sd, target, iv_priority, iv_guard);
+    __calloutTarget(io_servData, target, iv_priority, iv_guard);
 
     // Add the callout FFDC to the service data.
     nlohmann::json ffdc;
@@ -180,15 +184,16 @@ void HardwareCalloutResolution::resolve(ServiceData& io_sd) const
     ffdc["Target"]       = util::pdbg::getPhysDevPath(target);
     ffdc["Priority"]     = iv_priority.getRegistryString();
     ffdc["Guard"]        = iv_guard;
-    io_sd.addCalloutFFDC(ffdc);
+    io_servData.addCalloutFFDC(ffdc);
 }
 
 //------------------------------------------------------------------------------
 
-void ConnectedCalloutResolution::resolve(ServiceData& io_sd) const
+void ConnectedCalloutResolution::resolve(const IsolationData&,
+                                         ServiceData& io_servData) const
 {
     // Get the chip target from the root cause signature.
-    auto chipTarget = __getRootCauseChipTarget(io_sd);
+    auto chipTarget = __getRootCauseChipTarget(io_servData);
 
     // Get the endpoint target for the receiving side of the bus.
     auto rxTarget = __getUnitTarget(chipTarget, iv_unitPath);
@@ -197,7 +202,7 @@ void ConnectedCalloutResolution::resolve(ServiceData& io_sd) const
     auto txTarget = __getConnectedTarget(rxTarget, iv_busType);
 
     // Callout the TX endpoint.
-    __calloutTarget(io_sd, txTarget, iv_priority, iv_guard);
+    __calloutTarget(io_servData, txTarget, iv_priority, iv_guard);
 
     // Add the callout FFDC to the service data.
     nlohmann::json ffdc;
@@ -206,15 +211,16 @@ void ConnectedCalloutResolution::resolve(ServiceData& io_sd) const
     ffdc["Target"]       = util::pdbg::getPhysDevPath(txTarget);
     ffdc["Priority"]     = iv_priority.getRegistryString();
     ffdc["Guard"]        = iv_guard;
-    io_sd.addCalloutFFDC(ffdc);
+    io_servData.addCalloutFFDC(ffdc);
 }
 
 //------------------------------------------------------------------------------
 
-void BusCalloutResolution::resolve(ServiceData& io_sd) const
+void BusCalloutResolution::resolve(const IsolationData&,
+                                   ServiceData& io_servData) const
 {
     // Get the chip target from the root cause signature.
-    auto chipTarget = __getRootCauseChipTarget(io_sd);
+    auto chipTarget = __getRootCauseChipTarget(io_servData);
 
     // Get the endpoint target for the receiving side of the bus.
     auto rxTarget = __getUnitTarget(chipTarget, iv_unitPath);
@@ -223,14 +229,14 @@ void BusCalloutResolution::resolve(ServiceData& io_sd) const
     auto txTarget = __getConnectedTarget(rxTarget, iv_busType);
 
     // Callout the RX endpoint.
-    __calloutTarget(io_sd, rxTarget, iv_priority, iv_guard);
+    __calloutTarget(io_servData, rxTarget, iv_priority, iv_guard);
 
     // Callout the TX endpoint.
-    __calloutTarget(io_sd, txTarget, iv_priority, iv_guard);
+    __calloutTarget(io_servData, txTarget, iv_priority, iv_guard);
 
     // Callout everything else in between.
     // TODO: For P10 (OMI bus and XBUS), the callout is simply the backplane.
-    __calloutBackplane(io_sd, iv_priority);
+    __calloutBackplane(io_servData, iv_priority);
 
     // Add the callout FFDC to the service data.
     nlohmann::json ffdc;
@@ -240,18 +246,19 @@ void BusCalloutResolution::resolve(ServiceData& io_sd) const
     ffdc["TX Target"]    = util::pdbg::getPhysDevPath(txTarget);
     ffdc["Priority"]     = iv_priority.getRegistryString();
     ffdc["Guard"]        = iv_guard;
-    io_sd.addCalloutFFDC(ffdc);
+    io_servData.addCalloutFFDC(ffdc);
 }
 
 //------------------------------------------------------------------------------
 
-void ClockCalloutResolution::resolve(ServiceData& io_sd) const
+void ClockCalloutResolution::resolve(const IsolationData&,
+                                     ServiceData& io_servData) const
 {
     // Callout the clock target.
     // TODO: For P10, the callout is simply the backplane. Also, there are no
     //       clock targets in the device tree. So at the moment there is no
     //       guard support for clock targets.
-    __calloutBackplane(io_sd, iv_priority);
+    __calloutBackplane(io_servData, iv_priority);
 
     // Add the callout FFDC to the service data.
     // TODO: Add the target and guard type if guard is ever supported.
@@ -259,25 +266,40 @@ void ClockCalloutResolution::resolve(ServiceData& io_sd) const
     ffdc["Callout Type"] = "Clock Callout";
     ffdc["Clock Type"]   = iv_clockType.getString();
     ffdc["Priority"]     = iv_priority.getRegistryString();
-    io_sd.addCalloutFFDC(ffdc);
+    io_servData.addCalloutFFDC(ffdc);
 }
 
 //------------------------------------------------------------------------------
 
-void ProcedureCalloutResolution::resolve(ServiceData& io_sd) const
+void ProcedureCalloutResolution::resolve(const IsolationData&,
+                                         ServiceData& io_servData) const
 {
     // Add the actual callout to the service data.
     nlohmann::json callout;
     callout["Procedure"] = iv_procedure.getString();
     callout["Priority"]  = iv_priority.getUserDataString();
-    io_sd.addCallout(callout);
+    io_servData.addCallout(callout);
 
     // Add the callout FFDC to the service data.
     nlohmann::json ffdc;
     ffdc["Callout Type"] = "Procedure Callout";
     ffdc["Procedure"]    = iv_procedure.getString();
     ffdc["Priority"]     = iv_priority.getRegistryString();
-    io_sd.addCalloutFFDC(ffdc);
+    io_servData.addCalloutFFDC(ffdc);
+}
+
+//------------------------------------------------------------------------------
+
+void PluginResolution::resolve(const IsolationData& i_isoData,
+                               ServiceData& io_servData) const
+{
+    // Get the plugin function and call it.
+
+    auto chip = i_sd.getRootCause().getChip();
+
+    auto func = PluginMap::getSingleton().get(chip.getType(), iv_name);
+
+    func(iv_instance, chip, io_servData);
 }
 
 //------------------------------------------------------------------------------

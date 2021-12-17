@@ -1,6 +1,7 @@
 #pragma once
 
 #include <analyzer/service_data.hpp>
+#include <hei_isolation_data.hpp>
 
 namespace analyzer
 {
@@ -15,10 +16,13 @@ class Resolution
   public:
     /**
      * @brief Resolves the service actions required by this resolution.
-     * @param io_sd An object containing the service data collected during
-     *              hardware error analysis.
+     * @param i_isoData   An object containing the isolation data collected
+     *                    during hardware error analysis.
+     * @param io_servData An object containing the service data collected during
+     *                    hardware error analysis.
      */
-    virtual void resolve(ServiceData& io_sd) const = 0;
+    virtual void resolve(const libhei::IsolationData& i_isoData,
+                         ServiceData& io_servData) const = 0;
 };
 
 // Pure virtual destructor must be defined.
@@ -54,7 +58,8 @@ class HardwareCalloutResolution : public Resolution
     const bool iv_guard;
 
   public:
-    void resolve(ServiceData& io_sd) const override;
+    void resolve(const libhei::IsolationData& i_isoData,
+                 ServiceData& io_servData) const override;
 };
 
 /** @brief Resolution to callout a connected chip/target. */
@@ -94,7 +99,8 @@ class ConnectedCalloutResolution : public Resolution
     const bool iv_guard;
 
   public:
-    void resolve(ServiceData& io_sd) const override;
+    void resolve(const libhei::IsolationData& i_isoData,
+                 ServiceData& io_servData) const override;
 };
 
 /**
@@ -136,7 +142,8 @@ class BusCalloutResolution : public Resolution
     const bool iv_guard;
 
   public:
-    void resolve(ServiceData& io_sd) const override;
+    void resolve(const libhei::IsolationData& i_isoData,
+                 ServiceData& io_servData) const override;
 };
 
 /** @brief Resolves a clock callout service event. */
@@ -166,7 +173,8 @@ class ClockCalloutResolution : public Resolution
     const bool iv_guard;
 
   public:
-    void resolve(ServiceData& io_sd) const override;
+    void resolve(const libhei::IsolationData& i_isoData,
+                 ServiceData& io_servData) const override;
 };
 
 /** @brief Resolves a procedure callout service event. */
@@ -192,7 +200,39 @@ class ProcedureCalloutResolution : public Resolution
     const callout::Priority iv_priority;
 
   public:
-    void resolve(ServiceData& io_sd) const override;
+    void resolve(const libhei::IsolationData& i_isoData,
+                 ServiceData& io_servData) const override;
+};
+
+/**
+ * @brief Some service actions cannot be contained within the RAS data files.
+ *        This resolution class allows a predefined plugin function to be
+ *        called to do additional service action work.
+ */
+class PluginResolution : public Resolution
+{
+  public:
+    /**
+     * @brief Constructor from components.
+     * @param i_name     The name of the plugin.
+     * @param i_instance A plugin could be defined for multiple chip
+     *                   units/registers.
+     */
+    PluginResolution(const std::string& i_name, unsigned int i_instance) :
+        iv_name(i_name), iv_instance(i_instance)
+    {}
+
+  private:
+    /** The name of the plugin. */
+    const std::string iv_name;
+
+    /** Some plugins will define the same action for multiple instances of a
+     *  register (i.e. for each core on a processor). */
+    const unsigned int iv_instance;
+
+  public:
+    void resolve(const libhei::IsolationData& i_isoData,
+                 ServiceData& io_servData) const override;
 };
 
 /**
@@ -220,11 +260,12 @@ class ResolutionList : public Resolution
     }
 
     // Overloaded from parent.
-    void resolve(ServiceData& io_sd) const override
+    void resolve(const libhei::IsolationData& i_isoData,
+                 ServiceData& io_servData) const override
     {
         for (const auto& e : iv_list)
         {
-            e->resolve(io_sd);
+            e->resolve(i_isoData, io_servData);
         }
     }
 };

@@ -161,14 +161,14 @@ uint32_t analyzeHardware(AnalysisType i_type, attn::DumpParameters& o_dump)
             {
                 // Resolve the root cause attention.
                 RasDataParser rasData{};
-                rasData.getResolution(rootCause)->resolve(servData);
+                rasData.getResolution(rootCause)->resolve(isoData, servData);
             }
             else
             {
                 // Analysis failed so apply the Level 2 Support resolution.
                 ProcedureCalloutResolution res{callout::Procedure::NEXTLVL,
                                                callout::Priority::HIGH};
-                res.resolve(servData);
+                res.resolve(isoData, servData);
             }
         }
 
