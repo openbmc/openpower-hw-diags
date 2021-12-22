@@ -2,3 +2,4 @@
 /build
 /subprojects/googletest
 /subprojects/libhei
+/subprojects/phosphor-logging
