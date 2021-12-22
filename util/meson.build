@@ -13,6 +13,7 @@ util_src = files(
 util_deps = [
     libhei_dep,
     libpdbg_dep,
+    phosphor_logging_dep,
 ]
 
 if get_option('phal').enabled()

@@ -56,6 +56,9 @@ incdir = include_directories('.')
 # default to the subproject.
 libhei_dep = dependency('hei', fallback : ['libhei', 'libhei_dep'])
 
+phosphor_logging_dep = dependency('phosphor-logging',
+    fallback: ['phosphor-logging', 'phosphor_logging_dep'])
+
 sdbusplus_dep       = dependency('sdbusplus', version : '>=1.0')
 dbus_interfaces_dep = dependency('phosphor-dbus-interfaces')
 
