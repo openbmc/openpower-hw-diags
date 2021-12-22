@@ -3,6 +3,8 @@
 #include <inttypes.h>
 #include <stdio.h>
 
+#include <phosphor-logging/lg2.hpp>
+
 #include <cstdarg>
 
 #ifndef TEST_TRACE
