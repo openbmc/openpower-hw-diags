@@ -83,6 +83,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "39a8f5fc_d08ea1cf",
+        "filename": "meson_options.txt",
+        "patchSetId": 20
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-01-13T15:22:55Z",
+      "side": 1,
+      "message": "I will change it back.",
+      "parentUuid": "92053f5e_e67bcb9a",
+      "range": {
+        "startLine": 4,
+        "startChar": 41,
+        "endLine": 4,
+        "endChar": 48
+      },
+      "revId": "e1586e01b5abf991f881ffee821dc8e02518c604",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e75808b6_3e4ffff0",
