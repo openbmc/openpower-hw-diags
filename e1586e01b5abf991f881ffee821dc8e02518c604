@@ -223,6 +223,30 @@
       },
       "revId": "e1586e01b5abf991f881ffee821dc8e02518c604",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "57cd614a_9f9e259c",
+        "filename": "test/pdbg_dts_test.cpp",
+        "patchSetId": 20
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-01-14T06:46:39Z",
+      "side": 1,
+      "message": "Used fapi position instead.",
+      "parentUuid": "0cd84568_b10dfb44",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 70
+      },
+      "revId": "e1586e01b5abf991f881ffee821dc8e02518c604",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
