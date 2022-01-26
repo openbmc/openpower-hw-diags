@@ -1,4 +1,5 @@
 #include <attn/attn_config.hpp>
+#include <util/trace.hpp>
 
 namespace attn
 {

@@ -7,6 +7,7 @@
 #include <attn/attn_logging.hpp>
 #include <attn/pel/pel_minimal.hpp>
 #include <phosphor-logging/log.hpp>
+#include <util/trace.hpp>
 
 namespace attn
 {
@@ -69,11 +70,9 @@ util::FFDCFile createFFDCRawFile(void* i_buffer, size_t i_size)
     size_t numBytes = write(fd, static_cast<char*>(i_buffer), i_size);
     if (i_size != numBytes)
     {
-        std::stringstream traceMsg;
-        traceMsg << file.getPath().c_str() << " only " << (int)numBytes
-                 << " of " << (int)i_size << " bytes written";
-        auto strobj = traceMsg.str();
-        trace<level::ERROR>(strobj.c_str());
+        // TODO: Make sure file.getPath() not return null pointer.
+        trace::err("%s only %d of %d bytes written", file.getPath().c_str(),
+                   (int)numBytes, (int)i_size);
     }
 
     lseek(fd, 0, SEEK_SET);
@@ -110,11 +109,9 @@ util::FFDCFile createFFDCTraceFile(const std::vector<std::string>& lines)
         size_t numBytes = write(fd, buffer.c_str(), buffer.size());
         if (buffer.size() != numBytes)
         {
-            std::stringstream traceMsg;
-            traceMsg << file.getPath().c_str() << " only " << (int)numBytes
-                     << " of " << (int)buffer.size() << " bytes written";
-            auto strobj = traceMsg.str();
-            trace<level::ERROR>(strobj.c_str());
+            // TODO: Make sure file.getPath() not return null pointer.
+            trace::err("%s only %d of %d bytes written", file.getPath().c_str(),
+                       (int)numBytes, (int)buffer.size());
         }
     }
 
@@ -155,9 +152,9 @@ void createFFDCTraceFiles(std::vector<util::FFDCFile>& i_files)
         }
         catch (const std::exception& e)
         {
-            trace<level::INFO>("createFFDCTraceFiles exception");
+            trace::inf("createFFDCTraceFiles exception");
             std::string traceMsg = std::string(e.what(), maxTraceLen);
-            trace<level::INFO>(traceMsg.c_str());
+            trace::inf(traceMsg.c_str());
         }
     }
 }
@@ -419,7 +416,7 @@ uint32_t event(EventType i_event,
                     traceMsg << "Error reading event log: " << (int)numBytes
                              << " of " << (int)buffer.size() << " bytes read";
                     auto strobj = traceMsg.str();
-                    trace<level::ERROR>(strobj.c_str());
+                    trace::err(strobj.c_str());
                 }
                 else
                 {
@@ -483,8 +480,7 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
         }
     }
 
-    std::string traceMsg = "TI info size = " + std::to_string(tiInfoSize);
-    trace<level::INFO>(traceMsg.c_str());
+    trace::inf("TI info size = %u", tiInfoSize);
 
     event(EventType::Terminate, i_additionalData,
           createFFDCFiles(i_tiInfoData, tiInfoSize));
@@ -527,7 +523,7 @@ void eventAttentionFail(int i_error)
  */
 void eventPhalSbeChipop(uint32_t proc)
 {
-    trace<level::ERROR>("SBE error while getting TI info");
+    trace::err("SBE error while getting TI info");
 
     // report proc number in event log entry
     std::map<std::string, std::string> additionalData;

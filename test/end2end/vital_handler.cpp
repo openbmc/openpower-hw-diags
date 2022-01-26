@@ -11,12 +11,12 @@ int handleVital(Attention* i_attention)
     int rc = RC_SUCCESS;
 
     // trace message
-    trace<level::INFO>("Vital handler");
+    trace::inf("Vital handler");
 
     // sanity check
     if (nullptr == i_attention)
     {
-        trace<level::INFO>("attention type is null");
+        trace::inf("attention type is null");
         rc = RC_NOT_HANDLED;
     }
 

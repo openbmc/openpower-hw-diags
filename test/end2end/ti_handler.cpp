@@ -7,7 +7,7 @@ namespace attn
 void tiHandler()
 {
     // trace message
-    trace<level::INFO>("TI handler");
+    trace::inf("TI handler");
 }
 
 } // namespace attn
