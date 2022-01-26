@@ -16,13 +16,6 @@ constexpr auto pathLogging   = "/xyz/openbmc_project/logging";
 constexpr auto levelPelError = "xyz.openbmc_project.Logging.Entry.Level.Error";
 constexpr auto eventPelTerminate = "xyz.open_power.Attn.Error.Terminate";
 
-/** @brief Logging level types */
-enum level
-{
-    INFO,
-    ERROR
-};
-
 /** @brief Logging event types */
 enum class EventType
 {
@@ -36,10 +29,6 @@ enum class EventType
 
 /** @brief Maximum length of a single trace event message */
 static const size_t trace_msg_max_len = 255;
-
-/** @brief Create trace message template */
-template <level L>
-void trace(const char* i_message);
 
 /** @brief Commit special attention TI event to log */
 void eventTerminate(std::map<std::string, std::string> i_additionalData,
