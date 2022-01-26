@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+
+use FindBin qw($RealBin);
+use FindBin qw($RealScript);
+
+use Data::Dumper;
+
+#-------------------------------------------------------------------------------
+
+my $git_root = `git rev-parse --show-toplevel`;
+die if ( $? );
+chomp $git_root;
+
+my @tmp = split( /\//, $git_root );
+
+my $project = pop @tmp;
+my $sb_root = join( '/', @tmp );
+
+my $exp_wp     = "export WORKSPACE=\"$sb_root\"";
+my $exp_ut_pkg = "export UNIT_TEST_PKG=\"$project\"";
+my $ut_cmd     = "\"$sb_root/openbmc-build-scripts/run-unit-test-docker.sh\"";
+
+system "git add $git_root";
+
+#system "$exp_wp && $exp_ut_pkg && sudo -E $ut_cmd && echo 'SUCCESS'";
+system "$exp_wp && $exp_ut_pkg && nice -n 15 $ut_cmd && echo 'SUCCESS'";
