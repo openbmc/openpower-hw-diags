@@ -1,6 +1,7 @@
 #include <attn_common.hpp>
 #include <attn_dbus.hpp>
 #include <attn_logging.hpp>
+#include <util/trace.hpp>
 
 #include <string>
 #include <vector>
@@ -66,18 +67,19 @@ int dbusMethod(const std::string& i_path, const std::string& i_interface,
         else
         {
             // This trace will be picked up in event log
-            trace<level::INFO>("dbusMethod service not found");
+            // TODO: Check with team if there is otherway to do this.
+            trace::inf("dbusMethod service not found");
             std::string traceMsgPath = std::string(i_path, maxTraceLen);
-            trace<level::INFO>(traceMsgPath.c_str());
+            trace::inf(traceMsgPath.c_str());
             std::string traceMsgIface = std::string(i_interface, maxTraceLen);
-            trace<level::INFO>(traceMsgIface.c_str());
+            trace::inf(traceMsgIface.c_str());
         }
     }
     catch (const sdbusplus::exception::SdBusError& e)
     {
-        trace<level::ERROR>("dbusMethod exception");
+        trace::err("dbusMethod exception");
         std::string traceMsg = std::string(e.what(), maxTraceLen);
-        trace<level::ERROR>(traceMsg.c_str());
+        trace::err(traceMsg.c_str());
     }
 
     return rc;
@@ -120,9 +122,9 @@ uint32_t createPel(const std::string& i_event,
         }
         catch (const sdbusplus::exception::SdBusError& e)
         {
-            trace<level::ERROR>("createPel exception");
+            trace::err("createPel exception");
             std::string traceMsg = std::string(e.what(), maxTraceLen);
-            trace<level::ERROR>(traceMsg.c_str());
+            trace::err(traceMsg.c_str());
         }
     }
 
@@ -141,11 +143,7 @@ void createPelRaw(const std::vector<uint8_t>& i_buffer)
     size_t numBytes = write(fd, i_buffer.data(), i_buffer.size());
     if (i_buffer.size() != numBytes)
     {
-        std::stringstream traceMsg;
-        traceMsg << filePath.c_str() << " only " << (int)numBytes << " of "
-                 << (int)i_buffer.size() << " bytes written";
-        auto strobj = traceMsg.str();
-        trace<level::ERROR>(strobj.c_str());
+        trace::err("%s only %d of %d bytes written", filePath.c_str(), (int)numBytes, (int)i_buffer.size());            
     }
 
     lseek(fd, 0, SEEK_SET);
@@ -174,9 +172,9 @@ void createPelRaw(const std::vector<uint8_t>& i_buffer)
         }
         catch (const sdbusplus::exception::SdBusError& e)
         {
-            trace<level::ERROR>("createPelRaw exception");
+            trace::err("createPelRaw exception");
             std::string traceMsg = std::string(e.what(), maxTraceLen);
-            trace<level::ERROR>(traceMsg.c_str());
+            trace::err(traceMsg.c_str());
         }
     }
 }
@@ -214,9 +212,9 @@ int getPel(const uint32_t i_pelId)
         }
         catch (const sdbusplus::exception::SdBusError& e)
         {
-            trace<level::ERROR>("getPel exception");
+            trace::err("getPel exception");
             std::string traceMsg = std::string(e.what(), maxTraceLen);
-            trace<level::ERROR>(traceMsg.c_str());
+            trace::err(traceMsg.c_str());
         }
     }
 
