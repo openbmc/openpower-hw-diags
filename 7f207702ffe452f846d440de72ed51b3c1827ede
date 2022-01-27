@@ -41,6 +41,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f24ba15_3ccd83f8",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-01-27T22:46:49Z",
+      "side": 1,
+      "message": "Fixed in next commit.",
+      "parentUuid": "4b27a932_7b858026",
+      "range": {
+        "startLine": 119,
+        "startChar": 27,
+        "endLine": 119,
+        "endChar": 43
+      },
+      "revId": "7f207702ffe452f846d440de72ed51b3c1827ede",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "61fb77dc_9670a6f3",
@@ -64,6 +88,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "904365fe_6c173f7c",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-01-27T22:46:49Z",
+      "side": 1,
+      "message": "Fixed in next commit.",
+      "parentUuid": "61fb77dc_9670a6f3",
+      "range": {
+        "startLine": 143,
+        "startChar": 31,
+        "endLine": 143,
+        "endChar": 48
+      },
+      "revId": "7f207702ffe452f846d440de72ed51b3c1827ede",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "759adf84_224277d4",
@@ -77,6 +125,30 @@
       "writtenOn": "2022-01-27T18:04:36Z",
       "side": 1,
       "message": "This can be replaced by a std::string since there is just a simple concatenation.",
+      "range": {
+        "startLine": 410,
+        "startChar": 8,
+        "endLine": 410,
+        "endChar": 29
+      },
+      "revId": "7f207702ffe452f846d440de72ed51b3c1827ede",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0ff54a71_92faa702",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-01-27T22:46:49Z",
+      "side": 1,
+      "message": "Fixed in next commit.",
+      "parentUuid": "759adf84_224277d4",
       "range": {
         "startLine": 410,
         "startChar": 8,
