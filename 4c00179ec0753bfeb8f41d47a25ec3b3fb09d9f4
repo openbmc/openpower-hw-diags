@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "62381a8d_a530468c",
+        "filename": "analyzer/service_data.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-01-28T22:11:26Z",
+      "side": 1,
+      "message": "Need to implement each of these.",
+      "revId": "4c00179ec0753bfeb8f41d47a25ec3b3fb09d9f4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4db5e3de_2cd2cbca",
+        "filename": "analyzer/service_data.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-01-28T22:11:26Z",
+      "side": 1,
+      "message": "This won\u0027t work because phosphor logging is expecting a string in the format of \u0027Ox12\u0027. Maybe a chance to start using fmt::format to make formatted strings.",
+      "range": {
+        "startLine": 167,
+        "startChar": 12,
+        "endLine": 167,
+        "endChar": 27
+      },
+      "revId": "4c00179ec0753bfeb8f41d47a25ec3b3fb09d9f4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a4ca50c_8248fbae",
+        "filename": "analyzer/service_data.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-01-28T22:11:26Z",
+      "side": 1,
+      "message": "This is a complete list from Hostboot. We won\u0027t use the entire list and we should be able to cut out anything we won\u0027t ever use.",
+      "revId": "4c00179ec0753bfeb8f41d47a25ec3b3fb09d9f4",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
