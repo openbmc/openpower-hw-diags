@@ -65,19 +65,6 @@ if get_option('phal').enabled()
   libphal_dep = cmplr.find_library('phal')
 endif
 
-# See if phosphor-logging is available, if not use test case logging code. This
-# allows for local builds outside of CI test sandbox.
-h = 'phosphor-logging/log.hpp'
-if cmplr.compiles('#include <@0@>'.format(h), name : '#include <@0@>'.format(h))
-    test_arg = []
-    phosphor_logging = true
-else
-    test_arg = [
-        '-DTEST_TRACE',
-    ]
-    phosphor_logging = false
-endif
-
 pthread = declare_dependency(link_args : '-pthread')
 lrt = declare_dependency(link_args : '-lrt')
 
@@ -145,7 +132,6 @@ if not no_listener_mode.disabled()
 else
     hwdiags_src  += files('main.cpp', 'cli.cpp', 'listener.cpp')
     hwdiags_deps += [ lrt, pthread ]
-    hwdiags_args += test_arg
 endif
 
 executable('openpower-hw-diags',

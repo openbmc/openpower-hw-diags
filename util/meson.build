@@ -20,6 +20,5 @@ endif
 
 # Compiler arguments.
 util_args = [
-    test_arg,
 ]
 
