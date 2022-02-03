@@ -43,6 +43,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "e2053c57_263a951e",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-02-03T15:50:18Z",
+      "side": 1,
+      "message": "Build not able to resolve the header where those values are defined. I think that header is not exported/installed.",
+      "parentUuid": "82a8e8a4_fbddc52c",
+      "range": {
+        "startLine": 306,
+        "startChar": 59,
+        "endLine": 306,
+        "endChar": 65
+      },
+      "revId": "be38ae32c7242d876a5e8062198f0990172d81cd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cbf4fb80_1c6ed0ec",
         "filename": "attn/attn_handler.cpp",
         "patchSetId": 2
@@ -54,6 +78,30 @@
       "writtenOn": "2022-02-01T21:36:30Z",
       "side": 1,
       "message": "use `trace::err` from util/trace.hpp",
+      "range": {
+        "startLine": 467,
+        "startChar": 4,
+        "endLine": 467,
+        "endChar": 23
+      },
+      "revId": "be38ae32c7242d876a5e8062198f0990172d81cd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f2821417_3030771f",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 467,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-02-03T15:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbf4fb80_1c6ed0ec",
       "range": {
         "startLine": 467,
         "startChar": 4,
@@ -81,6 +129,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6707b208_0419d5fd",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 477,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-02-03T15:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b2f0d7d_50f889a2",
+      "revId": "be38ae32c7242d876a5e8062198f0990172d81cd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7d2c2c71_7b228407",
@@ -94,6 +160,30 @@
       "writtenOn": "2022-02-01T21:35:12Z",
       "side": 1,
       "message": "Can do this instead:\nadditionalData \u003d {{\"SRC6\", std::to_string((chipPosition \u003c\u003c 16) | command)}};",
+      "range": {
+        "startLine": 481,
+        "startChar": 43,
+        "endLine": 481,
+        "endChar": 57
+      },
+      "revId": "be38ae32c7242d876a5e8062198f0990172d81cd",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0356df6e_96f5b4f9",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-02-03T15:50:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d2c2c71_7b228407",
       "range": {
         "startLine": 481,
         "startChar": 43,
