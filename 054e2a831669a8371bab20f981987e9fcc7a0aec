@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c9d012ef_2fa5cbb8",
+        "filename": "analyzer/callout.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-03T22:16:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13265229_9a57f99a",
+      "range": {
+        "startLine": 111,
+        "startChar": 4,
+        "endLine": 111,
+        "endChar": 13
+      },
+      "revId": "054e2a831669a8371bab20f981987e9fcc7a0aec",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "449aedf0_6648ba32",
@@ -47,6 +71,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6546f34f_70722da7",
+        "filename": "analyzer/service_data.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-03T22:16:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "449aedf0_6648ba32",
+      "range": {
+        "startLine": 3,
+        "startChar": 0,
+        "endLine": 3,
+        "endChar": 23
+      },
+      "revId": "054e2a831669a8371bab20f981987e9fcc7a0aec",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "dfd372ac_68dadbb6",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-02-03T18:04:59Z",
       "side": 1,
       "message": "0",
+      "range": {
+        "startLine": 171,
+        "startChar": 25,
+        "endLine": 171,
+        "endChar": 26
+      },
+      "revId": "054e2a831669a8371bab20f981987e9fcc7a0aec",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "fe371837_6ec64a31",
+        "filename": "analyzer/service_data.hpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-03T22:16:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfd372ac_68dadbb6",
       "range": {
         "startLine": 171,
         "startChar": 25,
