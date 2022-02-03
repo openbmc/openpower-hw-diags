@@ -1,6 +1,6 @@
 #include <assert.h>
 
-#include <analyzer_main.hpp>
+#include <analyzer/analyzer_main.hpp>
 #include <hei_main.hpp>
 #include <hei_util.hpp>
 #include <util/pdbg.hpp>

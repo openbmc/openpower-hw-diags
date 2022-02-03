@@ -1,3 +1,7 @@
+# Additional source files
+analyzer_src += files(
+    'ras-data-parser.cpp',
+)
 
 # Install the RAS data files
 

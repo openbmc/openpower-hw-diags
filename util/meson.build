@@ -22,7 +22,7 @@ endif
 util_lib = static_library(
     'util_lib',
     util_src,
-    include_directories : incdir,
+    include_directories : hwdiags_inc,
     dependencies : util_deps,
     cpp_args : test_arg,
     install : false,

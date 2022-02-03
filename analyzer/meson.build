@@ -5,14 +5,8 @@ analyzer_src = files(
     'filter-root-cause.cpp',
     'hei_user_interface.cpp',
     'initialize_isolator.cpp',
-    'ras-data/ras-data-parser.cpp',
     'resolution.cpp',
     'service_data.cpp',
-)
-
-plugins_src = files(
-    'plugins/p10-plugins.cpp',
-    'plugins/p10-tod-plugins.cpp',
 )
 
 # Library dependencies.
@@ -24,16 +18,12 @@ analyzer_deps = [
     valijson_dep,
 ]
 
-# Create static library.
-analyzer_lib = static_library(
-    'analyzer_lib',
-    [ analyzer_src ],
-    include_directories : incdir,
-    dependencies : analyzer_deps,
-    cpp_args : [ package_args, test_arg ],
-    install : false,
-)
+# Compiler arguments.
+analyzer_args = [
+    package_args,
+]
 
-# Install the RAS data files.
-subdir('ras-data')
+# Search subdirectories for additional sources, dependencies, etc.
+subdir('plugins')
+subdir('ras-data') # also installs the RAS data files
 

@@ -59,7 +59,7 @@ dep = [ gtest_dep ]
 var = [ ]
 
 exe = executable(tc.underscorify(), src, dependencies: dep,
-                 cpp_args: test_arg, include_directories: incdir)
+                 cpp_args: test_arg, include_directories: hwdiags_inc)
 
 test(tc, exe, env: var)
 
@@ -80,7 +80,7 @@ dep = [ gtest_dep ]
 var = [ ]
 
 exe = executable(tc.underscorify(), src, dependencies: dep,
-                 cpp_args: test_arg, include_directories: incdir)
+                 cpp_args: test_arg, include_directories: hwdiags_inc)
 
 test(tc, exe, env: var)
 
@@ -104,7 +104,7 @@ dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
 var = [ pdbg_env ]
 
 exe = executable(tc.underscorify(), src, dependencies: dep,
-                 cpp_args: test_arg, include_directories: incdir)
+                 cpp_args: test_arg, include_directories: hwdiags_inc)
 
 test(tc, exe, env: var)
 
@@ -125,7 +125,7 @@ dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
 var = [ pdbg_env ]
 
 exe = executable(tc.underscorify(), src, dependencies: dep,
-                 cpp_args: test_arg, include_directories: incdir)
+                 cpp_args: test_arg, include_directories: hwdiags_inc)
 
 test(tc, exe, env: var)
 
@@ -152,7 +152,7 @@ dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
 var = [ pdbg_env ]
 
 exe = executable(tc.underscorify(), src, dependencies: dep,
-                 cpp_args: test_arg, include_directories: incdir)
+                 cpp_args: test_arg, include_directories: hwdiags_inc)
 
 test(tc, exe, env: var)
 
@@ -175,7 +175,7 @@ dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
 var = [ pdbg_env ]
 
 exe = executable(tc.underscorify(), src, dependencies: dep,
-                 cpp_args: test_arg, include_directories: incdir)
+                 cpp_args: test_arg, include_directories: hwdiags_inc)
 
 test(tc, exe, env: var)
 
@@ -198,7 +198,7 @@ dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
 var = [ pdbg_env ]
 
 exe = executable(tc.underscorify(), src, dependencies: dep,
-                 cpp_args: test_arg, include_directories: incdir)
+                 cpp_args: test_arg, include_directories: hwdiags_inc)
 
 test(tc, exe, env: var)
 

@@ -74,7 +74,7 @@ attn_lib = static_library(
     'attn_lib',
     attn_src,
     pel_src,
-    include_directories : incdir,
+    include_directories : hwdiags_inc,
     dependencies : attn_deps,
     cpp_args : [boost_args, test_arg],
     install : false,

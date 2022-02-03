@@ -1,5 +1,6 @@
 
 #include <assert.h>
+#include <string.h>
 
 #include <hei_main.hpp>
 #include <util/pdbg.hpp>

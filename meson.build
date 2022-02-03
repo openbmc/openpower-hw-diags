@@ -46,7 +46,7 @@ configure_file(input: 'config.h.in', output: 'config.h', configuration: conf)
 
 # Only using the base directory. All header includes should provide the full
 # path from the base directory.
-incdir = include_directories('.')
+hwdiags_inc = include_directories('.')
 
 #-------------------------------------------------------------------------------
 # External library dependencies
@@ -107,15 +107,27 @@ else
 endif
 
 #-------------------------------------------------------------------------------
-# Build the local static libraries
+# Source subdirectories
 #-------------------------------------------------------------------------------
 
 subdir('analyzer')
 subdir('attn')
 subdir('util')
 
+hwdiags_src = [
+    buildinfo,
+    analyzer_src,
+]
+
+hwdiags_deps = [
+    analyzer_deps,
+]
+
+hwdiags_args = [
+    analyzer_args,
+]
+
 hwdiags_libs = [
-    analyzer_lib,
     attn_lib,
     util_lib,
 ]
@@ -127,20 +139,21 @@ hwdiags_libs = [
 no_listener_mode = get_option('nlmode')
 
 if not no_listener_mode.disabled()
-  executable('openpower-hw-diags',
-              sources : [ 'main_nl.cpp', 'cli.cpp', buildinfo, plugins_src ],
-              dependencies : [ libhei_dep ],
-              link_with : hwdiags_libs,
-              install : true)
+    hwdiags_src += files('main_nl.cpp', 'cli.cpp')
 else
-  executable('openpower-hw-diags',
-              sources : [ 'main.cpp', 'cli.cpp', 'listener.cpp', buildinfo,
-                          plugins_src ],
-              dependencies : [lrt, pthread, libhei_dep],
-              link_with : hwdiags_libs,
-              cpp_args : test_arg,
-              install : true)
+    hwdiags_src  += files('main.cpp', 'cli.cpp', 'listener.cpp')
+    hwdiags_deps += [ lrt, pthread ]
+    hwdiags_args += test_arg
 endif
+
+executable('openpower-hw-diags',
+    sources             : hwdiags_src,
+    include_directories : hwdiags_inc,
+    dependencies        : hwdiags_deps,
+    link_with           : hwdiags_libs,
+    cpp_args            : hwdiags_args,
+    install             : true
+)
 
 #-------------------------------------------------------------------------------
 # Test, if configured
