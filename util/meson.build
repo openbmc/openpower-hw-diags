@@ -18,13 +18,8 @@ if get_option('phal').enabled()
     util_deps += dependency('libdt-api')
 endif
 
-# Create static library.
-util_lib = static_library(
-    'util_lib',
-    util_src,
-    include_directories : hwdiags_inc,
-    dependencies : util_deps,
-    cpp_args : test_arg,
-    install : false,
-)
+# Compiler arguments.
+util_args = [
+    test_arg,
+]
 

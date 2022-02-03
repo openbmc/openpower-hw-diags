@@ -14,7 +14,7 @@ additional_src = [
 
 # create openpower-hw-diags executable for local testing
 end2end = executable('openpower-hw-diags-test',
-            end2end_src, additional_src, analyzer_src,
+            end2end_src, additional_src, analyzer_src, util_src,
             link_with : hwdiags_libs,
             include_directories : hwdiags_inc,
             dependencies : analyzer_deps,

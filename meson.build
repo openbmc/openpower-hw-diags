@@ -117,19 +117,21 @@ subdir('util')
 hwdiags_src = [
     buildinfo,
     analyzer_src,
+    util_src,
 ]
 
 hwdiags_deps = [
     analyzer_deps,
+    util_deps,
 ]
 
 hwdiags_args = [
     analyzer_args,
+    util_args,
 ]
 
 hwdiags_libs = [
     attn_lib,
-    util_lib,
 ]
 
 #-------------------------------------------------------------------------------
