@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d9b767b_8fbb1674",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-08T20:43:50Z",
+      "side": 1,
+      "message": "Could remove these \u0027:\u0027",
+      "range": {
+        "startLine": 257,
+        "startChar": 29,
+        "endLine": 257,
+        "endChar": 30
+      },
+      "revId": "f6dbbff954b1e0704ff610ec72ea6bee1ff9ec58",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4d529243_e012577f",
+        "filename": "attn/ti_handler.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-08T20:43:50Z",
+      "side": 1,
+      "message": "Should be able to remove the (int) casts here.",
+      "range": {
+        "startLine": 258,
+        "startChar": 30,
+        "endLine": 258,
+        "endChar": 35
+      },
+      "revId": "f6dbbff954b1e0704ff610ec72ea6bee1ff9ec58",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
