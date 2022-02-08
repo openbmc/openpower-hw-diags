@@ -202,3 +202,20 @@ exe = executable(tc.underscorify(), src, dependencies: dep,
 
 test(tc, exe, env: var)
 
+################################################################################
+
+tc = 'test-ti-handler'
+
+src = [
+  files(
+    tc + '.cpp',
+  ),
+]
+
+dep = [ gtest_dep ]
+
+exe = executable(tc.underscorify(), src, dependencies: dep,
+                 link_with : hwdiags_libs,
+                 cpp_args: test_arg, include_directories: incdir)
+
+test(tc, exe, env: var)
