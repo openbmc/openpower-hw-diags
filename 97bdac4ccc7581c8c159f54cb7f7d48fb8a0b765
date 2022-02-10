@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8379e5c9_319b5b67",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-02-10T15:21:35Z",
+      "side": 1,
+      "message": "test results:\nFeb 09 19:53:30 p10bmc systemd[1]: Started The Attention Handler service.       \nFeb 09 19:53:30 p10bmc openpower-hw-diags[2070]: Attention handler started      \n... waiting for an attention                                                    \nFeb 09 20:32:29 p10bmc openpower-hw-diags[2070]: Attention GPIO active          \n... handling an active attention                                                \nFeb 09 20:40:25 p10bmc systemd[1]: attn_handler.service: Failed with result \u0027core-dump\u0027.\nFeb 09 20:40:26 p10bmc systemd[1]: Stopped The Attention Handler service.       \nFeb 09 20:40:26 p10bmc systemd[1]: Started The Attention Handler service.       \n... handling same active attention (crashed before attention handled)           \nFeb 09 20:42:24 p10bmc systemd[1]: attn_handler.service: Failed with result \u0027core-dump\u0027.\nFeb 09 20:42:25 p10bmc systemd[1]: Stopped The Attention Handler service.       \nFeb 09 20:42:25 p10bmc systemd[1]: attn_handler.service: Start request repeated too quickly.\nFeb 09 20:42:25 p10bmc systemd[1]: attn_handler.service: Failed with result \u0027core-dump\u0027.\nFeb 09 20:42:25 p10bmc systemd[1]: Failed to start The Attention Handler service.\n... 2 crashes within 10 minutes (or less) so service considered failed (not restarted)\n",
+      "revId": "97bdac4ccc7581c8c159f54cb7f7d48fb8a0b765",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
