@@ -131,30 +131,30 @@ test(tc, exe, env: var)
 
 ################################################################################
 
-tc = 'test-pll-unlock'
-
-src = [
-  files(
-    tc + '.cpp',
-    '../analyzer/plugins/p10-plugins.cpp',
-    '../analyzer/ras-data/ras-data-parser.cpp',
-    '../analyzer/resolution.cpp',
-    '../analyzer/service_data.cpp',
-    '../util/data_file.cpp',
-    '../util/pdbg.cpp',
-    'pdbg-sim-only.cpp',
-  ),
-  pdbg_test_dtb,
-]
-
-dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
-
-var = [ pdbg_env ]
-
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 cpp_args: test_arg, include_directories: incdir)
-
-test(tc, exe, env: var)
+#tc = 'test-pll-unlock'
+#
+#src = [
+#  files(
+#    tc + '.cpp',
+#    '../analyzer/plugins/p10-plugins.cpp',
+#    '../analyzer/ras-data/ras-data-parser.cpp',
+#    '../analyzer/resolution.cpp',
+#    '../analyzer/service_data.cpp',
+#    '../util/data_file.cpp',
+#    '../util/pdbg.cpp',
+#    'pdbg-sim-only.cpp',
+#  ),
+#  pdbg_test_dtb,
+#]
+#
+#dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
+#
+#var = [ pdbg_env ]
+#
+#exe = executable(tc.underscorify(), src, dependencies: dep,
+#                 cpp_args: test_arg, include_directories: incdir)
+#
+#test(tc, exe, env: var)
 
 ################################################################################
 
