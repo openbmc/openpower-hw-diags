@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "717e0bc7_6f9a87db",
+        "filename": "test/meson.build",
+        "patchSetId": 10
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-02-14T15:45:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6367e41e_1b08e817",
+      "range": {
+        "startLine": 212,
+        "startChar": 4,
+        "endLine": 212,
+        "endChar": 29
+      },
+      "revId": "3ad5574243fe9bc0653b93448612762652178f4c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac4369cf_e23b1a41",
@@ -47,6 +71,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ef1aa763_0a752def",
+        "filename": "test/meson.build",
+        "patchSetId": 10
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-02-14T15:45:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac4369cf_e23b1a41",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 33
+      },
+      "revId": "3ad5574243fe9bc0653b93448612762652178f4c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "05175182_2887e0ef",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-02-13T02:35:57Z",
       "side": 1,
       "message": "not really needed",
+      "range": {
+        "startLine": 218,
+        "startChar": 0,
+        "endLine": 218,
+        "endChar": 18
+      },
+      "revId": "3ad5574243fe9bc0653b93448612762652178f4c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "dbdfab02_5ff0f169",
+        "filename": "test/meson.build",
+        "patchSetId": 10
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-02-14T15:45:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05175182_2887e0ef",
       "range": {
         "startLine": 218,
         "startChar": 0,
