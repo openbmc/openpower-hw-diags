@@ -16,6 +16,69 @@
       "message": "Fixed in the new commit.",
       "revId": "55e488c9beaf2a20fb9d6d0f766774573fe95f3c",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "05ed9da9_3ec50b03",
+        "filename": "test/meson.build",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-15T20:58:55Z",
+      "side": 1,
+      "message": "can add back \u0027var \u003d []\u0027",
+      "revId": "55e488c9beaf2a20fb9d6d0f766774573fe95f3c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "800452a8_dbcf5a6f",
+        "filename": "test/test-ti-handler.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-15T20:58:55Z",
+      "side": 1,
+      "message": "Can create your own TiInfo rather than use the default",
+      "range": {
+        "startLine": 18,
+        "startChar": 32,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "55e488c9beaf2a20fb9d6d0f766774573fe95f3c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0952dcf4_caa0610f",
+        "filename": "test/test-ti-handler.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-15T20:58:55Z",
+      "side": 1,
+      "message": "instead of formatting the data from tiData, just use hardcoded strings",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "55e488c9beaf2a20fb9d6d0f766774573fe95f3c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
