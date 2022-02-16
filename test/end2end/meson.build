@@ -1,10 +1,6 @@
 # Source files specific to end2end test.
 end2end_src = [
-    'bp_handler.cpp',
-    'logging.cpp',
     'main.cpp',
-    'ti_handler.cpp',
-    'vital_handler.cpp'
 ]
 
 # Additional source files needed for test.
