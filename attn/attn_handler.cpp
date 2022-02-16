@@ -478,8 +478,9 @@ void phalSbeExceptionHandler(openpower::phal::exception::SbeError& sbeError,
             static_cast<uint8_t>(0x01), fd}};
 
         // Create event log entry with FFDC data
-        createPel("org.open_power.Processor.Error.SbeChipOpFailure",
-                  additionalData, ffdc);
+        additionalData.emplace("_PID", std::to_string(getpid()));
+        util::dbus::createPel("org.open_power.Processor.Error.SbeChipOpFailure",
+                              levelPelError, additionalData, ffdc);
     }
 }
 #endif

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <sdbusplus/bus.hpp>
+#include <util/ffdc_file.hpp>
 
 #include <string>
 #include <variant>
@@ -112,6 +113,25 @@ HostRunningState hostRunningState();
  * @return false if dumpPolicyEnabled property is false, else true
  */
 bool dumpPolicyEnabled();
+
+/**
+ * Create a PEL
+ *
+ * The additional data provided in the map will be placed in a user data
+ * section of the PEL and may additionally contain key words to trigger
+ * certain behaviors by the backend logging code. Each set of data described
+ * in the vector of ffdc data will be placed in additional user data
+ * sections.
+ *
+ * @param  i_message - the event type
+ * @param  i_severity - the severity level
+ * @param  i_additional - map of additional data
+ * @param  i_ffdc - vector of ffdc data
+ * @return Platform log id or 0 if error
+ */
+uint32_t createPel(const std::string& i_message, const std::string& i_severity,
+                   const std::map<std::string, std::string>& i_additional,
+                   const std::vector<FFDCTuple>& i_ffdc);
 
 } // namespace dbus
 
