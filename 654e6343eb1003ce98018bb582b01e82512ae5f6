@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3919ce72_46515be1",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-18T20:06:27Z",
+      "side": 1,
+      "message": "Going to update the subsystems to match HWSV instead of Hostboot",
+      "revId": "654e6343eb1003ce98018bb582b01e82512ae5f6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
