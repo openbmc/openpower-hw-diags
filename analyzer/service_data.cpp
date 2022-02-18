@@ -296,6 +296,7 @@ callout::SrcSubsystem ServiceData::getTargetSubsystem(pdbg_target* i_target)
         {TargetType_t::TYPE_DIMM,     callout::SrcSubsystem::MEMORY_DIMM   },
         {TargetType_t::TYPE_PROC,     callout::SrcSubsystem::PROCESSOR     },
         {TargetType_t::TYPE_CORE,     callout::SrcSubsystem::PROCESSOR_UNIT},
+        {TargetType_t::TYPE_NX,       callout::SrcSubsystem::PROCESSOR     },
         {TargetType_t::TYPE_EQ,       callout::SrcSubsystem::PROCESSOR     },
         {TargetType_t::TYPE_PEC,      callout::SrcSubsystem::PHB           },
         {TargetType_t::TYPE_PHB,      callout::SrcSubsystem::PHB           },
