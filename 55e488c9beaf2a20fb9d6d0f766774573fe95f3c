@@ -35,6 +35,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "13412b32_31132e57",
+        "filename": "test/meson.build",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-02-21T14:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05ed9da9_3ec50b03",
+      "revId": "55e488c9beaf2a20fb9d6d0f766774573fe95f3c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "800452a8_dbcf5a6f",
@@ -58,6 +76,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "8c8f71f0_a1f22ab6",
+        "filename": "test/test-ti-handler.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-02-21T14:49:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "800452a8_dbcf5a6f",
+      "range": {
+        "startLine": 18,
+        "startChar": 32,
+        "endLine": 18,
+        "endChar": 56
+      },
+      "revId": "55e488c9beaf2a20fb9d6d0f766774573fe95f3c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0952dcf4_caa0610f",
@@ -71,6 +113,30 @@
       "writtenOn": "2022-02-15T20:58:55Z",
       "side": 1,
       "message": "instead of formatting the data from tiData, just use hardcoded strings",
+      "range": {
+        "startLine": 24,
+        "startChar": 14,
+        "endLine": 24,
+        "endChar": 56
+      },
+      "revId": "55e488c9beaf2a20fb9d6d0f766774573fe95f3c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1a302357_94c518ae",
+        "filename": "test/test-ti-handler.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-02-21T14:49:09Z",
+      "side": 1,
+      "message": "In order to hard code the strings, I still need to get the values from the array with appropriate offsets. The offsets will be from struct TiDataArea members. All these manual manipulation will be easily introduce new errors. So I used index of array. The index values are offsets of the structure members. I like to have comments from next code review.",
+      "parentUuid": "0952dcf4_caa0610f",
       "range": {
         "startLine": 24,
         "startChar": 14,
