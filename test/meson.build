@@ -94,6 +94,7 @@ src = [
     '../analyzer/plugins/p10-plugins.cpp',
     '../analyzer/service_data.cpp',
     '../util/pdbg.cpp',
+    'dbus-sim-only.cpp',
     'pdbg-sim-only.cpp',
   ),
   pdbg_test_dtb,
@@ -116,6 +117,7 @@ src = [
   files(
     tc + '.cpp',
     '../util/pdbg.cpp',
+    'dbus-sim-only.cpp',
   ),
   pdbg_test_dtb,
 ]
@@ -142,6 +144,7 @@ src = [
     '../analyzer/service_data.cpp',
     '../util/data_file.cpp',
     '../util/pdbg.cpp',
+    'dbus-sim-only.cpp',
     'pdbg-sim-only.cpp',
   ),
   pdbg_test_dtb,
@@ -166,6 +169,7 @@ src = [
     '../analyzer/resolution.cpp',
     '../analyzer/service_data.cpp',
     '../util/pdbg.cpp',
+    'dbus-sim-only.cpp',
   ),
   pdbg_test_dtb,
 ]
@@ -189,6 +193,7 @@ src = [
     '../analyzer/plugins/p10-tod-plugins.cpp',
     '../analyzer/service_data.cpp',
     '../util/pdbg.cpp',
+    'dbus-sim-only.cpp',
   ),
   pdbg_test_dtb,
 ]
