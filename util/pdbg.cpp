@@ -9,14 +9,22 @@
 #include <config.h>
 
 #include <hei_main.hpp>
+#include <nlohmann/json.hpp>
+#include <util/dbus.hpp>
 #include <util/pdbg.hpp>
 #include <util/trace.hpp>
+
+#include <filesystem>
+#include <fstream>
+#include <string>
 
 #ifdef CONFIG_PHAL_API
 #include <attributes_info.H>
 #endif
 
 using namespace analyzer;
+
+namespace fs = std::filesystem;
 
 namespace util
 {
@@ -80,6 +88,60 @@ uint8_t getTrgtType(const libhei::Chip& i_chip)
 
 //------------------------------------------------------------------------------
 
+pdbg_target* getTargetAcrossBus(pdbg_target* i_rxTarget)
+{
+    pdbg_target* o_peerTarget;
+    fs::path filePath;
+
+    // Open the appropriate data file depending on machine type
+    util::dbus::MachineType machineType = util::dbus::getMachineType();
+    switch (machineType)
+    {
+        // Rainier 4U
+        case util::dbus::MachineType::Rainier_2S4U:
+        case util::dbus::MachineType::Rainier_1S4U:
+            filePath =
+                fs::path{PACKAGE_DIR "util-data/peer-targets-rainier-4u.json"};
+            break;
+        // Rainier 2U
+        case util::dbus::MachineType::Rainier_2S2U:
+        case util::dbus::MachineType::Rainier_1S2U:
+            filePath =
+                fs::path{PACKAGE_DIR "util-data/peer-targets-rainier-2u.json"};
+            break;
+        // Everest
+        case util::dbus::MachineType::Everest:
+            filePath =
+                fs::path{PACKAGE_DIR "util-data/peer-targets-everest.json"};
+            break;
+        default:
+            trace::err("Invalid machine type found %d",
+                       static_cast<uint8_t>(machineType));
+            break;
+    }
+
+    std::ifstream file{filePath};
+    assert(file.good());
+
+    try
+    {
+        auto trgtMap         = nlohmann::json::parse(file);
+        std::string rxPath   = util::pdbg::getPath(i_rxTarget);
+        std::string peerPath = trgtMap.at(rxPath).get<std::string>();
+
+        o_peerTarget = util::pdbg::getTrgt(peerPath);
+    }
+    catch (...)
+    {
+        trace::err("Failed to parse file: %s", filePath.string().c_str());
+        throw;
+    }
+
+    return o_peerTarget;
+}
+
+//------------------------------------------------------------------------------
+
 pdbg_target* getConnectedTarget(pdbg_target* i_rxTarget,
                                 const callout::BusType& i_busType)
 {
@@ -93,20 +155,12 @@ pdbg_target* getConnectedTarget(pdbg_target* i_rxTarget,
     if (callout::BusType::SMP_BUS == i_busType &&
         util::pdbg::TYPE_IOLINK == rxType)
     {
-        // TODO: Will need to reference some sort of data that can tell us how
-        //       the processors are connected in the system. For now, return the
-        //       RX target to avoid returning a nullptr.
-        trace::inf("No support to get peer target on SMP bus");
-        txTarget = i_rxTarget;
+        txTarget = getTargetAcrossBus(i_rxTarget);
     }
     else if (callout::BusType::SMP_BUS == i_busType &&
              util::pdbg::TYPE_IOHS == rxType)
     {
-        // TODO: Will need to reference some sort of data that can tell us how
-        //       the processors are connected in the system. For now, return the
-        //       RX target to avoid returning a nullptr.
-        trace::inf("No support to get peer target on SMP bus");
-        txTarget = i_rxTarget;
+        txTarget = getTargetAcrossBus(i_rxTarget);
     }
     else if (callout::BusType::OMI_BUS == i_busType &&
              util::pdbg::TYPE_OMI == rxType)

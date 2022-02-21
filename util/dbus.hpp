@@ -113,6 +113,23 @@ HostRunningState hostRunningState();
  */
 bool dumpPolicyEnabled();
 
+/** @brief Machine ID definitions */
+enum class MachineType
+{
+    Rainier_2S4U,
+    Rainier_2S2U,
+    Rainier_1S4U,
+    Rainier_1S2U,
+    Everest,
+};
+
+/**
+ * @brief Read the System IM keyword to get the machine type
+ *
+ * @return An enum representing the machine type
+ */
+MachineType getMachineType();
+
 } // namespace dbus
 
 } // namespace util
