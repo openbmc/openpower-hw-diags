@@ -158,6 +158,8 @@ class PelMinimal
      * @brief PEL Extended User Header
      */
     std::unique_ptr<ExtendedUserHeader> _eh;
+
+    std::vector<uint8_t>& _data;
 };
 
 } // namespace pel
