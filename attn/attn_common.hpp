@@ -24,16 +24,18 @@ enum class AttnSection
     tiHandler       = 0x0200,
     handlePhypTi    = 0x0300,
     handleHbTi      = 0x0400,
-    addHbStatusRegs = 0x0500
+    addHbStatusRegs = 0x0500,
+    attnLogging     = 0x0600
 };
 
 /** @brief Attention handler error reason codes */
 enum AttnCodes
 {
-    ATTN_NO_ERROR  = 0,
-    ATTN_INFO_NULL = 1,
-    ATTN_PDBG_CFAM = 2,
-    ATTN_PDBG_SCOM = 3
+    ATTN_NO_ERROR    = 0,
+    ATTN_INFO_NULL   = 1,
+    ATTN_PDBG_CFAM   = 2,
+    ATTN_PDBG_SCOM   = 3,
+    ATTN_INVALID_KEY = 4
 };
 
 /**
