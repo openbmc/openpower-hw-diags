@@ -16,6 +16,23 @@
       "message": "Continue investigation for now",
       "revId": "54f099e2f912579e03708ec2b724fd26a441d468",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ac4ade49_897c1b0e",
+        "filename": "attn/pel/pel_minimal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-02-22T21:22:08Z",
+      "side": 1,
+      "message": "Instead, add this before or on the same line for each:\n    // cppcheck-suppress useInitializationList",
+      "revId": "54f099e2f912579e03708ec2b724fd26a441d468",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
