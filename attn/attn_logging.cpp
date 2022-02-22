@@ -190,12 +190,26 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
     // subystem that provided the TI info. Get the subystem from additional
     // data and then populate the prmary SRC and SRC words for the custom PEL
     // based on the sybsystem's TI info.
-    uint8_t subsystem = std::stoi(i_additional["Subsystem"]);
-    tiPel->setSubsystem(subsystem);
+    std::map<std::string, std::string>::iterator it;
+    uint8_t subsystem;
+
+    it = i_additional.find("Subsystem");
+    if (it != i_additional.end())
+    {
+        subsystem = std::stoi(it->second);
+        tiPel->setSubsystem(subsystem);
+    }
+    else
+    {
+        // The entry with key "Subsystem" does not exist in the additional map.
+        // Log the error, create failure event, and return.
+        trace::err("Error the key %s does not exist in the map.", "Subsystem");
+        eventAttentionFail((int)AttnSection::attnHandler | ATTN_INVAL_KEY);
+        return;
+    }
 
     // If recoverable attentions are active we will call the analyzer and
     // then link the custom pel to analyzer pel.
-    std::map<std::string, std::string>::iterator it;
     it = i_additional.find("recoverables");
     if (it != i_additional.end() && "true" == it->second)
     {
@@ -226,9 +240,23 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
 
         // char array for raw pel src
         std::array<char, pel::asciiStringSize> srcChars{'0'};
+        std::string srcString;
 
         // src from TI info
-        std::string srcString = i_additional["SrcAscii"];
+        it = i_additional.find("SrcAscii");
+        if (it != i_additional.end())
+        {
+            srcString = it->second;
+        }
+        else
+        {
+            // The entry with key "Subsystem" does not exist in the additional
+            // map. Log the error, create failure event, and return.
+            trace::err("Error the key %s does not exist in the map.",
+                       "SrcAscii");
+            eventAttentionFail((int)AttnSection::attnHandler | ATTN_INVAL_KEY);
+            return;
+        }
 
         // copy from string to char array
         srcString.copy(srcChars.data(),
@@ -237,7 +265,7 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
         tiPel->setAsciiString(srcChars); // pel object src is char array
 
         // set symptom-id
-        auto symptomId = (i_additional["SrcAscii"].substr(0, 8) + '_');
+        auto symptomId = (srcString.substr(0, 8) + '_');
 
         symptomId += (i_additional["0x10 SRC Word 12"]);
         symptomId += (i_additional["0x14 SRC Word 13"] + '_');
@@ -271,9 +299,23 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
 
         // char array for raw pel src
         std::array<char, pel::asciiStringSize> srcChars{'0'};
+        std::string srcString;
 
         // src from TI info
-        std::string srcString = i_additional["SrcAscii"];
+        it = i_additional.find("SrcAscii");
+        if (it != i_additional.end())
+        {
+            srcString = it->second;
+        }
+        else
+        {
+            // The entry with key "Subsystem" does not exist in the additional
+            // map. Log the error, create failure event, and return.
+            trace::err("Error the key %s does not exist in the map.",
+                       "SrcAscii");
+            eventAttentionFail((int)AttnSection::attnHandler | ATTN_INVAL_KEY);
+            return;
+        }
 
         // copy from string to char array
         srcString.copy(srcChars.data(),
@@ -282,7 +324,7 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
         tiPel->setAsciiString(srcChars); // pel object src is char array
 
         // set symptom-id
-        auto symptomId = (i_additional["SrcAscii"].substr(0, 8) + '_');
+        auto symptomId = (srcString.substr(0, 8) + '_');
 
         symptomId += (i_additional["0x10 HB Word 0"]);       // note: word 1
         symptomId += (i_additional["0x14 HB Word 2"] + '_'); // does not exist
@@ -404,7 +446,25 @@ uint32_t event(EventType i_event,
                 close(pelFd);
             }
 
-            uint8_t subsystem = std::stoi(i_additional["Subsystem"]);
+            std::map<std::string, std::string>::iterator it;
+            uint8_t subsystem;
+
+            it = i_additional.find("Subsystem");
+            if (it != i_additional.end())
+            {
+                subsystem = std::stoi(it->second);
+            }
+            else
+            {
+                // The entry with key "Subsystem" does not exist in the
+                // additional map. Log the error, create failure event, and
+                // return.
+                trace::err("Error the key %s does not exist in the map.",
+                           "Subsystem");
+                eventAttentionFail((int)AttnSection::attnHandler |
+                                   ATTN_INVAL_KEY);
+                return pelId;
+            }
 
             // If not hypervisor TI
             if (static_cast<uint8_t>(pel::SubsystemID::hypervisor) != subsystem)
@@ -440,7 +500,23 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
     {
         tiInfoSize = 56; // assume not hypervisor TI
 
-        uint8_t subsystem = std::stoi(i_additionalData["Subsystem"]);
+        std::map<std::string, std::string>::iterator it;
+        uint8_t subsystem;
+
+        it = i_additionalData.find("Subsystem");
+        if (it != i_additionalData.end())
+        {
+            subsystem = std::stoi(it->second);
+        }
+        else
+        {
+            // The entry with key "Subsystem" does not exist in the additional
+            // map. Log the error, create failure event, and return.
+            trace::err("Error the key %s does not exist in the map.",
+                       "Subsystem");
+            eventAttentionFail((int)AttnSection::attnHandler | ATTN_INVAL_KEY);
+            return;
+        }
 
         // If hypervisor
         if (static_cast<uint8_t>(pel::SubsystemID::hypervisor) == subsystem)
