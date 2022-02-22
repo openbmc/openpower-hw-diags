@@ -11,6 +11,11 @@ PelMinimal::PelMinimal(std::vector<uint8_t>& data)
 {
     Stream pelData{data};
 
+    Initialize(pelData);
+}
+
+void PelMinimal::Initialize(Stream& pelData)
+{
     _ph = std::make_unique<PrivateHeader>(pelData);
     _uh = std::make_unique<UserHeader>(pelData);
     _ps = std::make_unique<PrimarySrc>(pelData);

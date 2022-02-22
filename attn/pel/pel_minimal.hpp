@@ -4,6 +4,7 @@
 #include "pel_common.hpp"
 #include "primary_src.hpp"
 #include "private_header.hpp"
+#include "stream.hpp"
 #include "user_header.hpp"
 
 #include <vector>
@@ -50,6 +51,13 @@ class PelMinimal
      * @param[in] pelBuffer - buffer containing a raw PEL
      */
     explicit PelMinimal(std::vector<uint8_t>& data);
+
+    /**
+     * @brief Initialize the object's data members
+     *
+     * @param[in] pelData - reference to Stream of data
+     */
+    void Initialize(Stream& pelData);
 
     /**
      * @brief Stream raw PEL data to buffer
