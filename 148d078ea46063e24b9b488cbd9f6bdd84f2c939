@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "59b11a41_fec7991d",
+        "filename": "util/ffdc.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-22T21:02:56Z",
+      "side": 1,
+      "message": "Can put in namespace",
+      "revId": "148d078ea46063e24b9b488cbd9f6bdd84f2c939",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
