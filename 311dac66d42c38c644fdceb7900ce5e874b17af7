@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da9fb840_68110f09",
+        "filename": "analyzer/plugins/p10-tod-plugins.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-22T20:38:16Z",
+      "side": 1,
+      "message": "Should have consistent use of either topography or topology. use topology",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 48
+      },
+      "revId": "311dac66d42c38c644fdceb7900ce5e874b17af7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bf0b472_89762bcb",
+        "filename": "analyzer/plugins/p10-tod-plugins.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-22T20:38:16Z",
+      "side": 1,
+      "message": "Add Tod to name or use a namespace",
+      "range": {
+        "startLine": 16,
+        "startChar": 11,
+        "endLine": 16,
+        "endChar": 21
+      },
+      "revId": "311dac66d42c38c644fdceb7900ce5e874b17af7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
