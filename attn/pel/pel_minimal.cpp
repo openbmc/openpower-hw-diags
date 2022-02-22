@@ -7,10 +7,8 @@ namespace attn
 namespace pel
 {
 
-PelMinimal::PelMinimal(std::vector<uint8_t>& data)
+PelMinimal::PelMinimal(std::vector<uint8_t>& data) : pelData{data}
 {
-    Stream pelData{data};
-
     _ph = std::make_unique<PrivateHeader>(pelData);
     _uh = std::make_unique<UserHeader>(pelData);
     _ps = std::make_unique<PrimarySrc>(pelData);
