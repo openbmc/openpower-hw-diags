@@ -33,7 +33,8 @@ enum AttnCodes
     ATTN_NO_ERROR  = 0,
     ATTN_INFO_NULL = 1,
     ATTN_PDBG_CFAM = 2,
-    ATTN_PDBG_SCOM = 3
+    ATTN_PDBG_SCOM = 3,
+    ATTN_INVAL_KEY = 4
 };
 
 /**
