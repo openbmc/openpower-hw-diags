@@ -16,6 +16,24 @@
       "message": "Can put in namespace",
       "revId": "148d078ea46063e24b9b488cbd9f6bdd84f2c939",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c7471101_99c1271f",
+        "filename": "util/ffdc.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-02-23T14:27:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59b11a41_fec7991d",
+      "revId": "148d078ea46063e24b9b488cbd9f6bdd84f2c939",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
