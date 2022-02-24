@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5aaeb76a_7a0117c3",
+        "filename": "test/sim-hw-access.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-02-24T17:53:46Z",
+      "side": 1,
+      "message": "theCfamAccess",
+      "range": {
+        "startLine": 119,
+        "startChar": 26,
+        "endLine": 119,
+        "endChar": 39
+      },
+      "revId": "3b8bf693cb01bcdafb0798638f8a7a60f19c6ce9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
