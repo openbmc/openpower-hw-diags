@@ -45,6 +45,29 @@
       },
       "revId": "3d88b877f896e55b0013bccdacf47c59480f3ee6",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "75a6afc9_477615c8",
+        "filename": "test/test-tod-step-check-fault.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-02-24T18:32:32Z",
+      "side": 1,
+      "message": "internal",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 31
+      },
+      "revId": "3d88b877f896e55b0013bccdacf47c59480f3ee6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
