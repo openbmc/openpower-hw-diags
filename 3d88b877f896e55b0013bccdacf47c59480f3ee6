@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "ebbe4163_f835899b",
+        "filename": "analyzer/plugins/p10-tod-plugins.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-02-24T19:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f1d837b5_dc24fecc",
+      "range": {
+        "startLine": 136,
+        "startChar": 64,
+        "endLine": 136,
+        "endChar": 70
+      },
+      "revId": "3d88b877f896e55b0013bccdacf47c59480f3ee6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c0a76ab_b4ee849f",
@@ -47,6 +71,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2b5c403b_21285cf2",
+        "filename": "analyzer/plugins/p10-tod-plugins.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-02-24T19:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c0a76ab_b4ee849f",
+      "range": {
+        "startLine": 240,
+        "startChar": 25,
+        "endLine": 240,
+        "endChar": 39
+      },
+      "revId": "3d88b877f896e55b0013bccdacf47c59480f3ee6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "75a6afc9_477615c8",
@@ -60,6 +108,30 @@
       "writtenOn": "2022-02-24T18:32:32Z",
       "side": 1,
       "message": "internal",
+      "range": {
+        "startLine": 52,
+        "startChar": 24,
+        "endLine": 52,
+        "endChar": 31
+      },
+      "revId": "3d88b877f896e55b0013bccdacf47c59480f3ee6",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c5cd731_f4aff1fc",
+        "filename": "test/test-tod-step-check-fault.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-02-24T19:59:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75a6afc9_477615c8",
       "range": {
         "startLine": 52,
         "startChar": 24,
