@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2370820c_1523ed0f",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-02-25T17:49:31Z",
+      "side": 1,
+      "message": "fixed in later commit.",
+      "parentUuid": "5034327d_aeea8214",
+      "revId": "54f099e2f912579e03708ec2b724fd26a441d468",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ac4ade49_897c1b0e",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-02-22T21:22:08Z",
       "side": 1,
       "message": "Instead, add this before or on the same line for each:\n    // cppcheck-suppress useInitializationList",
+      "revId": "54f099e2f912579e03708ec2b724fd26a441d468",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2314b936_61554235",
+        "filename": "attn/pel/pel_minimal.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-02-25T17:49:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac4ade49_897c1b0e",
       "revId": "54f099e2f912579e03708ec2b724fd26a441d468",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
