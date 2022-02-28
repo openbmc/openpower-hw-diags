@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9ec54f43_f6c862c9",
+        "filename": "test/dbus-sim-only.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-28T18:20:29Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 1,
+        "startChar": 0,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "ed0edeabecf062cca5ad2d48416420bc36532046",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2bd399d5_9984ebac",
+        "filename": "test/dbus-sim-only.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-28T18:20:29Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 4,
+        "startChar": 0,
+        "endLine": 4,
+        "endChar": 25
+      },
+      "revId": "ed0edeabecf062cca5ad2d48416420bc36532046",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7f6ac197_307cffbd",
+        "filename": "util/dbus.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-28T18:20:29Z",
+      "side": 1,
+      "message": "maybe find a better source",
+      "range": {
+        "startLine": 335,
+        "startChar": 29,
+        "endLine": 336,
+        "endChar": 69
+      },
+      "revId": "ed0edeabecf062cca5ad2d48416420bc36532046",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "475c6750_543c09c8",
+        "filename": "util/dbus.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-28T18:20:29Z",
+      "side": 1,
+      "message": "print as hex",
+      "range": {
+        "startLine": 365,
+        "startChar": 1,
+        "endLine": 365,
+        "endChar": 68
+      },
+      "revId": "ed0edeabecf062cca5ad2d48416420bc36532046",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b8b66a9_57e85f75",
+        "filename": "util/dbus.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-02-28T18:20:29Z",
+      "side": 1,
+      "message": "should probably throw instead. invalid argument maybe",
+      "range": {
+        "startLine": 374,
+        "startChar": 8,
+        "endLine": 374,
+        "endChar": 18
+      },
+      "revId": "ed0edeabecf062cca5ad2d48416420bc36532046",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
