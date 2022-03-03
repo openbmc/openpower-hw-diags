@@ -49,6 +49,7 @@ enum class EventType
 enum class ActionFlags
 {
     service = 0x8000,
+    hidden  = 0x4000,
     report  = 0x2000,
     call    = 0x0800
 };

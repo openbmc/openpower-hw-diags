@@ -28,7 +28,7 @@ struct TiDataArea
     uint8_t srcFlags;          // 0x09, phyp/opal
     uint8_t numAsciiWords;     // 0x0a, phyp/opal
     uint8_t numHexWords;       // 0x0b, phyp/opal
-    uint8_t hbDumpFlag;        // 0x0c, hostboot only
+    uint8_t hbFlags;           // 0x0c, hostboot only
     uint8_t source;            // 0x0d, hostboot only
     uint16_t lenSrc;           // 0x0e, phyp/opal
     uint32_t srcWord12HbWord0; // 0x10, common
@@ -53,6 +53,10 @@ struct TiDataArea
     uint8_t andData;           // 0x53, phyp/opal
 };
 #pragma pack(pop)
+
+// TI info defines
+constexpr uint8_t hbDumpFlag       = 0x01;
+constexpr uint8_t hbNotVisibleFlag = 0x02;
 
 // miscellaneous defines
 constexpr uint8_t TI_WITH_PLID = 0x01;

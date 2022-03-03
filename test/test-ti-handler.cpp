@@ -110,8 +110,8 @@ TEST(TiHandler, TestSet2)
     EXPECT_EQ(tiMap["0x04 Reserved"], "30");
     // hbTerminateType, offset: 0x05, size: 1, 0x31
     EXPECT_EQ(tiMap["0x05 HB_Term. Type"], "31");
-    // hbDumpFlag, offset: 0x0c, size: 1, 0x38
-    EXPECT_EQ(tiMap["0x0c HB Dump Flag"], "38");
+    // hbFlags, offset: 0x0c, size: 1, 0x38
+    EXPECT_EQ(tiMap["0x0c HB Flags"], "38");
     // source, offset: 0x0d, size: 1, 0x39
     EXPECT_EQ(tiMap["0x0d Source"], "39");
     // srcWord12HbWord0, offset: 0x10, size: 4, 0x3c 0x3d 0x3e 0x3f

@@ -220,9 +220,18 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
     // set severity, event type and action flags
     tiPel->setSeverity(static_cast<uint8_t>(pel::Severity::termination));
     tiPel->setType(static_cast<uint8_t>(pel::EventType::na));
-    tiPel->setAction(static_cast<uint16_t>(pel::ActionFlags::service |
-                                           pel::ActionFlags::report |
-                                           pel::ActionFlags::call));
+
+    auto actionFlags = pel::ActionFlags::service | pel::ActionFlags::report |
+                       pel::ActionFlags::call;
+
+    it = i_additional.find("hidden");
+    if (it != i_additional.end() && "true" == it->second)
+    {
+        trace::inf("making HB TI PEL hidden");
+        actionFlags = actionFlags | pel::ActionFlags::hidden;
+    }
+
+    tiPel->setAction(static_cast<uint16_t>(actionFlags));
 
     // The raw PEL that we used as the basis for this custom PEL contains the
     // attention handler trace data and does not needed to be in this PEL so

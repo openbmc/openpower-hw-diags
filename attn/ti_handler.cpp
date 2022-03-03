@@ -136,7 +136,7 @@ void handleHbTiWithEid(TiDataArea* i_tiDataArea)
     if (nullptr != i_tiDataArea)
     {
         // see if HB dump is requested
-        if (0 != i_tiDataArea->hbDumpFlag)
+        if (i_tiDataArea->hbFlags & hbDumpFlag)
         {
             // retrieve log ID from TI info data
             uint32_t logId = be32toh(i_tiDataArea->asciiData1);
@@ -192,6 +192,12 @@ void handleHbTiWithSrc(TiDataArea* i_tiDataArea)
             // dump flag is only valid for TI with EID (not TI with SRC)
             trace::inf("Ignoring TI info dump flag for HB TI with SRC");
             tiAdditionalData["Dump"] = "true";
+
+            // TI with SRC will honor hbNotVisibleFlag
+            if (i_tiDataArea->hbFlags & hbNotVisibleFlag)
+            {
+                tiAdditionalData["hidden"] = "true";
+            }
 
             // Generate event log
             eventTerminate(tiAdditionalData, (char*)i_tiDataArea);
@@ -325,9 +331,8 @@ void parseHbTiInfo(std::map<std::string, std::string>& i_map,
     i_map["0x04 Reserved"] = fmt::format("{:02x}", i_tiDataArea->reserved1);
     i_map["0x05 HB_Term. Type"] =
         fmt::format("{:02x}", i_tiDataArea->hbTerminateType);
-    i_map["0x0c HB Dump Flag"] =
-        fmt::format("{:02x}", i_tiDataArea->hbDumpFlag);
-    i_map["0x0d Source"] = fmt::format("{:02x}", i_tiDataArea->source);
+    i_map["0x0c HB Flags"] = fmt::format("{:02x}", i_tiDataArea->hbFlags);
+    i_map["0x0d Source"]   = fmt::format("{:02x}", i_tiDataArea->source);
     i_map["0x10 HB Word 0"] =
         fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord12HbWord0));
     i_map["0x14 HB Word 2"] =
