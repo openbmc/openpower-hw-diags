@@ -531,7 +531,7 @@ bool tiInfoValid(uint8_t* tiInfo)
         TiDataArea* tiDataArea = (TiDataArea*)tiInfo;
 
         // trace a few known TI data area values
-        trace::inf("TI data command = 0x02x", tiDataArea->command);
+        trace::inf("TI data command = 0x%02x", tiDataArea->command);
 
         // Another check for valid TI Info since it has been seen that
         // tiInfo[0] != 0 but TI info is not valid
@@ -540,12 +540,12 @@ bool tiInfoValid(uint8_t* tiInfo)
             tiInfoValid = true;
 
             // trace some more data since TI info appears valid
-            trace::inf("TI data term-type = 0x02x",
+            trace::inf("TI data term-type = 0x%02x",
                        tiDataArea->hbTerminateType);
 
-            trace::inf("TI data SRC format = 0x02x", tiDataArea->srcFormat);
+            trace::inf("TI data SRC format = 0x%02x", tiDataArea->srcFormat);
 
-            trace::inf("TI data source = 0x02x", tiDataArea->source);
+            trace::inf("TI data source = 0x%02x", tiDataArea->source);
         }
     }
 
