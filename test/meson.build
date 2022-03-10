@@ -229,3 +229,24 @@ exe = executable(tc.underscorify(), src, dependencies: dep,
                  cpp_args: test_arg, include_directories: incdir)
 
 test(tc, exe, env: var)
+
+################################################################################
+
+tc = 'test-attention'
+
+src = [
+  files(
+    tc + '.cpp',
+  ),
+  pdbg_test_dtb,
+]
+
+dep = [ gtest_dep ]
+
+var = [ pdbg_env ]
+
+exe = executable(tc.underscorify(), src, dependencies: dep,
+                 link_with : hwdiags_libs,
+                 cpp_args: test_arg, include_directories: incdir)
+
+test(tc, exe, env: var)
