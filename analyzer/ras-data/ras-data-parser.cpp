@@ -293,7 +293,8 @@ std::shared_ptr<Resolution>
             // clang-format off
             static const std::map<std::string, callout::Procedure> m =
             {
-                {"LEVEL2", callout::Procedure::NEXTLVL},
+                {"LEVEL2",   callout::Procedure::NEXTLVL},
+                {"SUE_SEEN", callout::Procedure::SUE_SEEN},
             };
             // clang-format on
 

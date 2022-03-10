@@ -104,6 +104,10 @@ class Procedure
     /** Contact next level support. */
     static const Procedure NEXTLVL;
 
+    /** An unrecoverable event occurred, look for previous errors for the
+     *  cause. */
+    static const Procedure SUE_SEEN;
+
   private:
     /**
      * @brief Constructor from components.
@@ -137,6 +141,8 @@ class Procedure
 
 inline const Procedure Procedure::NEXTLVL{"next_level_support",
                                           SrcSubsystem::OTHERS};
+inline const Procedure Procedure::SUE_SEEN{"find_sue_root_cause",
+                                           SrcSubsystem::OTHERS};
 
 /** @brief Container class for bus callout service actions. */
 class BusType

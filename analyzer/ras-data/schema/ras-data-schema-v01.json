@@ -177,7 +177,8 @@
                                     "properties": {
                                         "name": {
                                             "enum": [
-                                                "LEVEL2"
+                                                "LEVEL2",
+                                                "SUE_SEEN"
                                             ]
                                         }
                                     }
