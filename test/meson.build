@@ -250,3 +250,23 @@ exe = executable(tc.underscorify(), src, dependencies: dep,
                  cpp_args: test_arg, include_directories: incdir)
 
 test(tc, exe, env: var)
+
+################################################################################
+
+tc = 'test-util-data-file'
+
+src = [
+  files(
+    tc + '.cpp',
+  ),
+]
+
+dep = [ gtest_dep ]
+
+var = [ ]
+
+exe = executable(tc.underscorify(), src, dependencies: dep,
+                 link_with : hwdiags_libs,
+                 cpp_args: test_arg, include_directories: incdir)
+
+test(tc, exe, env: var)
