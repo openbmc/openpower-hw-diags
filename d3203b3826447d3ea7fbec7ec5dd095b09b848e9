@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "500f4ba6_a18d3842",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-03-16T17:02:09Z",
+      "side": 1,
+      "message": "UtilDataFile?",
+      "range": {
+        "startLine": 10,
+        "startChar": 5,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "d3203b3826447d3ea7fbec7ec5dd095b09b848e9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d46e7818_93ace1c7",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-03-16T17:02:09Z",
+      "side": 1,
+      "message": "fullPathTempFile1",
+      "range": {
+        "startLine": 19,
+        "startChar": 40,
+        "endLine": 19,
+        "endChar": 57
+      },
+      "revId": "d3203b3826447d3ea7fbec7ec5dd095b09b848e9",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
