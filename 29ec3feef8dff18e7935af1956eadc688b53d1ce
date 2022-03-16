@@ -16,6 +16,52 @@
       "message": "Additional work incoming",
       "revId": "29ec3feef8dff18e7935af1956eadc688b53d1ce",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "44327774_262123ac",
+        "filename": "test/test-attention.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-03-16T16:52:19Z",
+      "side": 1,
+      "message": "new should never return nullptr as long as the compiler conforms to the c++ standard.",
+      "range": {
+        "startLine": 55,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 1
+      },
+      "revId": "29ec3feef8dff18e7935af1956eadc688b53d1ce",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9d3c085d_2c4e2b47",
+        "filename": "test/test-attention.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-03-16T16:52:19Z",
+      "side": 1,
+      "message": "global",
+      "range": {
+        "startLine": 89,
+        "startChar": 18,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "29ec3feef8dff18e7935af1956eadc688b53d1ce",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
