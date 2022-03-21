@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "18951726_602f9a37",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-03-21T16:00:53Z",
+      "side": 1,
+      "message": "If I change the lines below to reuse json_obj variable, it fails.\n    json_obj \u003d R\"({\n    \"model_ec\" : \"20da0020\",\n    \"version_1\" : 1\n})\"_json;\n\n    EXPECT_FALSE(util::validateJson(schema_obj, json_obj));",
+      "range": {
+        "startLine": 87,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 60
+      },
+      "revId": "9b0ed5952ad195d3706ec5bd5c2fb33e54a24b84",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
