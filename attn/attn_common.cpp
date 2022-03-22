@@ -59,9 +59,11 @@ void addHbStatusRegs()
         // 00000000  Proc:00050001 )
         trace::inf("HostBoot Reg:%08x Data:%08x Proc:00000000", l_cfamAddr,
                    l_cfamData);
-        trace::inf("HostBoot Reg:%08x Data:%016" PRIx64 " Proc:00000000",
+        trace::inf("HostBoot Reg:%08" PRIx64 " Data:%016" PRIx64
+                   " Proc:00000000",
                    l_scomAddr1, l_scomData1);
-        trace::inf("HostBoot Reg:%08x Data:%016" PRIx64 " Proc:00000000",
+        trace::inf("HostBoot Reg:%08" PRIx64 " Data:%016" PRIx64
+                   " Proc:00000000",
                    l_scomAddr2, l_scomData2);
     }
 
