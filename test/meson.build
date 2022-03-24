@@ -83,229 +83,60 @@ test_libs = [
   test_util_lib,
 ]
 
-################################################################################
-
-tc = 'test-bin-stream'
-
-src = [
-  files(
-    tc + '.cpp',
-  ),
+# Additional SRCs that are not (or should not be) included in libraries.
+# NOTE: Try to limit this, if possible, to prevent duplicate compilation.
+test_additional_srcs = [
+  '../analyzer/plugins/p10-plugins.cpp',
+  '../analyzer/plugins/p10-tod-plugins.cpp',
+  '../cli.cpp',
 ]
-
-dep = [ gtest_dep ]
-
-var = [ ]
-
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with: test_libs,
-                 cpp_args: test_args, include_directories: incdir)
-
-test(tc, exe, env: var)
 
 ################################################################################
 
-tc = 'test-ffdc-file'
-
-src = [
-  files(
-    tc + '.cpp',
-  ),
+testcases = [
+  'test-bin-stream',
+  'test-ffdc-file',
+  'test-lpc-timeout',
+  'test-pdbg-dts',
+  'test-pll-unlock',
+  'test-resolution',
+  'test-tod-step-check-fault',
 ]
 
-dep = [ gtest_dep ]
+foreach tc : testcases
 
-var = [ ]
+  exe = executable(tc.underscorify(),
+    sources             : [ files(tc + '.cpp'), test_additional_srcs ],
+    include_directories : incdir,
+    dependencies        : test_deps,
+    cpp_args            : test_args,
+    link_with           : test_libs,
+  )
 
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with: test_libs,
-                 cpp_args: test_args, include_directories: incdir)
+  test(tc, exe, env: test_var)
 
-test(tc, exe, env: var)
+endforeach
 
 ################################################################################
 
-tc = 'test-lpc-timeout'
-
-src = [
-  files(
-    tc + '.cpp',
-    '../analyzer/plugins/p10-plugins.cpp',
-  ),
+testcases = [
+  'test-attention',
+  'test-end2end',
+  'test-util-data-file',
+  'test-ti-handler',
 ]
 
-dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
+foreach tc : testcases
 
-var = [ pdbg_env ]
+  exe = executable(tc.underscorify(),
+    sources             : [ files(tc + '.cpp'), test_additional_srcs ],
+    include_directories : incdir,
+    dependencies        : test_deps,
+    cpp_args            : test_args,
+    link_with           : hwdiags_libs, # TODO: should use test_libs instead
+  )
 
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with: test_libs,
-                 cpp_args: test_args, include_directories: incdir)
+  test(tc, exe, env: test_var)
 
-test(tc, exe, env: var)
-
-################################################################################
-
-tc = 'test-pdbg-dts'
-
-src = [
-  files(
-    tc + '.cpp',
-  ),
-]
-
-dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
-
-var = [ pdbg_env ]
-
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with: test_libs,
-                 cpp_args: test_args, include_directories: incdir)
-
-test(tc, exe, env: var)
-
-################################################################################
-
-tc = 'test-pll-unlock'
-
-src = [
-  files(
-    tc + '.cpp',
-    '../analyzer/plugins/p10-plugins.cpp',
-  ),
-]
-
-dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
-
-var = [ pdbg_env ]
-
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with: test_libs,
-                 cpp_args: test_args, include_directories: incdir)
-
-test(tc, exe, env: var)
-
-################################################################################
-
-tc = 'test-resolution'
-
-src = [
-  files(
-    tc + '.cpp',
-  ),
-]
-
-dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
-
-var = [ pdbg_env ]
-
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with: test_libs,
-                 cpp_args: test_args, include_directories: incdir)
-
-test(tc, exe, env: var)
-
-################################################################################
-
-tc = 'test-tod-step-check-fault'
-
-src = [
-  files(
-    tc + '.cpp',
-    '../analyzer/plugins/p10-tod-plugins.cpp',
-  ),
-]
-
-dep = [ libhei_dep, libpdbg_dep, gtest_dep ]
-
-var = [ pdbg_env ]
-
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with: test_libs,
-                 cpp_args: test_args, include_directories: incdir)
-
-test(tc, exe, env: var)
-
-################################################################################
-
-tc = 'test-ti-handler'
-
-src = [
-  files(
-    tc + '.cpp',
-  ),
-]
-
-dep = [ gtest_dep ]
-
-var = [ ]
-
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with : hwdiags_libs, # TODO: should use test_libs instead
-                 cpp_args: test_args, include_directories: incdir)
-
-test(tc, exe, env: var)
-
-################################################################################
-
-tc = 'test-attention'
-
-src = [
-  files(
-    tc + '.cpp',
-  ),
-  pdbg_test_dtb,
-]
-
-dep = [ gtest_dep ]
-
-var = [ pdbg_env ]
-
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with : hwdiags_libs, # TODO: should use test_libs instead
-                 cpp_args: test_args, include_directories: incdir)
-
-test(tc, exe, env: var)
-
-################################################################################
-
-tc = 'test-util-data-file'
-
-src = [
-  files(
-    tc + '.cpp',
-  ),
-]
-
-dep = [ gtest_dep ]
-
-var = [ ]
-
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with : hwdiags_libs, # TODO: should use test_libs instead
-                 cpp_args: test_args, include_directories: incdir)
-
-test(tc, exe, env: var)
-
-################################################################################
-
-tc = 'test-end2end'
-
-src = [
-  files(
-    tc + '.cpp',
-    '../cli.cpp',
-  ),
-  pdbg_test_dtb,
-]
-
-dep = [ gtest_dep ]
-
-var = [ pdbg_env ]
-
-exe = executable(tc.underscorify(), src, dependencies: dep,
-                 link_with : hwdiags_libs, # TODO: should use test_libs instead
-                 cpp_args: test_args, include_directories: incdir)
-
-test(tc, exe, env: var)
+endforeach
 
