@@ -41,9 +41,6 @@ pdbg_test_dtb = custom_target('build_pdbg_test_dtb',
 
 pdbg_env = 'PDBG_DTB=' + pdbg_test_dtb.full_path()
 
-# end2end code exerciser for experiment and testing
-subdir('end2end')
-
 ################################################################################
 
 tc = 'test-bin-stream'
@@ -250,3 +247,27 @@ exe = executable(tc.underscorify(), src, dependencies: dep,
                  cpp_args: test_arg, include_directories: incdir)
 
 test(tc, exe, env: var)
+
+
+################################################################################
+
+tc = 'test-end2end'
+
+src = [
+  files(
+    tc + '.cpp',
+    '../cli.cpp',
+  ),
+  pdbg_test_dtb,
+]
+
+dep = [ gtest_dep ]
+
+var = [ pdbg_env ]
+
+exe = executable(tc.underscorify(), src, dependencies: dep,
+                 link_with : hwdiags_libs,
+                 cpp_args: test_arg, include_directories: incdir)
+
+test(tc, exe, env: var)
+
