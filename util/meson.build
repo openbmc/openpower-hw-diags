@@ -26,7 +26,7 @@ util_lib = static_library(
     util_src,
     include_directories : incdir,
     dependencies : util_deps,
-    cpp_args : [ package_args, test_arg ],
+    cpp_args : [ package_args ],
     install : false,
 )
 

@@ -70,16 +70,6 @@ if get_option('phal').enabled()
   libphal_dep = cmplr.find_library('phal')
 endif
 
-# See if phosphor-logging is available, if not use test case logging code.
-h = 'phosphor-logging/log.hpp'
-if cmplr.compiles('#include <@0@>'.format(h), name : '#include <@0@>'.format(h))
-    test_arg = []
-else
-    test_arg = [
-        '-DTEST_TRACE',
-    ]
-endif
-
 pthread = declare_dependency(link_args : '-pthread')
 lrt = declare_dependency(link_args : '-lrt')
 
@@ -140,7 +130,6 @@ else
                           plugins_src ],
               dependencies : [lrt, pthread, libhei_dep],
               link_with : hwdiags_libs,
-              cpp_args : test_arg,
               install : true)
 endif
 
