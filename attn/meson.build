@@ -69,6 +69,6 @@ attn_lib = static_library(
     pel_src,
     include_directories : incdir,
     dependencies : attn_deps,
-    cpp_args : [boost_args, test_arg],
+    cpp_args : [boost_args],
     install : false,
 )

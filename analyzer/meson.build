@@ -31,7 +31,7 @@ analyzer_lib = static_library(
     [ analyzer_src ],
     include_directories : incdir,
     dependencies : analyzer_deps,
-    cpp_args : [ package_args, test_arg ],
+    cpp_args : [ package_args ],
     install : false,
 )
 
