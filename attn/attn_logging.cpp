@@ -123,7 +123,7 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
     {
         // The entry with key "Subsystem" does not exist in the additional map.
         // Log the error, create failure event, and return.
-        trace::err("Error the key %s does not exist in the map.", "Subsystem");
+        trace::err("Error the key Subsystem does not exist in the map.");
         eventAttentionFail((int)AttnSection::attnLogging | ATTN_INVALID_KEY);
         return;
     }
@@ -172,8 +172,7 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
         {
             // The entry with key "Subsystem" does not exist in the additional
             // map. Log the error, create failure event, and return.
-            trace::err("Error the key %s does not exist in the map.",
-                       "SrcAscii");
+            trace::err("Error the key SrcAscii does not exist in the map.");
             eventAttentionFail((int)AttnSection::attnLogging |
                                ATTN_INVALID_KEY);
             return;
@@ -232,8 +231,7 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
         {
             // The entry with key "Subsystem" does not exist in the additional
             // map. Log the error, create failure event, and return.
-            trace::err("Error the key %s does not exist in the map.",
-                       "SrcAscii");
+            trace::err("Error the key SrcAscii does not exist in the map.");
             eventAttentionFail((int)AttnSection::attnLogging |
                                ATTN_INVALID_KEY);
             return;
@@ -391,8 +389,8 @@ uint32_t event(EventType i_event,
                 // The entry with key "Subsystem" does not exist in the
                 // additional map. Log the error, create failure event, and
                 // return.
-                trace::err("Error the key %s does not exist in the map.",
-                           "Subsystem");
+                trace::err(
+                    "Error the key Subsystem does not exist in the map.");
                 eventAttentionFail((int)AttnSection::attnLogging |
                                    ATTN_INVALID_KEY);
                 return 0;
@@ -444,8 +442,7 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
         {
             // The entry with key "Subsystem" does not exist in the additional
             // map. Log the error, create failure event, and return.
-            trace::err("Error the key %s does not exist in the map.",
-                       "Subsystem");
+            trace::err("Error the key Subsystem does not exist in the map.");
             eventAttentionFail((int)AttnSection::attnLogging |
                                ATTN_INVALID_KEY);
             return;
