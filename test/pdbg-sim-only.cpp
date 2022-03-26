@@ -9,8 +9,8 @@
 #include <assert.h>
 
 #include <test/sim-hw-access.hpp>
+#include <util/log.hpp>
 #include <util/pdbg.hpp>
-#include <util/trace.hpp>
 
 //------------------------------------------------------------------------------
 
@@ -47,8 +47,10 @@ int getScom(pdbg_target* i_target, uint64_t i_addr, uint64_t& o_val)
 
     if (0 != rc)
     {
-        trace::err("SCOM read failure: target=%s addr=0x%0" PRIx64,
-                   getPath(i_target), i_addr);
+        lg2::error(
+            "SCOM read failure: target={SCOM_TARGET} addr={SCOM_ADDRESS}",
+            "SCOM_TARGET", getPath(i_target), "SCOM_ADDRESS",
+            (lg2::hex | lg2::field64), i_addr, "SCOM_ACCESS_RC", rc);
     }
 
     return rc;
@@ -65,8 +67,10 @@ int getCfam(pdbg_target* i_target, uint32_t i_addr, uint32_t& o_val)
 
     if (0 != rc)
     {
-        trace::err("CFAM read failure: target=%s addr=0x%08x",
-                   getPath(i_target), i_addr);
+        lg2::error(
+            "CFAM read failure: target={CFAM_TARGET} addr={CFAM_ADDRESS}",
+            "CFAM_TARGET", getPath(i_target), "CFAM_ADDRESS",
+            (lg2::hex | lg2::field32), i_addr, "CFAM_ACCESS_RC", rc);
     }
 
     return rc;
