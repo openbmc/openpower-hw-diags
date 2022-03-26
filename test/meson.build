@@ -62,11 +62,13 @@ test_util_srcs = [
 test_deps = [
   libhei_dep,
   libpdbg_dep,
+  phosphor_logging_dep,
   gtest_dep,
 ]
 
 test_vars = [
   pdbg_env,
+  'LG2_FORCE_STDERR=true',
 ]
 
 test_util_lib = static_library('test_util_lib',
