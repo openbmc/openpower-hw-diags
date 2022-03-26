@@ -11,6 +11,26 @@ using json = nlohmann::json;
 
 TEST(UtilDataFile, TestFindFiles)
 {
+    // The parent folder is determined by the file system.
+    // On Linux it is /tmp.
+    fs::path dataDir = fs::temp_directory_path();
+    // pattern of the temp files used by TemporaryFile class.
+    auto regexPattern = R"(openpower\-hw\-diags\-.*)";
+    // The vector to store existing temp files before creating new ones.
+    vector<fs::path> existingDataPaths;
+    // The vector to store new and existing temp files.
+    vector<fs::path> dataPaths;
+
+    trace::inf("parent path: %s", string(dataDir).c_str());
+    // Before creating temp files, call the function under test.
+    util::findFiles(dataDir, regexPattern, existingDataPaths);
+
+    for (auto path : existingDataPaths)
+    {
+        trace::inf("path in existingDataPath vector: %s", path.c_str());
+    }
+
+    // Create two new temp file objects.
     TemporaryFile tempFile1{};
     TemporaryFile tempFile2{};
 
@@ -21,17 +41,12 @@ TEST(UtilDataFile, TestFindFiles)
     trace::inf("fullPathTempFile1: %s", fullPathTempFile1.c_str());
     trace::inf("fullPathTempFile2: %s", fullPathTempFile2.c_str());
 
+    // Paths of two temp files.
     // path1 and path2 will be used to test later.
     fs::path path1 = fullPathTempFile1;
     fs::path path2 = fullPathTempFile2;
 
-    // parent pathes for path1 and path2 are the same.
-    fs::path dataDir  = path1.parent_path();
-    auto regexPattern = R"(openpower\-hw\-diags\-.*)";
-    vector<fs::path> dataPaths;
-
-    trace::inf("parent path: %s", string(dataDir).c_str());
-    // call the function under test.
+    // After creating new temp files, call the function under test.
     util::findFiles(dataDir, regexPattern, dataPaths);
 
     for (auto path : dataPaths)
@@ -39,13 +54,26 @@ TEST(UtilDataFile, TestFindFiles)
         trace::inf("path in dataPath vector: %s", path.c_str());
     }
 
-    EXPECT_EQ(2, dataPaths.size());
+    // TODO
+    // Sometimes, by the time calling the function below,
+    // the existing temp files have been deleted,
+    // and the following testing functino will not be true.
+    EXPECT_EQ((2 + existingDataPaths.size()), dataPaths.size());
 
     vector<fs::path>::iterator it;
+    // Before removing the newly created temp files.
     it = find(dataPaths.begin(), dataPaths.end(), path1);
     EXPECT_TRUE(it != dataPaths.end());
     it = find(dataPaths.begin(), dataPaths.end(), path2);
     EXPECT_TRUE(it != dataPaths.end());
+
+    // Remove the newly created temp files.
+    tempFile1.remove();
+    tempFile2.remove();
+
+    // After removing the newly created temp files, the temp file path entries
+    // are still in the dataPaths vector.
+    // The test complete.
 }
 
 TEST(UtilDataFile, TestValidateJson)
