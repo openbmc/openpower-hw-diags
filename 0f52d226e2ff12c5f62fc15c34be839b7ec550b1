@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bec69392_f81fcdf6",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-03-28T16:27:04Z",
+      "side": 1,
+      "message": "can remove this",
+      "range": {
+        "startLine": 20,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "0f52d226e2ff12c5f62fc15c34be839b7ec550b1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4fd78b00_17c27f03",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-03-28T16:27:04Z",
+      "side": 1,
+      "message": "can remove this as well",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "0f52d226e2ff12c5f62fc15c34be839b7ec550b1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aa474a9f_2e4ba8f1",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-03-28T16:27:04Z",
+      "side": 1,
+      "message": "can remove this trace",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 5
+      },
+      "revId": "0f52d226e2ff12c5f62fc15c34be839b7ec550b1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
