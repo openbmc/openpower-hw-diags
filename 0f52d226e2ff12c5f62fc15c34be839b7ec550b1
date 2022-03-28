@@ -24,6 +24,54 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "3880f135_7de4daf8",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-03-28T16:49:06Z",
+      "side": 1,
+      "message": "fix in next commit",
+      "parentUuid": "bec69392_f81fcdf6",
+      "range": {
+        "startLine": 20,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "0f52d226e2ff12c5f62fc15c34be839b7ec550b1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49c3fc1a_1cc46627",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-03-28T16:49:06Z",
+      "side": 1,
+      "message": "fix in next commit",
+      "parentUuid": "bec69392_f81fcdf6",
+      "range": {
+        "startLine": 20,
+        "startChar": 1,
+        "endLine": 20,
+        "endChar": 39
+      },
+      "revId": "0f52d226e2ff12c5f62fc15c34be839b7ec550b1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4fd78b00_17c27f03",
@@ -47,6 +95,54 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "545daa3f_f9b96df7",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-03-28T16:49:06Z",
+      "side": 1,
+      "message": "fix in next commit",
+      "parentUuid": "4fd78b00_17c27f03",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "0f52d226e2ff12c5f62fc15c34be839b7ec550b1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "45075355_b41d9dfb",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-03-28T16:49:06Z",
+      "side": 1,
+      "message": "fix in next commit",
+      "parentUuid": "4fd78b00_17c27f03",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 5
+      },
+      "revId": "0f52d226e2ff12c5f62fc15c34be839b7ec550b1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aa474a9f_2e4ba8f1",
@@ -60,6 +156,54 @@
       "writtenOn": "2022-03-28T16:27:04Z",
       "side": 1,
       "message": "can remove this trace",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 5
+      },
+      "revId": "0f52d226e2ff12c5f62fc15c34be839b7ec550b1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "762a917d_77177907",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-03-28T16:49:06Z",
+      "side": 1,
+      "message": "fix in next commit",
+      "parentUuid": "aa474a9f_2e4ba8f1",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 5
+      },
+      "revId": "0f52d226e2ff12c5f62fc15c34be839b7ec550b1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4f299521_886006c5",
+        "filename": "test/test-util-data-file.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001232
+      },
+      "writtenOn": "2022-03-28T16:49:06Z",
+      "side": 1,
+      "message": "fix in next commit",
+      "parentUuid": "aa474a9f_2e4ba8f1",
       "range": {
         "startLine": 52,
         "startChar": 0,
