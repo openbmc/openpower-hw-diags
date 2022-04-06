@@ -67,6 +67,9 @@ void getStaticTiInfo(uint8_t*& tiInfoPtr);
 /** @brief Check if TI info data is valid */
 bool tiInfoValid(uint8_t* tiInfo);
 
+/** @brief Clear attention interrupts */
+void clearAttnInterrupts();
+
 /**
  * @brief The main attention handler logic
  *
@@ -74,6 +77,9 @@ bool tiInfoValid(uint8_t* tiInfo);
  */
 void attnHandler(Config* i_config)
 {
+    // Clear attention interrupts that may still be active (MPIPL)
+    clearAttnInterrupts();
+
     // Vector of active attentions to be handled
     std::vector<Attention> active_attentions;
 
@@ -550,6 +556,93 @@ bool tiInfoValid(uint8_t* tiInfo)
     }
 
     return tiInfoValid;
+}
+
+/**
+ * @brief Clear attention interrupts
+ *
+ * The attention interrupts are sticky and may still be set (MPIPL) even if
+ * there  are no active attentions. If there is an active attention then
+ * clearing the associated interrupt will have not effect.
+ */
+void clearAttnInterrupts()
+{
+    uint32_t int_val;
+
+    // loop through processors clearing attention interrupts
+    trace::inf("Clearing attention interrupts");
+
+    pdbg_target* target;
+    pdbg_for_each_class_target("proc", target)
+    {
+        if (PDBG_TARGET_ENABLED == pdbg_target_probe(target))
+        {
+            auto proc = pdbg_target_index(target); // get processor number
+
+            // Use PIB target to determine if a processor is enabled
+            char path[16];
+            sprintf(path, "/proc%d/pib", proc);
+            pdbg_target* pibTarget = pdbg_target_from_path(nullptr, path);
+
+            // sanity check
+            if (nullptr == pibTarget)
+            {
+                trace::inf("pib path or target not found");
+                continue;
+            }
+
+            // check if pib target is enabled
+            if (PDBG_TARGET_ENABLED == pdbg_target_probe(pibTarget))
+            {
+                // The processor FSI target is required for CFAM access
+                sprintf(path, "/proc%d/fsi", proc);
+                pdbg_target* fsiTarget = pdbg_target_from_path(nullptr, path);
+
+                // sanity check
+                if (nullptr == fsiTarget)
+                {
+                    trace::inf("fsi path or target not found");
+                    continue;
+                }
+
+                // trace the proc number
+                trace::inf("proc: %u", proc);
+
+                int_val = 0xffffffff; // invalid isr value
+
+                // get attention interrupts on processor
+                if (RC_SUCCESS != fsi_read(fsiTarget, 0x100b, &int_val))
+                {
+                    // log cfam read error
+                    trace::err("cfam read 0x100b FAILED");
+                    eventAttentionFail((int)AttnSection::attnHandler |
+                                       ATTN_PDBG_CFAM);
+                }
+                else if (0xffffffff == int_val)
+                {
+                    trace::err("cfam read 0x100b INVALID");
+                    continue;
+                }
+                else
+                {
+                    // trace int value
+                    trace::inf("cfam 0x100b = 0x%08x", int_val);
+
+                    int_val &= ~(ANY_ATTN | CHECKSTOP_ATTN | SPECIAL_ATTN |
+                                 RECOVERABLE_ATTN | SBE_ATTN);
+
+                    // clear attention interrupts on processor
+                    if (RC_SUCCESS != fsi_write(fsiTarget, 0x100b, int_val))
+                    {
+                        // log cfam read error
+                        trace::err("cfam write 0x100b FAILED");
+                        eventAttentionFail((int)AttnSection::attnHandler |
+                                           ATTN_PDBG_CFAM);
+                    }
+                }
+            }
+        }
+    }
 }
 
 } // namespace attn
