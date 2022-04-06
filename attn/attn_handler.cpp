@@ -22,6 +22,7 @@ extern "C"
 #include <attn/vital_handler.hpp>
 #include <util/dbus.hpp>
 #include <util/ffdc_file.hpp>
+#include <util/pdbg.hpp>
 #include <util/trace.hpp>
 
 #include <algorithm>
@@ -67,6 +68,9 @@ void getStaticTiInfo(uint8_t*& tiInfoPtr);
 /** @brief Check if TI info data is valid */
 bool tiInfoValid(uint8_t* tiInfo);
 
+/** @brief Clear attention interrupts */
+void clearAttnInterrupts();
+
 /**
  * @brief The main attention handler logic
  *
@@ -74,6 +78,9 @@ bool tiInfoValid(uint8_t* tiInfo);
  */
 void attnHandler(Config* i_config)
 {
+    // Clear attention interrupts that may still be active (MPIPL)
+    clearAttnInterrupts();
+
     // Vector of active attentions to be handled
     std::vector<Attention> active_attentions;
 
@@ -296,8 +303,8 @@ int handleSpecial(Attention* i_attention)
                 // library threw an exception
                 // note: phal::sbe::getTiInfo = command class | command ==
                 // 0xa900 | 0x04 = 0xa904. The sbe fifo command class and
-                // commands are defined in the sbefifo library source code but
-                // do not seem to be exported/installed for consumption
+                // commands are defined in the sbefifo library source code
+                // but do not seem to be exported/installed for consumption
                 // externally.
                 uint32_t procNum = pdbg_target_index(attnProc);
                 phalSbeExceptionHandler(sbeError, procNum, 0xa904);
@@ -470,9 +477,9 @@ void phalSbeExceptionHandler(openpower::phal::exception::SbeError& sbeError,
         std::map<std::string, std::string> additionalData = {
             {"SRC6", std::to_string((chipPosition << 16) | command)}};
 
-        // See phosphor-logging/extensions/openpower-pels/README.md, "Self Boot
-        // Engine(SBE) First Failure Data Capture(FFDC)" - SBE FFDC file type
-        // is 0xCB, version is 0x01.
+        // See phosphor-logging/extensions/openpower-pels/README.md, "Self
+        // Boot Engine(SBE) First Failure Data Capture(FFDC)" - SBE FFDC
+        // file type is 0xCB, version is 0x01.
         std::vector<util::FFDCTuple> ffdc{util::FFDCTuple{
             util::FFDCFormat::Custom, static_cast<uint8_t>(0xCB),
             static_cast<uint8_t>(0x01), fd}};
@@ -550,6 +557,56 @@ bool tiInfoValid(uint8_t* tiInfo)
     }
 
     return tiInfoValid;
+}
+
+/**
+ * @brief Clear attention interrupts
+ *
+ * The attention interrupts are sticky and may still be set (MPIPL) even if
+ * there are no active attentions. If there is an active attention then
+ * clearing the associated interrupt will have no effect.
+ */
+void clearAttnInterrupts()
+{
+    trace::inf("Clearing attention interrupts");
+
+    // loop through processors clearing attention interrupts
+    pdbg_target* procTarget;
+    pdbg_for_each_class_target("proc", procTarget)
+    {
+        // active processors only
+        if (PDBG_TARGET_ENABLED !=
+            pdbg_target_probe(util::pdbg::getPibTrgt(procTarget)))
+        {
+            continue;
+        }
+
+        // get cfam is an fsi read
+        pdbg_target* fsiTarget = util::pdbg::getFsiTrgt(procTarget);
+        uint32_t int_val;
+
+        // get attention interrupts on processor
+        if (RC_SUCCESS == fsi_read(fsiTarget, 0x100b, &int_val))
+        {
+            // trace int value
+            trace::inf("cfam 0x100b = 0x%08x", int_val);
+
+            int_val &= ~(ANY_ATTN | CHECKSTOP_ATTN | SPECIAL_ATTN |
+                         RECOVERABLE_ATTN | SBE_ATTN);
+
+            // clear attention interrupts on processor
+            if (RC_SUCCESS != fsi_write(fsiTarget, 0x100b, int_val))
+            {
+                // log cfam write error
+                trace::err("cfam write 0x100b FAILED");
+            }
+        }
+        else
+        {
+            // log cfam read error
+            trace::err("cfam read 0x100b FAILED");
+        }
+    }
 }
 
 } // namespace attn
