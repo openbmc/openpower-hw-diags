@@ -22,6 +22,30 @@
       },
       "revId": "d80665b10d76c39af78ff15e49861ba8683ae338",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cdd4d0af_aff2b76a",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 591,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-04-08T14:59:31Z",
+      "side": 1,
+      "message": "doh! good catch. We can make sure we use the right target, so I was ok with a wrong target assert (bug in our code) but we can\u0027t really make sure the library doesn\u0027t return a nullptr (bug in their code). On the fence about using util function now.",
+      "parentUuid": "f78895f7_257040fa",
+      "range": {
+        "startLine": 591,
+        "startChar": 12,
+        "endLine": 591,
+        "endChar": 34
+      },
+      "revId": "d80665b10d76c39af78ff15e49861ba8683ae338",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
