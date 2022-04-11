@@ -16,6 +16,24 @@
       "message": "Approved, but waiting for test completion.",
       "revId": "513ca9ec40e5e8b1b86cd89059a4bae29593c312",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ce59fd6f_e578f0ed",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-04-11T18:32:28Z",
+      "side": 1,
+      "message": "I have verified fix, it works. I am no longer testing this.",
+      "parentUuid": "51f465e2_4ee0c11b",
+      "revId": "513ca9ec40e5e8b1b86cd89059a4bae29593c312",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
