@@ -140,5 +140,60 @@ endif
 build_tests = get_option('tests')
 
 if not build_tests.disabled()
+
+  # IMPORTANT NOTE:
+  # We cannot link the test executables to `util_lib` because:
+  #   - It is built without `-DTEST_TRACE` and any of the util functions that
+  #     use `trace.hpp` will throw a linker error because we don't have access
+  #     to phosphor-logging in test ... yet. This issue will go away once we
+  #     have converted all of our trace to use the `lg2` interfaces.
+  #   - Some functions related to pdbg and dbus simply cannot be built in the
+  #     test environment. Instead, there are alternate implementation of those
+  #     functions to simulate them for testing (see `test/*-sim-only.cpp`).
+  # Instead we will build a `test_util_lib` that will contain the `util` files
+  # that we need in test along with simulated versions of some util functions.
+
+  # IMPORTANT NOTE:
+  # When running GCOV reports, the Jenkins CI script explicitly ignores any
+  # libraries and executables built in the `test/` directory. Therefore, this
+  # `test_util_lib` library must be built here instead in order to get any GCOV
+  # credit for the code.
+
+  test_args = [
+    '-DTEST_TRACE',
+    package_args,
+  ]
+
+  test_util_srcs = [
+    files(
+      'util/data_file.cpp',
+      'util/ffdc_file.cpp',
+      'util/pdbg.cpp',
+      'util/temporary_file.cpp',
+      'test/dbus-sim-only.cpp',
+      'test/pdbg-sim-only.cpp',
+    ),
+  ]
+
+  test_util_deps = [
+    libhei_dep,
+    libpdbg_dep,
+    phosphor_logging_dep,
+  ]
+
+  test_util_lib = static_library('test_util_lib',
+    sources             : test_util_srcs,
+    include_directories : incdir,
+    dependencies        : test_util_deps,
+    cpp_args            : test_args,
+    install             : true,
+  )
+
+  test_libs = [
+    analyzer_lib,
+    attn_lib,
+    test_util_lib,
+  ]
+
   subdir('test')
 endif

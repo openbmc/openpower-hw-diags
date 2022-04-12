@@ -33,36 +33,9 @@ pdbg_env = 'PDBG_DTB=' + pdbg_test_dtb.full_path()
 
 ################################################################################
 
-# IMPORTANT NOTE:
-# We cannot link to `util_lib` because:
-#   - It is built without `-DTEST_TRACE` and any of the util functions that use
-#     `trace.hpp` will throw a linker error because we don't have access to
-#     phosphor-logging in test ... yet.
-#   - Some functions related to pdbg and dbus simply cannot be built in the test
-#     environment. Instead, there are alternate implementation of those
-#     functions to simulate them for testing.
-
-test_args = [
-  '-DTEST_TRACE',
-  package_args,
-]
-
-test_util_srcs = [
-  files(
-    '../util/data_file.cpp',
-    '../util/ffdc_file.cpp',
-    '../util/pdbg.cpp',
-    '../util/temporary_file.cpp',
-    'dbus-sim-only.cpp',
-    'pdbg-sim-only.cpp',
-  ),
-  pdbg_test_dtb
-]
-
+# Add gtest/gmock dependency to the list of test dependencies.
 test_deps = [
-  libhei_dep,
-  libpdbg_dep,
-  phosphor_logging_dep,
+  test_util_deps,
   gtest_dep,
 ]
 
@@ -71,26 +44,15 @@ test_vars = [
   'LG2_FORCE_STDERR=true',
 ]
 
-test_util_lib = static_library('test_util_lib',
-  sources             : test_util_srcs,
-  include_directories : incdir,
-  dependencies        : test_deps,
-  cpp_args            : test_args,
-  install             : false,
-)
-
-test_libs = [
-  analyzer_lib,
-  attn_lib,
-  test_util_lib,
-]
-
 # Additional SRCs that are not (or should not be) included in libraries.
 # NOTE: Try to limit this, if possible, to prevent duplicate compilation.
 test_additional_srcs = [
-  '../analyzer/plugins/p10-plugins.cpp',
-  '../analyzer/plugins/p10-tod-plugins.cpp',
-  '../cli.cpp',
+  files(
+    '../analyzer/plugins/p10-plugins.cpp',
+    '../analyzer/plugins/p10-tod-plugins.cpp',
+    '../cli.cpp',
+  ),
+  pdbg_test_dtb
 ]
 
 ################################################################################
