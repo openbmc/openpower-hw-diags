@@ -69,7 +69,7 @@ class AttentionTestPos : public testing::Test
     }
 
     std::unique_ptr<Attention> pAttn;
-    Config* config;
+    Config* config      = nullptr;
     pdbg_target* target = nullptr;
 };
 
@@ -140,7 +140,7 @@ class AttentionTestProc : public testing::Test
     }
 
     std::unique_ptr<Attention> pAttn;
-    Config* config;
+    Config* config      = nullptr;
     pdbg_target* target = nullptr;
     uint32_t attr;
 };
