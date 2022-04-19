@@ -1,10 +1,13 @@
 #include <fcntl.h>
+#include <libpdbg.h>
 
+#include <hei_main.hpp>
 #include <test/sim-hw-access.hpp>
 #include <util/pdbg.hpp>
 #include <util/trace.hpp>
 
 #include <limits>
+#include <vector>
 
 #include "gtest/gtest.h"
 
@@ -230,4 +233,17 @@ TEST(util_pdbg, getCfam)
 
     // Test non-chip target.
     EXPECT_DEATH({ getCfam(omiUnit, 0x11111111, val); }, "");
+}
+
+TEST(util_pdbg, getActiveChips)
+{
+    using namespace util::pdbg;
+    using namespace libhei;
+    pdbg_targets_init(nullptr);
+
+    std::vector<libhei::Chip> chips;
+    getActiveChips(chips);
+
+    trace::inf("chips size: %u", chips.size());
+    EXPECT_EQ(2, chips.size());
 }
