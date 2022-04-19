@@ -2015,8 +2015,8 @@
     proc1 {
         compatible = "ibm,power-proc", "ibm,power10-proc";
         index = <0x01>;
-        ATTR_CHIP_ID = <0>;
-        ATTR_EC = [ 00 ];
+        ATTR_CHIP_ID = <1>;
+        ATTR_EC = [ 01 ];
         ATTR_FAPI_POS = <1>;
         ATTR_LOCATION_CODE = "Ufcs-P0-C15";
         ATTR_PHYS_BIN_PATH = [ 23 01 00 02 00 05 01 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ];
@@ -2324,8 +2324,8 @@
                                 ocmb0 {
                                     compatible = "ibm,power-ocmb", "ibm,power10-ocmb";
                                     index = <0x08>;
-                                    ATTR_CHIP_ID = <0>;
-                                    ATTR_EC = [ 00 ];
+                                    ATTR_CHIP_ID = <1>;
+                                    ATTR_EC = [ 01 ];
                                     ATTR_FAPI_POS = <24>;
                                     ATTR_LOCATION_CODE = "Ufcs-P0-C18";
                                     ATTR_PHYS_BIN_PATH = [ 23 01 00 02 00 4B 08 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ];
@@ -2366,8 +2366,8 @@
                                 ocmb0 {
                                     compatible = "ibm,power-ocmb", "ibm,power10-ocmb";
                                     index = <0x09>;
-                                    ATTR_CHIP_ID = <0>;
-                                    ATTR_EC = [ 00 ];
+                                    ATTR_CHIP_ID = <1>;
+                                    ATTR_EC = [ 01 ];
                                     ATTR_FAPI_POS = <25>;
                                     ATTR_LOCATION_CODE = "Ufcs-P0-C17";
                                     ATTR_PHYS_BIN_PATH = [ 23 01 00 02 00 4B 09 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ];
@@ -2418,8 +2418,8 @@
                                 ocmb0 {
                                     compatible = "ibm,power-ocmb", "ibm,power10-ocmb";
                                     index = <0x0a>;
-                                    ATTR_CHIP_ID = <0>;
-                                    ATTR_EC = [ 00 ];
+                                    ATTR_CHIP_ID = <1>;
+                                    ATTR_EC = [ 01 ];
                                     ATTR_FAPI_POS = <26>;
                                     ATTR_LOCATION_CODE = "Ufcs-P0-C16";
                                     ATTR_PHYS_BIN_PATH = [ 23 01 00 02 00 4B 0A 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ];
@@ -2460,8 +2460,8 @@
                                 ocmb0 {
                                     compatible = "ibm,power-ocmb", "ibm,power10-ocmb";
                                     index = <0x0b>;
-                                    ATTR_CHIP_ID = <0>;
-                                    ATTR_EC = [ 00 ];
+                                    ATTR_CHIP_ID = <1>;
+                                    ATTR_EC = [ 01 ];
                                     ATTR_FAPI_POS = <27>;
                                     ATTR_LOCATION_CODE = "Ufcs-P0-C35";
                                     ATTR_PHYS_BIN_PATH = [ 23 01 00 02 00 4B 0B 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ];
@@ -2562,8 +2562,8 @@
                                 ocmb0 {
                                     compatible = "ibm,power-ocmb", "ibm,power10-ocmb";
                                     index = <0x0c>;
-                                    ATTR_CHIP_ID = <0>;
-                                    ATTR_EC = [ 00 ];
+                                    ATTR_CHIP_ID = <1>;
+                                    ATTR_EC = [ 01 ];
                                     ATTR_FAPI_POS = <28>;
                                     ATTR_LOCATION_CODE = "Ufcs-P0-C37";
                                     ATTR_PHYS_BIN_PATH = [ 23 01 00 02 00 4B 0C 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ];
@@ -2604,8 +2604,8 @@
                                 ocmb0 {
                                     compatible = "ibm,power-ocmb", "ibm,power10-ocmb";
                                     index = <0x0d>;
-                                    ATTR_CHIP_ID = <0>;
-                                    ATTR_EC = [ 00 ];
+                                    ATTR_CHIP_ID = <1>;
+                                    ATTR_EC = [ 01 ];
                                     ATTR_FAPI_POS = <29>;
                                     ATTR_LOCATION_CODE = "Ufcs-P0-C36";
                                     ATTR_PHYS_BIN_PATH = [ 23 01 00 02 00 4B 0D 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ];
@@ -2656,8 +2656,8 @@
                                 ocmb0 {
                                     compatible = "ibm,power-ocmb", "ibm,power10-ocmb";
                                     index = <0x0e>;
-                                    ATTR_CHIP_ID = <0>;
-                                    ATTR_EC = [ 00 ];
+                                    ATTR_CHIP_ID = <1>;
+                                    ATTR_EC = [ 01 ];
                                     ATTR_FAPI_POS = <30>;
                                     ATTR_LOCATION_CODE = "Ufcs-P0-C34";
                                     ATTR_PHYS_BIN_PATH = [ 23 01 00 02 00 4B 0E 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ];
@@ -2698,8 +2698,8 @@
                                 ocmb0 {
                                     compatible = "ibm,power-ocmb", "ibm,power10-ocmb";
                                     index = <0x0f>;
-                                    ATTR_CHIP_ID = <0>;
-                                    ATTR_EC = [ 00 ];
+                                    ATTR_CHIP_ID = <1>;
+                                    ATTR_EC = [ 01 ];
                                     ATTR_FAPI_POS = <31>;
                                     ATTR_LOCATION_CODE = "Ufcs-P0-C33";
                                     ATTR_PHYS_BIN_PATH = [ 23 01 00 02 00 4B 0F 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ];
