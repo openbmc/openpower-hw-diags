@@ -96,12 +96,17 @@ class Data
      *        network.
      * @param i_topology          Target topology.
      * @param i_chipSourcingClock The chip sourcing the clock for the chip at
-     *                            fault. This is NOT the chip at fault.
+     *                            fault.
+     * @param i_chipAtFault       The chip reporting the fault.
      */
-    void setNetworkFault(Topology i_topology, pdbg_target* i_chipSourcingClock)
+    void setNetworkFault(Topology i_topology, pdbg_target* i_chipSourcingClock,
+                         pdbg_target* i_chipAtFault)
     {
         assert(nullptr != i_chipSourcingClock);
         iv_networkFaultList[i_topology].push_back(i_chipSourcingClock);
+
+        assert(nullptr != i_chipAtFault);
+        iv_networkFaultList[i_topology].push_back(i_chipAtFault);
     }
 
     /**
@@ -281,7 +286,7 @@ void collectTodFaultData(pdbg_target* i_chip, Data& o_data)
                                slavePathSelect, util::pdbg::getPath(i_chip),
                                iohsPos, util::pdbg::getPath(chipSourcingClock));
 
-                    o_data.setNetworkFault(top, chipSourcingClock);
+                    o_data.setNetworkFault(top, chipSourcingClock, i_chip);
                 }
             }
         }
