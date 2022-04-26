@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9cce13d0_96abd6c6",
+        "filename": "test/pdbg-test.dts",
+        "patchSetId": 2
+      },
+      "lineNbr": 2327,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-04-26T16:55:55Z",
+      "side": 1,
+      "message": "Need proper values for this. As written, this means the OCMB and PROC are the same type of chip.",
+      "range": {
+        "startLine": 2327,
+        "startChar": 36,
+        "endLine": 2327,
+        "endChar": 55
+      },
+      "revId": "2206553c5a46d3aa803c95a89260131984daac9c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
