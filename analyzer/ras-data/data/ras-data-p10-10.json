@@ -998,7 +998,7 @@
         ],
 
         "ncu_timeout"    : [
-            { "type": "action", "name": "level2" }
+            { "type": "plugin", "name": "lpc_timeout", "instance": 0 }
         ],
 
         "master_power_bus_chip_procedure": [
