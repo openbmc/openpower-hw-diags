@@ -65,6 +65,7 @@ testcases = [
   'test-pll-unlock',
   'test-resolution',
   'test-tod-step-check-fault',
+  'test-cli',  
 ]
 
 foreach tc : testcases

@@ -12,6 +12,7 @@ enum AttentionFlag
     enTerminate   = 2,
     enBreakpoints = 3,
     dfltTi        = 4,
+    enClrAttnIntr = 5,
     lastFlag
 };
 
@@ -39,10 +40,6 @@ class Config
 
     /** @brief Clear all configuration flags */
     void clearFlagAll();
-
-    /** @brief Set state of all configuration data */
-    void setConfig(bool i_vital, bool i_checkstop, bool i_terminate,
-                   bool i_breakpoints);
 
   private:
     std::bitset<lastFlag> iv_flags; // configuration flags
