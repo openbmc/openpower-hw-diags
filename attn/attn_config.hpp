@@ -4,6 +4,7 @@
 namespace attn
 {
 
+// TODO: Check if there is a better abbreviation.
 /** @brief configuration flags */
 enum AttentionFlag
 {
@@ -12,6 +13,7 @@ enum AttentionFlag
     enTerminate   = 2,
     enBreakpoints = 3,
     dfltTi        = 4,
+    enClrAttnIntr = 5,
     lastFlag
 };
 
