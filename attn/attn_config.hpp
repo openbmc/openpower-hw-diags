@@ -12,6 +12,7 @@ enum AttentionFlag
     enTerminate   = 2,
     enBreakpoints = 3,
     dfltTi        = 4,
+    enClrAttnIntr = 5,
     lastFlag
 };
 
