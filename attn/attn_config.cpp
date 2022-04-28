@@ -29,6 +29,7 @@ void Config::setFlagAll()
     iv_flags.set(enCheckstop);
     iv_flags.set(enTerminate);
     iv_flags.set(enBreakpoints);
+    iv_flags.set(enClrAttnIntr);
 }
 
 /** @brief Clear configuration flag */
@@ -44,6 +45,7 @@ void Config::clearFlagAll()
     iv_flags.reset(enCheckstop);
     iv_flags.reset(enTerminate);
     iv_flags.reset(enBreakpoints);
+    iv_flags.reset(enClrAttnIntr);
 }
 
 } // namespace attn
