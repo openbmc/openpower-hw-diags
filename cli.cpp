@@ -98,5 +98,18 @@ void parseConfig(char** i_begin, char** i_end, attn::Config* o_config)
         {
             o_config->setFlag(attn::dfltTi);
         }
+
+        setting = getCliSetting(i_begin, i_end, "--clrAttnIntr");
+        if (nullptr != setting)
+        {
+            if (std::string("off") == setting)
+            {
+                o_config->clearFlag(attn::enClrAttnIntr);
+            }
+            if (std::string("on") == setting)
+            {
+                o_config->setFlag(attn::enClrAttnIntr);
+            }
+        }
     }
 }
