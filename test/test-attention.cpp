@@ -118,9 +118,7 @@ class AttentionTestProc : public testing::Test
 
         EXPECT_NE(nullptr, target);
 
-        attr = std::numeric_limits<uint32_t>::max();
         attr = getTrgtType(target);
-
         EXPECT_EQ(TYPE_PROC, attr);
 
         attr = std::numeric_limits<uint32_t>::max();
@@ -142,7 +140,7 @@ class AttentionTestProc : public testing::Test
     std::unique_ptr<Attention> pAttn;
     Config* config      = nullptr;
     pdbg_target* target = nullptr;
-    uint32_t attr;
+    uint32_t attr       = std::numeric_limits<uint32_t>::max();
 };
 
 TEST_F(AttentionTestProc, TestAttentionProc)
@@ -168,4 +166,37 @@ TEST_F(AttentionTestProc, TestAttentionProc)
     EXPECT_EQ(false, config_tmp->getFlag(gAttnFlag));
     config_tmp->setFlag(gAttnFlag);
     EXPECT_EQ(true, config_tmp->getFlag(gAttnFlag));
+}
+
+TEST(AttnConfig, TestAttnConfig)
+{
+    Config* config = new Config();
+
+    // Test clearFlagAll() function.
+    config->clearFlagAll();
+    EXPECT_EQ(false, config->getFlag(AttentionFlag::enVital));
+    EXPECT_EQ(false, config->getFlag(AttentionFlag::enCheckstop));
+    EXPECT_EQ(false, config->getFlag(AttentionFlag::enTerminate));
+    EXPECT_EQ(false, config->getFlag(AttentionFlag::enBreakpoints));
+    // The dfltTi flag is not impacted.
+    EXPECT_EQ(false, config->getFlag(AttentionFlag::dfltTi));
+    EXPECT_EQ(false, config->getFlag(AttentionFlag::enClrAttnIntr));
+
+    // Test setFlagAll() function.
+    config->setFlagAll();
+    EXPECT_EQ(true, config->getFlag(AttentionFlag::enVital));
+    EXPECT_EQ(true, config->getFlag(AttentionFlag::enCheckstop));
+    EXPECT_EQ(true, config->getFlag(AttentionFlag::enTerminate));
+    EXPECT_EQ(true, config->getFlag(AttentionFlag::enBreakpoints));
+    // The dfltTi flag is not impacted.
+    EXPECT_EQ(false, config->getFlag(AttentionFlag::dfltTi));
+    EXPECT_EQ(true, config->getFlag(AttentionFlag::enClrAttnIntr));
+
+    // Test setFlag() and getFlag() functions.
+    // Only test one flag.
+    config->clearFlagAll();
+    config->setFlag(enVital);
+    EXPECT_EQ(true, config->getFlag(enVital));
+
+    delete config;
 }

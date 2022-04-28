@@ -78,8 +78,12 @@ void clearAttnInterrupts();
  */
 void attnHandler(Config* i_config)
 {
-    // Clear attention interrupts that may still be active (MPIPL)
-    clearAttnInterrupts();
+    // Check if enClrAttnIntr is enabled
+    if (true == i_config->getFlag(enClrAttnIntr))
+    {
+        // Clear attention interrupts that may still be active (MPIPL)
+        clearAttnInterrupts();
+    }
 
     // Vector of active attentions to be handled
     std::vector<Attention> active_attentions;
