@@ -103,7 +103,7 @@ TEST_F(AttentionTestPos, TestAttnTargetPos)
 // Start preparation for UT case #2.
 
 // Global variables for UT #2
-const uint32_t gChipId = 0x20da; // Chip ID for proc0.
+const uint32_t gChipId = 0; // ID for proc0.
 
 /** @brief Fixture class for TEST_F(). */
 class AttentionTestProc : public testing::Test
