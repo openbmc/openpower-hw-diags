@@ -81,9 +81,7 @@ TEST(TodStepCheckFault, MdmtFault)
     },
     {
         "Deconfigured": false,
-        "EntityPath": [],
-        "GuardType": "GARD_Unrecoverable",
-        "Guarded": true,
+        "Guarded": false,
         "LocationCode": "/proc0",
         "Priority": "M"
     }
@@ -100,7 +98,7 @@ TEST(TodStepCheckFault, MdmtFault)
     },
     {
         "Callout Type": "Hardware Callout",
-        "Guard": true,
+        "Guard": false,
         "Priority": "medium",
         "Target": "/proc0"
     }

@@ -348,8 +348,9 @@ void tod_step_check_fault(unsigned int, const libhei::Chip& i_chip,
             io_servData.calloutClock(callout::ClockType::TOD_CLOCK,
                                      callout::Priority::MED, true);
 
-            // Callout the MDMT chip (no guard).
-            io_servData.calloutTarget(mdmtFault, callout::Priority::MED, true);
+            // Callout the MDMT chip (no guard to avoid fatal guard on primary
+            // processor when the error could be anywhere in between).
+            io_servData.calloutTarget(mdmtFault, callout::Priority::MED, false);
 
             // Callout everything in between.
             // TODO: This isn't necessary for now because the clock callout is
@@ -360,17 +361,20 @@ void tod_step_check_fault(unsigned int, const libhei::Chip& i_chip,
         {
             calloutsMade = true;
 
-            // Callout all chips with network errors (guard).
+            // Callout all chips with network errors (no guard to avoid fatal
+            // guard on primary processor when the error could be anywhere in
+            // between).
             for (const auto& chip : networkFaults)
             {
-                io_servData.calloutTarget(chip, callout::Priority::MED, true);
+                io_servData.calloutTarget(chip, callout::Priority::MED, false);
             }
         }
         else if (!internalFaults.empty()) // interal path faults
         {
             calloutsMade = true;
 
-            // Callout all chips with internal errors (guard).
+            // Callout all chips with internal errors (guard because error is
+            // isolated to this processor).
             for (const auto& chip : internalFaults)
             {
                 io_servData.calloutTarget(chip, callout::Priority::MED, true);
