@@ -105,11 +105,8 @@ void __initialize(const fs::path& i_path)
 
 //------------------------------------------------------------------------------
 
-void initializeIsolator(std::vector<libhei::Chip>& o_chips)
+void initializeIsolator(const std::vector<libhei::Chip>& i_chips)
 {
-    // Get all of the active chips to be analyzed.
-    util::pdbg::getActiveChips(o_chips);
-
     // Find all of the existing chip data files.
     std::map<libhei::ChipType_t, fs::path> files;
     __getChipDataFiles(files);
@@ -117,7 +114,7 @@ void initializeIsolator(std::vector<libhei::Chip>& o_chips)
     // Keep track of models/levels that have already been initialized.
     std::map<libhei::ChipType_t, unsigned int> initTypes;
 
-    for (const auto& chip : o_chips)
+    for (const auto& chip : i_chips)
     {
         auto chipType = chip.getType();
 

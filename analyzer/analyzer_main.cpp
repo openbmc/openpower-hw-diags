@@ -17,10 +17,10 @@ namespace analyzer
 // Forward references for externally defined functions.
 
 /**
- * @brief Will get the list of active chip and initialize the isolator.
- * @param o_chips The returned list of active chips.
+ * @brief Will initialize the isolator with given list of active chips.
+ * @param i_chips The list of active chips.
  */
-void initializeIsolator(std::vector<libhei::Chip>& o_chips);
+void initializeIsolator(const std::vector<libhei::Chip>& i_chips);
 
 /**
  * @brief  Will get the list of active chip and initialize the isolator.
@@ -94,6 +94,61 @@ const char* __analysisType(AnalysisType i_type)
 
 //------------------------------------------------------------------------------
 
+// Should ignore OCMBs that have been masked on the processor side of the bus.
+bool __isMaskedOcmb(const libhei::Chip& i_chip)
+{
+    using namespace util::pdbg;
+
+    // Map of MCC target position to DSTL_FIR address.
+    static const std::map<unsigned int, uint64_t> addrs = {
+        {0, 0x0C010D00}, {1, 0x0C010D40}, {2, 0x0D010D00}, {3, 0x0D010D40},
+        {4, 0x0E010D00}, {5, 0x0E010D40}, {6, 0x0F010D00}, {7, 0x0F010D40},
+    };
+
+    auto ocmb = getTrgt(i_chip);
+
+    // Confirm this chip is an OCMB.
+    if (TYPE_OCMB != getTrgtType(ocmb))
+    {
+        return false;
+    }
+
+    // Get the connected MCC target on the processor chip. Since we are skipping
+    // the OMI target in between there isn't a util::pdbg wrapper for this. So,
+    // just use the pdbg function directly.
+    auto mcc = pdbg_target_parent("mcc", ocmb);
+    if (nullptr == mcc)
+    {
+        throw std::logic_error("No parent MCC found for " +
+                               std::string{getPath(ocmb)});
+    }
+
+    // Read the associated DSTL_FIR.
+    uint64_t val = 0;
+    if (getScom(getParentChip(mcc), addrs.at(getUnitPos(mcc)), val))
+    {
+        // Just let this go. The SCOM code will log the error.
+        return false;
+    }
+
+    // The DSTL_FIR has bits for each of the two memory channels on the MCC.
+    auto chnlPos = getChipPos(ocmb) % 2;
+
+    // Channel 0 => bits 0-3, channel 1 => bits 4-7.
+    auto mask = (val >> (60 - (4 * chnlPos))) & 0xf;
+
+    // Return true if the mask is set to all 1's.
+    if (0xf == mask)
+    {
+        trace::inf("OCMB masked on processor side of bus: %s", getPath(ocmb));
+        return true;
+    }
+
+    return false; // default
+}
+
+//------------------------------------------------------------------------------
+
 uint32_t analyzeHardware(AnalysisType i_type, attn::DumpParameters& o_dump)
 {
     uint32_t o_plid = 0; // default, zero indicates PEL was not created
@@ -106,9 +161,17 @@ uint32_t analyzeHardware(AnalysisType i_type, attn::DumpParameters& o_dump)
 
     trace::inf(">>> enter analyzeHardware(%s)", __analysisType(i_type));
 
+    // Get all of the active chips to be analyzed.
+    trace::inf("Finding active chips...");
+    std::vector<libhei::Chip> chips;
+    util::pdbg::getActiveChips(chips);
+
+    // Ignore OCMBs that have been masked on the processor side of the bus.
+    chips.erase(std::remove_if(chips.begin(), chips.end(), __isMaskedOcmb),
+                chips.end());
+
     // Initialize the isolator and get all of the chips to be analyzed.
     trace::inf("Initializing the isolator...");
-    std::vector<libhei::Chip> chips;
     initializeIsolator(chips);
 
     // Isolate attentions.
