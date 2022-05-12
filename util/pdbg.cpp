@@ -436,6 +436,58 @@ void __addChip(std::vector<libhei::Chip>& o_chips, pdbg_target* i_trgt,
     }
 }
 
+// Should ignore OCMBs that have been masked on the processor side of the bus.
+bool __isMaskedOcmb(const libhei::Chip& i_chip)
+{
+    // TODO: This function only works for P10 processors will need to update for
+    // subsequent chips.
+
+    // Map of MCC target position to DSTL_FIR_MASK address.
+    static const std::map<unsigned int, uint64_t> addrs = {
+        {0, 0x0C010D03}, {1, 0x0C010D43}, {2, 0x0D010D03}, {3, 0x0D010D43},
+        {4, 0x0E010D03}, {5, 0x0E010D43}, {6, 0x0F010D03}, {7, 0x0F010D43},
+    };
+
+    auto ocmb = getTrgt(i_chip);
+
+    // Confirm this chip is an OCMB.
+    if (TYPE_OCMB != getTrgtType(ocmb))
+    {
+        return false;
+    }
+
+    // Get the connected MCC target on the processor chip.
+    auto mcc = pdbg_target_parent("mcc", ocmb);
+    if (nullptr == mcc)
+    {
+        throw std::logic_error("No parent MCC found for " +
+                               std::string{getPath(ocmb)});
+    }
+
+    // Read the associated DSTL_FIR_MASK.
+    uint64_t val = 0;
+    if (getScom(getParentChip(mcc), addrs.at(getUnitPos(mcc)), val))
+    {
+        // Just let this go. The SCOM code will log the error.
+        return false;
+    }
+
+    // The DSTL_FIR has bits for each of the two memory channels on the MCC.
+    auto chnlPos = getChipPos(ocmb) % 2;
+
+    // Channel 0 => bits 0-3, channel 1 => bits 4-7.
+    auto mask = (val >> (60 - (4 * chnlPos))) & 0xf;
+
+    // Return true if the mask is set to all 1's.
+    if (0xf == mask)
+    {
+        trace::inf("OCMB masked on processor side of bus: %s", getPath(ocmb));
+        return true;
+    }
+
+    return false; // default
+}
+
 void getActiveChips(std::vector<libhei::Chip>& o_chips)
 {
     o_chips.clear();
@@ -468,6 +520,11 @@ void getActiveChips(std::vector<libhei::Chip>& o_chips)
             __addChip(o_chips, ocmbTrgt, __getChipIdEc(ocmbTrgt));
         }
     }
+
+    // Ignore OCMBs that have been masked on the processor side of the bus.
+    o_chips.erase(
+        std::remove_if(o_chips.begin(), o_chips.end(), __isMaskedOcmb),
+        o_chips.end());
 }
 
 //------------------------------------------------------------------------------
