@@ -241,9 +241,34 @@ TEST(util_pdbg, getActiveChips)
     using namespace libhei;
     pdbg_targets_init(nullptr);
 
+    auto proc0 = getTrgt("/proc0");
+    auto proc1 = getTrgt("/proc0");
+
+    sim::ScomAccess& scom = sim::ScomAccess::getSingleton();
+    scom.flush();
+
+    // Mask off proc0 mcc0 channel 1. The connected OCMB should be removed from
+    // the list.
+    scom.add(proc0, 0x0C010D03, 0x0f00000000000000);
+
+    // Mask off one or two attentions, but not all, on proc0 mcc7. None of the
+    // connected OCMBs should be removed from the list.
+    scom.add(proc0, 0x0F010D43, 0xA500000000000000);
+
+    // Mask off proc1 mcc2 channel 0. The connected OCMB should be removed from
+    // the list.
+    scom.add(proc1, 0x0D010D03, 0xf000000000000000);
+
+    // Mask off proc1 mcc5 channels 0 and 1. Both the connected OCMBs should be
+    // removed from the list.
+    scom.add(proc1, 0x0E010D43, 0xff00000000000000);
+
     std::vector<libhei::Chip> chips;
     getActiveChips(chips);
 
+    // In total there should be 14 chips with 2 processors, 7 OCMBs on proc0,
+    // and 5 OCMBs on proc1.
+
     trace::inf("chips size: %u", chips.size());
-    EXPECT_EQ(2, chips.size());
+    EXPECT_EQ(14, chips.size());
 }
