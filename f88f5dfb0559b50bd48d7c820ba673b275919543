@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "abc89024_c3fe4782",
+        "filename": "test/test-pdbg-dts.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-05-17T18:23:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "120e1da6_26e4f971",
+      "range": {
+        "startLine": 247,
+        "startChar": 9,
+        "endLine": 247,
+        "endChar": 19
+      },
+      "revId": "f88f5dfb0559b50bd48d7c820ba673b275919543",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7230a8c1_d419589f",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-05-13T17:05:06Z",
       "side": 1,
       "message": "These should be the masks",
+      "range": {
+        "startLine": 447,
+        "startChar": 12,
+        "endLine": 447,
+        "endChar": 22
+      },
+      "revId": "f88f5dfb0559b50bd48d7c820ba673b275919543",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c489ec59_7c354e2a",
+        "filename": "util/pdbg.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2022-05-17T18:23:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7230a8c1_d419589f",
       "range": {
         "startLine": 447,
         "startChar": 12,
