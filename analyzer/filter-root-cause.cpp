@@ -122,7 +122,7 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
 
 // Will query if a signature is a potential system checkstop root cause.
 // attention. Note that this function excludes memory channel failure attentions
-// and core unit checkstop attentions.
+// which are checked in __findMemoryChannelFailure().
 bool __findCsRootCause(const libhei::Signature& i_signature)
 {
     using namespace util::pdbg;
