@@ -4,6 +4,8 @@
 #include "pel_section.hpp"
 #include "stream.hpp"
 
+#include <array>
+
 namespace attn
 {
 namespace pel
