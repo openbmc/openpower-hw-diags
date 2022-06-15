@@ -59,6 +59,37 @@ void pll_unlock(unsigned int i_instance, const libhei::Chip&,
     }
 }
 
+void lpc_timeout_callout(const libhei::Chip& i_chip, ServiceData& io_servData)
+{
+    auto target = util::pdbg::getTrgt(i_chip);
+    auto path   = util::pdbg::getPath(target);
+
+    // Callout the PNOR.
+    io_servData.calloutPart(callout::PartType::PNOR, callout::Priority::MED);
+
+    // Callout the associated clock, no guard.
+    auto chipPos = util::pdbg::getChipPos(target);
+    if (0 == chipPos)
+    {
+        // Clock 0 is hardwired to proc 0.
+        io_servData.calloutClock(callout::ClockType::OSC_REF_CLOCK_0,
+                                 callout::Priority::MED, false);
+    }
+    else if (1 == chipPos)
+    {
+        // Clock 1 is hardwired to proc 1.
+        io_servData.calloutClock(callout::ClockType::OSC_REF_CLOCK_1,
+                                 callout::Priority::MED, false);
+    }
+    else
+    {
+        trace::err("LPC timeout on unexpected processor: %s", path);
+    }
+
+    // Callout the processor, no guard.
+    io_servData.calloutTarget(target, callout::Priority::MED, false);
+}
+
 /**
  * @brief Queries for an LPC timeout. If present, will callout all appropriate
  *        hardware.
@@ -73,31 +104,7 @@ void lpc_timeout(unsigned int, const libhei::Chip& i_chip,
     {
         trace::inf("LPC timeout detected on %s", path);
 
-        // Callout the PNOR.
-        io_servData.calloutPart(callout::PartType::PNOR,
-                                callout::Priority::MED);
-
-        // Callout the associated clock, no guard.
-        auto chipPos = util::pdbg::getChipPos(target);
-        if (0 == chipPos)
-        {
-            // Clock 0 is hardwired to proc 0.
-            io_servData.calloutClock(callout::ClockType::OSC_REF_CLOCK_0,
-                                     callout::Priority::MED, false);
-        }
-        else if (1 == chipPos)
-        {
-            // Clock 1 is hardwired to proc 1.
-            io_servData.calloutClock(callout::ClockType::OSC_REF_CLOCK_1,
-                                     callout::Priority::MED, false);
-        }
-        else
-        {
-            trace::err("LPC timeout on unexpected processor: %s", path);
-        }
-
-        // Callout the processor, no guard.
-        io_servData.calloutTarget(target, callout::Priority::MED, false);
+        lpc_timeout_callout(i_chip, io_servData);
     }
     else
     {
@@ -108,6 +115,20 @@ void lpc_timeout(unsigned int, const libhei::Chip& i_chip,
     }
 }
 
+/**
+ * @brief If Hostboot detects an LPC timeout, it will manually trigger a
+ *        checkstop attention. We will have to bypass checking for an LPC
+ *        timeout via the HWP because it will not find the timeout. Instead,
+ *        simply make the callout when Hostboot triggers the attention.
+ */
+void lpc_timeout_workaround(unsigned int, const libhei::Chip& i_chip,
+                            ServiceData& io_servData)
+{
+    trace::inf("Host detected LPC timeout %s", util::pdbg::getPath(i_chip));
+
+    lpc_timeout_callout(i_chip, io_servData);
+}
+
 } // namespace P10
 
 PLUGIN_DEFINE_NS(P10_10, P10, pll_unlock);
@@ -115,5 +136,8 @@ PLUGIN_DEFINE_NS(P10_20, P10, pll_unlock);
 
 PLUGIN_DEFINE_NS(P10_10, P10, lpc_timeout);
 PLUGIN_DEFINE_NS(P10_20, P10, lpc_timeout);
+
+PLUGIN_DEFINE_NS(P10_10, P10, lpc_timeout_workaround);
+PLUGIN_DEFINE_NS(P10_20, P10, lpc_timeout_workaround);
 
 } // namespace analyzer

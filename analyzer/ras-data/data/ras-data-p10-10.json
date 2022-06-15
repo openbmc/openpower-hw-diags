@@ -1001,6 +1001,10 @@
             { "type": "plugin", "name": "lpc_timeout", "instance": 0 }
         ],
 
+        "host_detected_lpc_timeout"    : [
+            { "type": "plugin", "name": "lpc_timeout_workaround", "instance": 0 }
+        ],
+
         "master_power_bus_chip_procedure": [
             { "type": "action", "name": "level2" }
         ],
@@ -19668,7 +19672,7 @@
          "3a" : { "00" : "deadman_timer" },
          "3b" : { "00" : "self" },
          "3c" : { "00" : "level2" },
-         "3d" : { "00" : "masked" },
+         "3d" : { "00" : "host_detected_lpc_timeout" },
          "3e" : { "00" : "masked" },
          "3f" : { "00" : "masked" }
       },
