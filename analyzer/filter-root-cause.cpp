@@ -154,9 +154,11 @@ bool __findCsRootCause(const libhei::Signature& i_signature)
     if (TYPE_PROC == targetType)
     {
         if (eq_core_fir == id &&
-            (3 == bit || 5 == bit || 8 == bit || 12 == bit || 22 == bit ||
-             25 == bit || 32 == bit || 36 == bit || 38 == bit || 46 == bit ||
-             47 == bit))
+            (0 == bit || 2 == bit || 3 == bit || 4 == bit || 5 == bit ||
+             7 == bit || 8 == bit || 9 == bit || 11 == bit || 12 == bit ||
+             13 == bit || 18 == bit || 21 == bit || 22 == bit || 24 == bit ||
+             25 == bit || 29 == bit || 31 == bit || 32 == bit || 36 == bit ||
+             37 == bit || 38 == bit || 43 == bit || 46 == bit || 47 == bit))
         {
             return true;
         }
