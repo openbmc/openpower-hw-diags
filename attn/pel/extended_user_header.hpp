@@ -43,12 +43,12 @@ constexpr size_t firmwareVersionSize        = 16;
 class ExtendedUserHeader : public Section
 {
   public:
-    ExtendedUserHeader()                          = delete;
-    ~ExtendedUserHeader()                         = default;
-    ExtendedUserHeader(const ExtendedUserHeader&) = default;
+    ExtendedUserHeader()                                     = delete;
+    ~ExtendedUserHeader()                                    = default;
+    ExtendedUserHeader(const ExtendedUserHeader&)            = default;
     ExtendedUserHeader& operator=(const ExtendedUserHeader&) = default;
     ExtendedUserHeader(ExtendedUserHeader&&)                 = default;
-    ExtendedUserHeader& operator=(ExtendedUserHeader&&) = default;
+    ExtendedUserHeader& operator=(ExtendedUserHeader&&)      = default;
 
     /**
      * @brief Constructor

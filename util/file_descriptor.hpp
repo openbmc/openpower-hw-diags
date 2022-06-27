@@ -19,8 +19,8 @@ namespace util
 class FileDescriptor
 {
   public:
-    FileDescriptor()                      = default;
-    FileDescriptor(const FileDescriptor&) = delete;
+    FileDescriptor()                                 = default;
+    FileDescriptor(const FileDescriptor&)            = delete;
     FileDescriptor& operator=(const FileDescriptor&) = delete;
 
     /**

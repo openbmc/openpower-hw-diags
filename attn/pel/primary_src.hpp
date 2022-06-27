@@ -62,12 +62,12 @@ class PrimarySrc : public Section
         virtualProgressSRC  = 0x80
     };
 
-    PrimarySrc()                  = delete;
-    ~PrimarySrc()                 = default;
-    PrimarySrc(const PrimarySrc&) = delete;
+    PrimarySrc()                             = delete;
+    ~PrimarySrc()                            = default;
+    PrimarySrc(const PrimarySrc&)            = delete;
     PrimarySrc& operator=(const PrimarySrc&) = delete;
     PrimarySrc(PrimarySrc&&)                 = delete;
-    PrimarySrc& operator=(PrimarySrc&&) = delete;
+    PrimarySrc& operator=(PrimarySrc&&)      = delete;
 
     /**
      * @brief Constructor

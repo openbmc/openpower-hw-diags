@@ -286,7 +286,6 @@ void __captureHostbootScratchRegisters(
 
 std::string __getMessageRegistry(AnalysisType i_type)
 {
-
     if (AnalysisType::SYSTEM_CHECKSTOP == i_type)
     {
         return "org.open_power.HwDiags.Error.Checkstop";

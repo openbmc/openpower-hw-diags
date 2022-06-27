@@ -37,12 +37,12 @@ class FFDCFile
 {
   public:
     // Specify which compiler-generated methods we want
-    FFDCFile()                = delete;
-    FFDCFile(const FFDCFile&) = delete;
-    FFDCFile(FFDCFile&&)      = default;
+    FFDCFile()                           = delete;
+    FFDCFile(const FFDCFile&)            = delete;
+    FFDCFile(FFDCFile&&)                 = default;
     FFDCFile& operator=(const FFDCFile&) = delete;
-    FFDCFile& operator=(FFDCFile&&) = default;
-    ~FFDCFile()                     = default;
+    FFDCFile& operator=(FFDCFile&&)      = default;
+    ~FFDCFile()                          = default;
 
     /**
      * Constructor.

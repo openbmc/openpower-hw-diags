@@ -26,7 +26,7 @@ class TemporaryFile
 {
   public:
     // Specify which compiler-generated methods we want
-    TemporaryFile(const TemporaryFile&) = delete;
+    TemporaryFile(const TemporaryFile&)            = delete;
     TemporaryFile& operator=(const TemporaryFile&) = delete;
 
     /**

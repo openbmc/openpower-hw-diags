@@ -6,7 +6,6 @@ using namespace attn;
 
 TEST(TestCli, TestCliOptAll)
 {
-
     // Test --all on options
     Config* config = new Config();
     char* argv[2];

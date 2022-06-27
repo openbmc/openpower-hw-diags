@@ -92,7 +92,6 @@ std::vector<std::string> sdjGetMessages(const std::string& field,
                 uint64_t usec{0};
                 if (0 == sd_journal_get_realtime_usec(journal, &usec))
                 {
-
                     // Convert realtime microseconds to date format
                     char dateBuffer[80];
                     std::string date;
