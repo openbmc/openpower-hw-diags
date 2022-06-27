@@ -33,12 +33,12 @@ namespace pel
 class UserHeader : public Section
 {
   public:
-    UserHeader()                  = delete;
-    ~UserHeader()                 = default;
-    UserHeader(const UserHeader&) = default;
+    UserHeader()                             = delete;
+    ~UserHeader()                            = default;
+    UserHeader(const UserHeader&)            = default;
     UserHeader& operator=(const UserHeader&) = default;
     UserHeader(UserHeader&&)                 = default;
-    UserHeader& operator=(UserHeader&&) = default;
+    UserHeader& operator=(UserHeader&&)      = default;
 
     /**
      * @brief Constructor

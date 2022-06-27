@@ -423,7 +423,6 @@ uint32_t event(EventType i_event,
 void eventTerminate(std::map<std::string, std::string> i_additionalData,
                     char* i_tiInfoData)
 {
-
     uint32_t tiInfoSize = 0; // assume TI info was not available
 
     if (nullptr != i_tiInfoData)

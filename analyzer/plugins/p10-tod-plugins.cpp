@@ -33,12 +33,12 @@ enum class Configuration
 class Data
 {
   public:
-    Data()            = default;
-    ~Data()           = default;
-    Data(const Data&) = default;
-    Data(Data&&)      = default;
+    Data()                       = default;
+    ~Data()                      = default;
+    Data(const Data&)            = default;
+    Data(Data&&)                 = default;
     Data& operator=(const Data&) = default;
-    Data& operator=(Data&&) = default;
+    Data& operator=(Data&&)      = default;
 
   private:
     /** The MDMT chips at fault (only one per topology). */

@@ -34,7 +34,6 @@ class AttnMonitor
         iv_gpioConfig(config), iv_gpioEventDescriptor(io),
         iv_config(i_attnConfig)
     {
-
         requestGPIOEvent(); // registers the event handler
     }
 
