@@ -12,7 +12,8 @@ Conflicts=obmc-host-timeout@0.target
 
 [Service]
 @ENABLE_PHAL_TRUE@Environment="PDBG_DTB=/var/lib/phosphor-software-manager/hostfw/running/DEVTREE"
-ExecStart=/usr/bin/openpower-hw-diags --daemon
+EnvironmentFile=/etc/default/attn_config                                        
+ExecStart=/usr/bin/openpower-hw-diags --daemon $CONFIG
 Restart=on-failure
 
 [Install]
