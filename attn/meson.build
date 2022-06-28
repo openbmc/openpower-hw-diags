@@ -6,16 +6,20 @@ boost_args = ['-DBOOST_ASIO_DISABLE_THREADS',
 # dependency to link gpiod support
 libgpiod = dependency('libgpiod', version : '>=1.4.1')
 
-# ENABLE_PHAL_TRUE used in attn_handler.service.in
+# get openpower-hw-diags build configuration
 attn_conf = configuration_data()
 
+# conditionally define ENABLE_PHAL_TRUE
 if (get_option('phal').enabled())
     attn_conf.set('ENABLE_PHAL_TRUE', '')
 else
     attn_conf.set('ENABLE_PHAL_TRUE', '#')
 endif
 
-# install systemd unit file
+# attention handler default config override
+attn_conf.set('ATTN_CONFIG', get_option('attn_config'))
+
+# install attention handler unit file
 configure_file(
     configuration: attn_conf,
     input: 'attn_handler.service.in',
@@ -23,6 +27,15 @@ configure_file(
     install: true,
     install_dir:
         dependency('systemd').get_variable(pkgconfig: 'systemdsystemunitdir')
+)
+
+# install attention handler config file
+configure_file(                                                               
+    configuration: attn_conf,                                                   
+    input: 'attn_config.in',                                         
+    output: 'attn_config',                                                   
+    install: true,                                                              
+    install_dir: join_paths(get_option('sysconfdir'), 'default')
 )
 
 # Source files.
