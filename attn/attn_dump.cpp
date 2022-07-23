@@ -20,8 +20,7 @@ namespace attn
  * @param[out] o_dumpStatus Dump status dbus response string
  * @return Always non-zero indicating no error, no cascading callbacks
  */
-uint dumpStatusChanged(sdbusplus::message::message& i_msg,
-                       std::string& o_dumpStatus)
+uint dumpStatusChanged(sdbusplus::message_t& i_msg, std::string& o_dumpStatus)
 {
     // reply (msg) will be a property change message
     std::string interface;
@@ -107,7 +106,7 @@ void requestDump(uint32_t i_logId, const DumpParameters& i_dumpParameters)
     constexpr auto interface = "xyz.openbmc_project.Dump.Create";
     constexpr auto function  = "CreateDump";
 
-    sdbusplus::message::message method;
+    sdbusplus::message_t method;
 
     if (0 == dbusMethod(path, interface, function, method))
     {

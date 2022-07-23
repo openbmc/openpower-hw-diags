@@ -22,8 +22,7 @@ namespace attn
  *
  **/
 int dbusMethod(const std::string& i_path, const std::string& i_interface,
-               const std::string& i_function,
-               sdbusplus::message::message& o_method);
+               const std::string& i_function, sdbusplus::message_t& o_method);
 
 /**
  * Create a PEL from raw PEL data

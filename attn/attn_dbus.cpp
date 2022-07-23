@@ -12,8 +12,7 @@ namespace attn
 
 /** @brief Create a dbus method */
 int dbusMethod(const std::string& i_path, const std::string& i_interface,
-               const std::string& i_function,
-               sdbusplus::message::message& o_method)
+               const std::string& i_function, sdbusplus::message_t& o_method)
 {
     int rc = RC_DBUS_ERROR; // assume error
 
@@ -77,7 +76,7 @@ void createPelRaw(const std::vector<uint8_t>& i_buffer)
     constexpr auto interface = "xyz.openbmc_project.Logging.Create";
     constexpr auto function  = "Create";
 
-    sdbusplus::message::message method;
+    sdbusplus::message_t method;
 
     if (0 == dbusMethod(pathLogging, interface, function, method))
     {
@@ -108,7 +107,7 @@ int getPel(const uint32_t i_pelId)
     constexpr auto interface = "org.open_power.Logging.PEL";
     constexpr auto function  = "GetPEL";
 
-    sdbusplus::message::message method;
+    sdbusplus::message_t method;
 
     if (0 == dbusMethod(pathLogging, interface, function, method))
     {
