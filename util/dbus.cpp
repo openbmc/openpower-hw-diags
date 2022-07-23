@@ -331,7 +331,7 @@ uint32_t createPel(const std::string& i_message, const std::string& i_severity,
 
             // create dbus method
             auto bus = sdbusplus::bus::new_system();
-            sdbusplus::message::message method =
+            sdbusplus::message_t method =
                 bus.new_method_call(service.c_str(), path, interface, function);
 
             // append additional dbus call paramaters
