@@ -16,6 +16,23 @@
       "message": "Still working on a complete fix for the issue.",
       "revId": "d51158393819c8a6259bc1a5901e6ba4f54883b7",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1d9d0fd4_ef987672",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-08-08T19:13:12Z",
+      "side": 1,
+      "message": "I made an additional change to the companion commit in openpower-proc-control which completes this fix. \nhttps://gerrit.openbmc.org/c/openbmc/openpower-proc-control/+/52870",
+      "revId": "d51158393819c8a6259bc1a5901e6ba4f54883b7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
