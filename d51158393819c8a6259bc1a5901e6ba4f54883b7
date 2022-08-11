@@ -50,6 +50,24 @@
       "message": "After change to attn_handler service\ngraceful shutdown - attention handler will service attentions during soft-off\nAug 09 21:05:05 rain135bmc phosphor-host-state-manager[2001]: Host state transition request of xyz.openbmc_project.State.Host.Transition.Off\nAug 09 21:05:06 rain135bmc systemd[1]: Starting PLDM soft power off app...       \nAug 09 21:05:12 rain135bmc openpower-hw-diags[8387]: Attention GPIO active       \nAug 09 21:05:12 rain135bmc openpower-hw-diags[8387]: Attention handler started\n^^^ here   \nAug 09 21:05:12 rain135bmc openpower-hw-diags[8387]: PHYP TI                     \nAug 09 21:05:12 rain135bmc phosphor-log-manager[335]: Created PEL 0x500050d8 (BMC ID 417) with SRC BD50D138\nAug 09 21:05:12 rain135bmc systemd[1]: Reached target Diagnostic Mode Collection for Host0.\nAug 09 21:05:37 rain135bmc pldm-softpoweroff[8604]: Exit the pldm-softpoweroff   \nAug 09 21:05:37 rain135bmc systemd[1]: Reached target Stop Host0 (Pre).          \nAug 09 21:05:37 rain135bmc phosphor-dump-manager[450]: User initiated dump started, setting flag\nAug 09 21:05:52 rain135bmc systemd[1]: Finished Start memory preserving reboot host0.\nAug 09 21:05:52 rain135bmc systemd[1]: Reached target Host0 (Stopping).          \nAug 09 21:05:52 rain135bmc systemd[1]: Reached target Host0 (Stopped).           \nAug 09 21:05:52 rain135bmc systemd[1]: Reached target Stop Host0.             ",
       "revId": "d51158393819c8a6259bc1a5901e6ba4f54883b7",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d67c0a9_cb696a94",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-08-11T17:30:43Z",
+      "side": 1,
+      "message": "https://gerrit.openbmc.org/c/openbmc/openpower-proc-control/+/52870",
+      "parentUuid": "c8d28899_388cbc4f",
+      "revId": "d51158393819c8a6259bc1a5901e6ba4f54883b7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
