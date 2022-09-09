@@ -20,7 +20,6 @@ namespace LogSvr = sdbusplus::xyz::openbmc_project::Logging::server;
 
 namespace analyzer
 {
-
 //------------------------------------------------------------------------------
 
 enum FfdcSubType_t : uint8_t
@@ -29,6 +28,7 @@ enum FfdcSubType_t : uint8_t
     FFDC_REGISTER_DUMP   = 0x02,
     FFDC_CALLOUT_FFDC    = 0x03,
     FFDC_HB_SCRATCH_REGS = 0x04,
+    FFDC_SCRATCH_SIG     = 0x05,
 
     // For the callout section, the value of '0xCA' is required per the
     // phosphor-logging openpower-pel extention spec.
@@ -284,6 +284,63 @@ void __captureHostbootScratchRegisters(
 
 //------------------------------------------------------------------------------
 
+void __captureScratchRegSignature(std::vector<util::FFDCFile>& io_userDataFiles)
+{
+    // If analysis was interrupted by a system checkstop, there may exist an
+    // error signature within Hostboot scratch registers 9 (scom: 0x00050180,
+    // fsi: 0x2980) and 10 (scom: 0x00050181, fsi: 0x2981) which indicates the
+    // signature from the interrupted analysis. If data exists within those
+    // registers a user data section will be created in the PEL to record it.
+
+    uint32_t reg9Addr  = 0x2980;
+    uint32_t reg10Addr = 0x2981;
+
+    uint32_t chipId = 0; // stored in reg9
+    uint32_t sigId  = 0; // stored in reg10
+
+    auto priProc = util::pdbg::getPrimaryProcessor();
+    if (nullptr == priProc)
+    {
+        trace::err("Unable to get primary processor");
+    }
+    else
+    {
+        if (0 != util::pdbg::getCfam(priProc, reg9Addr, chipId))
+        {
+            chipId = 0; // just in case
+        }
+
+        if (0 != util::pdbg::getCfam(priProc, reg10Addr, sigId))
+        {
+            sigId = 0; // just in case
+        }
+    }
+
+    // If any non-zero data was found in the registers, add them to the FFDC.
+    if (0 != chipId || 0 != sigId)
+    {
+        // Create a new entry for this user data section.
+        io_userDataFiles.emplace_back(util::FFDCFormat::Custom,
+                                      FFDC_SCRATCH_SIG, FFDC_VERSION1);
+
+        // Create a streamer for easy writing to the FFDC file.
+        auto path = io_userDataFiles.back().getPath();
+        util::BinFileWriter stream{path};
+
+        stream << chipId << sigId;
+
+        // If the stream failed for any reason, remove the FFDC file.
+        if (!stream.good())
+        {
+            trace::err("Unable to write register dump FFDC file: %s",
+                       path.string().c_str());
+            io_userDataFiles.pop_back();
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+
 std::string __getMessageRegistry(AnalysisType i_type)
 {
     if (AnalysisType::SYSTEM_CHECKSTOP == i_type)
@@ -348,6 +405,9 @@ uint32_t commitPel(const ServiceData& i_servData)
 
     // Add the Hostboot scratch register to the PEL.
     __captureHostbootScratchRegisters(userDataFiles);
+
+    // Add the signature stored in the scratch regs if it exists.
+    __captureScratchRegSignature(userDataFiles);
 
     // Add the callout FFDC to the PEL.
     __addCalloutFFDC(i_servData, userDataFiles);
