@@ -11,7 +11,6 @@
 
 namespace analyzer
 {
-
 //------------------------------------------------------------------------------
 
 bool __findRcsOscError(const std::vector<libhei::Signature>& i_list,
@@ -54,6 +53,25 @@ bool __findPllUnlock(const std::vector<libhei::Signature>& i_list,
 
 //------------------------------------------------------------------------------
 
+bool __findIueTh(const std::vector<libhei::Signature>& i_list,
+                 libhei::Signature& o_rootCause)
+{
+    auto itr = std::find_if(i_list.begin(), i_list.end(), [&](const auto& t) {
+        return (libhei::hash<libhei::NodeId_t>("RDFFIR") == t.getId() &&
+                (17 == t.getBit() || 37 == t.getBit()));
+    });
+
+    if (i_list.end() != itr)
+    {
+        o_rootCause = *itr;
+        return true;
+    }
+
+    return false;
+}
+
+//------------------------------------------------------------------------------
+
 bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
                                 libhei::Signature& o_rootCause)
 {
@@ -65,6 +83,10 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
     static const auto mc_dstl_fir       = __hash("MC_DSTL_FIR");
     static const auto mc_ustl_fir       = __hash("MC_USTL_FIR");
     static const auto mc_omi_dl_err_rpt = __hash("MC_OMI_DL_ERR_RPT");
+
+    // OCMB registers -- needed for special IUE threshold handling
+    static const auto rdffir = __hash("RDFFIR");
+    static const auto srqfir = __hash("SRQFIR");
 
     for (const auto s : i_list)
     {
@@ -79,6 +101,15 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
             // Any unit checkstop attentions will trigger a channel failure.
             if (libhei::ATTN_TYPE_UNIT_CS == attnType)
             {
+                // If the channel was specifically a firmware initiated channel
+                // fail (SRQFIR[25]) check for any IUE bits that are on that
+                // would have caused that (RDFFIR[17,37]).
+                if ((srqfir == id && 25 == bit) &&
+                    __findIueTh(i_list, o_rootCause))
+                {
+                    return true;
+                }
+
                 o_rootCause = s;
                 return true;
             }
