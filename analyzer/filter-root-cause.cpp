@@ -11,7 +11,6 @@
 
 namespace analyzer
 {
-
 //------------------------------------------------------------------------------
 
 bool __findRcsOscError(const std::vector<libhei::Signature>& i_list,
@@ -54,6 +53,25 @@ bool __findPllUnlock(const std::vector<libhei::Signature>& i_list,
 
 //------------------------------------------------------------------------------
 
+bool __findIueTh(const std::vector<libhei::Signature>& i_list,
+                 libhei::Signature& o_rootCause)
+{
+    auto itr = std::find_if(i_list.begin(), i_list.end(), [&](const auto& t) {
+        return (libhei::hash<libhei::NodeId_t>("RDFFIR") == t.getId() &&
+                (17 == t.getBit() || 37 == t.getBit()));
+    });
+
+    if (i_list.end() != itr)
+    {
+        o_rootCause = *itr;
+        return true;
+    }
+
+    return false;
+}
+
+//------------------------------------------------------------------------------
+
 bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
                                 libhei::Signature& o_rootCause)
 {
@@ -79,6 +97,17 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
             // Any unit checkstop attentions will trigger a channel failure.
             if (libhei::ATTN_TYPE_UNIT_CS == attnType)
             {
+                static const auto srqfir = __hash("SRQFIR");
+
+                // If the channel was specifically a firmware initiated channel
+                // fail (SRQFIR[25]) check for any IUE bits that are on that
+                // would have caused that (RDFFIR[17,37]).
+                if ((srqfir == id && 25 == bit) &&
+                    __findIueTh(i_list, o_rootCause))
+                {
+                    return true;
+                }
+
                 o_rootCause = s;
                 return true;
             }
