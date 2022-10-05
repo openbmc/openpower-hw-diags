@@ -71,6 +71,75 @@ void addHbStatusRegs()
 
 } // end addHbStatusRegs
 
+/** @brief Capture some scratch registers for PRD */
+void addPrdScratchRegs(std::vector<util::FFDCFile>& o_files)
+{
+    // Get primary processor FSI target for CFAM reads
+    pdbg_target* fsiTarget = pdbg_target_from_path(nullptr, "/proc0/fsi");
+
+    if (nullptr == fsiTarget)
+    {
+        trace::err("error getting scratch register target");
+    }
+    else
+    {
+        uint32_t chipId      = 0;
+        uint32_t signatureId = 0;
+
+        // get scratch register 9 (CFAM)
+        if (RC_SUCCESS != fsi_read(fsiTarget, 0x2980, &chipId))
+        {
+            trace::err("error reading scratch register 9");
+            chipId = 0;
+        }
+
+        // get scratch register 10 (CFAM)
+        if (RC_SUCCESS != fsi_read(fsiTarget, 0x2981, &signatureId))
+        {
+            trace::err("error reading scratch register 10");
+            signatureId = 0;
+        }
+
+        // Add data to traces and create user data section
+        if (0 != chipId || 0 != signatureId)
+        {
+            // trace scratch register data
+            trace::inf("PRD scratch Proc0, Chip ID: %08x, Signature ID: %08x",
+                       chipId, signatureId);
+
+            // create ffdc data for user data section
+            try
+            {
+                util::FFDCFile file{util::FFDCFormat::Text};
+                int fd = file.getFileDescriptor();
+                char buffer[150];
+                int len = sprintf(buffer,
+                                  "Scratch Register Error Signature\n"
+                                  "Processor            : 0\n"
+                                  "Chip ID              : %08x\n"
+                                  "Signature ID         : %08x\n",
+                                  chipId, signatureId);
+                if (write(fd, buffer, len) < 0)
+                {
+                    trace::err("error writing scratch register user data");
+                }
+                else
+                {
+                    o_files.push_back(std::move(file));
+                }
+            }
+            catch (const std::exception& e)
+            {
+                trace::err(
+                    "exception when creating scratch register user data");
+                trace::inf(e.what());
+            }
+        }
+    }
+
+    return;
+}
+
 /** @brief Check for recoverable errors present */
 bool recoverableErrors()
 {

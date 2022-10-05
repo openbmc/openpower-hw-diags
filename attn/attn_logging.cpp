@@ -86,6 +86,9 @@ std::vector<util::FFDCFile> createFFDCFiles(char* i_buffer = nullptr,
     // Create trace dump file
     util::createFFDCTraceFiles(files);
 
+    // Add PRD scratch registers
+    addPrdScratchRegs(files);
+
     return files;
 }
 
@@ -275,10 +278,17 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
 
     tiPel->setAction(static_cast<uint16_t>(actionFlags));
 
-    // The raw PEL that we used as the basis for this custom PEL contains the
-    // attention handler trace data and does not needed to be in this PEL so
-    // we remove it here.
-    tiPel->setSectionCount(tiPel->getSectionCount() - 1);
+    // The raw PEL that we used as the basis for this custom PEL contains some
+    // user data sections that do not need to be in this PEL. However we do
+    // want to include the raw TI information.
+    int ffdcCount = 0;
+    it            = i_additional.find("FFDC count");
+    if (it != i_additional.end())
+    {
+        // remove all sections except 1 (raw Ti info)
+        ffdcCount = std::stoi(it->second) - 1;
+    }
+    tiPel->setSectionCount(tiPel->getSectionCount() - ffdcCount);
 
     // Update the raw PEL with the new custom PEL data
     tiPel->raw(i_rawPel);
@@ -311,6 +321,9 @@ uint32_t event(EventType i_event,
 
     bool eventValid = false; // assume no event created
     bool tiEvent    = false; // assume not a terminate event
+
+    // count user data sections so we can fixup custom PEL
+    i_additional["FFDC count"] = std::to_string(i_ffdc.size());
 
     std::string eventName;
 
