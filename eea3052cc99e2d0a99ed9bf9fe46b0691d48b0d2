@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "63548617_dbce055e",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-10-05T23:51:13Z",
+      "side": 1,
+      "message": "Trace\nOct 05 21:47:05 rain111bmc openpower-hw-diags[2047]: PRD scratch Proc0, Chip ID: 08ca4000, Signature ID: 00010000\n\nUser data section\n\"User Data 4\": {                                 \n  \"Section Version\": \"1\",                            \n  \"Sub-section type\": \"3\",                           \n  \"Created by\": \"0x2000\",                            \n  \"Data\": [                                   \n    \"Scratch Register Error Signature\",                    \n    \"Processor      : 0\",                        \n    \"Chip ID       : 08ca4000\",                    \n    \"Signature ID     : 00010000...\"                   \n  ]                                       \n}",
+      "revId": "eea3052cc99e2d0a99ed9bf9fe46b0691d48b0d2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
