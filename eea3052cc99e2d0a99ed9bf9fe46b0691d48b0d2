@@ -36,6 +36,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cf48834f_85981467",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 5
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-10-06T16:19:39Z",
+      "side": 1,
+      "message": "Trailing periods after the signature id?",
+      "parentUuid": "8ff3ee9c_6dab93ae",
+      "revId": "eea3052cc99e2d0a99ed9bf9fe46b0691d48b0d2",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "3af48319_c97aa205",
