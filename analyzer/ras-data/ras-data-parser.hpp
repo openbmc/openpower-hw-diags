@@ -8,7 +8,6 @@
 
 namespace analyzer
 {
-
 /**
  * @brief Manages the RAS data files and resolves service actions required for
  *        error signatures.
@@ -22,6 +21,22 @@ class RasDataParser
         initDataFiles();
     }
 
+    /** Define all RAS data flags that may be associated with a signature */
+    enum RasDataFlags
+    {
+        SUE_SOURCE,
+        SUE_SEEN,
+        CS_POSSIBLE,
+        RECOVERED_ERROR,
+        INFORMATIONAL_ONLY,
+        MNFG_INFORMATIONAL_ONLY,
+        MASK_BUT_DONT_CLEAR,
+        CRC_RELATED_ERR,
+        CRC_ROOT_CAUSE,
+        ODP_DATA_CORRUPT_SIDE_EFFECT,
+        ODP_DATA_CORRUPT_ROOT_CAUSE,
+    };
+
   private:
     /** @brief The RAS data files. */
     std::map<libhei::ChipType_t, nlohmann::json> iv_dataFiles;
@@ -34,6 +49,16 @@ class RasDataParser
      */
     std::shared_ptr<Resolution>
         getResolution(const libhei::Signature& i_signature);
+
+    /**
+     * @brief Initializes the signature list within the input isolation data
+     *        with their appropriate flags based on the RAS data files.
+     * @param i_signature The target error signature.
+     * @param i_flag      The flag to check for
+     * @return True if the flag is set for the given signature, else false.
+     */
+    bool isFlagSet(const libhei::Signature& i_signature,
+                   const RasDataFlags i_flag);
 
   private:
     /**

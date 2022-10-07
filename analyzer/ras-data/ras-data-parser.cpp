@@ -10,7 +10,6 @@ namespace fs = std::filesystem;
 
 namespace analyzer
 {
-
 //------------------------------------------------------------------------------
 
 std::shared_ptr<Resolution>
@@ -44,6 +43,71 @@ std::shared_ptr<Resolution>
     }
 
     return resolution;
+}
+
+//------------------------------------------------------------------------------
+
+bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
+                              const RasDataFlags i_flag)
+{
+    bool o_isFlagSet = false;
+
+    // List of all flag enums mapping to their corresponding string
+    std::map<RasDataFlags, std::string> flagMap = {
+        {SUE_SOURCE, "sue_source"},
+        {SUE_SEEN, "sue_seen"},
+        {CS_POSSIBLE, "cs_possible"},
+        {RECOVERED_ERROR, "recovered_error"},
+        {INFORMATIONAL_ONLY, "informational_only"},
+        {MNFG_INFORMATIONAL_ONLY, "mnfg_informational_only"},
+        {MASK_BUT_DONT_CLEAR, "mask_but_dont_clear"},
+        {CRC_RELATED_ERR, "crc_related_err"},
+        {CRC_ROOT_CAUSE, "crc_root_cause"},
+        {ODP_DATA_CORRUPT_SIDE_EFFECT, "odp_data_corrupt_side_effect"},
+        {ODP_DATA_CORRUPT_ROOT_CAUSE, "odp_data_corrupt_root_cause"},
+    };
+
+    // If the input flag does not exist in the map, that's a code bug.
+    assert(0 != flagMap.count(i_flag));
+
+    nlohmann::json data;
+    try
+    {
+        data = iv_dataFiles.at(i_signature.getChip().getType());
+    }
+    catch (const std::out_of_range& e)
+    {
+        trace::err("No RAS data defined for chip type: 0x%08x",
+                   i_signature.getChip().getType());
+        throw; // caught later downstream
+    }
+
+    // Get the signature keys. All are hex (lower case) with no prefix.
+    char buf[5];
+    sprintf(buf, "%04x", i_signature.getId());
+    std::string id{buf};
+
+    sprintf(buf, "%02x", i_signature.getBit());
+    std::string bit{buf};
+
+    // Get the list of flags in string format from the data.
+    if (data.at("signatures").at(id).at(bit).contains("flags"))
+    {
+        auto flags = data.at("signatures")
+                         .at(id)
+                         .at(bit)
+                         .at("flags")
+                         .get<std::vector<std::string>>();
+
+        // Check if the input flag exists
+        if (flags.end() !=
+            std::find(flags.begin(), flags.end(), flagMap[i_flag]))
+        {
+            o_isFlagSet = true;
+        }
+    }
+
+    return o_isFlagSet;
 }
 
 //------------------------------------------------------------------------------
