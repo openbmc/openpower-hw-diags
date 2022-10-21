@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "5bdec344_e0799324",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-10-21T18:47:38Z",
+      "side": 1,
+      "message": "Oct 21 18:24:10 rain71bmc openpower-hw-diags[1805]: vital handler started        \nOct 21 18:24:20 rain71bmc openpower-hw-diags[1805]: PRD scratch Proc0, Chip ID: 08ca4000, Signature ID: 00010000\nOct 21 18:24:21 rain71bmc phosphor-log-manager[321]: Created PEL 0x50001ed1 (BMC ID 3) with SRC BD12D16D\n",
+      "revId": "01f3214fd412e8b323afdee1f70c49722f2e0cce",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
