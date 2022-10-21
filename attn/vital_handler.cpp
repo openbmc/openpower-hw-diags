@@ -30,6 +30,9 @@ int handleVital(Attention* i_attention)
     }
     else
     {
+        // wait for power fault handling before starting analyses
+        sleepSeconds(POWER_FAULT_WAIT);
+
         // generate pel
         auto pelId = eventVital();
 
