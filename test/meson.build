@@ -91,6 +91,11 @@ testcases = [
   'test-ti-handler',
 ]
 
+# allow more time for long running tests
+longtests = {
+  'test-end2end': 2,
+}
+
 foreach tc : testcases
 
   exe = executable(tc.underscorify(),
@@ -101,7 +106,7 @@ foreach tc : testcases
     link_with           : hwdiags_libs, # TODO: should use test_libs instead
   )
 
-  test(tc, exe, env: test_vars)
+  test(tc, exe, env: test_vars, timeout: 30 * longtests.get(tc, 1))
 
 endforeach
 
