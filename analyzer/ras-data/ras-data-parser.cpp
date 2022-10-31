@@ -162,7 +162,16 @@ std::string RasDataParser::parseSignature(const nlohmann::json& i_data,
     {
         trace::err("No action defined for signature: %s %s %s", id.c_str(),
                    bit.c_str(), inst.c_str());
-        throw; // caught later downstream
+
+        if (1 == i_data.at("version").get<unsigned int>())
+        {
+            throw; // caught later downstream
+        }
+        else
+        {
+            // Default to 'level2_M_th1' if no signature is found.
+            action = "level2_M_th1";
+        }
     }
 
     // Return the action.

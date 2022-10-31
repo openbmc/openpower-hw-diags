@@ -1,0 +1,291 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "RAS Data schema for openpower-hw-diags",
+    "version": 2,
+    "type": "object",
+    "$defs": {
+        "priority": {
+            "type": "string",
+            "enum": [
+                "HIGH",
+                "MED",
+                "MED_A",
+                "MED_B",
+                "MED_C",
+                "LOW"
+            ]
+        },
+        "flags": {
+            "type": "string",
+            "enum": [
+                "sue_source",
+                "sue_seen",
+                "cs_possible",
+                "external_checkstop",
+                "recovered_error",
+                "informational_only",
+                "mnfg_informational_only",
+                "mask_but_dont_clear",
+                "crc_related_err",
+                "crc_root_cause",
+                "odp_data_corrupt_side_effect",
+                "odp_data_corrupt_root_cause"
+            ]
+        }
+    },
+    "additionalProperties": false,
+    "required": [ "model_ec", "version", "actions", "signatures" ],
+    "properties": {
+        "model_ec": {
+            "type": "string",
+            "pattern": "^[0-9A-Fa-f]{8}$"
+        },
+        "version": {
+            "type": "integer",
+            "minimum": 1
+        },
+        "units": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^\\w+$": {
+                    "type": "string",
+                    "pattern": "^\\w+(\\/\\w+)*$"
+                }
+            }
+        },
+        "buses": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^\\w+$": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "required": [ "type" ],
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "enum": [ "SMP_BUS", "OMI_BUS" ]
+                        },
+                        "unit": {
+                            "type": "string",
+                            "pattern": "^\\w+$"
+                        }
+                    }
+                }
+            }
+        },
+        "actions": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^\\w+$": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": [ "type" ],
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "enum": [
+                                    "action",
+                                    "callout_self",
+                                    "callout_unit",
+                                    "callout_connected",
+                                    "callout_bus",
+                                    "callout_clock",
+                                    "callout_procedure",
+                                    "callout_part",
+                                    "plugin",
+                                    "flag"
+                                ]
+                            },
+                            "priority": {
+                                "$ref": "#/$defs/priority"
+                            },
+                            "guard": {
+                                "type": "boolean"
+                            },
+                            "name": {
+                                "type": "string",
+                                "pattern": "^\\w+$"
+                            }
+                        },
+                        "allOf": [
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": { "const": "action" }
+                                    }
+                                },
+                                "then": {
+                                    "required": [ "name" ],
+                                    "not": { "required": [ "priority", "guard" ] }
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": { "const": "callout_self" }
+                                    }
+                                },
+                                "then": {
+                                    "required": [ "priority", "guard" ],
+                                    "not": { "required": [ "name" ] }
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": { "const": "callout_unit" }
+                                    }
+                                },
+                                "then": {
+                                    "required": [ "name", "priority", "guard" ]
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": { "const": "callout_connected" }
+                                    }
+                                },
+                                "then": {
+                                    "required": [ "name", "priority", "guard" ]
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": { "const": "callout_bus" }
+                                    }
+                                },
+                                "then": {
+                                    "required": [ "name", "priority", "guard" ]
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": { "const": "callout_clock" }
+                                    }
+                                },
+                                "then": {
+                                    "required": [ "name", "priority", "guard" ],
+                                    "properties": {
+                                        "name": {
+                                            "enum": [
+                                                "OSC_REF_CLOCK_0",
+                                                "OSC_REF_CLOCK_1",
+                                                "TOD_CLOCK"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": { "const": "callout_procedure" }
+                                    }
+                                },
+                                "then": {
+                                    "required": [ "name", "priority" ],
+                                    "not": { "required": [ "guard" ] },
+                                    "properties": {
+                                        "name": {
+                                            "enum": [
+                                                "LEVEL2",
+                                                "SUE_SEEN"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": { "const": "callout_part" }
+                                    }
+                                },
+                                "then": {
+                                    "required": [ "name", "priority" ],
+                                    "not": { "required": [ "guard" ] },
+                                    "properties": {
+                                        "name": {
+                                            "enum": [
+                                                "PNOR"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": { "const": "plugin" }
+                                    }
+                                },
+                                "then": {
+                                    "required": [ "name", "instance" ],
+                                    "not": { "required": [ "priority", "guard" ] },
+                                    "properties": {
+                                        "instance": {
+                                            "type": "integer"
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": { "const": "flag" }
+                                    }
+                                },
+                                "then": {
+                                    "required": ["name"],
+                                    "properties": {
+                                        "name": {
+                                            "$ref": "#/$defs/flags"
+                                        }
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                }
+            }
+        },
+        "signatures": {
+            "type": "object",
+            "additionalProperties": false,
+            "patternProperties": {
+                "^[0-9A-Fa-f]{4}$": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^[0-9A-Fa-f]{2}$": {
+                            "type": "object",
+                            "additionalProperties": false,
+                            "patternProperties": {
+                                "^[0-9A-Fa-f]{2}$": {
+                                    "type": "string",
+                                    "pattern": "^\\w+$"
+                                },
+                                "flags": {
+                                    "type": "array",
+                                    "minItems": 1,
+                                    "uniqueItems": true,
+                                    "items":
+                                    {
+                                        "$ref": "#/$defs/flags"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
