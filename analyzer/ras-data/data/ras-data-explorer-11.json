@@ -1,476 +1,1504 @@
 {
-   "model_ec" : "60d20011",
-   "version" : 1,
-   "units": {
+    "model_ec": "60d20011",
+    "version": 2,
+    "units": {
         "mem_port": "mem_port0",
-        "dimm"    : "mem_port0/dimm0"
-   },
-   "buses" : {
-       "omi_bus": {
-           "type": "OMI_BUS"
-       }
-   },
-   "actions" : {
-        "self" : [
+        "dimm": "mem_port0/dimm0"
+    },
+    "buses": {
+        "omi_bus": {
+            "type": "OMI_BUS"
+        }
+    },
+    "actions": {
+        "ocmb_M": [
             {
-                "type"      : "callout_self",
-                "priority"  : "MED",
-                "guard"     : true
+                "type": "callout_self",
+                "priority": "MED",
+                "guard": true
             }
         ],
-        "level2" : [
+        "level2_M": [
             {
-                "type"      : "callout_procedure",
-                "name"      : "LEVEL2",
-                "priority"  : "MED"
+                "type": "callout_procedure",
+                "name": "LEVEL2",
+                "priority": "MED"
             }
         ],
-        "dimm" : [
+        "dimm_M": [
             {
-                "type"      : "callout_unit",
-                "name"      : "dimm",
-                "priority"  : "MED",
-                "guard"     : true
+                "type": "callout_unit",
+                "name": "dimm",
+                "priority": "MED",
+                "guard": true
             }
         ],
-        "mem_port" : [
+        "mem_port_M": [
             {
-                "type"      : "callout_unit",
-                "name"      : "mem_port",
-                "priority"  : "MED",
-                "guard"     : true
+                "type": "callout_unit",
+                "name": "mem_port",
+                "priority": "MED",
+                "guard": true
             }
         ],
-        "omi" : [
+        "omi_M": [
             {
-                "type"      : "callout_connected",
-                "name"      : "omi_bus",
-                "priority"  : "MED",
-                "guard"     : true
+                "type": "callout_connected",
+                "name": "omi_bus",
+                "priority": "MED",
+                "guard": true
             }
         ],
-        "omi_bus" : [
+        "omi_bus": [
             {
-                "type"      : "callout_self",
-                "priority"  : "MED_A",
-                "guard"     : true
+                "type": "callout_self",
+                "priority": "MED_A",
+                "guard": true
             },
             {
-                "type"      : "callout_connected",
-                "name"      : "omi_bus",
-                "priority"  : "MED_A",
-                "guard"     : true
+                "type": "callout_connected",
+                "name": "omi_bus",
+                "priority": "MED_A",
+                "guard": true
             },
             {
-                "type"      : "callout_bus",
-                "name"      : "omi_bus",
-                "priority"  : "LOW",
-                "guard"     : false
+                "type": "callout_bus",
+                "name": "omi_bus",
+                "priority": "LOW",
+                "guard": false
             }
         ],
-        "level2_M_self_L" : [
+        "ocmb_M_th1": [
             {
-                "type" : "action",
-                "name" : "level2"
+                "type": "action",
+                "name": "ocmb_M"
             },
             {
-                "type"      : "callout_self",
-                "priority"  : "LOW",
-                "guard"     : false
+                "type": "action",
+                "name": "th_1"
             }
         ],
-        "self_H_omi_L" : [
+        "mem_port_M_th1": [
             {
-                "type"      : "callout_self",
-                "priority"  : "HIGH",
-                "guard"     : true
+                "type": "action",
+                "name": "mem_port_M"
             },
             {
-                "type"      : "callout_connected",
-                "name"      : "omi_bus",
-                "priority"  : "LOW",
-                "guard"     : false
+                "type": "action",
+                "name": "th_1"
             }
         ],
-        "dimm_H_mem_port_L" : [
+        "dimm_M_th1": [
             {
-                "type"      : "callout_unit",
-                "name"      : "dimm",
-                "priority"  : "HIGH",
-                "guard"     : true
+                "type": "action",
+                "name": "dimm_M"
             },
             {
-                "type"      : "callout_unit",
-                "name"      : "mem_port",
-                "priority"  : "LOW",
-                "guard"     : false
+                "type": "action",
+                "name": "th_1"
             }
         ],
-        "masked"                 : [ { "type": "action", "name": "level2" } ],
-        "chiplet"                : [ { "type": "action", "name": "level2" } ],
-        "mcbist_program_complete": [ { "type": "action", "name": "level2" } ],
-        "omi_dl"                 : [ { "type": "action", "name": "level2" } ],
-        "omi_dl_fatal_error"     : [ { "type": "action", "name": "level2" } ],
-        "tlx_recov_error"        : [ { "type": "action", "name": "level2" } ]
-   },
-   "signatures" : {
-      "6401" : {
-         "00" : { "00" : "masked" },
-         "01" : { "00" : "self" },
-         "02" : { "00" : "self" },
-         "03" : { "00" : "self" },
-         "04" : { "00" : "masked" },
-         "05" : { "00" : "masked" },
-         "06" : { "00" : "masked" },
-         "07" : { "00" : "masked" },
-         "08" : { "00" : "masked" },
-         "09" : { "00" : "masked" },
-         "0a" : { "00" : "mcbist_program_complete" },
-         "0b" : { "00" : "masked" },
-         "0c" : { "00" : "masked" },
-         "0d" : { "00" : "self" },
-         "0e" : { "00" : "self" },
-         "0f" : { "00" : "masked" },
-         "10" : { "00" : "masked" },
-         "11" : { "00" : "masked" },
-         "12" : { "00" : "masked" },
-         "13" : { "00" : "masked" }
-      },
-      "86bf" : {
-         "00" : { "00" : "omi_dl" },
-         "01" : { "00" : "omi_dl" },
-         "02" : { "00" : "omi_dl" },
-         "03" : { "00" : "omi_dl" },
-         "04" : { "00" : "omi_dl" },
-         "05" : { "00" : "omi_dl" },
-         "06" : { "00" : "omi_dl" },
-         "07" : { "00" : "omi_dl" },
-         "08" : { "00" : "omi_dl" },
-         "09" : { "00" : "omi_dl" },
-         "0a" : { "00" : "omi_dl" },
-         "0b" : { "00" : "omi_dl" },
-         "0c" : { "00" : "omi_dl" },
-         "0d" : { "00" : "omi_dl" },
-         "0e" : { "00" : "omi_dl" },
-         "0f" : { "00" : "omi_dl" },
-         "10" : { "00" : "omi_dl" },
-         "11" : { "00" : "omi_dl" },
-         "12" : { "00" : "omi_dl" },
-         "13" : { "00" : "omi_dl" },
-         "14" : { "00" : "masked" },
-         "15" : { "00" : "masked" },
-         "16" : { "00" : "masked" },
-         "17" : { "00" : "masked" },
-         "18" : { "00" : "masked" },
-         "19" : { "00" : "masked" },
-         "1a" : { "00" : "masked" },
-         "1b" : { "00" : "masked" },
-         "1c" : { "00" : "masked" },
-         "1d" : { "00" : "masked" },
-         "1e" : { "00" : "masked" },
-         "1f" : { "00" : "masked" },
-         "20" : { "00" : "masked" },
-         "21" : { "00" : "masked" },
-         "22" : { "00" : "masked" },
-         "23" : { "00" : "masked" },
-         "24" : { "00" : "masked" },
-         "25" : { "00" : "masked" },
-         "26" : { "00" : "masked" },
-         "27" : { "00" : "masked" },
-         "28" : { "00" : "masked" },
-         "29" : { "00" : "masked" },
-         "2a" : { "00" : "masked" },
-         "2b" : { "00" : "masked" },
-         "2c" : { "00" : "masked" },
-         "2d" : { "00" : "masked" },
-         "2e" : { "00" : "masked" },
-         "2f" : { "00" : "masked" },
-         "30" : { "00" : "masked" },
-         "31" : { "00" : "masked" },
-         "32" : { "00" : "masked" },
-         "33" : { "00" : "masked" },
-         "34" : { "00" : "masked" },
-         "35" : { "00" : "masked" },
-         "36" : { "00" : "masked" },
-         "37" : { "00" : "masked" },
-         "38" : { "00" : "masked" },
-         "39" : { "00" : "masked" },
-         "3a" : { "00" : "masked" },
-         "3b" : { "00" : "masked" },
-         "3c" : { "00" : "masked" },
-         "3d" : { "00" : "masked" },
-         "3e" : { "00" : "masked" },
-         "3f" : { "00" : "masked" }
-      },
-      "b799" : {
-         "03" : { "00" : "chiplet" },
-         "04" : { "00" : "chiplet" },
-         "07" : { "00" : "chiplet" },
-         "08" : { "00" : "chiplet" },
-         "09" : { "00" : "chiplet" },
-         "0b" : { "00" : "chiplet" },
-         "0c" : { "00" : "chiplet" }
-      },
-      "b92a" : {
-         "01" : { "00" : "chiplet" },
-         "04" : { "00" : "chiplet" },
-         "05" : { "00" : "chiplet" },
-         "06" : { "00" : "chiplet" },
-         "08" : { "00" : "chiplet" },
-         "09" : { "00" : "chiplet" }
-      },
-      "bbd3" : {
-         "34" : { "00" : "level2" },
-         "35" : { "00" : "self" },
-         "36" : { "00" : "omi_bus" },
-         "37" : { "00" : "self" },
-         "38" : { "00" : "omi_bus" },
-         "39" : { "00" : "self" },
-         "3a" : { "00" : "self" },
-         "3b" : { "00" : "self" },
-         "3c" : { "00" : "self" },
-         "3d" : { "00" : "omi_bus" },
-         "3e" : { "00" : "self" },
-         "3f" : { "00" : "self" }
-      },
-      "bdcd" : {
-         "00" : { "00" : "self" },
-         "01" : { "00" : "self" },
-         "02" : { "00" : "self" },
-         "03" : { "00" : "masked" },
-         "04" : { "00" : "masked" },
-         "05" : { "00" : "masked" },
-         "06" : { "00" : "masked" },
-         "07" : { "00" : "masked" },
-         "08" : { "00" : "self" },
-         "09" : { "00" : "masked" },
-         "0a" : { "00" : "masked" },
-         "0b" : { "00" : "masked" },
-         "0c" : { "00" : "masked" },
-         "0d" : { "00" : "masked" },
-         "0e" : { "00" : "masked" },
-         "0f" : { "00" : "masked" },
-         "10" : { "00" : "masked" },
-         "11" : { "00" : "masked" },
-         "12" : { "00" : "masked" },
-         "13" : { "00" : "masked" },
-         "14" : { "00" : "self" },
-         "15" : { "00" : "masked" },
-         "16" : { "00" : "self" },
-         "17" : { "00" : "self" },
-         "18" : { "00" : "masked" },
-         "19" : { "00" : "self" },
-         "1a" : { "00" : "level2_self_L" },
-         "1b" : { "00" : "masked" },
-         "1c" : { "00" : "masked" },
-         "1d" : { "00" : "masked" },
-         "1e" : { "00" : "masked" },
-         "1f" : { "00" : "self" },
-         "20" : { "00" : "self" },
-         "21" : { "00" : "masked" },
-         "22" : { "00" : "masked" },
-         "23" : { "00" : "masked" },
-         "24" : { "00" : "self" },
-         "25" : { "00" : "self" },
-         "26" : { "00" : "masked" },
-         "27" : { "00" : "self_H_omi_L" },
-         "28" : { "00" : "self_H_omi_L" },
-         "29" : { "00" : "self_H_omi_L" },
-         "2a" : { "00" : "self_H_omi_L" },
-         "2b" : { "00" : "self_H_omi_L" },
-         "2c" : { "00" : "self_H_omi_L" },
-         "2d" : { "00" : "self_H_omi_L" },
-         "2e" : { "00" : "self_H_omi_L" },
-         "2f" : { "00" : "masked" },
-         "30" : { "00" : "masked" },
-         "31" : { "00" : "masked" },
-         "32" : { "00" : "masked" },
-         "33" : { "00" : "masked" },
-         "34" : { "00" : "masked" },
-         "35" : { "00" : "masked" },
-         "36" : { "00" : "masked" },
-         "37" : { "00" : "masked" },
-         "38" : { "00" : "masked" },
-         "39" : { "00" : "masked" },
-         "3a" : { "00" : "masked" },
-         "3b" : { "00" : "masked" },
-         "3c" : { "00" : "masked" },
-         "3d" : { "00" : "masked" },
-         "3e" : { "00" : "masked" },
-         "3f" : { "00" : "self" }
-      },
-      "c4f1" : {
-         "00" : { "00" : "omi_dl_fatal_error" },
-         "01" : { "00" : "self" },
-         "02" : { "00" : "self" },
-         "03" : { "00" : "omi_bus" },
-         "04" : { "00" : "masked" },
-         "05" : { "00" : "omi_bus" },
-         "06" : { "00" : "omi_bus" },
-         "07" : { "00" : "omi_bus" },
-         "08" : { "00" : "masked" },
-         "09" : { "00" : "omi_bus" },
-         "0a" : { "00" : "omi_bus" },
-         "0b" : { "00" : "masked" },
-         "0c" : { "00" : "masked" },
-         "0d" : { "00" : "masked" },
-         "0e" : { "00" : "masked" },
-         "0f" : { "00" : "masked" },
-         "10" : { "00" : "masked" },
-         "11" : { "00" : "masked" },
-         "12" : { "00" : "masked" },
-         "13" : { "00" : "masked" }
-      },
-      "ccaa" : {
-         "00" : { "00" : "dimm" },
-         "01" : { "00" : "dimm" },
-         "02" : { "00" : "dimm" },
-         "03" : { "00" : "dimm" },
-         "04" : { "00" : "dimm" },
-         "05" : { "00" : "dimm" },
-         "06" : { "00" : "dimm" },
-         "07" : { "00" : "dimm" },
-         "08" : { "00" : "dimm" },
-         "09" : { "00" : "dimm" },
-         "0a" : { "00" : "masked" },
-         "0b" : { "00" : "masked" },
-         "0c" : { "00" : "masked" },
-         "0d" : { "00" : "dimm_H_mem_port_L" },
-         "0e" : { "00" : "dimm" },
-         "0f" : { "00" : "mem_port" },
-         "10" : { "00" : "dimm_H_mem_port_L" },
-         "11" : { "00" : "dimm" },
-         "12" : { "00" : "mem_port" },
-         "13" : { "00" : "dimm" },
-         "14" : { "00" : "masked" },
-         "15" : { "00" : "masked" },
-         "16" : { "00" : "masked" },
-         "17" : { "00" : "masked" },
-         "18" : { "00" : "masked" },
-         "19" : { "00" : "masked" },
-         "1a" : { "00" : "masked" },
-         "1b" : { "00" : "masked" },
-         "1c" : { "00" : "masked" },
-         "1d" : { "00" : "masked" },
-         "1e" : { "00" : "masked" },
-         "1f" : { "00" : "masked" },
-         "20" : { "00" : "masked" },
-         "21" : { "00" : "dimm_H_mem_port_L" },
-         "22" : { "00" : "masked" },
-         "23" : { "00" : "mem_port" },
-         "24" : { "00" : "dimm_H_mem_port_L" },
-         "25" : { "00" : "dimm" },
-         "26" : { "00" : "mem_port" },
-         "27" : { "00" : "dimm" },
-         "28" : { "00" : "mem_port" },
-         "29" : { "00" : "mem_port" },
-         "2a" : { "00" : "mem_port" },
-         "2b" : { "00" : "mem_port" },
-         "2c" : { "00" : "mem_port" },
-         "2d" : { "00" : "mem_port" },
-         "2e" : { "00" : "mem_port" },
-         "2f" : { "00" : "mem_port" },
-         "30" : { "00" : "mem_port" },
-         "31" : { "00" : "masked" },
-         "32" : { "00" : "masked" },
-         "33" : { "00" : "masked" },
-         "34" : { "00" : "masked" },
-         "35" : { "00" : "masked" },
-         "36" : { "00" : "masked" },
-         "37" : { "00" : "masked" },
-         "38" : { "00" : "masked" },
-         "39" : { "00" : "masked" },
-         "3a" : { "00" : "masked" },
-         "3b" : { "00" : "masked" },
-         "3c" : { "00" : "masked" },
-         "3d" : { "00" : "masked" },
-         "3e" : { "00" : "masked" },
-         "3f" : { "00" : "masked" }
-      },
-      "d512" : {
-         "25" : { "00" : "self" },
-         "27" : { "00" : "omi" },
-         "28" : { "00" : "self" },
-         "29" : { "00" : "self" }
-      },
-      "e5d4" : {
-         "00" : { "00" : "mem_port" },
-         "01" : { "00" : "mem_port" },
-         "02" : { "00" : "mem_port" },
-         "03" : { "00" : "masked" },
-         "04" : { "00" : "dimm_H_mem_port_L" },
-         "05" : { "00" : "mem_port" },
-         "06" : { "00" : "masked" },
-         "07" : { "00" : "mem_port" },
-         "08" : { "00" : "masked" },
-         "09" : { "00" : "mem_port" },
-         "0a" : { "00" : "mem_port" },
-         "0b" : { "00" : "mem_port" },
-         "0c" : { "00" : "mem_port" },
-         "0d" : { "00" : "dimm_H_mem_port_L" },
-         "0e" : { "00" : "mem_port" },
-         "0f" : { "00" : "mem_port" },
-         "10" : { "00" : "mem_port" },
-         "11" : { "00" : "mem_port" },
-         "12" : { "00" : "mem_port" },
-         "13" : { "00" : "mem_port" },
-         "14" : { "00" : "mem_port" },
-         "15" : { "00" : "mem_port" },
-         "16" : { "00" : "mem_port" },
-         "17" : { "00" : "mem_port" },
-         "18" : { "00" : "mem_port" },
-         "19" : { "00" : "self" },
-         "1a" : { "00" : "mem_port" },
-         "1b" : { "00" : "mem_port" },
-         "1c" : { "00" : "mem_port" },
-         "1d" : { "00" : "masked" },
-         "1e" : { "00" : "masked" }
-      },
-      "efb3" : {
-         "00" : { "00" : "masked" },
-         "01" : { "00" : "masked" },
-         "02" : { "00" : "self" },
-         "03" : { "00" : "self" },
-         "04" : { "00" : "self" },
-         "05" : { "00" : "self" },
-         "06" : { "00" : "self" },
-         "07" : { "00" : "masked" },
-         "08" : { "00" : "masked" },
-         "09" : { "00" : "masked" },
-         "0a" : { "00" : "masked" },
-         "0b" : { "00" : "masked" }
-      },
-      "f6c2" : {
-         "00" : { "00" : "self" },
-         "01" : { "00" : "self" },
-         "02" : { "00" : "omi_bus" },
-         "03" : { "00" : "omi_bus" },
-         "04" : { "00" : "omi_bus" },
-         "05" : { "00" : "omi_bus" },
-         "06" : { "00" : "self" },
-         "07" : { "00" : "self" },
-         "08" : { "00" : "self" },
-         "09" : { "00" : "tlx_recov_error" },
-         "0a" : { "00" : "level2_M_self_L" },
-         "0b" : { "00" : "self" },
-         "0c" : { "00" : "self" },
-         "0d" : { "00" : "masked" },
-         "0e" : { "00" : "masked" },
-         "0f" : { "00" : "masked" },
-         "10" : { "00" : "masked" },
-         "11" : { "00" : "masked" },
-         "12" : { "00" : "omi_bus" },
-         "13" : { "00" : "omi" },
-         "14" : { "00" : "self" },
-         "15" : { "00" : "self" },
-         "16" : { "00" : "omi_bus" },
-         "17" : { "00" : "omi_bus" },
-         "18" : { "00" : "self" },
-         "19" : { "00" : "self" },
-         "1a" : { "00" : "self" },
-         "1b" : { "00" : "masked" },
-         "1c" : { "00" : "masked" },
-         "1d" : { "00" : "masked" }
-      }
-   }
+        "level2_M_th1": [
+            {
+                "type": "action",
+                "name": "level2_M"
+            },
+            {
+                "type": "action",
+                "name": "th_1"
+            }
+        ],
+        "omi_M_th1": [
+            {
+                "type": "action",
+                "name": "omi_M"
+            },
+            {
+                "type": "action",
+                "name": "th_1"
+            }
+        ],
+        "omi_bus_th1": [
+            {
+                "type": "action",
+                "name": "omi_bus"
+            },
+            {
+                "type": "action",
+                "name": "th_1"
+            }
+        ],
+        "level2_M_ocmb_L_th1": [
+            {
+                "type": "action",
+                "name": "level2_M"
+            },
+            {
+                "type": "callout_self",
+                "priority": "LOW",
+                "guard": false
+            },
+            {
+                "type": "action",
+                "name": "th_1"
+            }
+        ],
+        "ocmb_H_omi_L_th1": [
+            {
+                "type": "callout_self",
+                "priority": "HIGH",
+                "guard": true
+            },
+            {
+                "type": "callout_connected",
+                "name": "omi_bus",
+                "priority": "LOW",
+                "guard": false
+            },
+            {
+                "type": "action",
+                "name": "th_1"
+            }
+        ],
+        "dimm_H_mem_port_L_th1": [
+            {
+                "type": "callout_unit",
+                "name": "dimm",
+                "priority": "HIGH",
+                "guard": true
+            },
+            {
+                "type": "callout_unit",
+                "name": "mem_port",
+                "priority": "LOW",
+                "guard": false
+            },
+            {
+                "type": "action",
+                "name": "th_1"
+            }
+        ],
+        "dimm_H_mem_port_L_th_32perDay": [
+            {
+                "type": "callout_unit",
+                "name": "dimm",
+                "priority": "HIGH",
+                "guard": true
+            },
+            {
+                "type": "callout_unit",
+                "name": "mem_port",
+                "priority": "LOW",
+                "guard": false
+            },
+            {
+                "type": "action",
+                "name": "th_32perDay"
+            }
+        ],
+        "ocmb_M_th_32perDay": [
+            {
+                "type": "action",
+                "name": "ocmb_M"
+            },
+            {
+                "type": "action",
+                "name": "th_32perDay"
+            }
+        ],
+        "omi_M_th_32perDay": [
+            {
+                "type": "action",
+                "name": "omi_M"
+            },
+            {
+                "type": "action",
+                "name": "th_32perDay"
+            }
+        ],
+        "omi_bus_th_32perDay": [
+            {
+                "type": "action",
+                "name": "omi_bus"
+            },
+            {
+                "type": "action",
+                "name": "th_32perDay"
+            }
+        ],
+        "mem_port_M_th_32perDay": [
+            {
+                "type": "action",
+                "name": "mem_port_M"
+            },
+            {
+                "type": "action",
+                "name": "th_32perDay"
+            }
+        ],
+        "ocmb_M_info_only": [
+            {
+                "type": "action",
+                "name": "ocmb_M_th_32perDay"
+            },
+            {
+                "type": "flag",
+                "name": "informational_only"
+            }
+        ],
+        "omi_bus_info_only": [
+            {
+                "type": "action",
+                "name": "omi_bus_th_32perDay"
+            },
+            {
+                "type": "flag",
+                "name": "informational_only"
+            }
+        ],
+        "mem_port_M_info_only": [
+            {
+                "type": "action",
+                "name": "mem_port_M_th_32perDay"
+            },
+            {
+                "type": "flag",
+                "name": "informational_only"
+            }
+        ],
+        "downstream_attn": [
+            {
+                "type": "action",
+                "name": "level2_M_th1"
+            }
+        ],
+        "th_1": [],
+        "th_32perDay": [
+            {
+                "type": "flag",
+                "name": "recovered_error"
+            }
+        ],
+        "mcbist_program_complete": [
+            {
+                "type": "action",
+                "name": "level2_M_th1"
+            }
+        ],
+        "omi_degraded_mode": [
+            {
+                "type": "action",
+                "name": "omi_bus_th1"
+            }
+        ],
+        "verify_chip_mark_0": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "verify_chip_mark_1": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "verify_chip_mark_2": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "verify_chip_mark_3": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "verify_chip_mark_4": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "verify_chip_mark_5": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "verify_chip_mark_6": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "verify_chip_mark_7": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "mainline_nce_tce_handling": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "mainline_aue_iaue_handling": [
+            {
+                "type": "action",
+                "name": "dimm_H_mem_port_L_th1"
+            }
+        ],
+        "mainline_ue_handling": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "mainline_iue_handling": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "memory_impe_handling": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ],
+        "maintenance_aue_handling": [
+            {
+                "type": "action",
+                "name": "dimm_H_mem_port_L_th1"
+            }
+        ],
+        "maintenance_iue_handling": [
+            {
+                "type": "action",
+                "name": "dimm_M_th1"
+            }
+        ]
+    },
+    "signatures": {
+        "f6c2": {
+            "00": {
+                "00": "ocmb_M_info_only"
+            },
+            "01": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "02": {
+                "00": "omi_bus_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "03": {
+                "00": "omi_bus_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "04": {
+                "00": "omi_bus_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "05": {
+                "00": "omi_bus_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "06": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "07": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "08": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "09": {
+                "00": "downstream_attn"
+            },
+            "0a": {
+                "00": "level2_M_ocmb_L_th1"
+            },
+            "0b": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "0c": {
+                "00": "ocmb_M_th1"
+            },
+            "0d": {
+                "00": "level2_M_th1"
+            },
+            "0e": {
+                "00": "level2_M_th1"
+            },
+            "0f": {
+                "00": "level2_M_th1"
+            },
+            "10": {
+                "00": "level2_M_th1"
+            },
+            "11": {
+                "00": "level2_M_th1"
+            },
+            "12": {
+                "00": "omi_bus_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "13": {
+                "00": "omi_M_th1"
+            },
+            "14": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "15": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "16": {
+                "00": "omi_bus_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "17": {
+                "00": "omi_bus_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "18": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "19": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "1a": {
+                "00": "ocmb_M_th_32perDay"
+            },
+            "1b": {
+                "00": "level2_M_th1"
+            },
+            "1c": {
+                "00": "level2_M_th1"
+            },
+            "1d": {
+                "00": "level2_M_th1"
+            }
+        },
+        "bbd3": {
+            "34": {
+                "00": "level2_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "35": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "36": {
+                "00": "omi_bus_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "37": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "38": {
+                "00": "omi_bus_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "39": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "3a": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "3b": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "3c": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "3d": {
+                "00": "omi_bus_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "3e": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "3f": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            }
+        },
+        "bdcd": {
+            "00": {
+                "00": "ocmb_M_th_32perDay"
+            },
+            "01": {
+                "00": "ocmb_M_th_32perDay"
+            },
+            "02": {
+                "00": "ocmb_M_th_32perDay"
+            },
+            "03": {
+                "00": "level2_M_th1"
+            },
+            "04": {
+                "00": "level2_M_th1"
+            },
+            "05": {
+                "00": "level2_M_th1"
+            },
+            "06": {
+                "00": "level2_M_th1"
+            },
+            "07": {
+                "00": "level2_M_th1"
+            },
+            "08": {
+                "00": "ocmb_M_th_32perDay"
+            },
+            "09": {
+                "00": "level2_M_th1"
+            },
+            "0a": {
+                "00": "level2_M_th1"
+            },
+            "0b": {
+                "00": "level2_M_th1"
+            },
+            "0c": {
+                "00": "level2_M_th1"
+            },
+            "0d": {
+                "00": "level2_M_th1"
+            },
+            "0e": {
+                "00": "level2_M_th1"
+            },
+            "0f": {
+                "00": "level2_M_th1"
+            },
+            "10": {
+                "00": "level2_M_th1"
+            },
+            "11": {
+                "00": "level2_M_th1"
+            },
+            "12": {
+                "00": "level2_M_th1"
+            },
+            "13": {
+                "00": "level2_M_th1"
+            },
+            "14": {
+                "00": "ocmb_M_th1"
+            },
+            "15": {
+                "00": "level2_M_th1"
+            },
+            "16": {
+                "00": "ocmb_M_th1"
+            },
+            "17": {
+                "00": "ocmb_M_info_only"
+            },
+            "18": {
+                "00": "level2_M_th1"
+            },
+            "19": {
+                "00": "ocmb_M_th1"
+            },
+            "1a": {
+                "00": "level2_M_ocmb_L_th1"
+            },
+            "1b": {
+                "00": "level2_M_th1"
+            },
+            "1c": {
+                "00": "level2_M_th1"
+            },
+            "1d": {
+                "00": "level2_M_th1"
+            },
+            "1e": {
+                "00": "level2_M_th1"
+            },
+            "1f": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "mask_but_dont_clear"
+                ]
+            },
+            "20": {
+                "00": "ocmb_M_th1"
+            },
+            "21": {
+                "00": "level2_M_th1"
+            },
+            "22": {
+                "00": "level2_M_th1"
+            },
+            "23": {
+                "00": "level2_M_th1"
+            },
+            "24": {
+                "00": "ocmb_M_th1"
+            },
+            "25": {
+                "00": "ocmb_M_info_only"
+            },
+            "26": {
+                "00": "level2_M_th1"
+            },
+            "27": {
+                "00": "ocmb_H_omi_L_th1"
+            },
+            "28": {
+                "00": "ocmb_H_omi_L_th1"
+            },
+            "29": {
+                "00": "ocmb_H_omi_L_th1"
+            },
+            "2a": {
+                "00": "ocmb_H_omi_L_th1"
+            },
+            "2b": {
+                "00": "ocmb_H_omi_L_th1"
+            },
+            "2c": {
+                "00": "ocmb_H_omi_L_th1"
+            },
+            "2d": {
+                "00": "ocmb_H_omi_L_th1"
+            },
+            "2e": {
+                "00": "ocmb_H_omi_L_th1"
+            },
+            "2f": {
+                "00": "level2_M_th1"
+            },
+            "30": {
+                "00": "level2_M_th1"
+            },
+            "31": {
+                "00": "level2_M_th1"
+            },
+            "32": {
+                "00": "level2_M_th1"
+            },
+            "33": {
+                "00": "level2_M_th1"
+            },
+            "34": {
+                "00": "level2_M_th1"
+            },
+            "35": {
+                "00": "level2_M_th1"
+            },
+            "36": {
+                "00": "level2_M_th1"
+            },
+            "37": {
+                "00": "level2_M_th1"
+            },
+            "38": {
+                "00": "level2_M_th1"
+            },
+            "39": {
+                "00": "level2_M_th1"
+            },
+            "3a": {
+                "00": "level2_M_th1"
+            },
+            "3b": {
+                "00": "level2_M_th1"
+            },
+            "3c": {
+                "00": "level2_M_th1"
+            },
+            "3d": {
+                "00": "level2_M_th1"
+            },
+            "3e": {
+                "00": "level2_M_th1"
+            },
+            "3f": {
+                "00": "ocmb_M_th_32perDay"
+            }
+        },
+        "86bf": {
+            "00": {
+                "00": "downstream_attn",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "01": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "02": {
+                "00": "ocmb_M_th_32perDay"
+            },
+            "03": {
+                "00": "omi_bus_info_only"
+            },
+            "04": {
+                "00": "level2_M_th1"
+            },
+            "05": {
+                "00": "omi_degraded_mode"
+            },
+            "06": {
+                "00": "omi_bus_info_only"
+            },
+            "07": {
+                "00": "omi_bus_th_32perDay"
+            },
+            "08": {
+                "00": "level2_M_th1"
+            },
+            "09": {
+                "00": "omi_bus_th_32perDay"
+            },
+            "0a": {
+                "00": "omi_bus_th_32perDay"
+            },
+            "0b": {
+                "00": "level2_M_th1"
+            },
+            "0c": {
+                "00": "level2_M_th1"
+            },
+            "0d": {
+                "00": "level2_M_th1"
+            },
+            "0e": {
+                "00": "level2_M_th1"
+            },
+            "0f": {
+                "00": "level2_M_th1"
+            },
+            "10": {
+                "00": "level2_M_th1"
+            },
+            "11": {
+                "00": "level2_M_th1"
+            },
+            "12": {
+                "00": "level2_M_th1"
+            },
+            "13": {
+                "00": "level2_M_th1"
+            },
+            "14": {
+                "00": "level2_M_th1"
+            },
+            "15": {
+                "00": "level2_M_th1"
+            },
+            "16": {
+                "00": "level2_M_th1"
+            },
+            "17": {
+                "00": "level2_M_th1"
+            },
+            "18": {
+                "00": "level2_M_th1"
+            },
+            "19": {
+                "00": "level2_M_th1"
+            },
+            "1a": {
+                "00": "level2_M_th1"
+            },
+            "1b": {
+                "00": "level2_M_th1"
+            },
+            "1c": {
+                "00": "level2_M_th1"
+            },
+            "1d": {
+                "00": "level2_M_th1"
+            },
+            "1e": {
+                "00": "level2_M_th1"
+            },
+            "1f": {
+                "00": "level2_M_th1"
+            },
+            "20": {
+                "00": "level2_M_th1"
+            },
+            "21": {
+                "00": "level2_M_th1"
+            },
+            "22": {
+                "00": "level2_M_th1"
+            },
+            "23": {
+                "00": "level2_M_th1"
+            },
+            "24": {
+                "00": "level2_M_th1"
+            },
+            "25": {
+                "00": "level2_M_th1"
+            },
+            "26": {
+                "00": "level2_M_th1"
+            },
+            "27": {
+                "00": "level2_M_th1"
+            },
+            "28": {
+                "00": "level2_M_th1"
+            },
+            "29": {
+                "00": "level2_M_th1"
+            },
+            "2a": {
+                "00": "level2_M_th1"
+            },
+            "2b": {
+                "00": "level2_M_th1"
+            },
+            "2c": {
+                "00": "level2_M_th1"
+            },
+            "2d": {
+                "00": "level2_M_th1"
+            },
+            "2e": {
+                "00": "level2_M_th1"
+            },
+            "2f": {
+                "00": "level2_M_th1"
+            },
+            "30": {
+                "00": "level2_M_th1"
+            },
+            "31": {
+                "00": "level2_M_th1"
+            },
+            "32": {
+                "00": "level2_M_th1"
+            },
+            "33": {
+                "00": "level2_M_th1"
+            },
+            "34": {
+                "00": "level2_M_th1"
+            },
+            "35": {
+                "00": "level2_M_th1"
+            },
+            "36": {
+                "00": "level2_M_th1"
+            },
+            "37": {
+                "00": "level2_M_th1"
+            },
+            "38": {
+                "00": "level2_M_th1"
+            },
+            "39": {
+                "00": "level2_M_th1"
+            },
+            "3a": {
+                "00": "level2_M_th1"
+            },
+            "3b": {
+                "00": "level2_M_th1"
+            },
+            "3c": {
+                "00": "level2_M_th1"
+            },
+            "3d": {
+                "00": "level2_M_th1"
+            },
+            "3e": {
+                "00": "level2_M_th1"
+            },
+            "3f": {
+                "00": "level2_M_th1"
+            }
+        },
+        "e5d4": {
+            "00": {
+                "00": "mem_port_M_th1"
+            },
+            "01": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "02": {
+                "00": "mem_port_M_th_32perDay"
+            },
+            "03": {
+                "00": "level2_M_th1"
+            },
+            "04": {
+                "00": "dimm_H_mem_port_L_th_32perDay"
+            },
+            "05": {
+                "00": "mem_port_M_th1"
+            },
+            "06": {
+                "00": "level2_M_th1"
+            },
+            "07": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "08": {
+                "00": "level2_M_th1"
+            },
+            "09": {
+                "00": "mem_port_M_th1"
+            },
+            "0a": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "0b": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "0c": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "0d": {
+                "00": "dimm_H_mem_port_L_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "0e": {
+                "00": "mem_port_M_info_only"
+            },
+            "0f": {
+                "00": "mem_port_M_info_only"
+            },
+            "10": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "11": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "12": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "13": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "14": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "15": {
+                "00": "mem_port_M_th1"
+            },
+            "16": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "17": {
+                "00": "mem_port_M_th_32perDay"
+            },
+            "18": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "19": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "informational_only",
+                    "sue_source"
+                ]
+            },
+            "1a": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "1b": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "1c": {
+                "00": "mem_port_M_th_32perDay"
+            },
+            "1d": {
+                "00": "level2_M_th1"
+            },
+            "1e": {
+                "00": "level2_M_th1"
+            }
+        },
+        "ccaa": {
+            "00": {
+                "00": "verify_chip_mark_0"
+            },
+            "01": {
+                "00": "verify_chip_mark_1"
+            },
+            "02": {
+                "00": "verify_chip_mark_2"
+            },
+            "03": {
+                "00": "verify_chip_mark_3"
+            },
+            "04": {
+                "00": "verify_chip_mark_4"
+            },
+            "05": {
+                "00": "verify_chip_mark_5"
+            },
+            "06": {
+                "00": "verify_chip_mark_6"
+            },
+            "07": {
+                "00": "verify_chip_mark_7"
+            },
+            "08": {
+                "00": "mainline_nce_tce_handling"
+            },
+            "09": {
+                "00": "mainline_nce_tce_handling"
+            },
+            "0a": {
+                "00": "level2_M_th1"
+            },
+            "0b": {
+                "00": "level2_M_th1"
+            },
+            "0c": {
+                "00": "level2_M_th1"
+            },
+            "0d": {
+                "00": "mainline_aue_iaue_handling",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "0e": {
+                "00": "mainline_ue_handling",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "0f": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "10": {
+                "00": "mainline_aue_iaue_handling",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "11": {
+                "00": "mainline_iue_handling",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "12": {
+                "00": "mem_port_M_th_32perDay"
+            },
+            "13": {
+                "00": "memory_impe_handling"
+            },
+            "14": {
+                "00": "level2_M_th1"
+            },
+            "15": {
+                "00": "level2_M_th1"
+            },
+            "16": {
+                "00": "level2_M_th1"
+            },
+            "17": {
+                "00": "level2_M_th1"
+            },
+            "18": {
+                "00": "level2_M_th1"
+            },
+            "19": {
+                "00": "level2_M_th1"
+            },
+            "1a": {
+                "00": "level2_M_th1"
+            },
+            "1b": {
+                "00": "level2_M_th1"
+            },
+            "1c": {
+                "00": "level2_M_th1"
+            },
+            "1d": {
+                "00": "level2_M_th1"
+            },
+            "1e": {
+                "00": "level2_M_th1"
+            },
+            "1f": {
+                "00": "level2_M_th1"
+            },
+            "20": {
+                "00": "level2_M_th1"
+            },
+            "21": {
+                "00": "maintenance_aue_handling",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "22": {
+                "00": "level2_M_th1"
+            },
+            "23": {
+                "00": "mem_port_M_th1"
+            },
+            "24": {
+                "00": "dimm_H_mem_port_L_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "25": {
+                "00": "maintenance_iue_handling",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "26": {
+                "00": "mem_port_M_th_32perDay"
+            },
+            "27": {
+                "00": "memory_impe_handling"
+            },
+            "28": {
+                "00": "mem_port_M_th_32perDay"
+            },
+            "29": {
+                "00": "mem_port_M_info_only"
+            },
+            "2a": {
+                "00": "mem_port_M_th1"
+            },
+            "2b": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "2c": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "2d": {
+                "00": "mem_port_M_th_32perDay"
+            },
+            "2e": {
+                "00": "mem_port_M_th_32perDay"
+            },
+            "2f": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "30": {
+                "00": "mem_port_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "31": {
+                "00": "level2_M_th1"
+            },
+            "32": {
+                "00": "level2_M_th1"
+            },
+            "33": {
+                "00": "level2_M_th1"
+            },
+            "34": {
+                "00": "level2_M_th1"
+            },
+            "35": {
+                "00": "level2_M_th1"
+            },
+            "36": {
+                "00": "level2_M_th1"
+            },
+            "37": {
+                "00": "level2_M_th1"
+            },
+            "38": {
+                "00": "level2_M_th1"
+            },
+            "39": {
+                "00": "level2_M_th1"
+            },
+            "3a": {
+                "00": "level2_M_th1"
+            },
+            "3b": {
+                "00": "level2_M_th1"
+            },
+            "3c": {
+                "00": "level2_M_th1"
+            },
+            "3d": {
+                "00": "level2_M_th1"
+            },
+            "3e": {
+                "00": "level2_M_th1"
+            },
+            "3f": {
+                "00": "level2_M_th1"
+            }
+        },
+        "d512": {
+            "25": {
+                "00": "ocmb_M_th_32perDay"
+            },
+            "27": {
+                "00": "omi_M_th_32perDay"
+            },
+            "28": {
+                "00": "ocmb_M_th1"
+            },
+            "29": {
+                "00": "ocmb_M_th1"
+            }
+        },
+        "6401": {
+            "00": {
+                "00": "level2_M_th1"
+            },
+            "01": {
+                "00": "ocmb_M_th1"
+            },
+            "02": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "03": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "04": {
+                "00": "level2_M_th1"
+            },
+            "05": {
+                "00": "level2_M_th1"
+            },
+            "06": {
+                "00": "level2_M_th1"
+            },
+            "07": {
+                "00": "level2_M_th1"
+            },
+            "08": {
+                "00": "level2_M_th1"
+            },
+            "09": {
+                "00": "level2_M_th1"
+            },
+            "0a": {
+                "00": "mcbist_program_complete"
+            },
+            "0b": {
+                "00": "level2_M_th1"
+            },
+            "0c": {
+                "00": "level2_M_th1"
+            },
+            "0d": {
+                "00": "ocmb_M_th1"
+            },
+            "0e": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "0f": {
+                "00": "level2_M_th1"
+            },
+            "10": {
+                "00": "level2_M_th1"
+            },
+            "11": {
+                "00": "level2_M_th1"
+            },
+            "12": {
+                "00": "level2_M_th1"
+            },
+            "13": {
+                "00": "level2_M_th1"
+            }
+        },
+        "efb3": {
+            "00": {
+                "00": "level2_M_th1"
+            },
+            "01": {
+                "00": "level2_M_th1"
+            },
+            "02": {
+                "00": "ocmb_M_th_32perDay"
+            },
+            "03": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "04": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "05": {
+                "00": "ocmb_M_th1",
+                "flags": [
+                    "sue_source"
+                ]
+            },
+            "06": {
+                "00": "ocmb_M_th1"
+            },
+            "07": {
+                "00": "level2_M_th1"
+            },
+            "08": {
+                "00": "level2_M_th1"
+            },
+            "09": {
+                "00": "level2_M_th1"
+            },
+            "0a": {
+                "00": "level2_M_th1"
+            },
+            "0b": {
+                "00": "level2_M_th1"
+            }
+        }
+    }
 }
