@@ -47,8 +47,47 @@ std::shared_ptr<Resolution>
 
 //------------------------------------------------------------------------------
 
+bool __checkActionForFlag(const std::string& i_action,
+                          const std::string& i_flag,
+                          const nlohmann::json& i_data)
+{
+    bool o_isFlagSet = false;
+
+    // Loop through the array of actions.
+    for (const auto& a : i_data.at("actions").at(i_action))
+    {
+        // Get the action type
+        auto type = a.at("type").get<std::string>();
+
+        // If the action is another action, recursively call this function
+        if ("action" == type)
+        {
+            auto name   = a.at("name").get<std::string>();
+            o_isFlagSet = __checkActionForFlag(name, i_flag, i_data);
+            if (o_isFlagSet)
+            {
+                break;
+            }
+        }
+        // If the action is a flag, check if it's the one
+        else if ("flag" == type)
+        {
+            auto name = a.at("name").get<std::string>();
+            if (name == i_flag)
+            {
+                o_isFlagSet = true;
+                break;
+            }
+        }
+    }
+
+    return o_isFlagSet;
+}
+
+//------------------------------------------------------------------------------
+
 bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
-                              const RasDataFlags i_flag)
+                              const RasDataFlags i_flag) const
 {
     bool o_isFlagSet = false;
 
@@ -66,6 +105,7 @@ bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
         {ODP_DATA_CORRUPT_SIDE_EFFECT, "odp_data_corrupt_side_effect"},
         {ODP_DATA_CORRUPT_ROOT_CAUSE, "odp_data_corrupt_root_cause"},
     };
+    std::string strFlag = flagMap[i_flag];
 
     // If the input flag does not exist in the map, that's a code bug.
     assert(0 != flagMap.count(i_flag));
@@ -100,8 +140,7 @@ bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
                          .get<std::vector<std::string>>();
 
         // Check if the input flag exists
-        if (flags.end() !=
-            std::find(flags.begin(), flags.end(), flagMap[i_flag]))
+        if (flags.end() != std::find(flags.begin(), flags.end(), strFlag))
         {
             o_isFlagSet = true;
         }
@@ -112,22 +151,34 @@ bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
     if (!o_isFlagSet)
     {
         const auto action = parseSignature(data, i_signature);
-        for (const auto& a : data.at("actions").at(action))
-        {
-            auto type = a.at("type").get<std::string>();
-            if ("flag" == type)
-            {
-                auto name = a.at("name").get<std::string>();
-                if (name == flagMap[i_flag])
-                {
-                    o_isFlagSet = true;
-                    break;
-                }
-            }
-        }
+        __checkActionForFlag(action, strFlag, data);
     }
 
     return o_isFlagSet;
+}
+
+//------------------------------------------------------------------------------
+
+unsigned int
+    RasDataParser::getVersion(const libhei::Signature& i_signature) const
+{
+    unsigned int o_version = 0;
+
+    nlohmann::json data;
+    try
+    {
+        data = iv_dataFiles.at(i_signature.getChip().getType());
+    }
+    catch (const std::out_of_range& e)
+    {
+        trace::err("No RAS data defined for chip type: 0x%08x",
+                   i_signature.getChip().getType());
+        throw; // caught later downstream
+    }
+
+    o_version = data.at("version").get<unsigned int>();
+
+    return o_version;
 }
 
 //------------------------------------------------------------------------------
@@ -221,8 +272,9 @@ void RasDataParser::initDataFiles()
 
 //------------------------------------------------------------------------------
 
-std::string RasDataParser::parseSignature(const nlohmann::json& i_data,
-                                          const libhei::Signature& i_signature)
+std::string
+    RasDataParser::parseSignature(const nlohmann::json& i_data,
+                                  const libhei::Signature& i_signature) const
 {
     // Get the signature keys. All are hex (lower case) with no prefix.
     char buf[5];

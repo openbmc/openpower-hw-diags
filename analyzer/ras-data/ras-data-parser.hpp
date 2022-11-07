@@ -58,7 +58,15 @@ class RasDataParser
      * @return True if the flag is set for the given signature, else false.
      */
     bool isFlagSet(const libhei::Signature& i_signature,
-                   const RasDataFlags i_flag);
+                   const RasDataFlags i_flag) const;
+
+    /**
+     * @brief Returns of the version of the relevant RAS data file for the
+     *        input signature.
+     * @param i_signature The target error signature.
+     * @return The version of the RAS data file.
+     */
+    unsigned int getVersion(const libhei::Signature& i_signature) const;
 
   private:
     /**
@@ -76,7 +84,7 @@ class RasDataParser
      * @return A string representing the target action for the signature.
      */
     std::string parseSignature(const nlohmann::json& i_data,
-                               const libhei::Signature& i_signature);
+                               const libhei::Signature& i_signature) const;
 
     /**
      * @brief  Parses a bus object in the given data file and returns the bus
