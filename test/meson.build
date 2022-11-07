@@ -48,6 +48,7 @@ test_vars = [
 # NOTE: Try to limit this, if possible, to prevent duplicate compilation.
 test_additional_srcs = [
   files(
+    '../analyzer/filter-root-cause.cpp',
     '../analyzer/plugins/p10-plugins.cpp',
     '../analyzer/plugins/p10-tod-plugins.cpp',
     '../cli.cpp',
@@ -64,6 +65,7 @@ testcases = [
   'test-pdbg-dts',
   'test-pll-unlock',
   'test-resolution',
+  'test-root-cause-filter',
   'test-tod-step-check-fault',
   'test-cli',
 ]

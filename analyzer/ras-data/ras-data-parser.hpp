@@ -58,7 +58,7 @@ class RasDataParser
      * @return True if the flag is set for the given signature, else false.
      */
     bool isFlagSet(const libhei::Signature& i_signature,
-                   const RasDataFlags i_flag);
+                   const RasDataFlags i_flag) const;
 
   private:
     /**

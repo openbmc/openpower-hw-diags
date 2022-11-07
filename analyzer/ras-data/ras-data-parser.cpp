@@ -48,7 +48,7 @@ std::shared_ptr<Resolution>
 //------------------------------------------------------------------------------
 
 bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
-                              const RasDataFlags i_flag)
+                              const RasDataFlags i_flag) const
 {
     bool o_isFlagSet = false;
 
