@@ -11,7 +11,6 @@
 
 namespace analyzer
 {
-
 //------------------------------------------------------------------------------
 
 // Forward references for externally defined functions.
@@ -27,11 +26,13 @@ void initializeIsolator(std::vector<libhei::Chip>& o_chips);
  * @param  i_type      The type of analysis to perform. See enum for details.
  * @param  i_isoData   The data gathered during isolation (for FFDC).
  * @param  o_rootCause The returned root cause signature.
+ * @param  i_rasData   The RAS data parser.
  * @return True, if root cause has been found. False, otherwise.
  */
 bool filterRootCause(AnalysisType i_type,
                      const libhei::IsolationData& i_isoData,
-                     libhei::Signature& o_rootCause);
+                     libhei::Signature& o_rootCause,
+                     const RasDataParser& i_rasData);
 
 /**
  * @brief Will create and submit a PEL using the given data.
@@ -126,7 +127,8 @@ uint32_t analyzeHardware(AnalysisType i_type, attn::DumpParameters& o_dump)
 
     // Filter for root cause attention.
     libhei::Signature rootCause{};
-    bool attnFound = filterRootCause(i_type, isoData, rootCause);
+    RasDataParser rasData{};
+    bool attnFound = filterRootCause(i_type, isoData, rootCause, rasData);
 
     // If a root cause attention was found, or if this was a system checkstop,
     // generate a PEL.
@@ -160,7 +162,6 @@ uint32_t analyzeHardware(AnalysisType i_type, attn::DumpParameters& o_dump)
                 try
                 {
                     // Resolve the root cause attention.
-                    RasDataParser rasData{};
                     rasData.getResolution(rootCause)->resolve(servData);
                 }
                 catch (const std::exception& e)
