@@ -48,7 +48,7 @@ std::shared_ptr<Resolution>
 //------------------------------------------------------------------------------
 
 bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
-                              const RasDataFlags i_flag)
+                              const RasDataFlags i_flag) const
 {
     bool o_isFlagSet = false;
 
@@ -221,8 +221,9 @@ void RasDataParser::initDataFiles()
 
 //------------------------------------------------------------------------------
 
-std::string RasDataParser::parseSignature(const nlohmann::json& i_data,
-                                          const libhei::Signature& i_signature)
+std::string
+    RasDataParser::parseSignature(const nlohmann::json& i_data,
+                                  const libhei::Signature& i_signature) const
 {
     // Get the signature keys. All are hex (lower case) with no prefix.
     char buf[5];
