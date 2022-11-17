@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b246b9e7_3b993868",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-11-17T15:57:22Z",
+      "side": 1,
+      "message": "Need to handle the case where the flag is defined in the action instead of in the signature.",
+      "revId": "84b16672d67240c7ff436a4bc40b7e4b3460444c",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
