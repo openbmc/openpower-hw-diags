@@ -45,11 +45,4 @@ enum class AnalysisType
  */
 uint32_t analyzeHardware(AnalysisType i_type, attn::DumpParameters& o_dump);
 
-/**
- * @brief Get error analyzer build information
- *
- * @return Pointer to build information
- */
-const char* getBuildInfo();
-
 } // namespace analyzer
