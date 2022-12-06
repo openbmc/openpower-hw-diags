@@ -8,6 +8,7 @@
 #include <attn/attn_main.hpp>
 #include <buildinfo.hpp>
 #include <cli.hpp>
+#include <hei_buildinfo.hpp>
 #include <util/pdbg_callback.hpp>
 
 /**
@@ -34,7 +35,7 @@ int main(int argc, char* argv[])
         printf("options:\n");
         printf("  --analyze:              Analyze the hardware\n");
         printf("  --daemon:               Start the attn handler daemon\n");
-        printf("hwdiag: %s, hei: %s\n", BUILDINFO, analyzer::getBuildInfo());
+        printf("hwdiag: %s, hei: %s\n", BUILDINFO, libhei::getBuildInfo());
     }
     else
     {
