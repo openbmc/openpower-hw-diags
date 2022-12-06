@@ -1,5 +1,15 @@
 #pragma once
 
-// The build process use this file as a teplate to create a file used during
+// The build process use this file as a template to create a file used during
 // compilation. This allows for automatic updating of build information.
-#define BUILDINFO "@BUILDINFO@"
+
+namespace hwdiags
+{
+
+inline const char* getBuildInfo()
+{
+    return "@BUILDINFO@";
+}
+
+} // namespace hwdiags
+

@@ -223,14 +223,4 @@ uint32_t analyzeHardware(AnalysisType i_type, attn::DumpParameters& o_dump)
 
 //------------------------------------------------------------------------------
 
-/**
- * @brief Get error isolator build information
- *
- * @return Pointer to build information
- */
-const char* getBuildInfo()
-{
-    return libhei::getBuildInfo();
-}
-
 } // namespace analyzer
