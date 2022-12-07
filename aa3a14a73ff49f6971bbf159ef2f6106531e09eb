@@ -18,6 +18,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e8f28f71_6bc4d4a2",
+        "filename": "analyzer/filter-root-cause.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-12-07T15:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1bce74dc_c420f2aa",
+      "revId": "aa3a14a73ff49f6971bbf159ef2f6106531e09eb",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "59238191_d22e72a0",
@@ -31,6 +49,24 @@
       "writtenOn": "2022-12-06T17:37:46Z",
       "side": 1,
       "message": "open a story to cleanup version 1 at some point",
+      "revId": "aa3a14a73ff49f6971bbf159ef2f6106531e09eb",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1c0bf54f_1102ece2",
+        "filename": "analyzer/filter-root-cause.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-12-07T15:48:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59238191_d22e72a0",
       "revId": "aa3a14a73ff49f6971bbf159ef2f6106531e09eb",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
