@@ -7,10 +7,10 @@ service action needed to avoid repeated system failures.
 
 Aditional details TBD.
 
-Building
---------
+## Building
 
 For a standard OpenBMC release build, you want something like:
+
 ```
 meson -Dtests=disabled <build_dir>
 ninja -C <build_dir>
@@ -18,9 +18,8 @@ ninja -C <build_dir> install
 ```
 
 For a test / debug build, a typical configuration is:
+
 ```
 meson -Dtests=enabled <build_dir>
 ninja -C <build_dir> test
 ```
-
-
