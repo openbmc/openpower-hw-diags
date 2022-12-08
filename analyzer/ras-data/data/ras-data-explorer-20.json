@@ -389,51 +389,35 @@
             },
             "01": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "02": {
                 "00": "omi_bus_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "03": {
                 "00": "omi_bus_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "04": {
                 "00": "omi_bus_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "05": {
                 "00": "omi_bus_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "06": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "07": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "08": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "09": {
                 "00": "downstream_attn"
@@ -443,9 +427,7 @@
             },
             "0b": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "0c": {
                 "00": "ocmb_M_th1"
@@ -467,48 +449,34 @@
             },
             "12": {
                 "00": "omi_bus_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "13": {
                 "00": "omi_M_th1"
             },
             "14": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "15": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "16": {
                 "00": "omi_bus_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "17": {
                 "00": "omi_bus_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "18": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "19": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "1a": {
                 "00": "ocmb_M_th_32perDay"
@@ -526,75 +494,51 @@
         "bbd3": {
             "34": {
                 "00": "level2_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "35": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "36": {
                 "00": "omi_bus_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "37": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "38": {
                 "00": "omi_bus_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "39": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "3a": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "3b": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "3c": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "3d": {
                 "00": "omi_bus_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "3e": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "3f": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             }
         },
         "bdcd": {
@@ -693,9 +637,7 @@
             },
             "1f": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "mask_but_dont_clear"
-                ]
+                "flags": ["mask_but_dont_clear"]
             },
             "20": {
                 "00": "ocmb_M_th1"
@@ -797,15 +739,11 @@
         "86bf": {
             "00": {
                 "00": "downstream_attn",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "01": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "02": {
                 "00": "ocmb_M_th_32perDay"
@@ -1000,9 +938,7 @@
             },
             "01": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "02": {
                 "00": "mem_port_M_th_32perDay"
@@ -1021,9 +957,7 @@
             },
             "07": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "08": {
                 "00": "level2_M_th1"
@@ -1033,27 +967,19 @@
             },
             "0a": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "0b": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "0c": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "0d": {
                 "00": "dimm_H_mem_port_L_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "0e": {
                 "00": "mem_port_M_info_only"
@@ -1063,70 +989,49 @@
             },
             "10": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "11": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "12": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "13": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "14": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "15": {
                 "00": "mem_port_M_th1"
             },
             "16": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "17": {
                 "00": "mem_port_M_th_32perDay"
             },
             "18": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "19": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "informational_only",
-                    "sue_source"
-                ]
+                "flags": ["informational_only", "sue_source"]
             },
             "1a": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "1b": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "1c": {
                 "00": "mem_port_M_th_32perDay"
@@ -1180,33 +1085,23 @@
             },
             "0d": {
                 "00": "mainline_aue_iaue_handling",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "0e": {
                 "00": "mainline_ue_handling",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "0f": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "10": {
                 "00": "mainline_aue_iaue_handling",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "11": {
                 "00": "mainline_iue_handling",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "12": {
                 "00": "mem_port_M_th_32perDay"
@@ -1255,9 +1150,7 @@
             },
             "21": {
                 "00": "maintenance_aue_handling",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "22": {
                 "00": "level2_M_th1"
@@ -1267,15 +1160,11 @@
             },
             "24": {
                 "00": "dimm_H_mem_port_L_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "25": {
                 "00": "maintenance_iue_handling",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "26": {
                 "00": "mem_port_M_th_32perDay"
@@ -1294,15 +1183,11 @@
             },
             "2b": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "2c": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "2d": {
                 "00": "mem_port_M_th_32perDay"
@@ -1312,15 +1197,11 @@
             },
             "2f": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "30": {
                 "00": "mem_port_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "31": {
                 "00": "level2_M_th1"
@@ -1391,15 +1272,11 @@
             },
             "02": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "03": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "04": {
                 "00": "level2_M_th1"
@@ -1433,9 +1310,7 @@
             },
             "0e": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "0f": {
                 "00": "level2_M_th1"
@@ -1465,21 +1340,15 @@
             },
             "03": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "04": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "05": {
                 "00": "ocmb_M_th1",
-                "flags": [
-                    "sue_source"
-                ]
+                "flags": ["sue_source"]
             },
             "06": {
                 "00": "ocmb_M_th1"
