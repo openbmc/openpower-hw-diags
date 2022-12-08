@@ -56,10 +56,10 @@ keyword is optional and the chip is used as the endpoint connection instead.
 This is usually intended to be used when the chip is the child and we need to
 find the connected `parent` chip/unit.
 
-| Keyword | Description                                                        |
-|---------|--------------------------------------------------------------------|
-| type    | The bus connection type. Values (string): `SMP_BUS` and `OMI_BUS`  |
-| unit    | Optional. The `<unit_name>` of the bus endpoint on this chip.      |
+| Keyword | Description                                                       |
+| ------- | ----------------------------------------------------------------- |
+| type    | The bus connection type. Values (string): `SMP_BUS` and `OMI_BUS` |
+| unit    | Optional. The `<unit_name>` of the bus endpoint on this chip.     |
 
 ## 5) `actions` keyword (required)
 
@@ -71,8 +71,8 @@ RAS actions, to be performed in order, with the format:
 "<action_name>" : [ { <action_element> }, ... ]
 ```
 
-Where `<action_name>` is simply an alphanumeric label for a set of actions.
-This will be the keyword referenced by the `signatures` or by a special
+Where `<action_name>` is simply an alphanumeric label for a set of actions. This
+will be the keyword referenced by the `signatures` or by a special
 `<action_element>` for nested actions (see below).
 
 ### 5.1) `<action_element>` object
@@ -83,66 +83,66 @@ dependent on the action type.
 
 Actions with a `priority` keyword can only use the following values (string):
 
-| Priority | Description                                                       |
-|----------|-------------------------------------------------------------------|
-| `HIGH`   | Serivce is mandatory.                                             |
-| `MED`    | Service one at a time, in order, until issue is resolved.         |
-| `MED_A`  | Same as `MED` except all in group A replaced at the same time.    |
-| `MED_B`  | Same as `MED` except all in group B replaced at the same time.    |
-| `MED_C`  | Same as `MED` except all in group C replaced at the same time.    |
-| `LOW`    | Same as `MED*`, but only if higher priority service does not work.|
+| Priority | Description                                                        |
+| -------- | ------------------------------------------------------------------ |
+| `HIGH`   | Serivce is mandatory.                                              |
+| `MED`    | Service one at a time, in order, until issue is resolved.          |
+| `MED_A`  | Same as `MED` except all in group A replaced at the same time.     |
+| `MED_B`  | Same as `MED` except all in group B replaced at the same time.     |
+| `MED_C`  | Same as `MED` except all in group C replaced at the same time.     |
+| `LOW`    | Same as `MED*`, but only if higher priority service does not work. |
 
 NOTE: If a part is called out more than once, only the highest priority callout
 will be used.
 
 Actions with a `guard` keyword can only use the following values (boolean):
 
-| Guard | Description                                                          |
-|-------|----------------------------------------------------------------------|
-| true  | Request guard on associated part.                                    |
-| false | No guard request.                                                    |
+| Guard | Description                       |
+| ----- | --------------------------------- |
+| true  | Request guard on associated part. |
+| false | No guard request.                 |
 
 #### 5.1.1) action type `action`
 
 This is a special action type that allows using an action that has already been
 defined (nested actions).
 
-| Keyword | Description                                                        |
-|---------|--------------------------------------------------------------------|
-| type    | value (string): `action`                                           |
-| name    | The `<action_name>` of a previously predefined action.             |
+| Keyword | Description                                            |
+| ------- | ------------------------------------------------------ |
+| type    | value (string): `action`                               |
+| name    | The `<action_name>` of a previously predefined action. |
 
 #### 5.1.2) action type `callout_self`
 
 This will request to callout the chip defined by this file.
 
-| Keyword  | Description                                                       |
-|----------|-------------------------------------------------------------------|
-| type     | value (string): `callout_self`                                    |
-| priority | See `priority` table above.                                       |
-| guard    | See `guard` table above.                                          |
+| Keyword  | Description                    |
+| -------- | ------------------------------ |
+| type     | value (string): `callout_self` |
+| priority | See `priority` table above.    |
+| guard    | See `guard` table above.       |
 
 #### 5.1.3) action type `callout_unit`
 
 This will request to callout a unit of the chip defined by this file.
 
-| Keyword  | Description                                                       |
-|----------|-------------------------------------------------------------------|
-| type     | value (string): `callout_unit`                                    |
-| name     | The `<unit_name>` as defined by the `units` keyword.              |
-| priority | See `priority` table above.                                       |
-| guard    | See `guard` table above.                                          |
+| Keyword  | Description                                          |
+| -------- | ---------------------------------------------------- |
+| type     | value (string): `callout_unit`                       |
+| name     | The `<unit_name>` as defined by the `units` keyword. |
+| priority | See `priority` table above.                          |
+| guard    | See `guard` table above.                             |
 
 #### 5.1.4) action type `callout_connected`
 
 This will request to callout a connected chip/unit on the other side of a bus.
 
-| Keyword  | Description                                                       |
-|----------|-------------------------------------------------------------------|
-| type     | value (string): `callout_connected`                               |
-| name     | The `<bus_name>` as defined by the `buses` keyword.               |
-| priority | See `priority` table above.                                       |
-| guard    | See `guard` table above.                                          |
+| Keyword  | Description                                         |
+| -------- | --------------------------------------------------- |
+| type     | value (string): `callout_connected`                 |
+| name     | The `<bus_name>` as defined by the `buses` keyword. |
+| priority | See `priority` table above.                         |
+| guard    | See `guard` table above.                            |
 
 #### 5.1.5) action type `callout_bus`
 
@@ -152,68 +152,68 @@ the same priority. If a particular part, like the endpoints, need to be called
 out at a different priority, they will need to be called out using a different
 action type. For example:
 
-- `callout_self` with priority `MED_A`.         (RX endpoint MED_A)
-- `callout_connected` with priority `MED_A`.    (TX endpoint MED_A)
-- `callout_bus` with priority `LOW`.            (everything else LOW)
+- `callout_self` with priority `MED_A`. (RX endpoint MED_A)
+- `callout_connected` with priority `MED_A`. (TX endpoint MED_A)
+- `callout_bus` with priority `LOW`. (everything else LOW)
 
-| Keyword     | Description                                                    |
-|-------------|----------------------------------------------------------------|
-| type        | value (string): `callout_bus`                                  |
-| name        | The `<bus_name>` as defined by the `buses` keyword.            |
-| priority    | See `priority` table above.                                    |
-| guard       | See `guard` table above.                                       |
+| Keyword  | Description                                         |
+| -------- | --------------------------------------------------- |
+| type     | value (string): `callout_bus`                       |
+| name     | The `<bus_name>` as defined by the `buses` keyword. |
+| priority | See `priority` table above.                         |
+| guard    | See `guard` table above.                            |
 
 #### 5.1.6) action type `callout_clock`
 
 This will request to callout a clock associated with this chip.
 
-| Keyword  | Description                                                       |
-|----------|-------------------------------------------------------------------|
-| type     | value (string): `callout_clock`                                   |
-| name     | See `clock type` table below.                                     |
-| priority | See `priority` table above.                                       |
-| guard    | See `guard` table above.                                          |
+| Keyword  | Description                     |
+| -------- | ------------------------------- |
+| type     | value (string): `callout_clock` |
+| name     | See `clock type` table below.   |
+| priority | See `priority` table above.     |
+| guard    | See `guard` table above.        |
 
 Supported clock types:
 
-| Clock Type      | Description                                                |
-|-----------------|------------------------------------------------------------|
-| OSC_REF_CLOCK_0 | Oscillator reference clock 0                               |
-| OSC_REF_CLOCK_1 | Oscillator reference clock 1                               |
-| TOD_CLOCK       | Time of Day (TOD) clock                                    |
+| Clock Type      | Description                  |
+| --------------- | ---------------------------- |
+| OSC_REF_CLOCK_0 | Oscillator reference clock 0 |
+| OSC_REF_CLOCK_1 | Oscillator reference clock 1 |
+| TOD_CLOCK       | Time of Day (TOD) clock      |
 
 #### 5.1.7) action type `callout_procedure`
 
 This will request to callout a service procedure.
 
-| Keyword  | Description                                                       |
-|----------|-------------------------------------------------------------------|
-| type     | value (string): `callout_procedure`                               |
-| name     | See `procedures` table below.                                     |
-| priority | See `priority` table above.                                       |
+| Keyword  | Description                         |
+| -------- | ----------------------------------- |
+| type     | value (string): `callout_procedure` |
+| name     | See `procedures` table below.       |
+| priority | See `priority` table above.         |
 
 Supported procedures:
 
-| Procedure | Description                                                      |
-|-----------|------------------------------------------------------------------|
-| LEVEL2    | Request Level 2 support                                          |
+| Procedure | Description             |
+| --------- | ----------------------- |
+| LEVEL2    | Request Level 2 support |
 
 #### 5.1.8) action type `callout_part`
 
 This will request special part callouts that cannot be managed by the other
 callout actions (e.g. the PNOR).
 
-| Keyword  | Description                                                       |
-|----------|-------------------------------------------------------------------|
-| type     | value (string): `callout_part`                                    |
-| name     | See `parts` table below.                                          |
-| priority | See `priority` table above.                                       |
+| Keyword  | Description                    |
+| -------- | ------------------------------ |
+| type     | value (string): `callout_part` |
+| name     | See `parts` table below.       |
+| priority | See `priority` table above.    |
 
 Supported parts:
 
-| Part Type     | Description                                                  |
-|---------------|--------------------------------------------------------------|
-| PNOR          | The part containing the PNOR                                 |
+| Part Type | Description                  |
+| --------- | ---------------------------- |
+| PNOR      | The part containing the PNOR |
 
 #### 5.1.9) action type `plugin`
 
@@ -224,7 +224,7 @@ the goal is to make the user applications as data driven as possible to avoid
 platform specific code.
 
 | Keyword  | Description                                                       |
-|----------|-------------------------------------------------------------------|
+| -------- | ----------------------------------------------------------------- |
 | type     | value (string): `plugin`                                          |
 | name     | A string representing the plugin name.                            |
 | instance | Some plugins may be defined for multiple register/unit instances. |

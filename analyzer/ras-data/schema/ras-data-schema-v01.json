@@ -6,18 +6,11 @@
     "definitions": {
         "priority": {
             "type": "string",
-            "enum": [
-                "HIGH",
-                "MED",
-                "MED_A",
-                "MED_B",
-                "MED_C",
-                "LOW"
-            ]
+            "enum": ["HIGH", "MED", "MED_A", "MED_B", "MED_C", "LOW"]
         }
     },
     "additionalProperties": false,
-    "required": [ "model_ec", "version", "actions", "signatures" ],
+    "required": ["model_ec", "version", "actions", "signatures"],
     "properties": {
         "model_ec": {
             "type": "string",
@@ -44,11 +37,11 @@
                 "^\\w+$": {
                     "type": "object",
                     "additionalProperties": false,
-                    "required": [ "type" ],
+                    "required": ["type"],
                     "properties": {
                         "type": {
                             "type": "string",
-                            "enum": [ "SMP_BUS", "OMI_BUS" ]
+                            "enum": ["SMP_BUS", "OMI_BUS"]
                         },
                         "unit": {
                             "type": "string",
@@ -66,7 +59,7 @@
                     "type": "array",
                     "items": {
                         "type": "object",
-                        "required": [ "type" ],
+                        "required": ["type"],
                         "properties": {
                             "type": {
                                 "type": "string",
@@ -101,8 +94,8 @@
                                     }
                                 },
                                 "then": {
-                                    "required": [ "name" ],
-                                    "not": { "required": [ "priority", "guard" ] }
+                                    "required": ["name"],
+                                    "not": { "required": ["priority", "guard"] }
                                 }
                             },
                             {
@@ -112,8 +105,8 @@
                                     }
                                 },
                                 "then": {
-                                    "required": [ "priority", "guard" ],
-                                    "not": { "required": [ "name" ] }
+                                    "required": ["priority", "guard"],
+                                    "not": { "required": ["name"] }
                                 }
                             },
                             {
@@ -123,7 +116,7 @@
                                     }
                                 },
                                 "then": {
-                                    "required": [ "name", "priority", "guard" ]
+                                    "required": ["name", "priority", "guard"]
                                 }
                             },
                             {
@@ -133,7 +126,7 @@
                                     }
                                 },
                                 "then": {
-                                    "required": [ "name", "priority", "guard" ]
+                                    "required": ["name", "priority", "guard"]
                                 }
                             },
                             {
@@ -143,7 +136,7 @@
                                     }
                                 },
                                 "then": {
-                                    "required": [ "name", "priority", "guard" ]
+                                    "required": ["name", "priority", "guard"]
                                 }
                             },
                             {
@@ -153,7 +146,7 @@
                                     }
                                 },
                                 "then": {
-                                    "required": [ "name", "priority", "guard" ],
+                                    "required": ["name", "priority", "guard"],
                                     "properties": {
                                         "name": {
                                             "enum": [
@@ -172,14 +165,11 @@
                                     }
                                 },
                                 "then": {
-                                    "required": [ "name", "priority" ],
-                                    "not": { "required": [ "guard" ] },
+                                    "required": ["name", "priority"],
+                                    "not": { "required": ["guard"] },
                                     "properties": {
                                         "name": {
-                                            "enum": [
-                                                "LEVEL2",
-                                                "SUE_SEEN"
-                                            ]
+                                            "enum": ["LEVEL2", "SUE_SEEN"]
                                         }
                                     }
                                 }
@@ -191,13 +181,11 @@
                                     }
                                 },
                                 "then": {
-                                    "required": [ "name", "priority" ],
-                                    "not": { "required": [ "guard" ] },
+                                    "required": ["name", "priority"],
+                                    "not": { "required": ["guard"] },
                                     "properties": {
                                         "name": {
-                                            "enum": [
-                                                "PNOR"
-                                            ]
+                                            "enum": ["PNOR"]
                                         }
                                     }
                                 }
@@ -209,8 +197,10 @@
                                     }
                                 },
                                 "then": {
-                                    "required": [ "name", "instance" ],
-                                    "not": { "required": [ "priority", "guard" ] },
+                                    "required": ["name", "instance"],
+                                    "not": {
+                                        "required": ["priority", "guard"]
+                                    },
                                     "properties": {
                                         "instance": {
                                             "type": "integer"
