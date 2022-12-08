@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8deb6616_104178aa",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2022-12-08T13:07:59Z",
+      "side": 1,
+      "message": "I rebased this because it was based on an ancient commit.  Please \u0027fetch\u0027 locally before pushing to Gerrit.",
+      "revId": "8f92d84076db1dca7e6c01a1ba90b50e6e651342",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
