@@ -527,6 +527,7 @@ bool __findTiRootCause(const std::vector<libhei::Signature>& i_list,
 
             if (int_cq_fir == id &&
                 (0 == bit || 3 == bit || 5 == bit || 7 == bit || 36 == bit ||
+                 47 == bit || 48 == bit || 49 == bit || 50 == bit ||
                  58 == bit || 59 == bit || 60 == bit))
             {
                 continue;
