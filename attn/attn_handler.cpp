@@ -33,7 +33,6 @@ extern "C"
 
 namespace attn
 {
-
 /**
  * @brief Handle checkstop attention
  *
@@ -247,23 +246,25 @@ int handleCheckstop(Attention* i_attention)
     }
     else
     {
-        // wait for power fault handling before starting analyses
+        // check for power fault before starting analyses
         sleepSeconds(POWER_FAULT_WAIT);
-
-        // Look for any attentions found in hardware. This will generate and
-        // commit a PEL if any errors are found.
-        DumpParameters dumpParameters;
-        auto logid = analyzer::analyzeHardware(
-            analyzer::AnalysisType::SYSTEM_CHECKSTOP, dumpParameters);
-        if (0 == logid)
+        if (!util::dbus::powerFault())
         {
-            // A PEL should exist for a checkstop attention.
-            rc = RC_ANALYZER_ERROR;
-        }
-        else
-        {
-            requestDump(logid, dumpParameters);
-            util::dbus::transitionHost(util::dbus::HostState::Quiesce);
+            // Look for any attentions found in hardware. This will generate and
+            // commit a PEL if any errors are found.
+            DumpParameters dumpParameters;
+            auto logid = analyzer::analyzeHardware(
+                analyzer::AnalysisType::SYSTEM_CHECKSTOP, dumpParameters);
+            if (0 == logid)
+            {
+                // A PEL should exist for a checkstop attention.
+                rc = RC_ANALYZER_ERROR;
+            }
+            else
+            {
+                requestDump(logid, dumpParameters);
+                util::dbus::transitionHost(util::dbus::HostState::Quiesce);
+            }
         }
     }
 
