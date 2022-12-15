@@ -9,12 +9,10 @@
 
 namespace util
 {
-
 namespace dbus
 {
-
 using DBusValue         = std::variant<std::string, bool, std::vector<uint8_t>,
-                               std::vector<std::string>>;
+                               std::vector<std::string>, int32_t>;
 using DBusProperty      = std::string;
 using DBusInterface     = std::string;
 using DBusService       = std::string;
@@ -150,6 +148,13 @@ enum class MachineType
  * @return An enum representing the machine type
  */
 MachineType getMachineType();
+
+/**
+ * @brief Determin if power fault was detected
+ *
+ * @return true if power fault or unknown, false otherwise
+ */
+bool powerFault();
 
 } // namespace dbus
 

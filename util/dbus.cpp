@@ -6,10 +6,8 @@
 
 namespace util
 {
-
 namespace dbus
 {
-
 //------------------------------------------------------------------------------
 
 constexpr auto objectMapperService   = "xyz.openbmc_project.ObjectMapper";
@@ -426,6 +424,35 @@ MachineType getMachineType()
     }
 
     return machineType;
+}
+
+/** @brief Determine if power fault was detected */
+bool powerFault()
+{
+    // power fault based on pgood property
+    int32_t pgood = 0; // assume fault or unknown
+
+    constexpr auto interface = "org.openbmc.control.Power";
+
+    DBusService service;
+    DBusPath path;
+
+    // find a dbus object and path that implements the interface
+    if (0 == find(interface, path, service))
+    {
+        DBusValue value;
+
+        // chassis pgood is implemented as a property
+        constexpr auto property = "pgood";
+
+        if (0 == getProperty(interface, path, service, property, value))
+        {
+            // return value is a variant, autoreboot policy is boolean
+            pgood = std::get<int32_t>(value);
+        }
+    }
+
+    return pgood != 1 ? true : false; // if not pgood then power fault
 }
 
 } // namespace dbus
