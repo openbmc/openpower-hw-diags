@@ -79,6 +79,29 @@
       "message": "If recovery successful, submit a recoverable pel, else have the usual unrecoverable pel.",
       "revId": "f13bff1cbae193078694add5d13cf9d662ced8a5",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8c467abf_64987f80",
+        "filename": "attn/vital_handler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-12-15T19:32:27Z",
+      "side": 1,
+      "message": "This is a \"should never happen case\" however I see that in case of checkstop we will request a dump even if the pelId \u003d\u003d 0. Should we do the same here?",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 19
+      },
+      "revId": "f13bff1cbae193078694add5d13cf9d662ced8a5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
