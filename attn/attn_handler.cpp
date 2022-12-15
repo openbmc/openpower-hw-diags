@@ -23,6 +23,7 @@ extern "C"
 #include <util/dbus.hpp>
 #include <util/ffdc_file.hpp>
 #include <util/pdbg.hpp>
+#include <util/pldm.hpp>
 #include <util/trace.hpp>
 
 #include <algorithm>
@@ -33,7 +34,6 @@ extern "C"
 
 namespace attn
 {
-
 /**
  * @brief Handle checkstop attention
  *
@@ -67,9 +67,6 @@ void getStaticTiInfo(uint8_t*& tiInfoPtr);
 
 /** @brief Check if TI info data is valid */
 bool tiInfoValid(uint8_t* tiInfo);
-
-/** @brief Clear attention interrupts */
-void clearAttnInterrupts();
 
 /**
  * @brief The main attention handler logic
@@ -563,13 +560,7 @@ bool tiInfoValid(uint8_t* tiInfo)
     return tiInfoValid;
 }
 
-/**
- * @brief Clear attention interrupts
- *
- * The attention interrupts are sticky and may still be set (MPIPL) even if
- * there are no active attentions. If there is an active attention then
- * clearing the associated interrupt will have no effect.
- */
+/** @brief Clear attention interrupts */
 void clearAttnInterrupts()
 {
     trace::inf("Clearing attention interrupts");
