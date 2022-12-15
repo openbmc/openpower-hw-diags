@@ -9,9 +9,10 @@
 
 namespace attn
 {
-
 constexpr auto pathLogging   = "/xyz/openbmc_project/logging";
 constexpr auto levelPelError = "xyz.openbmc_project.Logging.Entry.Level.Error";
+constexpr auto levelPelInfo =
+    "xyz.openbmc_project.Logging.Entry.Level.Informational";
 constexpr auto eventPelTerminate = "xyz.open_power.Attn.Error.Terminate";
 
 /** @brief Logging event types */
@@ -30,7 +31,7 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
                     char* i_tiInfoData);
 
 /** @brief Commit SBE vital event to log, returns event log Id */
-uint32_t eventVital();
+uint32_t eventVital(std::string severity);
 
 /** @brief Commit attention handler failure event to log */
 void eventAttentionFail(int i_error);

@@ -13,7 +13,6 @@
 
 namespace attn
 {
-
 /** @brief Tuple containing information about ffdc files */
 using FFDCTuple =
     std::tuple<util::FFDCFormat, uint8_t, uint8_t, sdbusplus::message::unix_fd>;
@@ -311,11 +310,13 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
  * @param  i_event - The event type
  * @param  i_additional - Additional PEL data
  * @param  i_ffdc - FFDC PEL data
+ * @param  i_severity - Severity level
  * @return Event log Id (0 if no event log generated)
  */
 uint32_t event(EventType i_event,
                std::map<std::string, std::string>& i_additional,
-               const std::vector<util::FFDCFile>& i_ffdc)
+               const std::vector<util::FFDCFile>& i_ffdc,
+               std::string i_severity = levelPelError)
 {
     uint32_t pelId = 0; // assume no event log generated
 
@@ -356,7 +357,7 @@ uint32_t event(EventType i_event,
     {
         // Create PEL with additional data and FFDC data. The newly created
         // PEL's platform log-id will be returned.
-        pelId = util::dbus::createPel(eventName, levelPelError, i_additional,
+        pelId = util::dbus::createPel(eventName, i_severity, i_additional,
                                       createFFDCTuples(i_ffdc));
 
         // If this is a TI event we will create an additional PEL that is
@@ -482,13 +483,14 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
 }
 
 /** @brief Commit SBE vital event to log, returns event log ID */
-uint32_t eventVital()
+uint32_t eventVital(std::string severity)
 {
     // Additional data for log
     std::map<std::string, std::string> additionalData;
 
     // Create log event with additional data and FFDC data
-    return event(EventType::Vital, additionalData, createFFDCFiles(nullptr, 0));
+    return event(EventType::Vital, additionalData, createFFDCFiles(nullptr, 0),
+                 severity);
 }
 
 /**
