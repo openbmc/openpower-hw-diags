@@ -70,6 +70,8 @@ if get_option('phal').enabled()
   libphal_dep = cmplr.find_library('phal')
 endif
 
+libpldm_dep = dependency('libpldm')
+
 pthread = declare_dependency(link_args : '-pthread')
 lrt = declare_dependency(link_args : '-lrt')
 
