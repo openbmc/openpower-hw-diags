@@ -6,15 +6,15 @@
 
 namespace util
 {
-
 namespace dbus
 {
-
 //------------------------------------------------------------------------------
 
 constexpr auto objectMapperService   = "xyz.openbmc_project.ObjectMapper";
 constexpr auto objectMapperPath      = "/xyz/openbmc_project/object_mapper";
 constexpr auto objectMapperInterface = "xyz.openbmc_project.ObjectMapper";
+
+constexpr uint8_t terminusIdZero = 0;
 
 /** @brief Find the path and service that implements the given interface */
 int find(const std::string& i_interface, std::string& o_path,
@@ -428,6 +428,107 @@ MachineType getMachineType()
     return machineType;
 }
 
-} // namespace dbus
+/** @brief Get list of state effecter PDRs */
+bool getStateEffecterPdrs(std::vector<std::vector<uint8_t>>& pdrList,
+                          uint16_t stateSetId)
+{
+    constexpr auto service   = "xyz.openbmc_project.PLDM";
+    constexpr auto path      = "/xyz/openbmc_project/pldm";
+    constexpr auto interface = "xyz.openbmc_project.PLDM.PDR";
+    constexpr auto function  = "FindStateEffecterPDR";
 
+    constexpr uint16_t PLDM_ENTITY_PROC = 135;
+
+    try
+    {
+        // create dbus method
+        auto bus = sdbusplus::bus::new_default();
+        sdbusplus::message_t method =
+            bus.new_method_call(service, path, interface, function);
+
+        // append additional method data
+        method.append(terminusIdZero, PLDM_ENTITY_PROC, stateSetId);
+
+        // request PDRs
+        auto reply = bus.call(method);
+        reply.read(pdrList);
+    }
+    catch (const sdbusplus::exception_t& e)
+    {
+        trace::err("failed to find state effecter PDRs");
+        trace::err(e.what());
+        return false;
+    }
+
+    return true;
+}
+
+/** @brief Get list of state sensor PDRs */
+bool getStateSensorPdrs(std::vector<std::vector<uint8_t>>& pdrList,
+                        uint16_t stateSetId)
+{
+    constexpr auto service   = "xyz.openbmc_project.PLDM";
+    constexpr auto path      = "/xyz/openbmc_project/pldm";
+    constexpr auto interface = "xyz.openbmc_project.PLDM.PDR";
+    constexpr auto function  = "FindStateSensorPDR";
+
+    constexpr uint16_t PLDM_ENTITY_PROC = 135;
+
+    try
+    {
+        // create dbus method
+        auto bus = sdbusplus::bus::new_default();
+        sdbusplus::message_t method =
+            bus.new_method_call(service, path, interface, function);
+
+        // append additional method data
+        method.append(terminusIdZero, PLDM_ENTITY_PROC, stateSetId);
+
+        // request PDRs
+        auto reply = bus.call(method);
+        reply.read(pdrList);
+    }
+    catch (const sdbusplus::exception_t& e)
+    {
+        trace::err("failed to find state sensor PDRs");
+        trace::err(e.what());
+        return false;
+    }
+
+    return true;
+}
+
+/** @brief Get MCTP instance associated with endpoint */
+bool getMctpInstance(uint8_t& mctpInstance, uint8_t Eid)
+{
+    constexpr auto service   = "xyz.openbmc_project.PLDM";
+    constexpr auto path      = "/xyz/openbmc_project/pldm";
+    constexpr auto interface = "xyz.openbmc_project.PLDM.Requester";
+    constexpr auto function  = "GetInstanceId";
+
+    try
+    {
+        // create dbus method
+        auto bus = sdbusplus::bus::new_default();
+        sdbusplus::message_t method =
+            bus.new_method_call(service, path, interface, function);
+
+        // append endpoint ID
+        method.append(Eid);
+
+        // request MCTP instance ID
+        auto reply = bus.call(method);
+        reply.read(mctpInstance);
+    }
+    catch (const sdbusplus::exception_t& e)
+    {
+        trace::err("get MCTP instance exception");
+        trace::err(e.what());
+        return false;
+    }
+
+    return true;
+}
+
+} // namespace dbus
 } // namespace util
