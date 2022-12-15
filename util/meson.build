@@ -6,6 +6,7 @@ util_src = files(
     'ffdc_file.cpp',
     'pdbg.cpp',
     'pdbg-no-sim.cpp',
+    'pldm.cpp',
     'temporary_file.cpp',
 )
 
@@ -13,6 +14,7 @@ util_src = files(
 util_deps = [
     libhei_dep,
     libpdbg_dep,
+    libpldm_dep,
     phosphor_logging_dep,
 ]
 
