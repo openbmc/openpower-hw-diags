@@ -52,9 +52,6 @@ int handleCheckstop(Attention* i_attention);
  */
 int handleSpecial(Attention* i_attention);
 
-/** @brief Determine if attention is active and not masked */
-bool activeAttn(uint32_t i_val, uint32_t i_mask, uint32_t i_attn);
-
 #ifdef CONFIG_PHAL_API
 /** @brief Handle phal sbe exception */
 void phalSbeExceptionHandler(openpower::phal::exception::SbeError& e,
@@ -66,9 +63,6 @@ void getStaticTiInfo(uint8_t*& tiInfoPtr);
 
 /** @brief Check if TI info data is valid */
 bool tiInfoValid(uint8_t* tiInfo);
-
-/** @brief Clear attention interrupts */
-void clearAttnInterrupts();
 
 /**
  * @brief The main attention handler logic
@@ -396,19 +390,7 @@ int handleSpecial(Attention* i_attention)
     return rc;
 }
 
-/**
- * @brief Determine if attention is active and not masked
- *
- * Determine whether an attention needs to be handled and trace details of
- * attention type and whether it is masked or not.
- *
- * @param i_val attention status register
- * @param i_mask attention true mask register
- * @param i_attn attention type
- * @param i_proc processor associated with registers
- *
- * @return true if attention is active and not masked, otherwise false
- */
+/** @brief Determine if attention is active and not masked */
 bool activeAttn(uint32_t i_val, uint32_t i_mask, uint32_t i_attn)
 {
     bool rc = false; // assume attn masked and/or inactive
@@ -564,13 +546,7 @@ bool tiInfoValid(uint8_t* tiInfo)
     return tiInfoValid;
 }
 
-/**
- * @brief Clear attention interrupts
- *
- * The attention interrupts are sticky and may still be set (MPIPL) even if
- * there are no active attentions. If there is an active attention then
- * clearing the associated interrupt will have no effect.
- */
+/** @brief Clear attention interrupts */
 void clearAttnInterrupts()
 {
     trace::inf("Clearing attention interrupts");
