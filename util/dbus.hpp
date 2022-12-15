@@ -12,7 +12,7 @@ namespace util
 namespace dbus
 {
 using DBusValue         = std::variant<std::string, bool, std::vector<uint8_t>,
-                               std::vector<std::string>>;
+                               std::vector<std::string>, int32_t>;
 using DBusProperty      = std::string;
 using DBusInterface     = std::string;
 using DBusService       = std::string;
@@ -178,6 +178,13 @@ bool getStateEffecterPdrs(std::vector<std::vector<uint8_t>>& pdrList,
  * @return True on success otherwise False
  */
 bool getMctpInstance(uint8_t& mctpInstance, uint8_t Eid);
+
+/**
+ * @brief Determin if power fault was detected
+ *
+ * @return true if power fault or unknown, false otherwise
+ */
+bool powerFault();
 
 } // namespace dbus
 } // namespace util
