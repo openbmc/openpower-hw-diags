@@ -9,10 +9,8 @@
 
 namespace util
 {
-
 namespace dbus
 {
-
 using DBusValue         = std::variant<std::string, bool, std::vector<uint8_t>,
                                std::vector<std::string>>;
 using DBusProperty      = std::string;
@@ -151,6 +149,35 @@ enum class MachineType
  */
 MachineType getMachineType();
 
-} // namespace dbus
+/** @brief Get list of state sensor PDRs
+ *
+ *  @param[out] pdrList - list of PDRs
+ *  @param[in] stateSetId - ID of the state set of interest
+ *
+ *  @return true if successful otherwise false
+ */
+bool getStateSensorPdrs(std::vector<std::vector<uint8_t>>& pdrList,
+                        uint16_t stateSetId);
 
+/** @brief Get list of state effecter PDRs
+ *
+ *  @param[out] pdrList -  list of PDRs
+ *  @param[in] stateSetId - ID of the state set of interest
+ *
+ *  @return true if successful otherwise false
+ */
+bool getStateEffecterPdrs(std::vector<std::vector<uint8_t>>& pdrList,
+                          uint16_t stateSetId);
+
+/**
+ * @brief Get MCTP instance ID associated with endpoint
+ *
+ * @param[out] mctpInstance - instance of MCTP
+ * @param[in] Eid - MCTP enpoint ID
+ *
+ * @return True on success otherwise False
+ */
+bool getMctpInstance(uint8_t& mctpInstance, uint8_t Eid);
+
+} // namespace dbus
 } // namespace util
