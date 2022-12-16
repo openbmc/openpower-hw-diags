@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "f6399dcc_fb7bc35d",
+        "filename": "attn/attn_handler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-12-16T00:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da96aeeb_37beb81f",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 24
+      },
+      "revId": "f13bff1cbae193078694add5d13cf9d662ced8a5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "422e3bd3_616f1be2",
@@ -37,6 +61,30 @@
       "writtenOn": "2022-12-15T18:25:42Z",
       "side": 1,
       "message": "remove",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "f13bff1cbae193078694add5d13cf9d662ced8a5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "441f4059_75b37bb5",
+        "filename": "attn/vital_handler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-12-16T00:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "422e3bd3_616f1be2",
       "range": {
         "startLine": 23,
         "startChar": 0,
@@ -64,6 +112,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "31928462_0e068077",
+        "filename": "attn/vital_handler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-12-16T00:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "516c5716_1887888c",
+      "revId": "f13bff1cbae193078694add5d13cf9d662ced8a5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a072f654_9a907809",
@@ -81,6 +147,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "59e16f0f_5494b66e",
+        "filename": "attn/vital_handler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-12-16T00:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a072f654_9a907809",
+      "revId": "f13bff1cbae193078694add5d13cf9d662ced8a5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "8c467abf_64987f80",
@@ -94,6 +178,30 @@
       "writtenOn": "2022-12-15T19:32:27Z",
       "side": 1,
       "message": "This is a \"should never happen case\" however I see that in case of checkstop we will request a dump even if the pelId \u003d\u003d 0. Should we do the same here?",
+      "range": {
+        "startLine": 112,
+        "startChar": 4,
+        "endLine": 112,
+        "endChar": 19
+      },
+      "revId": "f13bff1cbae193078694add5d13cf9d662ced8a5",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aaf31a09_a8accdac",
+        "filename": "attn/vital_handler.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000369
+      },
+      "writtenOn": "2022-12-16T00:36:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c467abf_64987f80",
       "range": {
         "startLine": 112,
         "startChar": 4,
