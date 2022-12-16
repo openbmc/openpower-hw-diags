@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9bbde4c1_5734a912",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2022-12-16T20:08:26Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 306,
+        "startChar": 60,
+        "endLine": 306,
+        "endChar": 61
+      },
+      "revId": "a8d54f3aeedc549d7972de8b1efea47dbf0f27e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
