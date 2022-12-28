@@ -5,6 +5,8 @@
 #include <cli.hpp>
 #include <listener.hpp>
 
+#include <vector>
+
 /** @brief openpower-hw-diags message queue name */
 static constexpr const char* mq_listener = "openpower-hw-diags-mq";
 
@@ -83,7 +85,7 @@ void* threadListener(void* i_params)
             std::vector<char*> argv;
 
             std::transform(messages.begin(), messages.end(),
-                           std::back_inserter(argv), (char*)data());
+                           std::back_inserter(argv), (char*)argv.data());
 
             int argc = argv.size();
             argv.push_back(nullptr);

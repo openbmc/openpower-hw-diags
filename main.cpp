@@ -1,6 +1,8 @@
 #include <libpdbg.h>
 
 #include <analyzer/analyzer_main.hpp>
+#include <attn/attn_common.hpp>
+#include <attn/attn_handler.hpp>
 #include <boost/interprocess/ipc/message_queue.hpp>
 #include <cli.hpp>
 #include <listener.hpp>
@@ -29,7 +31,7 @@
  */
 int main(int argc, char* argv[])
 {
-    int rc = RC_SUCCESS; // assume success
+    int rc = attn::RC_SUCCESS; // assume success
 
     using namespace boost::interprocess;
 
