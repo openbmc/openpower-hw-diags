@@ -182,6 +182,15 @@ void transitionHost(const HostState i_hostState)
             target = "obmc-host-crash@0.target";
         }
 
+        // If the system is powering off for any reason (ex. we hit a PHYP TI
+        // in the graceful power off path), then we want to call the immediate
+        // power off target
+        if (hostRunningState() == HostRunningState::Stopping)
+        {
+            trace::inf("system is powering off so no dump will be requested");
+            target = "obmc-chassis-hard-poweroff@0.target";
+        }
+
         auto bus    = sdbusplus::bus::new_system();
         auto method = bus.new_method_call(
             "org.freedesktop.systemd1", "/org/freedesktop/systemd1",
@@ -269,6 +278,32 @@ HostRunningState hostRunningState()
             else
             {
                 host = HostRunningState::NotStarted;
+            }
+        }
+    }
+
+    // See if host in process of powering off when we get NotStarted
+    if (host == HostRunningState::NotStarted)
+    {
+        constexpr auto hostStateInterface = "xyz.openbmc_project.State.Host";
+        if (0 == find(hostStateInterface, path, service))
+        {
+            DBusValue value;
+
+            // current host state is implemented as a property
+            constexpr auto stateProperty = "CurrentHostState";
+
+            if (0 == getProperty(hostStateInterface, path, service,
+                                 stateProperty, value))
+            {
+                // return value is a variant, host state is in the vector of
+                // strings
+                std::string hostState(std::get<std::string>(value));
+                if (hostState == "xyz.openbmc_project.State.Host.HostState."
+                                 "TransitioningToOff")
+                {
+                    host = HostRunningState::Stopping;
+                }
             }
         }
     }

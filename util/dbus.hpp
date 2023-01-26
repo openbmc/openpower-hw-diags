@@ -92,7 +92,8 @@ enum class HostRunningState
 {
     Unknown,
     NotStarted,
-    Started
+    Started,
+    Stopping
 };
 
 /**
