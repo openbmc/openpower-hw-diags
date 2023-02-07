@@ -4,6 +4,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <stdexcept>
 #include <string>
 
 namespace fs = std::filesystem;
@@ -131,7 +132,7 @@ bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
     std::string bit{buf};
 
     // Get the list of flags in string format from the data.
-    if (data.at("signatures").at(id).at(bit).contains("flags"))
+    try
     {
         auto flags = data.at("signatures")
                          .at(id)
@@ -145,13 +146,26 @@ bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
             o_isFlagSet = true;
         }
     }
+    catch (const std::out_of_range& e)
+    {
+        // Do nothing. Assume there is no flag defined. If for some reason
+        // the `id` or `bit` were not defined, that will be cause below when the
+        // signture is parsed.
+    }
 
     // If the flag hasn't been found, check if it was defined as part of the
     // action for this input signature.
     if (!o_isFlagSet)
     {
         const auto action = parseSignature(data, i_signature);
-        __checkActionForFlag(action, strFlag, data);
+        try
+        {
+            __checkActionForFlag(action, strFlag, data);
+        }
+        catch (...)
+        {
+            // Again, do nothing. Assume no flag defined.
+        }
     }
 
     return o_isFlagSet;
