@@ -146,7 +146,7 @@ bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
             o_isFlagSet = true;
         }
     }
-    catch (const std::out_of_range& e)
+    catch (const nlohmann::json::out_of_range& e)
     {
         // Do nothing. Assume there is no flag defined. If for some reason
         // the `id` or `bit` were not defined, that will be cause below when the
@@ -162,7 +162,7 @@ bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
         {
             __checkActionForFlag(action, strFlag, data);
         }
-        catch (const std::out_of_range& e)
+        catch (const nlohmann::json::out_of_range& e)
         {
             // Again, do nothing. Assume there is no flag defined. If for some
             // reason the action is not defined, that will be handled later when
@@ -310,7 +310,7 @@ std::string
         action =
             i_data.at("signatures").at(id).at(bit).at(inst).get<std::string>();
     }
-    catch (const std::out_of_range& e)
+    catch (const nlohmann::json::out_of_range& e)
     {
         trace::err("No action defined for signature: %s %s %s", id.c_str(),
                    bit.c_str(), inst.c_str());

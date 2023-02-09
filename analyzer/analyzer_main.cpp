@@ -128,7 +128,17 @@ uint32_t analyzeHardware(AnalysisType i_type, attn::DumpParameters& o_dump)
     // Filter for root cause attention.
     libhei::Signature rootCause{};
     RasDataParser rasData{};
-    bool attnFound = filterRootCause(i_type, isoData, rootCause, rasData);
+    bool attnFound = false;
+    try
+    {
+        attnFound = filterRootCause(i_type, isoData, rootCause, rasData);
+    }
+    catch (const std::exception& e)
+    {
+        trace::err("Exception caught during root cause filtering");
+        trace::err(e.what());
+        attnFound = false; // just in case
+    }
 
     // If a root cause attention was found, or if this was a system checkstop,
     // generate a PEL.
