@@ -1,436 +1,489 @@
 {
-    "model_ec": "60d20011",
-    "version": 2,
-    "units": {
-        "mem_port": "mem_port0",
-        "dimm": "mem_port0/dimm0"
+    "actions": {
+        "dimm_H_mem_port_L_th1": [
+            {
+                "guard": true,
+                "name": "dimm",
+                "priority": "HIGH",
+                "type": "callout_unit"
+            },
+            {
+                "guard": false,
+                "name": "mem_port",
+                "priority": "LOW",
+                "type": "callout_unit"
+            },
+            {
+                "name": "th_1",
+                "type": "action"
+            }
+        ],
+        "dimm_H_mem_port_L_th_32perDay": [
+            {
+                "guard": true,
+                "name": "dimm",
+                "priority": "HIGH",
+                "type": "callout_unit"
+            },
+            {
+                "guard": false,
+                "name": "mem_port",
+                "priority": "LOW",
+                "type": "callout_unit"
+            },
+            {
+                "name": "th_32perDay",
+                "type": "action"
+            }
+        ],
+        "dimm_M": [
+            {
+                "guard": true,
+                "name": "dimm",
+                "priority": "MED",
+                "type": "callout_unit"
+            }
+        ],
+        "dimm_M_th1": [
+            {
+                "name": "dimm_M",
+                "type": "action"
+            },
+            {
+                "name": "th_1",
+                "type": "action"
+            }
+        ],
+        "downstream_attn": [
+            {
+                "name": "level2_M_th1",
+                "type": "action"
+            }
+        ],
+        "level2_M": [
+            {
+                "name": "LEVEL2",
+                "priority": "MED",
+                "type": "callout_procedure"
+            }
+        ],
+        "level2_M_ocmb_L_th1": [
+            {
+                "name": "level2_M",
+                "type": "action"
+            },
+            {
+                "guard": false,
+                "priority": "LOW",
+                "type": "callout_self"
+            },
+            {
+                "name": "th_1",
+                "type": "action"
+            }
+        ],
+        "level2_M_th1": [
+            {
+                "name": "level2_M",
+                "type": "action"
+            },
+            {
+                "name": "th_1",
+                "type": "action"
+            }
+        ],
+        "mainline_aue_iaue_handling": [
+            {
+                "name": "dimm_H_mem_port_L_th1",
+                "type": "action"
+            }
+        ],
+        "mainline_iue_handling": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "mainline_nce_tce_handling": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "mainline_ue_handling": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "maintenance_aue_handling": [
+            {
+                "name": "dimm_H_mem_port_L_th1",
+                "type": "action"
+            }
+        ],
+        "maintenance_iue_handling": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "mcbist_program_complete": [
+            {
+                "name": "level2_M_th1",
+                "type": "action"
+            }
+        ],
+        "mem_port_M": [
+            {
+                "guard": true,
+                "name": "mem_port",
+                "priority": "MED",
+                "type": "callout_unit"
+            }
+        ],
+        "mem_port_M_info_only": [
+            {
+                "name": "mem_port_M_th_32perDay",
+                "type": "action"
+            },
+            {
+                "name": "informational_only",
+                "type": "flag"
+            }
+        ],
+        "mem_port_M_th1": [
+            {
+                "name": "mem_port_M",
+                "type": "action"
+            },
+            {
+                "name": "th_1",
+                "type": "action"
+            }
+        ],
+        "mem_port_M_th_32perDay": [
+            {
+                "name": "mem_port_M",
+                "type": "action"
+            },
+            {
+                "name": "th_32perDay",
+                "type": "action"
+            }
+        ],
+        "memory_impe_handling": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "ocmb_H_omi_L_th1": [
+            {
+                "guard": true,
+                "priority": "HIGH",
+                "type": "callout_self"
+            },
+            {
+                "guard": false,
+                "name": "omi_bus",
+                "priority": "LOW",
+                "type": "callout_connected"
+            },
+            {
+                "name": "th_1",
+                "type": "action"
+            }
+        ],
+        "ocmb_M": [
+            {
+                "guard": true,
+                "priority": "MED",
+                "type": "callout_self"
+            }
+        ],
+        "ocmb_M_info_only": [
+            {
+                "name": "ocmb_M_th_32perDay",
+                "type": "action"
+            },
+            {
+                "name": "informational_only",
+                "type": "flag"
+            }
+        ],
+        "ocmb_M_th1": [
+            {
+                "name": "ocmb_M",
+                "type": "action"
+            },
+            {
+                "name": "th_1",
+                "type": "action"
+            }
+        ],
+        "ocmb_M_th_32perDay": [
+            {
+                "name": "ocmb_M",
+                "type": "action"
+            },
+            {
+                "name": "th_32perDay",
+                "type": "action"
+            }
+        ],
+        "omi_M": [
+            {
+                "guard": true,
+                "name": "omi_bus",
+                "priority": "MED",
+                "type": "callout_connected"
+            }
+        ],
+        "omi_M_th1": [
+            {
+                "name": "omi_M",
+                "type": "action"
+            },
+            {
+                "name": "th_1",
+                "type": "action"
+            }
+        ],
+        "omi_M_th_32perDay": [
+            {
+                "name": "omi_M",
+                "type": "action"
+            },
+            {
+                "name": "th_32perDay",
+                "type": "action"
+            }
+        ],
+        "omi_bus": [
+            {
+                "guard": true,
+                "priority": "MED_A",
+                "type": "callout_self"
+            },
+            {
+                "guard": true,
+                "name": "omi_bus",
+                "priority": "MED_A",
+                "type": "callout_connected"
+            },
+            {
+                "guard": false,
+                "name": "omi_bus",
+                "priority": "LOW",
+                "type": "callout_bus"
+            }
+        ],
+        "omi_bus_info_only": [
+            {
+                "name": "omi_bus_th_32perDay",
+                "type": "action"
+            },
+            {
+                "name": "informational_only",
+                "type": "flag"
+            }
+        ],
+        "omi_bus_th1": [
+            {
+                "name": "omi_bus",
+                "type": "action"
+            },
+            {
+                "name": "th_1",
+                "type": "action"
+            }
+        ],
+        "omi_bus_th_32perDay": [
+            {
+                "name": "omi_bus",
+                "type": "action"
+            },
+            {
+                "name": "th_32perDay",
+                "type": "action"
+            }
+        ],
+        "omi_degraded_mode": [
+            {
+                "name": "omi_bus_th1",
+                "type": "action"
+            }
+        ],
+        "th_1": [],
+        "th_32perDay": [
+            {
+                "name": "recovered_error",
+                "type": "flag"
+            }
+        ],
+        "verify_chip_mark_0": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "verify_chip_mark_1": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "verify_chip_mark_2": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "verify_chip_mark_3": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "verify_chip_mark_4": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "verify_chip_mark_5": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "verify_chip_mark_6": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ],
+        "verify_chip_mark_7": [
+            {
+                "name": "dimm_M_th1",
+                "type": "action"
+            }
+        ]
     },
     "buses": {
         "omi_bus": {
             "type": "OMI_BUS"
         }
     },
-    "actions": {
-        "ocmb_M": [
-            {
-                "type": "callout_self",
-                "priority": "MED",
-                "guard": true
-            }
-        ],
-        "level2_M": [
-            {
-                "type": "callout_procedure",
-                "name": "LEVEL2",
-                "priority": "MED"
-            }
-        ],
-        "dimm_M": [
-            {
-                "type": "callout_unit",
-                "name": "dimm",
-                "priority": "MED",
-                "guard": true
-            }
-        ],
-        "mem_port_M": [
-            {
-                "type": "callout_unit",
-                "name": "mem_port",
-                "priority": "MED",
-                "guard": true
-            }
-        ],
-        "omi_M": [
-            {
-                "type": "callout_connected",
-                "name": "omi_bus",
-                "priority": "MED",
-                "guard": true
-            }
-        ],
-        "omi_bus": [
-            {
-                "type": "callout_self",
-                "priority": "MED_A",
-                "guard": true
-            },
-            {
-                "type": "callout_connected",
-                "name": "omi_bus",
-                "priority": "MED_A",
-                "guard": true
-            },
-            {
-                "type": "callout_bus",
-                "name": "omi_bus",
-                "priority": "LOW",
-                "guard": false
-            }
-        ],
-        "ocmb_M_th1": [
-            {
-                "type": "action",
-                "name": "ocmb_M"
-            },
-            {
-                "type": "action",
-                "name": "th_1"
-            }
-        ],
-        "mem_port_M_th1": [
-            {
-                "type": "action",
-                "name": "mem_port_M"
-            },
-            {
-                "type": "action",
-                "name": "th_1"
-            }
-        ],
-        "dimm_M_th1": [
-            {
-                "type": "action",
-                "name": "dimm_M"
-            },
-            {
-                "type": "action",
-                "name": "th_1"
-            }
-        ],
-        "level2_M_th1": [
-            {
-                "type": "action",
-                "name": "level2_M"
-            },
-            {
-                "type": "action",
-                "name": "th_1"
-            }
-        ],
-        "omi_M_th1": [
-            {
-                "type": "action",
-                "name": "omi_M"
-            },
-            {
-                "type": "action",
-                "name": "th_1"
-            }
-        ],
-        "omi_bus_th1": [
-            {
-                "type": "action",
-                "name": "omi_bus"
-            },
-            {
-                "type": "action",
-                "name": "th_1"
-            }
-        ],
-        "level2_M_ocmb_L_th1": [
-            {
-                "type": "action",
-                "name": "level2_M"
-            },
-            {
-                "type": "callout_self",
-                "priority": "LOW",
-                "guard": false
-            },
-            {
-                "type": "action",
-                "name": "th_1"
-            }
-        ],
-        "ocmb_H_omi_L_th1": [
-            {
-                "type": "callout_self",
-                "priority": "HIGH",
-                "guard": true
-            },
-            {
-                "type": "callout_connected",
-                "name": "omi_bus",
-                "priority": "LOW",
-                "guard": false
-            },
-            {
-                "type": "action",
-                "name": "th_1"
-            }
-        ],
-        "dimm_H_mem_port_L_th1": [
-            {
-                "type": "callout_unit",
-                "name": "dimm",
-                "priority": "HIGH",
-                "guard": true
-            },
-            {
-                "type": "callout_unit",
-                "name": "mem_port",
-                "priority": "LOW",
-                "guard": false
-            },
-            {
-                "type": "action",
-                "name": "th_1"
-            }
-        ],
-        "dimm_H_mem_port_L_th_32perDay": [
-            {
-                "type": "callout_unit",
-                "name": "dimm",
-                "priority": "HIGH",
-                "guard": true
-            },
-            {
-                "type": "callout_unit",
-                "name": "mem_port",
-                "priority": "LOW",
-                "guard": false
-            },
-            {
-                "type": "action",
-                "name": "th_32perDay"
-            }
-        ],
-        "ocmb_M_th_32perDay": [
-            {
-                "type": "action",
-                "name": "ocmb_M"
-            },
-            {
-                "type": "action",
-                "name": "th_32perDay"
-            }
-        ],
-        "omi_M_th_32perDay": [
-            {
-                "type": "action",
-                "name": "omi_M"
-            },
-            {
-                "type": "action",
-                "name": "th_32perDay"
-            }
-        ],
-        "omi_bus_th_32perDay": [
-            {
-                "type": "action",
-                "name": "omi_bus"
-            },
-            {
-                "type": "action",
-                "name": "th_32perDay"
-            }
-        ],
-        "mem_port_M_th_32perDay": [
-            {
-                "type": "action",
-                "name": "mem_port_M"
-            },
-            {
-                "type": "action",
-                "name": "th_32perDay"
-            }
-        ],
-        "ocmb_M_info_only": [
-            {
-                "type": "action",
-                "name": "ocmb_M_th_32perDay"
-            },
-            {
-                "type": "flag",
-                "name": "informational_only"
-            }
-        ],
-        "omi_bus_info_only": [
-            {
-                "type": "action",
-                "name": "omi_bus_th_32perDay"
-            },
-            {
-                "type": "flag",
-                "name": "informational_only"
-            }
-        ],
-        "mem_port_M_info_only": [
-            {
-                "type": "action",
-                "name": "mem_port_M_th_32perDay"
-            },
-            {
-                "type": "flag",
-                "name": "informational_only"
-            }
-        ],
-        "downstream_attn": [
-            {
-                "type": "action",
-                "name": "level2_M_th1"
-            }
-        ],
-        "th_1": [],
-        "th_32perDay": [
-            {
-                "type": "flag",
-                "name": "recovered_error"
-            }
-        ],
-        "mcbist_program_complete": [
-            {
-                "type": "action",
-                "name": "level2_M_th1"
-            }
-        ],
-        "omi_degraded_mode": [
-            {
-                "type": "action",
-                "name": "omi_bus_th1"
-            }
-        ],
-        "verify_chip_mark_0": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "verify_chip_mark_1": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "verify_chip_mark_2": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "verify_chip_mark_3": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "verify_chip_mark_4": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "verify_chip_mark_5": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "verify_chip_mark_6": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "verify_chip_mark_7": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "mainline_nce_tce_handling": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "mainline_aue_iaue_handling": [
-            {
-                "type": "action",
-                "name": "dimm_H_mem_port_L_th1"
-            }
-        ],
-        "mainline_ue_handling": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "mainline_iue_handling": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "memory_impe_handling": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ],
-        "maintenance_aue_handling": [
-            {
-                "type": "action",
-                "name": "dimm_H_mem_port_L_th1"
-            }
-        ],
-        "maintenance_iue_handling": [
-            {
-                "type": "action",
-                "name": "dimm_M_th1"
-            }
-        ]
-    },
+    "model_ec": "60d20011",
     "signatures": {
-        "f6c2": {
+        "6401": {
             "00": {
-                "00": "ocmb_M_info_only"
+                "00": "level2_M_th1"
+            },
+            "01": {
+                "00": "ocmb_M_th1"
+            },
+            "02": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "03": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "04": {
+                "00": "level2_M_th1"
+            },
+            "05": {
+                "00": "level2_M_th1"
+            },
+            "06": {
+                "00": "level2_M_th1"
+            },
+            "07": {
+                "00": "level2_M_th1"
+            },
+            "08": {
+                "00": "level2_M_th1"
+            },
+            "09": {
+                "00": "level2_M_th1"
+            },
+            "0a": {
+                "00": "mcbist_program_complete"
+            },
+            "0b": {
+                "00": "level2_M_th1"
+            },
+            "0c": {
+                "00": "level2_M_th1"
+            },
+            "0d": {
+                "00": "ocmb_M_th1"
+            },
+            "0e": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "0f": {
+                "00": "level2_M_th1"
+            },
+            "10": {
+                "00": "level2_M_th1"
+            },
+            "11": {
+                "00": "level2_M_th1"
+            },
+            "12": {
+                "00": "level2_M_th1"
+            },
+            "13": {
+                "00": "level2_M_th1"
+            }
+        },
+        "86bf": {
+            "00": {
+                "00": "downstream_attn",
+                "flags": ["sue_source"]
             },
             "01": {
                 "00": "ocmb_M_th1",
                 "flags": ["sue_source"]
             },
             "02": {
-                "00": "omi_bus_th1",
-                "flags": ["sue_source"]
+                "00": "ocmb_M_th_32perDay"
             },
             "03": {
-                "00": "omi_bus_th1",
-                "flags": ["sue_source"]
+                "00": "omi_bus_info_only"
             },
             "04": {
-                "00": "omi_bus_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "05": {
-                "00": "omi_bus_th1",
-                "flags": ["sue_source"]
+                "00": "omi_degraded_mode"
             },
             "06": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
+                "00": "omi_bus_info_only"
             },
             "07": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
+                "00": "omi_bus_th_32perDay"
             },
             "08": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "09": {
-                "00": "downstream_attn"
+                "00": "omi_bus_th_32perDay"
             },
             "0a": {
-                "00": "level2_M_ocmb_L_th1"
+                "00": "omi_bus_th_32perDay"
             },
             "0b": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "0c": {
-                "00": "ocmb_M_th1"
+                "00": "level2_M_th1"
             },
             "0d": {
                 "00": "level2_M_th1"
@@ -448,38 +501,31 @@
                 "00": "level2_M_th1"
             },
             "12": {
-                "00": "omi_bus_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "13": {
-                "00": "omi_M_th1"
+                "00": "level2_M_th1"
             },
             "14": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "15": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "16": {
-                "00": "omi_bus_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "17": {
-                "00": "omi_bus_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "18": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "19": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "1a": {
-                "00": "ocmb_M_th_32perDay"
+                "00": "level2_M_th1"
             },
             "1b": {
                 "00": "level2_M_th1"
@@ -488,6 +534,108 @@
                 "00": "level2_M_th1"
             },
             "1d": {
+                "00": "level2_M_th1"
+            },
+            "1e": {
+                "00": "level2_M_th1"
+            },
+            "1f": {
+                "00": "level2_M_th1"
+            },
+            "20": {
+                "00": "level2_M_th1"
+            },
+            "21": {
+                "00": "level2_M_th1"
+            },
+            "22": {
+                "00": "level2_M_th1"
+            },
+            "23": {
+                "00": "level2_M_th1"
+            },
+            "24": {
+                "00": "level2_M_th1"
+            },
+            "25": {
+                "00": "level2_M_th1"
+            },
+            "26": {
+                "00": "level2_M_th1"
+            },
+            "27": {
+                "00": "level2_M_th1"
+            },
+            "28": {
+                "00": "level2_M_th1"
+            },
+            "29": {
+                "00": "level2_M_th1"
+            },
+            "2a": {
+                "00": "level2_M_th1"
+            },
+            "2b": {
+                "00": "level2_M_th1"
+            },
+            "2c": {
+                "00": "level2_M_th1"
+            },
+            "2d": {
+                "00": "level2_M_th1"
+            },
+            "2e": {
+                "00": "level2_M_th1"
+            },
+            "2f": {
+                "00": "level2_M_th1"
+            },
+            "30": {
+                "00": "level2_M_th1"
+            },
+            "31": {
+                "00": "level2_M_th1"
+            },
+            "32": {
+                "00": "level2_M_th1"
+            },
+            "33": {
+                "00": "level2_M_th1"
+            },
+            "34": {
+                "00": "level2_M_th1"
+            },
+            "35": {
+                "00": "level2_M_th1"
+            },
+            "36": {
+                "00": "level2_M_th1"
+            },
+            "37": {
+                "00": "level2_M_th1"
+            },
+            "38": {
+                "00": "level2_M_th1"
+            },
+            "39": {
+                "00": "level2_M_th1"
+            },
+            "3a": {
+                "00": "level2_M_th1"
+            },
+            "3b": {
+                "00": "level2_M_th1"
+            },
+            "3c": {
+                "00": "level2_M_th1"
+            },
+            "3d": {
+                "00": "level2_M_th1"
+            },
+            "3e": {
+                "00": "level2_M_th1"
+            },
+            "3f": {
                 "00": "level2_M_th1"
             }
         },
@@ -736,313 +884,6 @@
                 "00": "ocmb_M_th_32perDay"
             }
         },
-        "86bf": {
-            "00": {
-                "00": "downstream_attn",
-                "flags": ["sue_source"]
-            },
-            "01": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
-            },
-            "02": {
-                "00": "ocmb_M_th_32perDay"
-            },
-            "03": {
-                "00": "omi_bus_info_only"
-            },
-            "04": {
-                "00": "level2_M_th1"
-            },
-            "05": {
-                "00": "omi_degraded_mode"
-            },
-            "06": {
-                "00": "omi_bus_info_only"
-            },
-            "07": {
-                "00": "omi_bus_th_32perDay"
-            },
-            "08": {
-                "00": "level2_M_th1"
-            },
-            "09": {
-                "00": "omi_bus_th_32perDay"
-            },
-            "0a": {
-                "00": "omi_bus_th_32perDay"
-            },
-            "0b": {
-                "00": "level2_M_th1"
-            },
-            "0c": {
-                "00": "level2_M_th1"
-            },
-            "0d": {
-                "00": "level2_M_th1"
-            },
-            "0e": {
-                "00": "level2_M_th1"
-            },
-            "0f": {
-                "00": "level2_M_th1"
-            },
-            "10": {
-                "00": "level2_M_th1"
-            },
-            "11": {
-                "00": "level2_M_th1"
-            },
-            "12": {
-                "00": "level2_M_th1"
-            },
-            "13": {
-                "00": "level2_M_th1"
-            },
-            "14": {
-                "00": "level2_M_th1"
-            },
-            "15": {
-                "00": "level2_M_th1"
-            },
-            "16": {
-                "00": "level2_M_th1"
-            },
-            "17": {
-                "00": "level2_M_th1"
-            },
-            "18": {
-                "00": "level2_M_th1"
-            },
-            "19": {
-                "00": "level2_M_th1"
-            },
-            "1a": {
-                "00": "level2_M_th1"
-            },
-            "1b": {
-                "00": "level2_M_th1"
-            },
-            "1c": {
-                "00": "level2_M_th1"
-            },
-            "1d": {
-                "00": "level2_M_th1"
-            },
-            "1e": {
-                "00": "level2_M_th1"
-            },
-            "1f": {
-                "00": "level2_M_th1"
-            },
-            "20": {
-                "00": "level2_M_th1"
-            },
-            "21": {
-                "00": "level2_M_th1"
-            },
-            "22": {
-                "00": "level2_M_th1"
-            },
-            "23": {
-                "00": "level2_M_th1"
-            },
-            "24": {
-                "00": "level2_M_th1"
-            },
-            "25": {
-                "00": "level2_M_th1"
-            },
-            "26": {
-                "00": "level2_M_th1"
-            },
-            "27": {
-                "00": "level2_M_th1"
-            },
-            "28": {
-                "00": "level2_M_th1"
-            },
-            "29": {
-                "00": "level2_M_th1"
-            },
-            "2a": {
-                "00": "level2_M_th1"
-            },
-            "2b": {
-                "00": "level2_M_th1"
-            },
-            "2c": {
-                "00": "level2_M_th1"
-            },
-            "2d": {
-                "00": "level2_M_th1"
-            },
-            "2e": {
-                "00": "level2_M_th1"
-            },
-            "2f": {
-                "00": "level2_M_th1"
-            },
-            "30": {
-                "00": "level2_M_th1"
-            },
-            "31": {
-                "00": "level2_M_th1"
-            },
-            "32": {
-                "00": "level2_M_th1"
-            },
-            "33": {
-                "00": "level2_M_th1"
-            },
-            "34": {
-                "00": "level2_M_th1"
-            },
-            "35": {
-                "00": "level2_M_th1"
-            },
-            "36": {
-                "00": "level2_M_th1"
-            },
-            "37": {
-                "00": "level2_M_th1"
-            },
-            "38": {
-                "00": "level2_M_th1"
-            },
-            "39": {
-                "00": "level2_M_th1"
-            },
-            "3a": {
-                "00": "level2_M_th1"
-            },
-            "3b": {
-                "00": "level2_M_th1"
-            },
-            "3c": {
-                "00": "level2_M_th1"
-            },
-            "3d": {
-                "00": "level2_M_th1"
-            },
-            "3e": {
-                "00": "level2_M_th1"
-            },
-            "3f": {
-                "00": "level2_M_th1"
-            }
-        },
-        "e5d4": {
-            "00": {
-                "00": "mem_port_M_th1"
-            },
-            "01": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "02": {
-                "00": "mem_port_M_th_32perDay"
-            },
-            "03": {
-                "00": "level2_M_th1"
-            },
-            "04": {
-                "00": "dimm_H_mem_port_L_th_32perDay"
-            },
-            "05": {
-                "00": "mem_port_M_th1"
-            },
-            "06": {
-                "00": "level2_M_th1"
-            },
-            "07": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "08": {
-                "00": "level2_M_th1"
-            },
-            "09": {
-                "00": "mem_port_M_th1"
-            },
-            "0a": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "0b": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "0c": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "0d": {
-                "00": "dimm_H_mem_port_L_th1",
-                "flags": ["sue_source"]
-            },
-            "0e": {
-                "00": "mem_port_M_info_only"
-            },
-            "0f": {
-                "00": "mem_port_M_info_only"
-            },
-            "10": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "11": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "12": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "13": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "14": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "15": {
-                "00": "mem_port_M_th1"
-            },
-            "16": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "17": {
-                "00": "mem_port_M_th_32perDay"
-            },
-            "18": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "19": {
-                "00": "ocmb_M_th1",
-                "flags": ["informational_only", "sue_source"]
-            },
-            "1a": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "1b": {
-                "00": "mem_port_M_th1",
-                "flags": ["sue_source"]
-            },
-            "1c": {
-                "00": "mem_port_M_th_32perDay"
-            },
-            "1d": {
-                "00": "level2_M_th1"
-            },
-            "1e": {
-                "00": "level2_M_th1"
-            }
-        },
         "ccaa": {
             "00": {
                 "00": "verify_chip_mark_0"
@@ -1263,68 +1104,114 @@
                 "00": "ocmb_M_th1"
             }
         },
-        "6401": {
+        "e5d4": {
             "00": {
-                "00": "level2_M_th1"
+                "00": "mem_port_M_th1"
             },
             "01": {
-                "00": "ocmb_M_th1"
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
             },
             "02": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
+                "00": "mem_port_M_th_32perDay"
             },
             "03": {
-                "00": "ocmb_M_th1",
-                "flags": ["sue_source"]
+                "00": "level2_M_th1"
             },
             "04": {
-                "00": "level2_M_th1"
+                "00": "dimm_H_mem_port_L_th_32perDay"
             },
             "05": {
-                "00": "level2_M_th1"
+                "00": "mem_port_M_th1"
             },
             "06": {
                 "00": "level2_M_th1"
             },
             "07": {
-                "00": "level2_M_th1"
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
             },
             "08": {
                 "00": "level2_M_th1"
             },
             "09": {
-                "00": "level2_M_th1"
+                "00": "mem_port_M_th1"
             },
             "0a": {
-                "00": "mcbist_program_complete"
-            },
-            "0b": {
-                "00": "level2_M_th1"
-            },
-            "0c": {
-                "00": "level2_M_th1"
-            },
-            "0d": {
-                "00": "ocmb_M_th1"
-            },
-            "0e": {
-                "00": "ocmb_M_th1",
+                "00": "mem_port_M_th1",
                 "flags": ["sue_source"]
             },
+            "0b": {
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
+            },
+            "0c": {
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
+            },
+            "0d": {
+                "00": "dimm_H_mem_port_L_th1",
+                "flags": ["sue_source"]
+            },
+            "0e": {
+                "00": "mem_port_M_info_only"
+            },
             "0f": {
-                "00": "level2_M_th1"
+                "00": "mem_port_M_info_only"
             },
             "10": {
-                "00": "level2_M_th1"
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
             },
             "11": {
-                "00": "level2_M_th1"
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
             },
             "12": {
-                "00": "level2_M_th1"
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
             },
             "13": {
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
+            },
+            "14": {
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
+            },
+            "15": {
+                "00": "mem_port_M_th1"
+            },
+            "16": {
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
+            },
+            "17": {
+                "00": "mem_port_M_th_32perDay"
+            },
+            "18": {
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
+            },
+            "19": {
+                "00": "ocmb_M_th1",
+                "flags": ["informational_only", "sue_source"]
+            },
+            "1a": {
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
+            },
+            "1b": {
+                "00": "mem_port_M_th1",
+                "flags": ["sue_source"]
+            },
+            "1c": {
+                "00": "mem_port_M_th_32perDay"
+            },
+            "1d": {
+                "00": "level2_M_th1"
+            },
+            "1e": {
                 "00": "level2_M_th1"
             }
         },
@@ -1368,6 +1255,119 @@
             "0b": {
                 "00": "level2_M_th1"
             }
+        },
+        "f6c2": {
+            "00": {
+                "00": "ocmb_M_info_only"
+            },
+            "01": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "02": {
+                "00": "omi_bus_th1",
+                "flags": ["sue_source"]
+            },
+            "03": {
+                "00": "omi_bus_th1",
+                "flags": ["sue_source"]
+            },
+            "04": {
+                "00": "omi_bus_th1",
+                "flags": ["sue_source"]
+            },
+            "05": {
+                "00": "omi_bus_th1",
+                "flags": ["sue_source"]
+            },
+            "06": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "07": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "08": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "09": {
+                "00": "downstream_attn"
+            },
+            "0a": {
+                "00": "level2_M_ocmb_L_th1"
+            },
+            "0b": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "0c": {
+                "00": "ocmb_M_th1"
+            },
+            "0d": {
+                "00": "level2_M_th1"
+            },
+            "0e": {
+                "00": "level2_M_th1"
+            },
+            "0f": {
+                "00": "level2_M_th1"
+            },
+            "10": {
+                "00": "level2_M_th1"
+            },
+            "11": {
+                "00": "level2_M_th1"
+            },
+            "12": {
+                "00": "omi_bus_th1",
+                "flags": ["sue_source"]
+            },
+            "13": {
+                "00": "omi_M_th1"
+            },
+            "14": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "15": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "16": {
+                "00": "omi_bus_th1",
+                "flags": ["sue_source"]
+            },
+            "17": {
+                "00": "omi_bus_th1",
+                "flags": ["sue_source"]
+            },
+            "18": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "19": {
+                "00": "ocmb_M_th1",
+                "flags": ["sue_source"]
+            },
+            "1a": {
+                "00": "ocmb_M_th_32perDay"
+            },
+            "1b": {
+                "00": "level2_M_th1"
+            },
+            "1c": {
+                "00": "level2_M_th1"
+            },
+            "1d": {
+                "00": "level2_M_th1"
+            }
         }
-    }
+    },
+    "units": {
+        "dimm": "mem_port0/dimm0",
+        "mem_port": "mem_port0"
+    },
+    "version": 2
 }
