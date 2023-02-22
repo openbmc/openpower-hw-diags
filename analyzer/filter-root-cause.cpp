@@ -377,6 +377,37 @@ bool __findCsRootCause_UCS(const std::vector<libhei::Signature>& i_list,
 
 //------------------------------------------------------------------------------
 
+bool __findOcmbAttnBits(const std::vector<libhei::Signature>& i_list,
+                        libhei::Signature& o_rootCause,
+                        const RasDataParser& i_rasData)
+{
+    using namespace util::pdbg;
+
+    // If we have any attentions from an OCMB, assume isolation to the OCMBs
+    // was successful and the ATTN_FROM_OCMB flag does not need to be checked.
+    for (const auto s : i_list)
+    {
+        if (TYPE_OCMB == getTrgtType(getTrgt(s.getChip())))
+        {
+            return false;
+        }
+    }
+
+    for (const auto s : i_list)
+    {
+        if (1 < i_rasData.getVersion(s) &&
+            i_rasData.isFlagSet(s, RasDataParser::RasDataFlags::ATTN_FROM_OCMB))
+        {
+            o_rootCause = s;
+            return true;
+        }
+    }
+
+    return false; // default, nothing found
+}
+
+//------------------------------------------------------------------------------
+
 bool __findNonExternalCs(const std::vector<libhei::Signature>& i_list,
                          libhei::Signature& o_rootCause)
 {
@@ -830,6 +861,14 @@ bool filterRootCause(AnalysisType i_type,
     // system checkstop attention. These would include any attention that would
     // generate an SUE.
     if (__findCsRootCause_UCS(list, o_rootCause, i_rasData))
+    {
+        return true;
+    }
+
+    // Version 2 of the RAS data files. If no other viable root cause has
+    // been found, check for any signatures with the ATTN_FROM_OCMB flag in
+    // case there was an attention from an inaccessible OCMB.
+    if (__findOcmbAttnBits(list, o_rootCause, i_rasData))
     {
         return true;
     }
