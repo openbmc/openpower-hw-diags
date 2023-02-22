@@ -35,6 +35,7 @@ class RasDataParser
         CRC_ROOT_CAUSE,
         ODP_DATA_CORRUPT_SIDE_EFFECT,
         ODP_DATA_CORRUPT_ROOT_CAUSE,
+        ATTN_FROM_OCMB,
     };
 
   private:

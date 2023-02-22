@@ -105,6 +105,7 @@ bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
         {CRC_ROOT_CAUSE, "crc_root_cause"},
         {ODP_DATA_CORRUPT_SIDE_EFFECT, "odp_data_corrupt_side_effect"},
         {ODP_DATA_CORRUPT_ROOT_CAUSE, "odp_data_corrupt_root_cause"},
+        {ATTN_FROM_OCMB, "attn_from_ocmb"},
     };
     std::string strFlag = flagMap[i_flag];
 

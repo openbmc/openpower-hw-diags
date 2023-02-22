@@ -22,7 +22,8 @@
                 "crc_related_err",
                 "crc_root_cause",
                 "odp_data_corrupt_side_effect",
-                "odp_data_corrupt_root_cause"
+                "odp_data_corrupt_root_cause",
+                "attn_from_ocmb"
             ]
         }
     },

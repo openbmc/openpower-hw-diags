@@ -129,6 +129,37 @@ void lpc_timeout_workaround(unsigned int, const libhei::Chip& i_chip,
     lpc_timeout_callout(i_chip, io_servData);
 }
 
+/**
+ * @brief Calls out all DIMMs attached to an OCMB.
+ */
+void callout_attached_dimms(unsigned int i_instance, const libhei::Chip& i_chip,
+                            ServiceData& io_servData)
+{
+    // Get the OMI target for this instance
+    auto procTarget = util::pdbg::getTrgt(i_chip);
+    auto omiTarget =
+        util::pdbg::getChipUnit(procTarget, util::pdbg::TYPE_OMI, i_instance);
+
+    if (nullptr != omiTarget)
+    {
+        // Get the connected OCMB from the OMI
+        auto ocmbTarget = util::pdbg::getConnectedTarget(
+            omiTarget, callout::BusType::OMI_BUS);
+
+        // Loop through all DIMMs connected to the OCMB
+        pdbg_target* dimmTarget = nullptr;
+        pdbg_for_each_target("dimm", ocmbTarget, dimmTarget)
+        {
+            if (nullptr != dimmTarget)
+            {
+                // Call out the DIMM, medium priority and guard
+                io_servData.calloutTarget(dimmTarget, callout::Priority::MED,
+                                          true);
+            }
+        }
+    }
+}
+
 } // namespace P10
 
 PLUGIN_DEFINE_NS(P10_10, P10, pll_unlock);
@@ -139,5 +170,8 @@ PLUGIN_DEFINE_NS(P10_20, P10, lpc_timeout);
 
 PLUGIN_DEFINE_NS(P10_10, P10, lpc_timeout_workaround);
 PLUGIN_DEFINE_NS(P10_20, P10, lpc_timeout_workaround);
+
+PLUGIN_DEFINE_NS(P10_10, P10, callout_attached_dimms);
+PLUGIN_DEFINE_NS(P10_20, P10, callout_attached_dimms);
 
 } // namespace analyzer
