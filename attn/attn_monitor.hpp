@@ -3,7 +3,7 @@
 #include <gpiod.h>
 
 #include <attn/attn_config.hpp>
-#include <boost/asio/io_service.hpp>
+#include <boost/asio/io_context.hpp>
 #include <boost/asio/posix/stream_descriptor.hpp>
 
 namespace attn
@@ -29,7 +29,7 @@ class AttnMonitor
      * @param i_attnConfig poiner to attention handler configuration object
      */
     AttnMonitor(gpiod_line* line, gpiod_line_request_config& config,
-                boost::asio::io_service& io, Config* i_attnConfig) :
+                boost::asio::io_context& io, Config* i_attnConfig) :
         iv_gpioLine(line),
         iv_gpioConfig(config), iv_gpioEventDescriptor(io),
         iv_config(i_attnConfig)

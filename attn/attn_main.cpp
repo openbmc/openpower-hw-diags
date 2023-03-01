@@ -12,7 +12,7 @@ int attnDaemon(Config* i_config)
 
     gpiod_line* line; // gpio line to monitor
 
-    boost::asio::io_service io; // async io monitoring service
+    boost::asio::io_context io; // async io monitoring service
 
     // GPIO line configuration (falling edge, active low)
     struct gpiod_line_request_config config
