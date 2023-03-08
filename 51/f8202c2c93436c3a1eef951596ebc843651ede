@@ -1,0 +1,9 @@
+Code-Review+2: Zane Shelley <zshelle@us.ibm.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: Ben Tyner <ben.tyner@ibm.com>
+Code-Review+1: Austin Cui <austinfcui@gmail.com>
+Submitted-by: Zane Shelley <zshelle@us.ibm.com>
+Submitted-at: Wed, 08 Mar 2023 16:39:11 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/openpower-hw-diags/+/61350
+Project: openbmc/openpower-hw-diags
+Branch: refs/heads/master
