@@ -228,6 +228,7 @@ void RasDataParser::initDataFiles()
 
             // Get the schema version.
             auto version = schema.at("version").get<unsigned int>();
+            assert(2 <= version); // check support version
 
             // Keep track of the schemas.
             auto ret = schemaFiles.emplace(version, schema);
@@ -262,6 +263,7 @@ void RasDataParser::initDataFiles()
 
             // Get the data version.
             auto version = data.at("version").get<unsigned int>();
+            assert(2 <= version); // check support version
 
             // Get the schema for this file.
             auto schema = schemaFiles.at(version);
@@ -316,15 +318,8 @@ std::string
         trace::err("No action defined for signature: %s %s %s", id.c_str(),
                    bit.c_str(), inst.c_str());
 
-        if (1 == i_data.at("version").get<unsigned int>())
-        {
-            throw; // caught later downstream
-        }
-        else
-        {
-            // Default to 'level2_M_th1' if no signature is found.
-            action = "level2_M_th1";
-        }
+        // Default to 'level2_M_th1' if no signature is found.
+        action = "level2_M_th1";
     }
 
     // Return the action.

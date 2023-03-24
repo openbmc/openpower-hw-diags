@@ -20,7 +20,8 @@ and EC level in which this data is defined.
 
 A new version number should be used for each new RAS data file format so that
 user applications will know how to properly parse the files. The value of this
-keyword is a positive integer. Initially, format version is `1`.
+keyword is a positive integer. Version `1` has been deprecated. The current
+version is `2`.
 
 ## 3) `units` keyword
 
