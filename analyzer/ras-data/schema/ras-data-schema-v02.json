@@ -36,7 +36,8 @@
         },
         "version": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 2,
+            "maximum": 2
         },
         "units": {
             "type": "object",
@@ -109,29 +110,39 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "action" }
+                                        "type": {
+                                            "const": "action"
+                                        }
                                     }
                                 },
                                 "then": {
                                     "required": ["name"],
-                                    "not": { "required": ["priority", "guard"] }
+                                    "not": {
+                                        "required": ["priority", "guard"]
+                                    }
                                 }
                             },
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_self" }
+                                        "type": {
+                                            "const": "callout_self"
+                                        }
                                     }
                                 },
                                 "then": {
                                     "required": ["priority", "guard"],
-                                    "not": { "required": ["name"] }
+                                    "not": {
+                                        "required": ["name"]
+                                    }
                                 }
                             },
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_unit" }
+                                        "type": {
+                                            "const": "callout_unit"
+                                        }
                                     }
                                 },
                                 "then": {
@@ -141,7 +152,9 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_connected" }
+                                        "type": {
+                                            "const": "callout_connected"
+                                        }
                                     }
                                 },
                                 "then": {
@@ -151,7 +164,9 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_bus" }
+                                        "type": {
+                                            "const": "callout_bus"
+                                        }
                                     }
                                 },
                                 "then": {
@@ -161,7 +176,9 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_clock" }
+                                        "type": {
+                                            "const": "callout_clock"
+                                        }
                                     }
                                 },
                                 "then": {
@@ -180,12 +197,16 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_procedure" }
+                                        "type": {
+                                            "const": "callout_procedure"
+                                        }
                                     }
                                 },
                                 "then": {
                                     "required": ["name", "priority"],
-                                    "not": { "required": ["guard"] },
+                                    "not": {
+                                        "required": ["guard"]
+                                    },
                                     "properties": {
                                         "name": {
                                             "enum": ["LEVEL2", "SUE_SEEN"]
@@ -196,12 +217,16 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_part" }
+                                        "type": {
+                                            "const": "callout_part"
+                                        }
                                     }
                                 },
                                 "then": {
                                     "required": ["name", "priority"],
-                                    "not": { "required": ["guard"] },
+                                    "not": {
+                                        "required": ["guard"]
+                                    },
                                     "properties": {
                                         "name": {
                                             "enum": ["PNOR"]
@@ -212,7 +237,9 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "plugin" }
+                                        "type": {
+                                            "const": "plugin"
+                                        }
                                     }
                                 },
                                 "then": {
@@ -230,7 +257,9 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "flag" }
+                                        "type": {
+                                            "const": "flag"
+                                        }
                                     }
                                 },
                                 "then": {

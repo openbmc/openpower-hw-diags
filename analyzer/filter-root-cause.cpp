@@ -89,98 +89,35 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
 
     for (const auto s : i_list)
     {
-        // Version 1 of the RAS data files
-        if (1 == i_rasData.getVersion(s))
+        if (libhei::ATTN_TYPE_UNIT_CS == s.getAttnType() &&
+            i_rasData.isFlagSet(s, RasDataParser::RasDataFlags::SUE_SOURCE))
         {
-            const auto targetType = getTrgtType(getTrgt(s.getChip()));
-            const auto id         = s.getId();
-            const auto bit        = s.getBit();
-            const auto attnType   = s.getAttnType();
-
-            // Look for any unit checkstop attentions from OCMBs.
-            if (TYPE_OCMB == targetType)
+            // Special Cases:
+            // If the channel fail was specifically a firmware initiated
+            // channel fail (SRQFIR[25]) check for any IUE bits that are on
+            // that would have caused that (RDFFIR[17,37]).
+            if ((srqfir == s.getId() && 25 == s.getBit()) &&
+                __findIueTh(i_list, o_rootCause))
             {
-                // Any unit checkstop attentions will trigger a channel failure.
-                if (libhei::ATTN_TYPE_UNIT_CS == attnType)
-                {
-                    // If the channel was specifically a firmware initiated
-                    // channel fail (SRQFIR[25]) check for any IUE bits that are
-                    // on that would have caused that (RDFFIR[17,37]).
-                    if ((srqfir == id && 25 == bit) &&
-                        __findIueTh(i_list, o_rootCause))
-                    {
-                        return true;
-                    }
-
-                    o_rootCause = s;
-                    return true;
-                }
-            }
-            // Look for channel failure attentions on processors.
-            else if (TYPE_PROC == targetType)
-            {
-                // TODO: All of these channel failure bits are configurable.
-                //       Eventually, we will need some mechanism to check that
-                //       config registers for a more accurate analysis. For now,
-                //       simply check for all bits that could potentially be
-                //       configured to channel failure.
-
-                // Any unit checkstop bit in the MC_DSTL_FIR or MC_USTL_FIR
-                // could be a channel failure.
-                if (libhei::ATTN_TYPE_UNIT_CS == attnType)
-                {
-                    // Ignore bits MC_DSTL_FIR[0:7] because they simply indicate
-                    // attentions occurred on the attached OCMBs.
-                    if ((mc_dstl_fir == id && 8 <= bit) || (mc_ustl_fir == id))
-                    {
-                        o_rootCause = s;
-                        return true;
-                    }
-                }
-
-                // All bits in MC_OMI_DL_ERR_RPT eventually feed into
-                // MC_OMI_DL_FIR[0,20] which are configurable to channel
-                // failure.
-                if (mc_omi_dl_err_rpt == id)
-                {
-                    o_rootCause = s;
-                    return true;
-                }
-            }
-        }
-        // Version 2 and above of the RAS data files
-        else if (2 <= i_rasData.getVersion(s))
-        {
-            if (libhei::ATTN_TYPE_UNIT_CS == s.getAttnType() &&
-                i_rasData.isFlagSet(s, RasDataParser::RasDataFlags::SUE_SOURCE))
-            {
-                // Special Cases:
-                // If the channel fail was specifically a firmware initiated
-                // channel fail (SRQFIR[25]) check for any IUE bits that are on
-                // that would have caused that (RDFFIR[17,37]).
-                if ((srqfir == s.getId() && 25 == s.getBit()) &&
-                    __findIueTh(i_list, o_rootCause))
-                {
-                    return true;
-                }
-
-                // TODO: The proc side channel failure bits are configurable.
-                //       Eventually, we will need some mechanism to check the
-                //       config registers for a more accurate analysis. For now,
-                //       simply check for all bits that could potentially be
-                //       configured to channel failure.
-
-                o_rootCause = s;
-            }
-            // The bits in the MC_OMI_DL_ERR_RPT register are a special case.
-            // They are possible channel fail bits but the MC_OMI_DL_FIR they
-            // feed into can't be set up to report UNIT_CS attentions, so they
-            // report as recoverable instead.
-            else if (mc_omi_dl_err_rpt == s.getId())
-            {
-                o_rootCause = s;
                 return true;
             }
+
+            // TODO: The proc side channel failure bits are configurable.
+            //       Eventually, we will need some mechanism to check the
+            //       config registers for a more accurate analysis. For now,
+            //       simply check for all bits that could potentially be
+            //       configured to channel failure.
+
+            o_rootCause = s;
+        }
+        // The bits in the MC_OMI_DL_ERR_RPT register are a special case.
+        // They are possible channel fail bits but the MC_OMI_DL_FIR they
+        // feed into can't be set up to report UNIT_CS attentions, so they
+        // report as recoverable instead.
+        else if (mc_omi_dl_err_rpt == s.getId())
+        {
+            o_rootCause = s;
+            return true;
         }
     }
 
@@ -195,131 +132,11 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
 bool __findCsRootCause(const libhei::Signature& i_signature,
                        const RasDataParser& i_rasData)
 {
-    // Version 1 of the RAS data files.
-    if (1 == i_rasData.getVersion(i_signature))
-    {
-        using namespace util::pdbg;
-
-        using func  = libhei::NodeId_t (*)(const std::string& i_str);
-        func __hash = libhei::hash<libhei::NodeId_t>;
-
-        // PROC registers
-        static const auto eq_core_fir      = __hash("EQ_CORE_FIR");
-        static const auto eq_l2_fir        = __hash("EQ_L2_FIR");
-        static const auto eq_l3_fir        = __hash("EQ_L3_FIR");
-        static const auto eq_ncu_fir       = __hash("EQ_NCU_FIR");
-        static const auto iohs_dlp_fir_oc  = __hash("IOHS_DLP_FIR_OC");
-        static const auto iohs_dlp_fir_smp = __hash("IOHS_DLP_FIR_SMP");
-        static const auto nx_cq_fir        = __hash("NX_CQ_FIR");
-        static const auto nx_dma_eng_fir   = __hash("NX_DMA_ENG_FIR");
-        static const auto pau_fir_0        = __hash("PAU_FIR_0");
-        static const auto pau_fir_1        = __hash("PAU_FIR_1");
-        static const auto pau_fir_2        = __hash("PAU_FIR_2");
-        static const auto pau_ptl_fir      = __hash("PAU_PTL_FIR");
-
-        // OCMB registers
-        static const auto rdffir = __hash("RDFFIR");
-
-        const auto targetType = getTrgtType(getTrgt(i_signature.getChip()));
-        const auto id         = i_signature.getId();
-        const auto bit        = i_signature.getBit();
-
-        if (TYPE_PROC == targetType)
-        {
-            if (eq_core_fir == id &&
-                (0 == bit || 2 == bit || 3 == bit || 4 == bit || 5 == bit ||
-                 7 == bit || 8 == bit || 9 == bit || 11 == bit || 12 == bit ||
-                 13 == bit || 18 == bit || 21 == bit || 22 == bit ||
-                 24 == bit || 25 == bit || 29 == bit || 31 == bit ||
-                 32 == bit || 36 == bit || 37 == bit || 38 == bit ||
-                 43 == bit || 46 == bit || 47 == bit))
-            {
-                return true;
-            }
-
-            if (eq_l2_fir == id &&
-                (1 == bit || 12 == bit || 13 == bit || 17 == bit || 18 == bit ||
-                 20 == bit || 27 == bit))
-            {
-                return true;
-            }
-
-            if (eq_l3_fir == id &&
-                (2 == bit || 5 == bit || 8 == bit || 11 == bit || 17 == bit))
-            {
-                return true;
-            }
-
-            if (eq_ncu_fir == id &&
-                (3 == bit || 4 == bit || 5 == bit || 7 == bit || 8 == bit ||
-                 10 == bit || 17 == bit))
-            {
-                return true;
-            }
-
-            if (iohs_dlp_fir_oc == id && (54 <= bit && bit <= 61))
-            {
-                return true;
-            }
-
-            if (iohs_dlp_fir_smp == id && (54 <= bit && bit <= 61))
-            {
-                return true;
-            }
-
-            if (nx_cq_fir == id && (7 == bit || 16 == bit || 21 == bit))
-            {
-                return true;
-            }
-
-            if (nx_dma_eng_fir == id && (0 == bit))
-            {
-                return true;
-            }
-
-            if (pau_fir_0 == id &&
-                (15 == bit || 18 == bit || 19 == bit || 25 == bit ||
-                 26 == bit || 29 == bit || 33 == bit || 34 == bit ||
-                 35 == bit || 40 == bit || 42 == bit || 44 == bit || 45 == bit))
-            {
-                return true;
-            }
-
-            if (pau_fir_1 == id &&
-                (13 == bit || 14 == bit || 15 == bit || 37 == bit ||
-                 39 == bit || 40 == bit || 41 == bit || 42 == bit))
-            {
-                return true;
-            }
-
-            if (pau_fir_2 == id &&
-                ((4 <= bit && bit <= 18) || (20 <= bit && bit <= 31) ||
-                 (36 <= bit && bit <= 41) || 45 == bit || 47 == bit ||
-                 48 == bit || 50 == bit || 51 == bit || 52 == bit))
-            {
-                return true;
-            }
-
-            if (pau_ptl_fir == id && (4 == bit || 8 == bit))
-            {
-                return true;
-            }
-        }
-        else if (TYPE_OCMB == targetType)
-        {
-            if (rdffir == id &&
-                (14 == bit || 15 == bit || 17 == bit || 37 == bit))
-            {
-                return true;
-            }
-        }
-    }
-    // Version 2 of the RAS data files. Check if the input signature has the
-    // CS_POSSIBLE or SUE_SOURCE flag set.
-    else if (i_rasData.isFlagSet(i_signature,
-                                 RasDataParser::RasDataFlags::CS_POSSIBLE) ||
-             i_rasData.isFlagSet(i_signature,
-                                 RasDataParser::RasDataFlags::SUE_SOURCE))
+    // Check if the input signature has the CS_POSSIBLE or SUE_SOURCE flag set.
+    if (i_rasData.isFlagSet(i_signature,
+                            RasDataParser::RasDataFlags::CS_POSSIBLE) ||
+        i_rasData.isFlagSet(i_signature,
+                            RasDataParser::RasDataFlags::SUE_SOURCE))
     {
         return true;
     }
@@ -395,8 +212,7 @@ bool __findOcmbAttnBits(const std::vector<libhei::Signature>& i_list,
 
     for (const auto s : i_list)
     {
-        if (1 < i_rasData.getVersion(s) &&
-            i_rasData.isFlagSet(s, RasDataParser::RasDataFlags::ATTN_FROM_OCMB))
+        if (i_rasData.isFlagSet(s, RasDataParser::RasDataFlags::ATTN_FROM_OCMB))
         {
             o_rootCause = s;
             return true;
@@ -865,9 +681,9 @@ bool filterRootCause(AnalysisType i_type,
         return true;
     }
 
-    // Version 2 of the RAS data files. If no other viable root cause has
-    // been found, check for any signatures with the ATTN_FROM_OCMB flag in
-    // case there was an attention from an inaccessible OCMB.
+    // If no other viable root cause has been found, check for any signatures
+    // with the ATTN_FROM_OCMB flag in case there was an attention from an
+    // inaccessible OCMB.
     if (__findOcmbAttnBits(list, o_rootCause, i_rasData))
     {
         return true;
