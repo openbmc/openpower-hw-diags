@@ -6,7 +6,14 @@
     "$defs": {
         "priority": {
             "type": "string",
-            "enum": ["HIGH", "MED", "MED_A", "MED_B", "MED_C", "LOW"]
+            "enum": [
+                "HIGH",
+                "MED",
+                "MED_A",
+                "MED_B",
+                "MED_C",
+                "LOW"
+            ]
         },
         "flags": {
             "type": "string",
@@ -28,7 +35,12 @@
         }
     },
     "additionalProperties": false,
-    "required": ["model_ec", "version", "actions", "signatures"],
+    "required": [
+        "model_ec",
+        "version",
+        "actions",
+        "signatures"
+    ],
     "properties": {
         "model_ec": {
             "type": "string",
@@ -36,7 +48,8 @@
         },
         "version": {
             "type": "integer",
-            "minimum": 1
+            "minimum": 2,
+            "maximum": 2
         },
         "units": {
             "type": "object",
@@ -55,11 +68,16 @@
                 "^\\w+$": {
                     "type": "object",
                     "additionalProperties": false,
-                    "required": ["type"],
+                    "required": [
+                        "type"
+                    ],
                     "properties": {
                         "type": {
                             "type": "string",
-                            "enum": ["SMP_BUS", "OMI_BUS"]
+                            "enum": [
+                                "SMP_BUS",
+                                "OMI_BUS"
+                            ]
                         },
                         "unit": {
                             "type": "string",
@@ -77,7 +95,9 @@
                     "type": "array",
                     "items": {
                         "type": "object",
-                        "required": ["type"],
+                        "required": [
+                            "type"
+                        ],
                         "properties": {
                             "type": {
                                 "type": "string",
@@ -109,63 +129,105 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "action" }
+                                        "type": {
+                                            "const": "action"
+                                        }
                                     }
                                 },
                                 "then": {
-                                    "required": ["name"],
-                                    "not": { "required": ["priority", "guard"] }
+                                    "required": [
+                                        "name"
+                                    ],
+                                    "not": {
+                                        "required": [
+                                            "priority",
+                                            "guard"
+                                        ]
+                                    }
                                 }
                             },
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_self" }
+                                        "type": {
+                                            "const": "callout_self"
+                                        }
                                     }
                                 },
                                 "then": {
-                                    "required": ["priority", "guard"],
-                                    "not": { "required": ["name"] }
+                                    "required": [
+                                        "priority",
+                                        "guard"
+                                    ],
+                                    "not": {
+                                        "required": [
+                                            "name"
+                                        ]
+                                    }
                                 }
                             },
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_unit" }
+                                        "type": {
+                                            "const": "callout_unit"
+                                        }
                                     }
                                 },
                                 "then": {
-                                    "required": ["name", "priority", "guard"]
+                                    "required": [
+                                        "name",
+                                        "priority",
+                                        "guard"
+                                    ]
                                 }
                             },
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_connected" }
+                                        "type": {
+                                            "const": "callout_connected"
+                                        }
                                     }
                                 },
                                 "then": {
-                                    "required": ["name", "priority", "guard"]
+                                    "required": [
+                                        "name",
+                                        "priority",
+                                        "guard"
+                                    ]
                                 }
                             },
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_bus" }
+                                        "type": {
+                                            "const": "callout_bus"
+                                        }
                                     }
                                 },
                                 "then": {
-                                    "required": ["name", "priority", "guard"]
+                                    "required": [
+                                        "name",
+                                        "priority",
+                                        "guard"
+                                    ]
                                 }
                             },
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_clock" }
+                                        "type": {
+                                            "const": "callout_clock"
+                                        }
                                     }
                                 },
                                 "then": {
-                                    "required": ["name", "priority", "guard"],
+                                    "required": [
+                                        "name",
+                                        "priority",
+                                        "guard"
+                                    ],
                                     "properties": {
                                         "name": {
                                             "enum": [
@@ -180,45 +242,76 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "callout_procedure" }
-                                    }
-                                },
-                                "then": {
-                                    "required": ["name", "priority"],
-                                    "not": { "required": ["guard"] },
-                                    "properties": {
-                                        "name": {
-                                            "enum": ["LEVEL2", "SUE_SEEN"]
+                                        "type": {
+                                            "const": "callout_procedure"
                                         }
                                     }
-                                }
-                            },
-                            {
-                                "if": {
-                                    "properties": {
-                                        "type": { "const": "callout_part" }
-                                    }
                                 },
                                 "then": {
-                                    "required": ["name", "priority"],
-                                    "not": { "required": ["guard"] },
-                                    "properties": {
-                                        "name": {
-                                            "enum": ["PNOR"]
-                                        }
-                                    }
-                                }
-                            },
-                            {
-                                "if": {
-                                    "properties": {
-                                        "type": { "const": "plugin" }
-                                    }
-                                },
-                                "then": {
-                                    "required": ["name", "instance"],
+                                    "required": [
+                                        "name",
+                                        "priority"
+                                    ],
                                     "not": {
-                                        "required": ["priority", "guard"]
+                                        "required": [
+                                            "guard"
+                                        ]
+                                    },
+                                    "properties": {
+                                        "name": {
+                                            "enum": [
+                                                "LEVEL2",
+                                                "SUE_SEEN"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": {
+                                            "const": "callout_part"
+                                        }
+                                    }
+                                },
+                                "then": {
+                                    "required": [
+                                        "name",
+                                        "priority"
+                                    ],
+                                    "not": {
+                                        "required": [
+                                            "guard"
+                                        ]
+                                    },
+                                    "properties": {
+                                        "name": {
+                                            "enum": [
+                                                "PNOR"
+                                            ]
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                "if": {
+                                    "properties": {
+                                        "type": {
+                                            "const": "plugin"
+                                        }
+                                    }
+                                },
+                                "then": {
+                                    "required": [
+                                        "name",
+                                        "instance"
+                                    ],
+                                    "not": {
+                                        "required": [
+                                            "priority",
+                                            "guard"
+                                        ]
                                     },
                                     "properties": {
                                         "instance": {
@@ -230,11 +323,15 @@
                             {
                                 "if": {
                                     "properties": {
-                                        "type": { "const": "flag" }
+                                        "type": {
+                                            "const": "flag"
+                                        }
                                     }
                                 },
                                 "then": {
-                                    "required": ["name"],
+                                    "required": [
+                                        "name"
+                                    ],
                                     "properties": {
                                         "name": {
                                             "$ref": "#/$defs/flags"
