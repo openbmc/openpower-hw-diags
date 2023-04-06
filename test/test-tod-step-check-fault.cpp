@@ -47,13 +47,13 @@ TEST(TodStepCheckFault, MdmtFault)
     scom.add(proc1, 0x00040002, 0x2000000000000000);
 
     // TOD_ERROR(0)[14] step check error on master select 0
-    libhei::Signature sig0{chip0, nodeId, 0, 14, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig0{chip0, nodeId, 0, 14, libhei::ATTN_TYPE_CHIP_CS};
 
     // TOD_ERROR(0)[17] internal step check error
-    libhei::Signature sig1{chip1, nodeId, 0, 17, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig1{chip1, nodeId, 0, 17, libhei::ATTN_TYPE_CHIP_CS};
 
     // TOD_ERROR(0)[21] step check error on slave select 1
-    libhei::Signature sig2{chip1, nodeId, 0, 21, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig2{chip1, nodeId, 0, 21, libhei::ATTN_TYPE_CHIP_CS};
 
     libhei::IsolationData isoData{};
     isoData.addSignature(sig0);

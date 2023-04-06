@@ -55,7 +55,7 @@ TEST(Resolution, TestSet1)
 
     // Get some ServiceData objects
     libhei::Chip chip{util::pdbg::getTrgt(chip_str), 0xdeadbeef};
-    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHIP_CS};
     ServiceData sd1{sig, AnalysisType::SYSTEM_CHECKSTOP,
                     libhei::IsolationData{}};
     ServiceData sd2{sig, AnalysisType::TERMINATE_IMMEDIATE,
@@ -148,7 +148,7 @@ TEST(Resolution, HardwareCallout)
         omi_str, callout::Priority::MED_A, true);
 
     libhei::Chip chip{util::pdbg::getTrgt(chip_str), 0xdeadbeef};
-    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHIP_CS};
     ServiceData sd{sig, AnalysisType::SYSTEM_CHECKSTOP,
                    libhei::IsolationData{}};
 
@@ -203,7 +203,7 @@ TEST(Resolution, ConnectedCallout)
         callout::BusType::OMI_BUS, omi_str, callout::Priority::MED_C, true);
 
     libhei::Chip chip{util::pdbg::getTrgt(chip_str), 0xdeadbeef};
-    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHIP_CS};
     ServiceData sd{sig, AnalysisType::SYSTEM_CHECKSTOP,
                    libhei::IsolationData{}};
 
@@ -294,7 +294,7 @@ TEST(Resolution, BusCallout)
         callout::BusType::OMI_BUS, omi_str, callout::Priority::LOW, false);
 
     libhei::Chip chip{util::pdbg::getTrgt(chip_str), 0xdeadbeef};
-    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHIP_CS};
     ServiceData sd{sig, AnalysisType::SYSTEM_CHECKSTOP,
                    libhei::IsolationData{}};
 
@@ -375,7 +375,7 @@ TEST(Resolution, ClockCallout)
         callout::ClockType::OSC_REF_CLOCK_1, callout::Priority::HIGH, false);
 
     libhei::Chip chip{util::pdbg::getTrgt(chip_str), 0xdeadbeef};
-    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHIP_CS};
     ServiceData sd{sig, AnalysisType::SYSTEM_CHECKSTOP,
                    libhei::IsolationData{}};
 
@@ -421,7 +421,7 @@ TEST(Resolution, ProcedureCallout)
         callout::Procedure::NEXTLVL, callout::Priority::LOW);
 
     libhei::Chip chip{util::pdbg::getTrgt(chip_str), 0xdeadbeef};
-    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHIP_CS};
     ServiceData sd{sig, AnalysisType::SYSTEM_CHECKSTOP,
                    libhei::IsolationData{}};
 
@@ -465,7 +465,7 @@ TEST(Resolution, PartCallout)
                                                       callout::Priority::MED);
 
     libhei::Chip chip{util::pdbg::getTrgt(chip_str), 0xdeadbeef};
-    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig{chip, 0xabcd, 0, 0, libhei::ATTN_TYPE_CHIP_CS};
     ServiceData sd{sig, AnalysisType::SYSTEM_CHECKSTOP,
                    libhei::IsolationData{}};
 
