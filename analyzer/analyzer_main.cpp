@@ -48,8 +48,8 @@ const char* __attn(libhei::AttentionType_t i_type)
     const char* str = "";
     switch (i_type)
     {
-        case libhei::ATTN_TYPE_CHECKSTOP:
-            str = "CHECKSTOP";
+        case libhei::ATTN_TYPE_CHIP_CS:
+            str = "CHIP_CS";
             break;
         case libhei::ATTN_TYPE_UNIT_CS:
             str = "UNIT_CS";

@@ -43,7 +43,7 @@ TEST(RootCauseFilter, Filter1)
 
     // EQ_CORE_FIR[14]: ME = 0 checkstop
     libhei::Signature checkstopSig{procChip0, eqCoreFir, 0, 14,
-                                   libhei::ATTN_TYPE_CHECKSTOP};
+                                   libhei::ATTN_TYPE_CHIP_CS};
 
     // MC_DSTL_FIR[1]: AFU initiated Recoverable Attn on Subchannel A
     libhei::Signature reAttnSig{procChip0, mc_dstl_fir, 0, 1,

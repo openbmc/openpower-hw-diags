@@ -57,6 +57,8 @@ bool __findPllUnlock(const std::vector<libhei::Signature>& i_list,
 bool __findIueTh(const std::vector<libhei::Signature>& i_list,
                  libhei::Signature& o_rootCause)
 {
+    // TODO: These bit values propbably changed in Odyssey. Will need to
+    //       consider flags instead of arbitrary values.
     auto itr = std::find_if(i_list.begin(), i_list.end(), [&](const auto& t) {
         return (libhei::hash<libhei::NodeId_t>("RDFFIR") == t.getId() &&
                 (17 == t.getBit() || 37 == t.getBit()));
@@ -82,36 +84,68 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
     using func  = libhei::NodeId_t (*)(const std::string& i_str);
     func __hash = libhei::hash<libhei::NodeId_t>;
 
+    static const auto mc_dstl_fir       = __hash("MC_DSTL_FIR");
+    static const auto mc_ustl_fir       = __hash("MC_USTL_FIR");
     static const auto mc_omi_dl_err_rpt = __hash("MC_OMI_DL_ERR_RPT");
     static const auto srqfir            = __hash("SRQFIR");
 
-    for (const auto s : i_list)
+    // First, look for any chip checkstops from the connected OCMBs.
+    for (const auto& s : i_list)
     {
-        if (libhei::ATTN_TYPE_UNIT_CS == s.getAttnType() &&
-            i_rasData.isFlagSet(s, RasDataParser::RasDataFlags::SUE_SOURCE))
+        if (TYPE_OCMB != getTrgtType(getTrgt(s.getChip()))
         {
-            // Special Cases:
+            continue; // OCMBs only
+        }
+
+        // TODO: The chip data for Explorer chips currently report chip
+        //       checkstops as unit checkstops. Once the chip data has been
+        //       updated, the check for unit checkstops here will need to be
+        //       removed.
+        if (libhei::ATTN_TYPE_CHIP_CS == s.getAttnType() ||
+            libhei::ATTN_TYPE_UNIT_CS == s.getAttnType())
+        {
+            // Special Case:
             // If the channel fail was specifically a firmware initiated
             // channel fail (SRQFIR[25]) check for any IUE bits that are on
             // that would have caused that (RDFFIR[17,37]).
+            // TODO: These bit values probably changed in Odyssey. Will need to
+            //       consider flags instead of arbitrary values.
             if ((srqfir == s.getId() && 25 == s.getBit()) &&
                 __findIueTh(i_list, o_rootCause))
             {
                 return true;
             }
 
-            // TODO: The proc side channel failure bits are configurable.
-            //       Eventually, we will need some mechanism to check the
-            //       config registers for a more accurate analysis. For now,
-            //       simply check for all bits that could potentially be
-            //       configured to channel failure.
-
             o_rootCause = s;
+            return true;
         }
-        // The bits in the MC_OMI_DL_ERR_RPT register are a special case.
-        // They are possible channel fail bits but the MC_OMI_DL_FIR they
-        // feed into can't be set up to report UNIT_CS attentions, so they
-        // report as recoverable instead.
+    }
+
+    // Now, look for any channel failure attentions on the processor side of the
+    // memory bus.
+    for (const auto& s : i_list)
+    {
+        if (TYPE_PROC != getTrgtType(getTrgt(s.getChip()))
+        {
+            continue; // processors only
+        }
+
+        // Any unit checkstop attentions that originated from the MC_DSTL_FIR or
+        // MC_USTLFIR are considered a channel failure attention.
+        // TODO: The "channel failure" designation is actually configurable via
+        //       other registers. We just happen to expect anything that is
+        //       configured to channel failure to also be configured to unit
+        //       checkstop. Eventually, we will need some mechanism to check the
+        //       configuration registers for a more accurate analysis.
+        if (libhei::ATTN_TYPE_UNIT_CS == s.getAttnType() &&
+            (mc_dstl_fir == s.getId() || mc_ustl_fir == s.getId()) &&
+            !i_rasData.isFlagSet(s, RasDataParser::RasDataFlags::ATTN_FROM_OCMB))
+        {
+            o_rootCause = s;
+            return true;
+        }
+        // Any signatures from MC_OMI_DL_ERR_RPT feed into the only bits in
+        // MC_OMI_DL_FIR that are hardwired to channel failure.
         else if (mc_omi_dl_err_rpt == s.getId())
         {
             o_rootCause = s;
@@ -148,7 +182,7 @@ bool __findCsRootCause_RE(const std::vector<libhei::Signature>& i_list,
                           libhei::Signature& o_rootCause,
                           const RasDataParser& i_rasData)
 {
-    for (const auto s : i_list)
+    for (const auto& s : i_list)
     {
         // Only looking for recoverable attentions.
         if (libhei::ATTN_TYPE_RECOVERABLE != s.getAttnType())
@@ -172,7 +206,7 @@ bool __findCsRootCause_UCS(const std::vector<libhei::Signature>& i_list,
                            libhei::Signature& o_rootCause,
                            const RasDataParser& i_rasData)
 {
-    for (const auto s : i_list)
+    for (const auto& s : i_list)
     {
         // Only looking for unit checkstop attentions.
         if (libhei::ATTN_TYPE_UNIT_CS != s.getAttnType())
@@ -200,7 +234,7 @@ bool __findOcmbAttnBits(const std::vector<libhei::Signature>& i_list,
 
     // If we have any attentions from an OCMB, assume isolation to the OCMBs
     // was successful and the ATTN_FROM_OCMB flag does not need to be checked.
-    for (const auto s : i_list)
+    for (const auto& s : i_list)
     {
         if (TYPE_OCMB == getTrgtType(getTrgt(s.getChip())))
         {
@@ -208,7 +242,7 @@ bool __findOcmbAttnBits(const std::vector<libhei::Signature>& i_list,
         }
     }
 
-    for (const auto s : i_list)
+    for (const auto& s : i_list)
     {
         if (i_rasData.isFlagSet(s, RasDataParser::RasDataFlags::ATTN_FROM_OCMB))
         {
@@ -229,16 +263,16 @@ bool __findNonExternalCs(const std::vector<libhei::Signature>& i_list,
 
     static const auto pb_ext_fir = libhei::hash<libhei::NodeId_t>("PB_EXT_FIR");
 
-    for (const auto s : i_list)
+    for (const auto& s : i_list)
     {
         const auto targetType = getTrgtType(getTrgt(s.getChip()));
         const auto id         = s.getId();
         const auto attnType   = s.getAttnType();
 
-        // Find any processor with system checkstop attention that did not
+        // Find any processor with chip checkstop attention that did not
         // originate from the PB_EXT_FIR.
         if ((TYPE_PROC == targetType) &&
-            (libhei::ATTN_TYPE_CHECKSTOP == attnType) && (pb_ext_fir != id))
+            (libhei::ATTN_TYPE_CHIP_CS == attnType) && (pb_ext_fir != id))
         {
             o_rootCause = s;
             return true;

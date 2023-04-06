@@ -20,7 +20,7 @@ TEST(PllUnlock, TestSet1)
 
     libhei::Chip chip1{util::pdbg::getTrgt("/proc1"), P10_20};
 
-    libhei::Signature sig11{chip1, nodeId, 0, 1, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig11{chip1, nodeId, 0, 1, libhei::ATTN_TYPE_CHIP_CS};
 
     libhei::IsolationData isoData{};
     isoData.addSignature(sig11);
@@ -78,10 +78,10 @@ TEST(PllUnlock, TestSet2)
     libhei::Chip chip1{util::pdbg::getTrgt("/proc1"), P10_20};
 
     // PLL unlock signatures for each clock per processor.
-    libhei::Signature sig00{chip0, nodeId, 0, 0, libhei::ATTN_TYPE_CHECKSTOP};
-    libhei::Signature sig01{chip0, nodeId, 0, 1, libhei::ATTN_TYPE_CHECKSTOP};
-    libhei::Signature sig10{chip1, nodeId, 0, 0, libhei::ATTN_TYPE_CHECKSTOP};
-    libhei::Signature sig11{chip1, nodeId, 0, 1, libhei::ATTN_TYPE_CHECKSTOP};
+    libhei::Signature sig00{chip0, nodeId, 0, 0, libhei::ATTN_TYPE_CHIP_CS};
+    libhei::Signature sig01{chip0, nodeId, 0, 1, libhei::ATTN_TYPE_CHIP_CS};
+    libhei::Signature sig10{chip1, nodeId, 0, 0, libhei::ATTN_TYPE_CHIP_CS};
+    libhei::Signature sig11{chip1, nodeId, 0, 1, libhei::ATTN_TYPE_CHIP_CS};
 
     // Plugins for each processor.
     auto plugin = PluginMap::getSingleton().get(chip1.getType(), "pll_unlock");
