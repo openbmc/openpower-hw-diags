@@ -270,7 +270,6 @@ HostRunningState hostRunningState()
                 server::Progress::convertProgressStagesFromString(bootProgress);
 
             if ((stage == BootProgress::SystemInitComplete) ||
-                (stage == BootProgress::OSStart) ||
                 (stage == BootProgress::OSRunning))
             {
                 host = HostRunningState::Started;
