@@ -55,19 +55,19 @@ class PrimarySrc : public Section
   public:
     enum HeaderFlags
     {
-        additionalSections  = 0x01,
-        powerFaultEvent     = 0x02,
-        hypDumpInit         = 0x04,
+        additionalSections = 0x01,
+        powerFaultEvent = 0x02,
+        hypDumpInit = 0x04,
         i5OSServiceEventBit = 0x10,
-        virtualProgressSRC  = 0x80
+        virtualProgressSRC = 0x80
     };
 
-    PrimarySrc()                             = delete;
-    ~PrimarySrc()                            = default;
-    PrimarySrc(const PrimarySrc&)            = delete;
+    PrimarySrc() = delete;
+    ~PrimarySrc() = default;
+    PrimarySrc(const PrimarySrc&) = delete;
     PrimarySrc& operator=(const PrimarySrc&) = delete;
-    PrimarySrc(PrimarySrc&&)                 = delete;
-    PrimarySrc& operator=(PrimarySrc&&)      = delete;
+    PrimarySrc(PrimarySrc&&) = delete;
+    PrimarySrc& operator=(PrimarySrc&&) = delete;
 
     /**
      * @brief Constructor

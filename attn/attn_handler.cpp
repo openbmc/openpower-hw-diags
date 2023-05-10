@@ -277,8 +277,8 @@ int handleSpecial(Attention* i_attention)
     int rc = RC_SUCCESS; // assume special attention handled
 
     // The TI info chipop will give us a pointer to the TI info data
-    uint8_t* tiInfo       = nullptr;                  // ptr to TI info data
-    uint32_t tiInfoLen    = 0;                        // length of TI info data
+    uint8_t* tiInfo = nullptr;                        // ptr to TI info data
+    uint32_t tiInfoLen = 0;                           // length of TI info data
     pdbg_target* attnProc = i_attention->getTarget(); // proc with attention
 
     bool tiInfoStatic = false; // assume TI info was provided (not created)
@@ -414,7 +414,7 @@ bool activeAttn(uint32_t i_val, uint32_t i_mask, uint32_t i_attn)
                 msg = "Special attn";
                 break;
             default:
-                msg       = "Unknown attn";
+                msg = "Unknown attn";
                 validAttn = false;
         }
 
@@ -502,7 +502,7 @@ void getStaticTiInfo(uint8_t*& tiInfo)
     else
     {
         stateString = "host not started";
-        tiInfo      = (uint8_t*)defaultHbTiInfo;
+        tiInfo = (uint8_t*)defaultHbTiInfo;
     }
 
     // trace host state

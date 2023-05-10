@@ -24,11 +24,11 @@ namespace analyzer
 
 enum FfdcSubType_t : uint8_t
 {
-    FFDC_SIGNATURES      = 0x01,
-    FFDC_REGISTER_DUMP   = 0x02,
-    FFDC_CALLOUT_FFDC    = 0x03,
+    FFDC_SIGNATURES = 0x01,
+    FFDC_REGISTER_DUMP = 0x02,
+    FFDC_CALLOUT_FFDC = 0x03,
     FFDC_HB_SCRATCH_REGS = 0x04,
-    FFDC_SCRATCH_SIG     = 0x05,
+    FFDC_SCRATCH_SIG = 0x05,
 
     // For the callout section, the value of '0xCA' is required per the
     // phosphor-logging openpower-pel extention spec.
@@ -59,12 +59,12 @@ void __getSrc(const libhei::Signature& i_signature, uint32_t& o_word6,
         // [ 0:15] chip position
         // [16:23] node position
         // [24:31] signature attention type
-        auto chipPos    = util::pdbg::getChipPos(i_signature.getChip());
+        auto chipPos = util::pdbg::getChipPos(i_signature.getChip());
         uint8_t nodePos = 0; // TODO: multi-node support
-        auto attn       = i_signature.getAttnType();
+        auto attn = i_signature.getAttnType();
 
-        o_word7 =
-            (chipPos & 0xffff) << 16 | (nodePos & 0xff) << 8 | (attn & 0xff);
+        o_word7 = (chipPos & 0xffff) << 16 | (nodePos & 0xff) << 8 |
+                  (attn & 0xff);
 
         // [ 0:15] signature ID
         // [16:23] signature instance
@@ -179,7 +179,7 @@ void __captureRegisterDump(const libhei::IsolationData& i_isoData,
 
     for (const auto& entry : dump)
     {
-        auto chip    = entry.first;
+        auto chip = entry.first;
         auto regList = entry.second;
 
         // Each chip will have the following information:
@@ -190,9 +190,9 @@ void __captureRegisterDump(const libhei::IsolationData& i_isoData,
         // Then the data for each register will follow.
 
         uint32_t chipType = chip.getType();
-        uint16_t chipPos  = util::pdbg::getChipPos(chip);
-        uint8_t nodePos   = 0; // TODO: multi-node support
-        uint32_t numRegs  = regList.size();
+        uint16_t chipPos = util::pdbg::getChipPos(chip);
+        uint8_t nodePos = 0; // TODO: multi-node support
+        uint32_t numRegs = regList.size();
         stream << chipType << chipPos << nodePos << numRegs;
 
         for (const auto& reg : regList)
@@ -238,10 +238,10 @@ void __captureHostbootScratchRegisters(
 {
     // Get the Hostboot scratch registers from the primary processor.
 
-    uint32_t cfamAddr  = 0x283C;
+    uint32_t cfamAddr = 0x283C;
     uint32_t cfamValue = 0;
 
-    uint64_t scomAddr  = 0x4602F489;
+    uint64_t scomAddr = 0x4602F489;
     uint64_t scomValue = 0;
 
     auto priProc = util::pdbg::getPrimaryProcessor();
@@ -292,11 +292,11 @@ void __captureScratchRegSignature(std::vector<util::FFDCFile>& io_userDataFiles)
     // signature from the interrupted analysis. If data exists within those
     // registers a user data section will be created in the PEL to record it.
 
-    uint32_t reg9Addr  = 0x2980;
+    uint32_t reg9Addr = 0x2980;
     uint32_t reg10Addr = 0x2981;
 
     uint32_t chipId = 0; // stored in reg9
-    uint32_t sigId  = 0; // stored in reg10
+    uint32_t sigId = 0;  // stored in reg10
 
     auto priProc = util::pdbg::getPrimaryProcessor();
     if (nullptr == priProc)

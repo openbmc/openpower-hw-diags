@@ -100,7 +100,7 @@ bool checkstopActive(int procInstance)
     uint32_t isr_val, isr_mask;
 
     isr_val = 0xffffffff;
-    r       = fsi_read(fsiTarget, 0x1007, &isr_val);
+    r = fsi_read(fsiTarget, 0x1007, &isr_val);
     if ((RC_SUCCESS != r) || (0xffffffff == isr_val))
     {
         trace::err("cfam 1007 read error");
@@ -108,7 +108,7 @@ bool checkstopActive(int procInstance)
     }
 
     isr_mask = 0xffffffff;
-    r        = fsi_read(fsiTarget, 0x100d, &isr_mask);
+    r = fsi_read(fsiTarget, 0x100d, &isr_mask);
     if ((RC_SUCCESS != r) || (0xffffffff == isr_mask))
     {
         trace::err("cfam 100d read error");

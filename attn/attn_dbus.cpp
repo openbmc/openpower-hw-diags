@@ -26,9 +26,9 @@ int dbusMethod(const std::string& i_path, const std::string& i_interface,
         if (0 == util::dbus::findService(i_interface, i_path, service))
         {
             // return the method
-            o_method =
-                bus.new_method_call(service.c_str(), i_path.c_str(),
-                                    i_interface.c_str(), i_function.c_str());
+            o_method = bus.new_method_call(service.c_str(), i_path.c_str(),
+                                           i_interface.c_str(),
+                                           i_function.c_str());
 
             rc = RC_SUCCESS;
         }
@@ -74,7 +74,7 @@ void createPelRaw(const std::vector<uint8_t>& i_buffer)
 
     // dbus specifics
     constexpr auto interface = "xyz.openbmc_project.Logging.Create";
-    constexpr auto function  = "Create";
+    constexpr auto function = "Create";
 
     sdbusplus::message_t method;
 
@@ -105,7 +105,7 @@ int getPel(const uint32_t i_pelId)
 
     // dbus specifics
     constexpr auto interface = "org.open_power.Logging.PEL";
-    constexpr auto function  = "GetPEL";
+    constexpr auto function = "GetPEL";
 
     sdbusplus::message_t method;
 
@@ -117,7 +117,7 @@ int getPel(const uint32_t i_pelId)
             method.append(i_pelId);
 
             // using system dbus
-            auto bus      = sdbusplus::bus::new_system();
+            auto bus = sdbusplus::bus::new_system();
             auto response = bus.call(method);
 
             // reply will be a unix file descriptor

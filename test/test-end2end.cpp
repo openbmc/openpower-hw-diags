@@ -62,9 +62,9 @@ int main(int argc, char* argv[])
 
         std::for_each(std::begin(attentions), std::end(attentions),
                       [](attn::Attention attention) {
-                          trace::inf("calling handler");
-                          attention.handle();
-                      });
+            trace::inf("calling handler");
+            attention.handle();
+        });
     }
 
     return rc;

@@ -13,11 +13,11 @@
 constexpr auto chip_str = "/proc0";
 
 // Unit paths
-constexpr auto proc_str   = "";
+constexpr auto proc_str = "";
 constexpr auto iolink_str = "pib/perv26/pauc1/iohs0/smpgroup0";
-constexpr auto omi_str    = "pib/perv12/mc0/mi0/mcc0/omi0";
-constexpr auto ocmb_str   = "pib/perv12/mc0/mi0/mcc0/omi0/ocmb0";
-constexpr auto core_str   = "pib/perv39/eq7/fc1/core1";
+constexpr auto omi_str = "pib/perv12/mc0/mi0/mcc0/omi0";
+constexpr auto ocmb_str = "pib/perv12/mc0/mi0/mcc0/omi0/ocmb0";
+constexpr auto core_str = "pib/perv39/eq7/fc1/core1";
 
 using namespace analyzer;
 

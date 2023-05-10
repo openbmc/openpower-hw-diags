@@ -49,7 +49,7 @@ util::FFDCFile createFFDCRawFile(void* i_buffer, size_t i_size)
     util::FFDCFile file{util::FFDCFormat::Custom};
 
     // Write buffer to file and then reset file description file offset
-    int fd          = file.getFileDescriptor();
+    int fd = file.getFileDescriptor();
     size_t numBytes = write(fd, static_cast<char*>(i_buffer), i_size);
     if (i_size != numBytes)
     {
@@ -72,7 +72,7 @@ util::FFDCFile createFFDCRawFile(void* i_buffer, size_t i_size)
  * @return  vector of FFDCFile objects
  */
 std::vector<util::FFDCFile> createFFDCFiles(char* i_buffer = nullptr,
-                                            size_t i_size  = 0)
+                                            size_t i_size = 0)
 {
     std::vector<util::FFDCFile> files{};
 
@@ -281,7 +281,7 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
     // user data sections that do not need to be in this PEL. However we do
     // want to include the raw TI information.
     int ffdcCount = 0;
-    it            = i_additional.find("FFDC count");
+    it = i_additional.find("FFDC count");
     if (it != i_additional.end())
     {
         // remove all sections except 1 (raw Ti info)
@@ -318,10 +318,10 @@ uint32_t event(EventType i_event,
                const std::vector<util::FFDCFile>& i_ffdc,
                std::string i_severity = levelPelError)
 {
-    uint32_t pelId = 0; // assume no event log generated
+    uint32_t pelId = 0;      // assume no event log generated
 
     bool eventValid = false; // assume no event created
-    bool tiEvent    = false; // assume not a terminate event
+    bool tiEvent = false;    // assume not a terminate event
 
     // count user data sections so we can fixup custom PEL
     i_additional["FFDC count"] = std::to_string(i_ffdc.size());
@@ -331,21 +331,21 @@ uint32_t event(EventType i_event,
     switch (i_event)
     {
         case EventType::Checkstop:
-            eventName  = "org.open_power.HwDiags.Error.Checkstop";
+            eventName = "org.open_power.HwDiags.Error.Checkstop";
             eventValid = true;
             break;
         case EventType::Terminate:
-            eventName  = "org.open_power.Attn.Error.Terminate";
+            eventName = "org.open_power.Attn.Error.Terminate";
             eventValid = true;
-            tiEvent    = true;
+            tiEvent = true;
             break;
         case EventType::Vital:
-            eventName  = "org.open_power.Attn.Error.Vital";
+            eventName = "org.open_power.Attn.Error.Vital";
             eventValid = true;
             break;
         case EventType::HwDiagsFail:
         case EventType::AttentionFail:
-            eventName  = "org.open_power.Attn.Error.Fail";
+            eventName = "org.open_power.Attn.Error.Fail";
             eventValid = true;
             break;
         default:
@@ -470,7 +470,7 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
             if (0 == (*(i_tiInfoData + 0x09) & 0x01))
             {
                 uint32_t* additionalLength = (uint32_t*)(i_tiInfoData + 0x50);
-                uint32_t tiAdditional      = be32toh(*additionalLength);
+                uint32_t tiAdditional = be32toh(*additionalLength);
                 tiInfoSize = std::min(tiInfoSize, (84 + tiAdditional));
             }
         }

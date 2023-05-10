@@ -81,13 +81,13 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
 {
     using namespace util::pdbg;
 
-    using func  = libhei::NodeId_t (*)(const std::string& i_str);
+    using func = libhei::NodeId_t (*)(const std::string& i_str);
     func __hash = libhei::hash<libhei::NodeId_t>;
 
-    static const auto mc_dstl_fir       = __hash("MC_DSTL_FIR");
-    static const auto mc_ustl_fir       = __hash("MC_USTL_FIR");
+    static const auto mc_dstl_fir = __hash("MC_DSTL_FIR");
+    static const auto mc_ustl_fir = __hash("MC_USTL_FIR");
     static const auto mc_omi_dl_err_rpt = __hash("MC_OMI_DL_ERR_RPT");
-    static const auto srqfir            = __hash("SRQFIR");
+    static const auto srqfir = __hash("SRQFIR");
 
     // First, look for any chip checkstops from the connected OCMBs.
     for (const auto& s : i_list)
@@ -267,8 +267,8 @@ bool __findNonExternalCs(const std::vector<libhei::Signature>& i_list,
     for (const auto& s : i_list)
     {
         const auto targetType = getTrgtType(getTrgt(s.getChip()));
-        const auto id         = s.getId();
-        const auto attnType   = s.getAttnType();
+        const auto id = s.getId();
+        const auto attnType = s.getAttnType();
 
         // Find any processor with chip checkstop attention that did not
         // originate from the PB_EXT_FIR.
@@ -290,20 +290,20 @@ bool __findTiRootCause(const std::vector<libhei::Signature>& i_list,
 {
     using namespace util::pdbg;
 
-    using func  = libhei::NodeId_t (*)(const std::string& i_str);
+    using func = libhei::NodeId_t (*)(const std::string& i_str);
     func __hash = libhei::hash<libhei::NodeId_t>;
 
     // PROC registers
-    static const auto tp_local_fir        = __hash("TP_LOCAL_FIR");
-    static const auto occ_fir             = __hash("OCC_FIR");
-    static const auto pbao_fir            = __hash("PBAO_FIR");
-    static const auto n0_local_fir        = __hash("N0_LOCAL_FIR");
-    static const auto int_cq_fir          = __hash("INT_CQ_FIR");
-    static const auto nx_cq_fir           = __hash("NX_CQ_FIR");
-    static const auto nx_dma_eng_fir      = __hash("NX_DMA_ENG_FIR");
-    static const auto vas_fir             = __hash("VAS_FIR");
-    static const auto n1_local_fir        = __hash("N1_LOCAL_FIR");
-    static const auto mcd_fir             = __hash("MCD_FIR");
+    static const auto tp_local_fir = __hash("TP_LOCAL_FIR");
+    static const auto occ_fir = __hash("OCC_FIR");
+    static const auto pbao_fir = __hash("PBAO_FIR");
+    static const auto n0_local_fir = __hash("N0_LOCAL_FIR");
+    static const auto int_cq_fir = __hash("INT_CQ_FIR");
+    static const auto nx_cq_fir = __hash("NX_CQ_FIR");
+    static const auto nx_dma_eng_fir = __hash("NX_DMA_ENG_FIR");
+    static const auto vas_fir = __hash("VAS_FIR");
+    static const auto n1_local_fir = __hash("N1_LOCAL_FIR");
+    static const auto mcd_fir = __hash("MCD_FIR");
     static const auto pb_station_fir_en_1 = __hash("PB_STATION_FIR_EN_1");
     static const auto pb_station_fir_en_2 = __hash("PB_STATION_FIR_EN_2");
     static const auto pb_station_fir_en_3 = __hash("PB_STATION_FIR_EN_3");
@@ -312,49 +312,49 @@ bool __findTiRootCause(const std::vector<libhei::Signature>& i_list,
     static const auto pb_station_fir_es_2 = __hash("PB_STATION_FIR_ES_2");
     static const auto pb_station_fir_es_3 = __hash("PB_STATION_FIR_ES_3");
     static const auto pb_station_fir_es_4 = __hash("PB_STATION_FIR_ES_4");
-    static const auto pb_station_fir_eq   = __hash("PB_STATION_FIR_EQ");
-    static const auto psihb_fir           = __hash("PSIHB_FIR");
-    static const auto pbaf_fir            = __hash("PBAF_FIR");
-    static const auto lpc_fir             = __hash("LPC_FIR");
-    static const auto eq_core_fir         = __hash("EQ_CORE_FIR");
-    static const auto eq_l2_fir           = __hash("EQ_L2_FIR");
-    static const auto eq_l3_fir           = __hash("EQ_L3_FIR");
-    static const auto eq_ncu_fir          = __hash("EQ_NCU_FIR");
-    static const auto eq_local_fir        = __hash("EQ_LOCAL_FIR");
-    static const auto eq_qme_fir          = __hash("EQ_QME_FIR");
-    static const auto iohs_local_fir      = __hash("IOHS_LOCAL_FIR");
-    static const auto iohs_dlp_fir_oc     = __hash("IOHS_DLP_FIR_OC");
-    static const auto iohs_dlp_fir_smp    = __hash("IOHS_DLP_FIR_SMP");
-    static const auto mc_local_fir        = __hash("MC_LOCAL_FIR");
-    static const auto mc_fir              = __hash("MC_FIR");
-    static const auto mc_dstl_fir         = __hash("MC_DSTL_FIR");
-    static const auto mc_ustl_fir         = __hash("MC_USTL_FIR");
-    static const auto nmmu_cq_fir         = __hash("NMMU_CQ_FIR");
-    static const auto nmmu_fir            = __hash("NMMU_FIR");
-    static const auto mc_omi_dl           = __hash("MC_OMI_DL");
-    static const auto pau_local_fir       = __hash("PAU_LOCAL_FIR");
-    static const auto pau_ptl_fir         = __hash("PAU_PTL_FIR");
-    static const auto pau_phy_fir         = __hash("PAU_PHY_FIR");
-    static const auto pau_fir_0           = __hash("PAU_FIR_0");
-    static const auto pau_fir_2           = __hash("PAU_FIR_2");
-    static const auto pci_local_fir       = __hash("PCI_LOCAL_FIR");
-    static const auto pci_iop_fir         = __hash("PCI_IOP_FIR");
-    static const auto pci_nest_fir        = __hash("PCI_NEST_FIR");
+    static const auto pb_station_fir_eq = __hash("PB_STATION_FIR_EQ");
+    static const auto psihb_fir = __hash("PSIHB_FIR");
+    static const auto pbaf_fir = __hash("PBAF_FIR");
+    static const auto lpc_fir = __hash("LPC_FIR");
+    static const auto eq_core_fir = __hash("EQ_CORE_FIR");
+    static const auto eq_l2_fir = __hash("EQ_L2_FIR");
+    static const auto eq_l3_fir = __hash("EQ_L3_FIR");
+    static const auto eq_ncu_fir = __hash("EQ_NCU_FIR");
+    static const auto eq_local_fir = __hash("EQ_LOCAL_FIR");
+    static const auto eq_qme_fir = __hash("EQ_QME_FIR");
+    static const auto iohs_local_fir = __hash("IOHS_LOCAL_FIR");
+    static const auto iohs_dlp_fir_oc = __hash("IOHS_DLP_FIR_OC");
+    static const auto iohs_dlp_fir_smp = __hash("IOHS_DLP_FIR_SMP");
+    static const auto mc_local_fir = __hash("MC_LOCAL_FIR");
+    static const auto mc_fir = __hash("MC_FIR");
+    static const auto mc_dstl_fir = __hash("MC_DSTL_FIR");
+    static const auto mc_ustl_fir = __hash("MC_USTL_FIR");
+    static const auto nmmu_cq_fir = __hash("NMMU_CQ_FIR");
+    static const auto nmmu_fir = __hash("NMMU_FIR");
+    static const auto mc_omi_dl = __hash("MC_OMI_DL");
+    static const auto pau_local_fir = __hash("PAU_LOCAL_FIR");
+    static const auto pau_ptl_fir = __hash("PAU_PTL_FIR");
+    static const auto pau_phy_fir = __hash("PAU_PHY_FIR");
+    static const auto pau_fir_0 = __hash("PAU_FIR_0");
+    static const auto pau_fir_2 = __hash("PAU_FIR_2");
+    static const auto pci_local_fir = __hash("PCI_LOCAL_FIR");
+    static const auto pci_iop_fir = __hash("PCI_IOP_FIR");
+    static const auto pci_nest_fir = __hash("PCI_NEST_FIR");
 
     // OCMB registers
     static const auto ocmb_lfir = __hash("OCMB_LFIR");
-    static const auto mmiofir   = __hash("MMIOFIR");
-    static const auto srqfir    = __hash("SRQFIR");
-    static const auto rdffir    = __hash("RDFFIR");
-    static const auto tlxfir    = __hash("TLXFIR");
-    static const auto omi_dl    = __hash("OMI_DL");
+    static const auto mmiofir = __hash("MMIOFIR");
+    static const auto srqfir = __hash("SRQFIR");
+    static const auto rdffir = __hash("RDFFIR");
+    static const auto tlxfir = __hash("TLXFIR");
+    static const auto omi_dl = __hash("OMI_DL");
 
     for (const auto& signature : i_list)
     {
         const auto targetType = getTrgtType(getTrgt(signature.getChip()));
-        const auto attnType   = signature.getAttnType();
-        const auto id         = signature.getId();
-        const auto bit        = signature.getBit();
+        const auto attnType = signature.getAttnType();
+        const auto id = signature.getId();
+        const auto bit = signature.getBit();
 
         // Only looking for recoverable or unit checkstop attentions.
         if (libhei::ATTN_TYPE_RECOVERABLE != attnType &&

@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
 
                 attn::attnHandler(&attnConfig); // handle pending attentions
 
-                attn::attnDaemon(&attnConfig); // start daemon
+                attn::attnDaemon(&attnConfig);  // start daemon
             }
         }
     }

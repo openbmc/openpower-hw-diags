@@ -39,9 +39,9 @@ void __getChipDataFiles(std::map<libhei::ChipType_t, fs::path>& o_files)
         libhei::FileKeyword_t keyword;
         libhei::ChipType_t chipType;
 
-        const size_t sz_keyword  = sizeof(keyword);
+        const size_t sz_keyword = sizeof(keyword);
         const size_t sz_chipType = sizeof(chipType);
-        const size_t sz_buffer   = sz_keyword + sz_chipType;
+        const size_t sz_buffer = sz_keyword + sz_chipType;
 
         // Read the keyword and chip type from the file.
         char buffer[sz_buffer];

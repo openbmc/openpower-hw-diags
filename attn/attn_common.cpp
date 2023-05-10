@@ -24,10 +24,10 @@ void addHbStatusRegs()
         pdbg_target* pibTarget = pdbg_target_from_path(nullptr, "/proc0/pib");
         pdbg_target* fsiTarget = pdbg_target_from_path(nullptr, "/proc0/fsi");
 
-        uint32_t l_cfamData  = 0xFFFFFFFF;
+        uint32_t l_cfamData = 0xFFFFFFFF;
         uint64_t l_scomData1 = 0xFFFFFFFFFFFFFFFFull;
         uint64_t l_scomData2 = 0xFFFFFFFFFFFFFFFFull;
-        uint32_t l_cfamAddr  = 0x283C;
+        uint32_t l_cfamAddr = 0x283C;
         uint64_t l_scomAddr1 = 0x4602F489;
         uint64_t l_scomAddr2 = 0x4602F487;
 
@@ -83,7 +83,7 @@ void addPrdScratchRegs(std::vector<util::FFDCFile>& o_files)
     }
     else
     {
-        uint32_t chipId      = 0;
+        uint32_t chipId = 0;
         uint32_t signatureId = 0;
 
         // get scratch register 9 (CFAM)
@@ -224,9 +224,9 @@ void sleepSeconds(const unsigned int seconds)
 
     while (0 < count)
     {
-        requested.tv_sec  = 1;
+        requested.tv_sec = 1;
         requested.tv_nsec = 0;
-        remaining         = requested;
+        remaining = requested;
 
         while (-1 == nanosleep(&requested, &remaining))
         {

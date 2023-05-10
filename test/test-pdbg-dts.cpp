@@ -13,15 +13,15 @@
 
 TEST(PDBG, PdbgDtsTest1)
 {
-    const char* perv1_fapi_pos_path  = "/proc0/pib/perv1";
+    const char* perv1_fapi_pos_path = "/proc0/pib/perv1";
     const char* perv12_fapi_pos_path = "/proc0/pib/perv12";
-    const uint32_t perv1_fapi_pos    = 1;
-    const uint32_t perv12_fapi_pos   = 12;
+    const uint32_t perv1_fapi_pos = 1;
+    const uint32_t perv12_fapi_pos = 12;
 
     pdbg_targets_init(nullptr);
 
     trace::inf("retrieving fapi pos.");
-    uint32_t attr     = std::numeric_limits<uint32_t>::max();
+    uint32_t attr = std::numeric_limits<uint32_t>::max();
     pdbg_target* trgt = pdbg_target_from_path(nullptr, perv1_fapi_pos_path);
     pdbg_target_get_attribute(trgt, "ATTR_FAPI_POS", 4, 1, &attr);
     trace::inf("perv1 fapi pos in DTS: %u", attr);
@@ -38,13 +38,13 @@ TEST(PDBG, PdbgDtsTest2)
 {
     const char* dimm0_path =
         "/proc0/pib/perv12/mc0/mi0/mcc0/omi0/ocmb0/mem_port0/dimm0";
-    const uint32_t index    = 0;
+    const uint32_t index = 0;
     const uint32_t fapi_pos = 0;
 
     pdbg_targets_init(nullptr);
 
     trace::inf("retrieving fapi pos.");
-    uint32_t attr     = std::numeric_limits<uint32_t>::max();
+    uint32_t attr = std::numeric_limits<uint32_t>::max();
     pdbg_target* trgt = pdbg_target_from_path(nullptr, dimm0_path);
     pdbg_target_get_attribute(trgt, "index", 4, 1, &attr);
     trace::inf("index in DTS: %u", attr);
@@ -58,7 +58,7 @@ TEST(PDBG, PdbgDtsTest2)
 
 TEST(PDBG, PdbgDtsTest3)
 {
-    const uint32_t chipId  = 0; // ID for proc0.
+    const uint32_t chipId = 0;  // ID for proc0.
     const uint32_t fapiPos = 0; // FAPI Position for proc0.
 
     pdbg_targets_init(nullptr);
@@ -87,9 +87,9 @@ TEST(PDBG, PdbgDtsTest3)
 
 TEST(PDBG, PdbgDtsTest4)
 {
-    const uint32_t index    = 1;
+    const uint32_t index = 1;
     const uint32_t fapi_pos = 1;
-    const char* perv1_path  = "/proc0/pib/perv1";
+    const char* perv1_path = "/proc0/pib/perv1";
 
     pdbg_targets_init(nullptr);
 
@@ -117,7 +117,7 @@ TEST(util_pdbg, getParentChip)
     pdbg_targets_init(nullptr);
 
     auto procChip = getTrgt("/proc0");
-    auto omiUnit  = getTrgt("/proc0/pib/perv13/mc1/mi0/mcc0/omi1");
+    auto omiUnit = getTrgt("/proc0/pib/perv13/mc1/mi0/mcc0/omi1");
 
     EXPECT_EQ(procChip, getParentChip(procChip)); // get self
     EXPECT_EQ(procChip, getParentChip(omiUnit));  // get unit
@@ -135,8 +135,8 @@ TEST(util_pdbg, getChipUnit)
     using namespace util::pdbg;
     pdbg_targets_init(nullptr);
 
-    auto procChip   = getTrgt("/proc0");
-    auto omiUnit    = getTrgt("/proc0/pib/perv13/mc1/mi0/mcc0/omi1");
+    auto procChip = getTrgt("/proc0");
+    auto omiUnit = getTrgt("/proc0/pib/perv13/mc1/mi0/mcc0/omi1");
     auto omiUnitPos = 5;
 
     // Get the unit and verify.
@@ -173,14 +173,14 @@ TEST(util_pdbg, getScom)
 
     auto procChip = getTrgt("/proc0");
     auto ocmbChip = getTrgt("/proc0/pib/perv13/mc1/mi0/mcc0/omi1/ocmb0");
-    auto omiUnit  = getTrgt("/proc0/pib/perv13/mc1/mi0/mcc0/omi1");
+    auto omiUnit = getTrgt("/proc0/pib/perv13/mc1/mi0/mcc0/omi1");
 
     sim::ScomAccess& scom = sim::ScomAccess::getSingleton();
     scom.flush();
     scom.add(procChip, 0x11111111, 0x0011223344556677);
     scom.error(ocmbChip, 0x22222222);
 
-    int rc       = 0;
+    int rc = 0;
     uint64_t val = 0;
 
     // Test good path.
@@ -207,14 +207,14 @@ TEST(util_pdbg, getCfam)
     pdbg_targets_init(nullptr);
 
     auto procChip = getTrgt("/proc0");
-    auto omiUnit  = getTrgt("/proc0/pib/perv13/mc1/mi0/mcc0/omi1");
+    auto omiUnit = getTrgt("/proc0/pib/perv13/mc1/mi0/mcc0/omi1");
 
     sim::CfamAccess& cfam = sim::CfamAccess::getSingleton();
     cfam.flush();
     cfam.add(procChip, 0x11111111, 0x00112233);
     cfam.error(procChip, 0x22222222);
 
-    int rc       = 0;
+    int rc = 0;
     uint32_t val = 0;
 
     // Test good path.

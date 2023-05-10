@@ -15,7 +15,7 @@ namespace attn
 class AttnMonitor
 {
   public:
-    AttnMonitor()  = delete;
+    AttnMonitor() = delete;
     ~AttnMonitor() = default;
 
     /** @brief Constructs AttnMonitor object.

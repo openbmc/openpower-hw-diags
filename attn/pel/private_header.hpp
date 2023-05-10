@@ -45,12 +45,12 @@ namespace pel
 class PrivateHeader : public Section
 {
   public:
-    PrivateHeader()                                = delete;
-    ~PrivateHeader()                               = default;
-    PrivateHeader(const PrivateHeader&)            = default;
+    PrivateHeader() = delete;
+    ~PrivateHeader() = default;
+    PrivateHeader(const PrivateHeader&) = default;
     PrivateHeader& operator=(const PrivateHeader&) = default;
-    PrivateHeader(PrivateHeader&&)                 = default;
-    PrivateHeader& operator=(PrivateHeader&&)      = default;
+    PrivateHeader(PrivateHeader&&) = default;
+    PrivateHeader& operator=(PrivateHeader&&) = default;
 
     /**
      * @brief Constructor

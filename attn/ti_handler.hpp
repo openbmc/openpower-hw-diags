@@ -55,20 +55,20 @@ struct TiDataArea
 #pragma pack(pop)
 
 // TI info defines
-constexpr uint8_t hbDumpFlag       = 0x01;
+constexpr uint8_t hbDumpFlag = 0x01;
 constexpr uint8_t hbNotVisibleFlag = 0x02;
 
 // miscellaneous defines
 constexpr uint8_t TI_WITH_PLID = 0x01;
-constexpr uint8_t TI_WITH_SRC  = 0x02;
-constexpr uint8_t TI_WITH_EID  = 0x03;
+constexpr uint8_t TI_WITH_SRC = 0x02;
+constexpr uint8_t TI_WITH_EID = 0x03;
 
 // component ID's
 constexpr uint16_t INITSVC_COMP_ID = 0x0500;
-constexpr uint16_t PNOR_COMP_ID    = 0x0600;
-constexpr uint16_t HWAS_COMP_ID    = 0x0C00;
-constexpr uint16_t SECURE_COMP_ID  = 0x1E00;
-constexpr uint16_t TRBOOT_COMP_ID  = 0x2B00;
+constexpr uint16_t PNOR_COMP_ID = 0x0600;
+constexpr uint16_t HWAS_COMP_ID = 0x0C00;
+constexpr uint16_t SECURE_COMP_ID = 0x1E00;
+constexpr uint16_t TRBOOT_COMP_ID = 0x2B00;
 
 // HBFW::INITSERVICE::SHUTDOWNPREQUESTED_BY_FSP
 constexpr uint16_t HB_SRC_SHUTDOWN_REQUEST = INITSVC_COMP_ID | 0x0b;

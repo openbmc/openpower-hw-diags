@@ -210,7 +210,7 @@ uint32_t analyzeHardware(AnalysisType i_type, attn::DumpParameters& o_dump)
             // will be reserved for MP-IPLs during TI analysis.
             // TODO: Need ID from root cause. At the moment, HUID does not exist
             //       in devtree. Will need a better ID definition.
-            o_dump.unitId   = 0;
+            o_dump.unitId = 0;
             o_dump.dumpType = attn::DumpType::Hardware;
         }
     }

@@ -82,7 +82,7 @@ std::vector<uint8_t> prepareSetEffecterReq(uint16_t effecterId,
 
     // encode the message with state data
     auto requestMsg = reinterpret_cast<pldm_msg*>(request.data());
-    auto rc         = encode_set_state_effecter_states_req(
+    auto rc = encode_set_state_effecter_states_req(
         mctpInstance, effecterId, effecterCount, stateField.data(), requestMsg);
 
     if (rc != PLDM_SUCCESS)
@@ -136,7 +136,7 @@ bool fetchSensorInfo(uint16_t stateSetId,
         if (possibleStates->state_set_id == stateSetId)
         {
             sensorOffset = offset;
-            offsetFound  = true;
+            offsetFound = true;
             break;
         }
         possibleStatesPtr += sizeof(possibleStates->state_set_id) +
@@ -162,7 +162,7 @@ bool fetchSensorInfo(uint16_t stateSetId,
 
     // map sensor ID to zero based SBE instance
     unsigned int position = 0;
-    for (auto const& pair : entityInstMap)
+    for (const auto& pair : entityInstMap)
     {
         sensorInstanceMap.emplace(pair.second, position);
         position++;
@@ -213,9 +213,9 @@ bool fetchEffecterInfo(uint16_t stateSetId,
 
         if (possibleStates->state_set_id == stateSetId)
         {
-            stateIdPos    = offset;
+            stateIdPos = offset;
             effecterCount = stateEffecterPDR->composite_effecter_count;
-            offsetFound   = true;
+            offsetFound = true;
             break;
         }
         possibleStatesPtr += sizeof(possibleStates->state_set_id) +
@@ -241,7 +241,7 @@ bool fetchEffecterInfo(uint16_t stateSetId,
 
     // map zero based SBE instance to effecter ID
     unsigned int position = 0;
-    for (auto const& pair : entityInstMap)
+    for (const auto& pair : entityInstMap)
     {
         instanceToEffecterMap.emplace(position, pair.second);
         position++;
@@ -257,7 +257,7 @@ bool hresetSbe(unsigned int sbeInstance)
 
     // get effecter info
     std::map<unsigned int, uint16_t> sbeInstanceToEffecter;
-    uint8_t SBEEffecterCount            = 0;
+    uint8_t SBEEffecterCount = 0;
     uint8_t sbeMaintenanceStatePosition = 0;
 
     if (!fetchEffecterInfo(PLDM_OEM_IBM_SBE_MAINTENANCE_STATE,
@@ -300,8 +300,8 @@ bool hresetSbe(unsigned int sbeInstance)
     // register signal change listener
     std::string hresetStatus = "requested";
     constexpr auto interface = "xyz.openbmc_project.PLDM.Event";
-    constexpr auto path      = "/xyz/openbmc_project/pldm";
-    constexpr auto member    = "StateSensorEvent";
+    constexpr auto path = "/xyz/openbmc_project/pldm";
+    constexpr auto member = "StateSensorEvent";
 
     auto bus = sdbusplus::bus::new_default();
     std::unique_ptr<sdbusplus::bus::match_t> match =
@@ -312,41 +312,40 @@ bool hresetSbe(unsigned int sbeInstance)
                 sdbusplus::bus::match::rules::path(path) +
                 sdbusplus::bus::match::rules::interface(interface),
             [&](auto& msg) {
-                uint8_t sensorTid{};
-                uint16_t sensorId{};
-                uint8_t msgSensorOffset{};
-                uint8_t eventState{};
-                uint8_t previousEventState{};
+        uint8_t sensorTid{};
+        uint16_t sensorId{};
+        uint8_t msgSensorOffset{};
+        uint8_t eventState{};
+        uint8_t previousEventState{};
 
-                // get sensor event details
-                msg.read(sensorTid, sensorId, msgSensorOffset, eventState,
-                         previousEventState);
+        // get sensor event details
+        msg.read(sensorTid, sensorId, msgSensorOffset, eventState,
+                 previousEventState);
 
-                // does sensor offset match?
-                if (sbeSensorOffset == msgSensorOffset)
+        // does sensor offset match?
+        if (sbeSensorOffset == msgSensorOffset)
+        {
+            // does sensor ID match?
+            auto sensorEntry = sensorToSbeInstance.find(sensorId);
+            if (sensorEntry != sensorToSbeInstance.end())
+            {
+                const uint8_t instance = sensorEntry->second;
+
+                // if instances matche check status
+                if (instance == sbeInstance)
                 {
-                    // does sensor ID match?
-                    auto sensorEntry = sensorToSbeInstance.find(sensorId);
-                    if (sensorEntry != sensorToSbeInstance.end())
+                    if (eventState == static_cast<uint8_t>(SBE_HRESET_READY))
                     {
-                        const uint8_t instance = sensorEntry->second;
-
-                        // if instances matche check status
-                        if (instance == sbeInstance)
-                        {
-                            if (eventState ==
-                                static_cast<uint8_t>(SBE_HRESET_READY))
-                            {
-                                hresetStatus = "success";
-                            }
-                            else if (eventState ==
-                                     static_cast<uint8_t>(SBE_HRESET_FAILED))
-                            {
-                                hresetStatus = "fail";
-                            }
-                        }
+                        hresetStatus = "success";
+                    }
+                    else if (eventState ==
+                             static_cast<uint8_t>(SBE_HRESET_FAILED))
+                    {
+                        hresetStatus = "fail";
                     }
                 }
+            }
+        }
             });
 
     // send request to issue hreset of sbe

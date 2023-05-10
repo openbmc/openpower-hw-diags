@@ -35,9 +35,9 @@ using PluginFunction =
 // These are provided as know chip types for plugin definitions.
 constexpr libhei::ChipType_t EXPLORER_11 = 0x60d20011;
 constexpr libhei::ChipType_t EXPLORER_20 = 0x60d20020;
-constexpr libhei::ChipType_t ODYSSEY_10  = 0x60c00010;
-constexpr libhei::ChipType_t P10_10      = 0x20da0010;
-constexpr libhei::ChipType_t P10_20      = 0x20da0020;
+constexpr libhei::ChipType_t ODYSSEY_10 = 0x60c00010;
+constexpr libhei::ChipType_t P10_10 = 0x20da0010;
+constexpr libhei::ChipType_t P10_20 = 0x20da0020;
 
 /**
  * @brief This is simply a global container for all of the registered plugins.

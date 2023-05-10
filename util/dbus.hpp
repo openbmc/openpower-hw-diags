@@ -11,12 +11,12 @@ namespace util
 {
 namespace dbus
 {
-using DBusValue         = std::variant<std::string, bool, std::vector<uint8_t>,
+using DBusValue = std::variant<std::string, bool, std::vector<uint8_t>,
                                std::vector<std::string>, int32_t>;
-using DBusProperty      = std::string;
-using DBusInterface     = std::string;
-using DBusService       = std::string;
-using DBusPath          = std::string;
+using DBusProperty = std::string;
+using DBusInterface = std::string;
+using DBusService = std::string;
+using DBusPath = std::string;
 using DBusInterfaceList = std::vector<DBusInterface>;
 using DBusSubTree =
     std::map<DBusPath, std::map<DBusService, DBusInterfaceList>>;

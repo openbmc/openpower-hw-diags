@@ -8,9 +8,9 @@ namespace attn
  */
 int attnDaemon(Config* i_config)
 {
-    int rc = 0; // assume success
+    int rc = 0;                 // assume success
 
-    gpiod_line* line; // gpio line to monitor
+    gpiod_line* line;           // gpio line to monitor
 
     boost::asio::io_context io; // async io monitoring service
 

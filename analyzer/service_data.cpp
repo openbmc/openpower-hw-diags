@@ -14,9 +14,9 @@ void ServiceData::calloutTarget(pdbg_target* i_target,
     // Add the callout FFDC.
     nlohmann::json ffdc;
     ffdc["Callout Type"] = "Hardware Callout";
-    ffdc["Target"]       = util::pdbg::getPhysDevPath(i_target);
-    ffdc["Priority"]     = callout::getStringFFDC(i_priority);
-    ffdc["Guard"]        = i_guard;
+    ffdc["Target"] = util::pdbg::getPhysDevPath(i_target);
+    ffdc["Priority"] = callout::getStringFFDC(i_priority);
+    ffdc["Guard"] = i_guard;
     addCalloutFFDC(ffdc);
     setSrcSubsystem(getTargetSubsystem(i_target), i_priority);
 }
@@ -36,11 +36,11 @@ void ServiceData::calloutConnected(pdbg_target* i_rxTarget,
     // Add the callout FFDC.
     nlohmann::json ffdc;
     ffdc["Callout Type"] = "Connected Callout";
-    ffdc["Bus Type"]     = i_busType.getString();
-    ffdc["RX Target"]    = util::pdbg::getPhysDevPath(i_rxTarget);
-    ffdc["TX Target"]    = util::pdbg::getPhysDevPath(txTarget);
-    ffdc["Priority"]     = callout::getStringFFDC(i_priority);
-    ffdc["Guard"]        = i_guard;
+    ffdc["Bus Type"] = i_busType.getString();
+    ffdc["RX Target"] = util::pdbg::getPhysDevPath(i_rxTarget);
+    ffdc["TX Target"] = util::pdbg::getPhysDevPath(txTarget);
+    ffdc["Priority"] = callout::getStringFFDC(i_priority);
+    ffdc["Guard"] = i_guard;
     addCalloutFFDC(ffdc);
     setSrcSubsystem(getTargetSubsystem(txTarget), i_priority);
 }
@@ -67,11 +67,11 @@ void ServiceData::calloutBus(pdbg_target* i_rxTarget,
     // Add the callout FFDC.
     nlohmann::json ffdc;
     ffdc["Callout Type"] = "Bus Callout";
-    ffdc["Bus Type"]     = i_busType.getString();
-    ffdc["RX Target"]    = util::pdbg::getPhysDevPath(i_rxTarget);
-    ffdc["TX Target"]    = util::pdbg::getPhysDevPath(txTarget);
-    ffdc["Priority"]     = callout::getStringFFDC(i_priority);
-    ffdc["Guard"]        = i_guard;
+    ffdc["Bus Type"] = i_busType.getString();
+    ffdc["RX Target"] = util::pdbg::getPhysDevPath(i_rxTarget);
+    ffdc["TX Target"] = util::pdbg::getPhysDevPath(txTarget);
+    ffdc["Priority"] = callout::getStringFFDC(i_priority);
+    ffdc["Guard"] = i_guard;
     addCalloutFFDC(ffdc);
     setSrcSubsystem(i_busType.getSrcSubsystem(), i_priority);
 }
@@ -91,8 +91,8 @@ void ServiceData::calloutClock(const callout::ClockType& i_clockType,
     // TODO: Add the target and guard type if guard is ever supported.
     nlohmann::json ffdc;
     ffdc["Callout Type"] = "Clock Callout";
-    ffdc["Clock Type"]   = i_clockType.getString();
-    ffdc["Priority"]     = callout::getStringFFDC(i_priority);
+    ffdc["Clock Type"] = i_clockType.getString();
+    ffdc["Priority"] = callout::getStringFFDC(i_priority);
     addCalloutFFDC(ffdc);
     setSrcSubsystem(i_clockType.getSrcSubsystem(), i_priority);
 }
@@ -105,14 +105,14 @@ void ServiceData::calloutProcedure(const callout::Procedure& i_procedure,
     // Add the actual callout to the service data.
     nlohmann::json callout;
     callout["Procedure"] = i_procedure.getString();
-    callout["Priority"]  = callout::getString(i_priority);
+    callout["Priority"] = callout::getString(i_priority);
     addCallout(callout);
 
     // Add the callout FFDC.
     nlohmann::json ffdc;
     ffdc["Callout Type"] = "Procedure Callout";
-    ffdc["Procedure"]    = i_procedure.getString();
-    ffdc["Priority"]     = callout::getStringFFDC(i_priority);
+    ffdc["Procedure"] = i_procedure.getString();
+    ffdc["Priority"] = callout::getStringFFDC(i_priority);
     addCalloutFFDC(ffdc);
     setSrcSubsystem(i_procedure.getSrcSubsystem(), i_priority);
 }
@@ -137,8 +137,8 @@ void ServiceData::calloutPart(const callout::PartType& i_part,
     // Add the callout FFDC.
     nlohmann::json ffdc;
     ffdc["Callout Type"] = "Part Callout";
-    ffdc["Part Type"]    = i_part.getString();
-    ffdc["Priority"]     = callout::getStringFFDC(i_priority);
+    ffdc["Part Type"] = i_part.getString();
+    ffdc["Priority"] = callout::getStringFFDC(i_priority);
     addCalloutFFDC(ffdc);
     setSrcSubsystem(i_part.getSrcSubsystem(), i_priority);
 }
@@ -212,9 +212,9 @@ void ServiceData::addTargetCallout(pdbg_target* i_target,
     nlohmann::json callout;
 
     callout["LocationCode"] = util::pdbg::getLocationCode(i_target);
-    callout["Priority"]     = callout::getString(i_priority);
+    callout["Priority"] = callout::getString(i_priority);
     callout["Deconfigured"] = false;
-    callout["Guarded"]      = false; // default
+    callout["Guarded"] = false; // default
 
     // Check if guard info should be added.
     if (i_guard)
@@ -223,9 +223,9 @@ void ServiceData::addTargetCallout(pdbg_target* i_target,
 
         if (!(callout::GuardType::NONE == guardType))
         {
-            callout["Guarded"]    = true;
+            callout["Guarded"] = true;
             callout["EntityPath"] = util::pdbg::getPhysBinPath(i_target);
-            callout["GuardType"]  = guardType.getString();
+            callout["GuardType"] = guardType.getString();
         }
     }
 
@@ -243,9 +243,9 @@ void ServiceData::addBackplaneCallout(callout::Priority i_priority)
     nlohmann::json callout;
 
     callout["LocationCode"] = "P0";
-    callout["Priority"]     = callout::getString(i_priority);
+    callout["Priority"] = callout::getString(i_priority);
     callout["Deconfigured"] = false;
-    callout["Guarded"]      = false;
+    callout["Guarded"] = false;
 
     addCallout(callout);
 }
@@ -276,7 +276,7 @@ void ServiceData::setSrcSubsystem(callout::SrcSubsystem i_subsystem,
         (callout::SrcSubsystem::CEC_HARDWARE == iv_srcSubsystem.first &&
          callout::Priority::LOW == iv_srcSubsystem.second))
     {
-        iv_srcSubsystem.first  = i_subsystem;
+        iv_srcSubsystem.first = i_subsystem;
         iv_srcSubsystem.second = i_priority;
     }
 }

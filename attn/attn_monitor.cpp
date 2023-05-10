@@ -13,16 +13,16 @@ void AttnMonitor::scheduleGPIOEvent()
     iv_gpioEventDescriptor.async_wait(
         boost::asio::posix::stream_descriptor::wait_read,
         [this](const boost::system::error_code& ec) {
-            if (ec)
-            {
-                trace::err("GPIO Async wait error: %s", ec.message().c_str());
-            }
-            else
-            {
-                trace::inf("Attention GPIO active");
-                handleGPIOEvent(); // gpio trigger detected
-            }
-            return;
+        if (ec)
+        {
+            trace::err("GPIO Async wait error: %s", ec.message().c_str());
+        }
+        else
+        {
+            trace::inf("Attention GPIO active");
+            handleGPIOEvent(); // gpio trigger detected
+        }
+        return;
         }); // register async callback
 }
 

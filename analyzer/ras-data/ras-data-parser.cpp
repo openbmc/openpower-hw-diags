@@ -63,7 +63,7 @@ bool __checkActionForFlag(const std::string& i_action,
         // If the action is another action, recursively call this function
         if ("action" == type)
         {
-            auto name   = a.at("name").get<std::string>();
+            auto name = a.at("name").get<std::string>();
             o_isFlagSet = __checkActionForFlag(name, i_flag, i_data);
             if (o_isFlagSet)
             {
@@ -348,7 +348,7 @@ std::tuple<callout::BusType, std::string>
     if (bus.contains("unit"))
     {
         auto unit = bus.at("unit").get<std::string>();
-        unitPath  = i_data.at("units").at(unit).get<std::string>();
+        unitPath = i_data.at("units").at(unit).get<std::string>();
     }
 
     return std::make_tuple(busType, unitPath);
@@ -382,7 +382,7 @@ std::shared_ptr<Resolution>
         else if ("callout_self" == type)
         {
             auto priority = a.at("priority").get<std::string>();
-            auto guard    = a.at("guard").get<bool>();
+            auto guard = a.at("guard").get<bool>();
 
             std::string path{}; // Must be empty to callout the chip.
 
@@ -391,9 +391,9 @@ std::shared_ptr<Resolution>
         }
         else if ("callout_unit" == type)
         {
-            auto name     = a.at("name").get<std::string>();
+            auto name = a.at("name").get<std::string>();
             auto priority = a.at("priority").get<std::string>();
-            auto guard    = a.at("guard").get<bool>();
+            auto guard = a.at("guard").get<bool>();
 
             auto path = i_data.at("units").at(name).get<std::string>();
 
@@ -402,9 +402,9 @@ std::shared_ptr<Resolution>
         }
         else if ("callout_connected" == type)
         {
-            auto name     = a.at("name").get<std::string>();
+            auto name = a.at("name").get<std::string>();
             auto priority = a.at("priority").get<std::string>();
-            auto guard    = a.at("guard").get<bool>();
+            auto guard = a.at("guard").get<bool>();
 
             auto busData = parseBus(i_data, name);
 
@@ -414,9 +414,9 @@ std::shared_ptr<Resolution>
         }
         else if ("callout_bus" == type)
         {
-            auto name     = a.at("name").get<std::string>();
+            auto name = a.at("name").get<std::string>();
             auto priority = a.at("priority").get<std::string>();
-            auto guard    = a.at("guard").get<bool>();
+            auto guard = a.at("guard").get<bool>();
 
             auto busData = parseBus(i_data, name);
 
@@ -426,9 +426,9 @@ std::shared_ptr<Resolution>
         }
         else if ("callout_clock" == type)
         {
-            auto name     = a.at("name").get<std::string>();
+            auto name = a.at("name").get<std::string>();
             auto priority = a.at("priority").get<std::string>();
-            auto guard    = a.at("guard").get<bool>();
+            auto guard = a.at("guard").get<bool>();
 
             // clang-format off
             static const std::map<std::string, callout::ClockType> m =
@@ -444,7 +444,7 @@ std::shared_ptr<Resolution>
         }
         else if ("callout_procedure" == type)
         {
-            auto name     = a.at("name").get<std::string>();
+            auto name = a.at("name").get<std::string>();
             auto priority = a.at("priority").get<std::string>();
 
             // clang-format off
@@ -460,7 +460,7 @@ std::shared_ptr<Resolution>
         }
         else if ("callout_part" == type)
         {
-            auto name     = a.at("name").get<std::string>();
+            auto name = a.at("name").get<std::string>();
             auto priority = a.at("priority").get<std::string>();
 
             // clang-format off

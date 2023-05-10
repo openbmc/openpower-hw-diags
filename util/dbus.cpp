@@ -10,8 +10,8 @@ namespace dbus
 {
 //------------------------------------------------------------------------------
 
-constexpr auto objectMapperService   = "xyz.openbmc_project.ObjectMapper";
-constexpr auto objectMapperPath      = "/xyz/openbmc_project/object_mapper";
+constexpr auto objectMapperService = "xyz.openbmc_project.ObjectMapper";
+constexpr auto objectMapperPath = "/xyz/openbmc_project/object_mapper";
 constexpr auto objectMapperInterface = "xyz.openbmc_project.ObjectMapper";
 
 constexpr uint8_t terminusIdZero = 0;
@@ -44,10 +44,10 @@ int find(const std::string& i_interface, std::string& o_path,
         {
             // Response is a map of object paths to a map of service, interfaces
             auto object = *(response.begin());
-            o_path      = object.first;                 // return path
-            o_service   = object.second.begin()->first; // return service
+            o_path = object.first;                    // return path
+            o_service = object.second.begin()->first; // return service
 
-            rc = 0; // success
+            rc = 0;                                   // success
         }
     }
     catch (const sdbusplus::exception::SdBusError& e)
@@ -115,7 +115,7 @@ int getProperty(const std::string& i_interface, const std::string& i_path,
     try
     {
         constexpr auto interface = "org.freedesktop.DBus.Properties";
-        constexpr auto function  = "Get";
+        constexpr auto function = "Get";
 
         // calling the get property method
         auto method = bus.new_method_call(i_service.c_str(), i_path.c_str(),
@@ -191,7 +191,7 @@ void transitionHost(const HostState i_hostState)
             target = "obmc-chassis-hard-poweroff@0.target";
         }
 
-        auto bus    = sdbusplus::bus::new_system();
+        auto bus = sdbusplus::bus::new_system();
         auto method = bus.new_method_call(
             "org.freedesktop.systemd1", "/org/freedesktop/systemd1",
             "org.freedesktop.systemd1.Manager", "StartUnit");
@@ -318,7 +318,7 @@ bool dumpPolicyEnabled()
     bool dumpPolicyEnabled = true;
 
     constexpr auto interface = "xyz.openbmc_project.Object.Enable";
-    constexpr auto path      = "/xyz/openbmc_project/dump/system_dump_policy";
+    constexpr auto path = "/xyz/openbmc_project/dump/system_dump_policy";
 
     DBusService service; // will find this
 
@@ -350,7 +350,7 @@ uint32_t createPel(const std::string& i_message, const std::string& i_severity,
 
     // Sdbus call specifics
     constexpr auto interface = "org.open_power.Logging.PEL";
-    constexpr auto path      = "/xyz/openbmc_project/logging";
+    constexpr auto path = "/xyz/openbmc_project/logging";
 
     // we need to find the service implementing the interface
     util::dbus::DBusService service;
@@ -428,9 +428,9 @@ MachineType getMachineType()
             try
             {
                 // Format the vector into a single hex string to compare to.
-                std::string hexId =
-                    fmt::format("0x{:02x}{:02x}{:02x}{:02x}", ids.at(0),
-                                ids.at(1), ids.at(2), ids.at(3));
+                std::string hexId = fmt::format("0x{:02x}{:02x}{:02x}{:02x}",
+                                                ids.at(0), ids.at(1), ids.at(2),
+                                                ids.at(3));
 
                 std::map<std::string, MachineType> typeMap = {
                     {"0x50001000", MachineType::Rainier_2S4U},
@@ -467,10 +467,10 @@ MachineType getMachineType()
 bool getStateEffecterPdrs(std::vector<std::vector<uint8_t>>& pdrList,
                           uint16_t stateSetId)
 {
-    constexpr auto service   = "xyz.openbmc_project.PLDM";
-    constexpr auto path      = "/xyz/openbmc_project/pldm";
+    constexpr auto service = "xyz.openbmc_project.PLDM";
+    constexpr auto path = "/xyz/openbmc_project/pldm";
     constexpr auto interface = "xyz.openbmc_project.PLDM.PDR";
-    constexpr auto function  = "FindStateEffecterPDR";
+    constexpr auto function = "FindStateEffecterPDR";
 
     constexpr uint16_t PLDM_ENTITY_PROC = 135;
 
@@ -478,8 +478,8 @@ bool getStateEffecterPdrs(std::vector<std::vector<uint8_t>>& pdrList,
     {
         // create dbus method
         auto bus = sdbusplus::bus::new_default();
-        sdbusplus::message_t method =
-            bus.new_method_call(service, path, interface, function);
+        sdbusplus::message_t method = bus.new_method_call(service, path,
+                                                          interface, function);
 
         // append additional method data
         method.append(terminusIdZero, PLDM_ENTITY_PROC, stateSetId);
@@ -502,10 +502,10 @@ bool getStateEffecterPdrs(std::vector<std::vector<uint8_t>>& pdrList,
 bool getStateSensorPdrs(std::vector<std::vector<uint8_t>>& pdrList,
                         uint16_t stateSetId)
 {
-    constexpr auto service   = "xyz.openbmc_project.PLDM";
-    constexpr auto path      = "/xyz/openbmc_project/pldm";
+    constexpr auto service = "xyz.openbmc_project.PLDM";
+    constexpr auto path = "/xyz/openbmc_project/pldm";
     constexpr auto interface = "xyz.openbmc_project.PLDM.PDR";
-    constexpr auto function  = "FindStateSensorPDR";
+    constexpr auto function = "FindStateSensorPDR";
 
     constexpr uint16_t PLDM_ENTITY_PROC = 135;
 
@@ -513,8 +513,8 @@ bool getStateSensorPdrs(std::vector<std::vector<uint8_t>>& pdrList,
     {
         // create dbus method
         auto bus = sdbusplus::bus::new_default();
-        sdbusplus::message_t method =
-            bus.new_method_call(service, path, interface, function);
+        sdbusplus::message_t method = bus.new_method_call(service, path,
+                                                          interface, function);
 
         // append additional method data
         method.append(terminusIdZero, PLDM_ENTITY_PROC, stateSetId);
@@ -536,17 +536,17 @@ bool getStateSensorPdrs(std::vector<std::vector<uint8_t>>& pdrList,
 /** @brief Get MCTP instance associated with endpoint */
 bool getMctpInstance(uint8_t& mctpInstance, uint8_t Eid)
 {
-    constexpr auto service   = "xyz.openbmc_project.PLDM";
-    constexpr auto path      = "/xyz/openbmc_project/pldm";
+    constexpr auto service = "xyz.openbmc_project.PLDM";
+    constexpr auto path = "/xyz/openbmc_project/pldm";
     constexpr auto interface = "xyz.openbmc_project.PLDM.Requester";
-    constexpr auto function  = "GetInstanceId";
+    constexpr auto function = "GetInstanceId";
 
     try
     {
         // create dbus method
         auto bus = sdbusplus::bus::new_default();
-        sdbusplus::message_t method =
-            bus.new_method_call(service, path, interface, function);
+        sdbusplus::message_t method = bus.new_method_call(service, path,
+                                                          interface, function);
 
         // append endpoint ID
         method.append(Eid);

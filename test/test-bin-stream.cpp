@@ -34,10 +34,10 @@ inline BinFileWriter& BinFileWriter::operator<<(RegisterId_t r)
 
 TEST(BinStream, TestSet1)
 {
-    uint8_t w1      = 0x11;
-    uint16_t w2     = 0x1122;
-    uint32_t w3     = 0x11223344;
-    uint64_t w4     = 0x1122334455667788;
+    uint8_t w1 = 0x11;
+    uint16_t w2 = 0x1122;
+    uint32_t w3 = 0x11223344;
+    uint64_t w4 = 0x1122334455667788;
     RegisterId_t w5 = static_cast<RegisterId_t>(0x123456);
 
     {

@@ -34,14 +34,14 @@ int handleAttention(Attention* attention)
 // Attention type
 Attention::AttentionType gType = Attention::AttentionType::Special;
 // pointer to handler callback function
-int (*gHandler)(Attention*)   = &(handleSpecial);
+int (*gHandler)(Attention*) = &(handleSpecial);
 const AttentionFlag gAttnFlag = AttentionFlag::enBreakpoints;
 
 // Start preparation for UT case #1.
 
 // Global variables for UT #1
 const char* gPosPath = "/proc0/pib/perv12";
-const uint32_t gPos  = 12;
+const uint32_t gPos = 12;
 
 /** @brief Fixture class for TEST_F(). */
 class AttentionTestPos : public testing::Test
@@ -69,7 +69,7 @@ class AttentionTestPos : public testing::Test
     }
 
     std::unique_ptr<Attention> pAttn;
-    Config* config      = nullptr;
+    Config* config = nullptr;
     pdbg_target* target = nullptr;
 };
 
@@ -85,7 +85,7 @@ TEST_F(AttentionTestPos, TestAttnTargetPos)
     EXPECT_EQ(gPos, attr);
 
     // Verify the target in Attention object.
-    attr                    = std::numeric_limits<uint32_t>::max();
+    attr = std::numeric_limits<uint32_t>::max();
     pdbg_target* target_tmp = pAttn->getTarget();
     EXPECT_NE(nullptr, target_tmp);
     pdbg_target_get_attribute(target_tmp, "ATTR_FAPI_POS", 4, 1, &attr);
@@ -138,9 +138,9 @@ class AttentionTestProc : public testing::Test
     }
 
     std::unique_ptr<Attention> pAttn;
-    Config* config      = nullptr;
+    Config* config = nullptr;
     pdbg_target* target = nullptr;
-    uint32_t attr       = std::numeric_limits<uint32_t>::max();
+    uint32_t attr = std::numeric_limits<uint32_t>::max();
 };
 
 TEST_F(AttentionTestProc, TestAttentionProc)
@@ -149,7 +149,7 @@ TEST_F(AttentionTestProc, TestAttentionProc)
     EXPECT_EQ(RC_SUCCESS, pAttn->handle());
 
     // Verify the target in Attention object.
-    attr                    = std::numeric_limits<uint32_t>::max();
+    attr = std::numeric_limits<uint32_t>::max();
     pdbg_target* target_tmp = pAttn->getTarget();
     EXPECT_NE(nullptr, target_tmp);
     attr = getTrgtType(target_tmp);

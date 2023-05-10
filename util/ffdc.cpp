@@ -79,8 +79,8 @@ std::vector<std::string> sdjGetMessages(const std::string& field,
             if (value == fieldValue)
             {
                 // Get SYSLOG_IDENTIFIER field (process that logged message)
-                std::string syslog =
-                    sdjGetFieldValue(journal, "SYSLOG_IDENTIFIER");
+                std::string syslog = sdjGetFieldValue(journal,
+                                                      "SYSLOG_IDENTIFIER");
 
                 // Get _PID field
                 std::string pid = sdjGetFieldValue(journal, "_PID");

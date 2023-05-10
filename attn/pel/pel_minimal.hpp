@@ -37,12 +37,12 @@ namespace pel
 class PelMinimal
 {
   public:
-    PelMinimal()                             = delete;
-    ~PelMinimal()                            = default;
-    PelMinimal(const PelMinimal&)            = delete;
+    PelMinimal() = delete;
+    ~PelMinimal() = default;
+    PelMinimal(const PelMinimal&) = delete;
     PelMinimal& operator=(const PelMinimal&) = delete;
-    PelMinimal(PelMinimal&&)                 = delete;
-    PelMinimal& operator=(PelMinimal&&)      = delete;
+    PelMinimal(PelMinimal&&) = delete;
+    PelMinimal& operator=(PelMinimal&&) = delete;
 
     /**
      * @brief Create a minimal PEL object from raw data

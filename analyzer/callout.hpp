@@ -78,21 +78,21 @@ enum class SrcSubsystem
     // Can also reference `extensions/openpower-pels/pel_values.cpp` from
     // `openbmc/phosphor-logging` for the full list of these values.
 
-    PROCESSOR      = 0x10,
-    PROCESSOR_FRU  = 0x11,
+    PROCESSOR = 0x10,
+    PROCESSOR_FRU = 0x11,
     PROCESSOR_UNIT = 0x13,
-    PROCESSOR_BUS  = 0x14,
+    PROCESSOR_BUS = 0x14,
 
     MEMORY_CTLR = 0x21,
-    MEMORY_BUS  = 0x22,
+    MEMORY_BUS = 0x22,
     MEMORY_DIMM = 0x23,
-    MEMORY_FRU  = 0x24,
+    MEMORY_FRU = 0x24,
 
     PHB = 0x38,
 
     CEC_HARDWARE = 0x50,
-    CEC_CLOCKS   = 0x58,
-    CEC_TOD      = 0x5A,
+    CEC_CLOCKS = 0x58,
+    CEC_TOD = 0x5A,
 
     OTHERS = 0x70,
 };

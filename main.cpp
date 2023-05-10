@@ -78,7 +78,7 @@ int main(int argc, char* argv[])
 
             // assume listener is not running
             bool listenerStarted = false;
-            bool newListener     = false;
+            bool newListener = false;
 
             pthread_t ptidListener; // handle to listener thread
 
@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
                     pthread_create(&ptidListener, NULL, &threadListener, NULL))
                 {
                     listenerStarted = true;
-                    newListener     = true;
+                    newListener = true;
                 }
                 else
                 {

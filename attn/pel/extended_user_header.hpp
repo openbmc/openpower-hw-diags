@@ -12,7 +12,7 @@ namespace pel
 {
 
 constexpr uint8_t extendedUserHeaderVersion = 0x01;
-constexpr size_t firmwareVersionSize        = 16;
+constexpr size_t firmwareVersionSize = 16;
 
 /**
  * @class ExtendedUserHeader
@@ -43,12 +43,12 @@ constexpr size_t firmwareVersionSize        = 16;
 class ExtendedUserHeader : public Section
 {
   public:
-    ExtendedUserHeader()                                     = delete;
-    ~ExtendedUserHeader()                                    = default;
-    ExtendedUserHeader(const ExtendedUserHeader&)            = default;
+    ExtendedUserHeader() = delete;
+    ~ExtendedUserHeader() = default;
+    ExtendedUserHeader(const ExtendedUserHeader&) = default;
     ExtendedUserHeader& operator=(const ExtendedUserHeader&) = default;
-    ExtendedUserHeader(ExtendedUserHeader&&)                 = default;
-    ExtendedUserHeader& operator=(ExtendedUserHeader&&)      = default;
+    ExtendedUserHeader(ExtendedUserHeader&&) = default;
+    ExtendedUserHeader& operator=(ExtendedUserHeader&&) = default;
 
     /**
      * @brief Constructor

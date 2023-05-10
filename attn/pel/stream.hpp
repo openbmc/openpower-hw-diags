@@ -49,12 +49,12 @@ inline uint64_t ntohll(uint64_t value)
 class Stream
 {
   public:
-    Stream()                         = delete;
-    ~Stream()                        = default;
-    Stream(const Stream&)            = default;
+    Stream() = delete;
+    ~Stream() = default;
+    Stream(const Stream&) = default;
     Stream& operator=(const Stream&) = default;
-    Stream(Stream&&)                 = default;
-    Stream& operator=(Stream&&)      = default;
+    Stream(Stream&&) = default;
+    Stream& operator=(Stream&&) = default;
 
     /**
      * @brief Constructor

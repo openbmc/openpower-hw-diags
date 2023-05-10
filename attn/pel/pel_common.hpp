@@ -9,9 +9,9 @@ namespace pel
 
 enum class SectionID
 {
-    privateHeader  = 0x5048, // 'PH'
-    userHeader     = 0x5548, // 'UH'
-    primarySRC     = 0x5053, // 'PS'
+    privateHeader = 0x5048,  // 'PH'
+    userHeader = 0x5548,     // 'UH'
+    primarySRC = 0x5053,     // 'PS'
     extendedHeader = 0x4548, // 'EH'
 };
 
@@ -22,16 +22,16 @@ enum class ComponentID
 
 enum class CreatorID
 {
-    hostboot   = 'B',
+    hostboot = 'B',
     hypervisor = 'H',
-    openbmc    = 'O'
+    openbmc = 'O'
 };
 
 enum class SubsystemID
 {
     hypervisor = 0x82,
-    hostboot   = 0x8a,
-    openbmc    = 0x8d
+    hostboot = 0x8a,
+    openbmc = 0x8d
 };
 
 enum class Severity
@@ -42,16 +42,16 @@ enum class Severity
 
 enum class EventType
 {
-    na    = 0x00,
+    na = 0x00,
     trace = 0x02
 };
 
 enum class ActionFlags
 {
     service = 0x8000,
-    hidden  = 0x4000,
-    report  = 0x2000,
-    call    = 0x0800
+    hidden = 0x4000,
+    report = 0x2000,
+    call = 0x0800
 };
 
 inline ActionFlags operator|(ActionFlags a, ActionFlags b)
@@ -66,7 +66,7 @@ enum class EventScope
 
 constexpr size_t numSrcWords = 8;  // number of SRC hex words
 const size_t asciiStringSize = 32; // size of SRC ascii string
-const size_t mtmsSize        = 20; // size of an mtms field
+const size_t mtmsSize = 20;        // size of an mtms field
 
 } // namespace pel
 } // namespace attn

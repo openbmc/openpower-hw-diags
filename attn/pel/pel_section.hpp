@@ -16,12 +16,12 @@ namespace pel
 class Section
 {
   public:
-    Section()                          = default;
-    virtual ~Section()                 = default;
-    Section(const Section&)            = default;
+    Section() = default;
+    virtual ~Section() = default;
+    Section(const Section&) = default;
     Section& operator=(const Section&) = default;
-    Section(Section&&)                 = default;
-    Section& operator=(Section&&)      = default;
+    Section(Section&&) = default;
+    Section& operator=(Section&&) = default;
 
     /**
      * @brief Returns a reference to the SectionHeader

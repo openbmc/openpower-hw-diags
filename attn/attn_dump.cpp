@@ -29,7 +29,7 @@ uint dumpStatusChanged(sdbusplus::message_t& i_msg, std::string& o_dumpStatus)
 
     // looking for property Status changes
     std::string propertyType = "Status";
-    auto dumpStatus          = property.find(propertyType);
+    auto dumpStatus = property.find(propertyType);
 
     if (dumpStatus != property.end())
     {
@@ -54,7 +54,7 @@ void monitorDump(const std::string& i_path)
 {
     // setup the signal match rules and callback
     std::string matchInterface = "xyz.openbmc_project.Common.Progress";
-    auto bus                   = sdbusplus::bus::new_system();
+    auto bus = sdbusplus::bus::new_system();
 
     // monitor dump status change property, will update dumpStatus
     std::string dumpStatus = "requested";
@@ -102,9 +102,9 @@ void monitorDump(const std::string& i_path)
 /** Request a dump from the dump manager */
 void requestDump(uint32_t i_logId, const DumpParameters& i_dumpParameters)
 {
-    constexpr auto path      = "/org/openpower/dump";
+    constexpr auto path = "/org/openpower/dump";
     constexpr auto interface = "xyz.openbmc_project.Dump.Create";
-    constexpr auto function  = "CreateDump";
+    constexpr auto function = "CreateDump";
 
     sdbusplus::message_t method;
 
@@ -141,7 +141,7 @@ void requestDump(uint32_t i_logId, const DumpParameters& i_dumpParameters)
             method.append(createParams);
 
             // using system dbus
-            auto bus      = sdbusplus::bus::new_system();
+            auto bus = sdbusplus::bus::new_system();
             auto response = bus.call(method);
 
             // reply will be type dbus::ObjectPath

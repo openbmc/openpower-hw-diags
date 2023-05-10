@@ -28,9 +28,9 @@ class Attention
     /** @brief types of attentions to be handled (by priority low to high) */
     enum AttentionType
     {
-        Special   = 0,
+        Special = 0,
         Checkstop = 1,
-        Vital     = 2
+        Vital = 2
     };
 
     /** @brief Default constructor. */

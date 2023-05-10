@@ -9,7 +9,7 @@ TEST(TestCli, TestCliOptAll)
     // Test --all on options
     Config* config = new Config();
     char* argv[2];
-    int i     = 0;
+    int i = 0;
     argv[i++] = (char*)"--all";
     argv[i++] = (char*)"on";
     parseConfig(argv, argv + i, config);
@@ -24,7 +24,7 @@ TEST(TestCli, TestCliOptAll)
     // Test --all off options
     // Set the dfltTi flag to default value.
     config->clearFlag(dfltTi);
-    i         = 0;
+    i = 0;
     argv[i++] = (char*)"--all";
     argv[i++] = (char*)"off";
     parseConfig(argv, argv + i, config);
@@ -43,7 +43,7 @@ TEST(TestCli, TestCliNonAll)
     // Test options with on switch.
     Config* config = new Config();
     char* argv[11];
-    int i     = 0;
+    int i = 0;
     argv[i++] = (char*)"--vital";
     argv[i++] = (char*)"on";
     argv[i++] = (char*)"--checkstop";
@@ -69,7 +69,7 @@ TEST(TestCli, TestCliNonAll)
     // Test options with off switch.
     // Set the dfltTi flag to default value.
     config->clearFlag(dfltTi);
-    i         = 0;
+    i = 0;
     argv[i++] = (char*)"--vital";
     argv[i++] = (char*)"off";
     argv[i++] = (char*)"--checkstop";

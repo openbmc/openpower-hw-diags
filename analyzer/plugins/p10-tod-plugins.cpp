@@ -33,12 +33,12 @@ enum class Configuration
 class Data
 {
   public:
-    Data()                       = default;
-    ~Data()                      = default;
-    Data(const Data&)            = default;
-    Data(Data&&)                 = default;
+    Data() = default;
+    ~Data() = default;
+    Data(const Data&) = default;
+    Data(Data&&) = default;
     Data& operator=(const Data&) = default;
-    Data& operator=(Data&&)      = default;
+    Data& operator=(Data&&) = default;
 
   private:
     /** The MDMT chips at fault (only one per topology). */
@@ -122,8 +122,8 @@ class Data
 
 enum class Register
 {
-    TOD_ERROR           = 0x00040030,
-    TOD_PSS_MSS_STATUS  = 0x00040008,
+    TOD_ERROR = 0x00040030,
+    TOD_PSS_MSS_STATUS = 0x00040008,
     TOD_PRI_PORT_0_CTRL = 0x00040001,
     TOD_PRI_PORT_1_CTRL = 0x00040002,
     TOD_SEC_PORT_0_CTRL = 0x00040003,
@@ -165,8 +165,8 @@ pdbg_target* getChipSourcingClock(pdbg_target* i_chipReportingError,
     auto iohsUnit = getChipUnit(i_chipReportingError, TYPE_IOHS, i_iohsPos);
     if (nullptr != iohsUnit)
     {
-        auto clockSourceUnit =
-            getConnectedTarget(iohsUnit, callout::BusType::SMP_BUS);
+        auto clockSourceUnit = getConnectedTarget(iohsUnit,
+                                                  callout::BusType::SMP_BUS);
         if (nullptr != clockSourceUnit)
         {
             chipSourcingClock = getParentChip(clockSourceUnit);
@@ -226,7 +226,7 @@ void collectTodFaultData(pdbg_target* i_chip, Data& o_data)
         bool isPriTop = (Configuration::PRIMARY == topConfig[top]);
 
         // Determine if this is the MDMT chip.
-        bool isMasterTod    = statusReg.isBitSet(isPriTop ? 13 : 17);
+        bool isMasterTod = statusReg.isBitSet(isPriTop ? 13 : 17);
         bool isMasterDrawer = statusReg.isBitSet(isPriTop ? 14 : 18);
 
         if (isMasterDrawer && isMasterTod)
@@ -234,8 +234,8 @@ void collectTodFaultData(pdbg_target* i_chip, Data& o_data)
             // The master path selects are sourced from the oscilator reference
             // clocks. So, we'll need to determine which one was used at the
             // time of the failure.
-            auto masterPathSelect =
-                statusReg.getFieldRight(isPriTop ? 12 : 16, 1);
+            auto masterPathSelect = statusReg.getFieldRight(isPriTop ? 12 : 16,
+                                                            1);
 
             // Determine if there is a step check fault for this path select.
             if (errorReg.isBitSet((0 == masterPathSelect) ? 14 : 15))
@@ -254,8 +254,8 @@ void collectTodFaultData(pdbg_target* i_chip, Data& o_data)
             // The slave path selects are sourced from other processor chips.
             // So, we'll need to determine which one was used at the time of the
             // failure.
-            auto slavePathSelect =
-                statusReg.getFieldRight(isPriTop ? 15 : 19, 1);
+            auto slavePathSelect = statusReg.getFieldRight(isPriTop ? 15 : 19,
+                                                           1);
 
             // Determine if there is a step check fault for this path select.
             if (errorReg.isBitSet((0 == slavePathSelect) ? 16 : 21))
@@ -274,7 +274,7 @@ void collectTodFaultData(pdbg_target* i_chip, Data& o_data)
                     continue; // try the other topology
                 }
 
-                auto iohsPos           = portCtrl.getFieldRight(0, 3);
+                auto iohsPos = portCtrl.getFieldRight(0, 3);
                 auto chipSourcingClock = getChipSourcingClock(i_chip, iohsPos);
 
                 if (nullptr != chipSourcingClock)
@@ -336,9 +336,9 @@ void tod_step_check_fault(unsigned int, const libhei::Chip& i_chip,
 
     for (const auto top : {tod::Topology::ACTIVE, tod::Topology::BACKUP})
     {
-        auto mdmtFault      = data.getMdmtFault(top);
+        auto mdmtFault = data.getMdmtFault(top);
         auto internalFaults = data.getInteralFaults(top);
-        auto networkFaults  = data.getNetworkFaults(top);
+        auto networkFaults = data.getNetworkFaults(top);
 
         if (nullptr != mdmtFault) // MDMT fault
         {
