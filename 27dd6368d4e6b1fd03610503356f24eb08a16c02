@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4cb45dbd_04020727",
+        "filename": ".clang-format",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2023-05-11T20:19:43Z",
+      "side": 1,
+      "message": "Is it absolutely required that all OpenBMC repositories use the exact same clang-format configuration? I understand consistency is important, but so it readability. I can let the other issue go, but this one is actually fairly useful.",
+      "parentUuid": "f5bae6ce_5d413dba",
+      "range": {
+        "startLine": 6,
+        "startChar": 29,
+        "endLine": 6,
+        "endChar": 34
+      },
+      "revId": "27dd6368d4e6b1fd03610503356f24eb08a16c02",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b28cc17a_8229c4d2",
         "filename": ".clang-format",
         "patchSetId": 1
