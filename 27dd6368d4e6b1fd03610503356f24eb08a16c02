@@ -74,6 +74,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "5be1ed96_5925bdf3",
+        "filename": ".clang-format",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2023-05-11T20:33:12Z",
+      "side": 1,
+      "message": "\u003e Is it absolutely required that all OpenBMC repositories use the exact same clang-format configuration?\n\nYes.  Maintainers are not keeping these up to date and we cannot know how to merge your special sauce with the reference configuration.\n\nIf you think it is more readable, you should be able to convince other maintainers that it makes their repository more readable also, right?\n\nUnfortunately, this particular flag also adds code-churn that I suspect some of the bigger repository maintainers are going to dislike.\n\n```\nint v123 \u003d 123;\nint v456 \u003d 456;\n```\n\nThen I add v7890 it\u0027s going to change all the lines.\n\n```\nint v123  \u003d 123;\nint v456  \u003d 456;\nint v7890 \u003d 7890;\n```",
+      "parentUuid": "4cb45dbd_04020727",
+      "range": {
+        "startLine": 6,
+        "startChar": 29,
+        "endLine": 6,
+        "endChar": 34
+      },
+      "revId": "27dd6368d4e6b1fd03610503356f24eb08a16c02",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "b28cc17a_8229c4d2",
         "filename": ".clang-format",
         "patchSetId": 1
