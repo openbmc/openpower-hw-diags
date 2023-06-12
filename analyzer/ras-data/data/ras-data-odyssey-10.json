@@ -978,10 +978,10 @@
                 "00": "ocmb_M_info_only"
             },
             "08": {
-                "00": "TBD"
+                "00": "level2_M_th1"
             },
             "09": {
-                "00": "TBD"
+                "00": "level2_M_th1"
             },
             "0a": {
                 "00": "ocmb_M_info_only"
@@ -1349,7 +1349,7 @@
             },
             "18": {
                 "00": "ocmb_M_th_32perDay",
-                "flags": ["crc_root_cause", "mask_but_dont_clear"]
+                "flags": ["mnfg_informational_only"]
             },
             "19": {
                 "00": "level2_M_th1"
@@ -1961,8 +1961,8 @@
                 "01": "mem_port1_M_th_32perDay"
             },
             "2f": {
-                "00": "TBD",
-                "01": "TBD"
+                "00": "mem_port0_M_th_32perDay",
+                "01": "mem_port1_M_th_32perDay"
             },
             "30": {
                 "00": "mem_port0_M_th1",
@@ -1970,24 +1970,25 @@
                 "flags": ["sue_source"]
             },
             "31": {
-                "00": "TBD",
-                "01": "TBD"
+                "00": "mem_port0_M_th1",
+                "01": "mem_port1_M_th1",
+                "flags": ["sue_source"]
             },
             "32": {
                 "00": "level2_M_th1",
                 "01": "level2_M_th1"
             },
             "33": {
-                "00": "TBD",
-                "01": "TBD"
+                "00": "level2_M_th1",
+                "01": "level2_M_th1"
             },
             "34": {
                 "00": "level2_M_th1",
                 "01": "level2_M_th1"
             },
             "35": {
-                "00": "TBD",
-                "01": "TBD"
+                "00": "level2_M_th1",
+                "01": "level2_M_th1"
             },
             "36": {
                 "00": "mem_port0_M_th1",
