@@ -1156,12 +1156,6 @@
             }
         },
         "58a8": {
-            "32": {
-                "00": "TBD"
-            },
-            "33": {
-                "00": "TBD"
-            },
             "34": {
                 "00": "ocmb_M_th1",
                 "flags": ["sue_source"]
@@ -1588,7 +1582,8 @@
                 "00": "ocmb_M_th_32perDay"
             },
             "04": {
-                "00": "omi_bus_info_only"
+                "00": "omi_bus_info_only",
+                "flags": ["crc_related_err"]
             },
             "05": {
                 "00": "level2_M_th1"
@@ -1598,10 +1593,12 @@
                 "flags": ["crc_related_err"]
             },
             "07": {
-                "00": "omi_bus_info_only"
+                "00": "omi_bus_info_only",
+                "flags": ["crc_related_err"]
             },
             "08": {
-                "00": "omi_bus_th_32perDay"
+                "00": "omi_bus_th_32perDay",
+                "flags": ["crc_related_err"]
             },
             "09": {
                 "00": "level2_M_th1"
@@ -1610,7 +1607,8 @@
                 "00": "omi_bus_th_32perDay"
             },
             "0b": {
-                "00": "omi_bus_th_32perDay"
+                "00": "omi_bus_th_32perDay",
+                "flags": ["crc_related_err"]
             },
             "0c": {
                 "00": "level2_M_th1"
