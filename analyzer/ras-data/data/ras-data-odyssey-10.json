@@ -462,6 +462,23 @@
                 "type": "action"
             }
         ],
+        "pcb_slave_parity": [
+            {
+                "name": "ocmb_M",
+                "type": "action"
+            },
+            {
+                "name": "th_1",
+                "type": "action"
+            }
+        ],
+        "pll_unlock": [
+            {
+                "instance": 0,
+                "name": "pll_unlock",
+                "type": "plugin"
+            }
+        ],
         "srq_rcd_parity_error_0": [
             {
                 "name": "dimm0_H_mem_port0_L_th1",
@@ -1267,6 +1284,11 @@
                 "00": "level2_M_th1"
             }
         },
+        "9ecb": {
+            "00": {
+                "00": "pll_unlock"
+            }
+        },
         "bc05": {
             "00": {
                 "00": "level2_M_th1"
@@ -1428,7 +1450,7 @@
                 "00": "level2_M_th1"
             },
             "12": {
-                "00": "TBD"
+                "00": "pcb_slave_parity"
             },
             "13": {
                 "00": "ocmb_M_th1"
