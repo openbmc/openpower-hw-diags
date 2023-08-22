@@ -37,10 +37,30 @@ bool __findRcsOscError(const std::vector<libhei::Signature>& i_list,
 bool __findPllUnlock(const std::vector<libhei::Signature>& i_list,
                      libhei::Signature& o_rootCause)
 {
+    using namespace util::pdbg;
+
     // TODO: Consider returning all of them instead of one as root cause.
+
+    auto nodeId = libhei::hash<libhei::NodeId_t>("PLL_UNLOCK");
+
+    // First, look for any PLL unlock attentions reported by a processsor chip.
     auto itr = std::find_if(i_list.begin(), i_list.end(), [&](const auto& t) {
-        return (libhei::hash<libhei::NodeId_t>("PLL_UNLOCK") == t.getId() &&
-                (0 == t.getBit() || 1 == t.getBit()));
+        return (nodeId == t.getId() &&
+                TYPE_PROC == getTrgtType(getTrgt(t.getChip())));
+    });
+
+    if (i_list.end() != itr)
+    {
+        o_rootCause = *itr;
+        return true;
+    }
+
+    // Then, look for any PLL unlock attentions reported by an OCMB chip. This
+    // is specifically for Odyssey, which are the only OCMBs that would report
+    // PLL unlock attentions.
+    auto itr = std::find_if(i_list.begin(), i_list.end(), [&](const auto& t) {
+        return (nodeId == t.getId() &&
+                TYPE_OCMB == getTrgtType(getTrgt(t.getChip())));
     });
 
     if (i_list.end() != itr)

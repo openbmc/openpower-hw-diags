@@ -129,6 +129,31 @@ pdbg_target* getParentChip(pdbg_target* i_unitTarget)
 
 //------------------------------------------------------------------------------
 
+pdbg_target* getParentProcessor(pdbg_target* i_target)
+{
+    assert(nullptr != i_target);
+
+    // Check if the given target is already a processor chip.
+    if (TYPE_PROC == getTrgtType(i_target))
+    {
+        return i_target; // simply return the given target
+    }
+
+    // Get the parent processor chip.
+    pdbg_target* parentChip = pdbg_target_parent("proc", i_target);
+
+    // There should always be a parent chip. Throw an error if not found.
+    if (nullptr == parentChip)
+    {
+        throw std::logic_error("No parent chip found: i_target=" +
+                               std::string{getPath(i_target)});
+    }
+
+    return parentChip;
+}
+
+//------------------------------------------------------------------------------
+
 pdbg_target* getChipUnit(pdbg_target* i_parentChip, TargetType_t i_unitType,
                          uint8_t i_unitPos)
 {
