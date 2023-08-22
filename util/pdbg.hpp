@@ -73,6 +73,9 @@ uint8_t getTrgtType(const libhei::Chip& i_chip);
 /** @return The parent chip target of the given unit target. */
 pdbg_target* getParentChip(pdbg_target* i_unitTarget);
 
+/** @return The parent processor chip target of the given target. */
+pdbg_target* getParentProcessor(pdbg_target* i_target);
+
 /** @return The unit target within chip of the given unit type and position
  *          relative to the chip. */
 pdbg_target* getChipUnit(pdbg_target* i_parentChip, TargetType_t i_unitType,

@@ -49,6 +49,7 @@ test_vars = [
 test_additional_srcs = [
   files(
     '../analyzer/filter-root-cause.cpp',
+    '../analyzer/plugins/ody-plugins.cpp',
     '../analyzer/plugins/p10-plugins.cpp',
     '../analyzer/plugins/p10-tod-plugins.cpp',
     '../cli.cpp',
