@@ -20,14 +20,26 @@ bool filterRootCause(AnalysisType i_type,
 
 using namespace analyzer;
 
+// Processor side FIRs
 static const auto eqCoreFir = static_cast<libhei::NodeId_t>(
     libhei::hash<libhei::NodeId_t>("EQ_CORE_FIR"));
 
+static const auto mc_dstl_fir = static_cast<libhei::NodeId_t>(
+    libhei::hash<libhei::NodeId_t>("MC_DSTL_FIR"));
+
+// Explorer OCMB FIRs
 static const auto rdfFir =
     static_cast<libhei::NodeId_t>(libhei::hash<libhei::NodeId_t>("RDFFIR"));
 
-static const auto mc_dstl_fir = static_cast<libhei::NodeId_t>(
-    libhei::hash<libhei::NodeId_t>("MC_DSTL_FIR"));
+// Odyssey OCMB FIRs
+static const auto srq_fir =
+    static_cast<libhei::NodeId_t>(libhei::hash<libhei::NodeId_t>("SRQ_FIR"));
+
+static const auto rdf_fir =
+    static_cast<libhei::NodeId_t>(libhei::hash<libhei::NodeId_t>("RDF_FIR"));
+
+static const auto odp_fir =
+    static_cast<libhei::NodeId_t>(libhei::hash<libhei::NodeId_t>("ODP_FIR"));
 
 TEST(RootCauseFilter, Filter1)
 {
@@ -112,4 +124,39 @@ TEST(RootCauseFilter, Filter1)
                                 rootCause, rasData);
     EXPECT_TRUE(attnFound);
     EXPECT_EQ(checkstopSig.toUint32(), rootCause.toUint32());
+
+    // Test 5: Test a firmware initiated channel fail due to an IUE threshold on
+    // a Odyssey OCMB
+    libhei::Chip odyChip0{ocmb0, ODYSSEY_10};
+
+    libhei::Signature fwInitChnlFail{odyChip0, srq_fir, 0, 46,
+                                     libhei::ATTN_TYPE_CHIP_CS};
+    libhei::Signature mainlineIue{odyChip0, rdf_fir, 0, 18,
+                                  libhei::ATTN_TYPE_RECOVERABLE};
+
+    isoData.flush();
+    isoData.addSignature(fwInitChnlFail);
+    isoData.addSignature(mainlineIue);
+
+    attnFound = filterRootCause(AnalysisType::SYSTEM_CHECKSTOP, isoData,
+                                rootCause, rasData);
+    EXPECT_TRUE(attnFound);
+    EXPECT_EQ(mainlineIue.toUint32(), rootCause.toUint32());
+
+    // Test 6: Test a UE that is the side effect of an ODP data corruption error
+    // on an Odyssey OCMB
+    libhei::Signature mainlineUe{odyChip0, rdf_fir, 0, 15,
+                                 libhei::ATTN_TYPE_RECOVERABLE};
+    libhei::Signature odpRootCause{odyChip0, odp_fir, 0, 6,
+                                   libhei::ATTN_TYPE_RECOVERABLE};
+
+    isoData.flush();
+    isoData.addSignature(mainlineUe);
+    isoData.addSignature(odpRootCause);
+
+    attnFound = filterRootCause(AnalysisType::SYSTEM_CHECKSTOP, isoData,
+                                rootCause, rasData);
+
+    EXPECT_TRUE(attnFound);
+    EXPECT_EQ(odpRootCause.toUint32(), rootCause.toUint32());
 }

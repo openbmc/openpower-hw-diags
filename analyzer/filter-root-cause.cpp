@@ -74,27 +74,6 @@ bool __findPllUnlock(const std::vector<libhei::Signature>& i_list,
 
 //------------------------------------------------------------------------------
 
-bool __findIueTh(const std::vector<libhei::Signature>& i_list,
-                 libhei::Signature& o_rootCause)
-{
-    // TODO: These bit values propbably changed in Odyssey. Will need to
-    //       consider flags instead of arbitrary values.
-    auto itr = std::find_if(i_list.begin(), i_list.end(), [&](const auto& t) {
-        return (libhei::hash<libhei::NodeId_t>("RDFFIR") == t.getId() &&
-                (17 == t.getBit() || 37 == t.getBit()));
-    });
-
-    if (i_list.end() != itr)
-    {
-        o_rootCause = *itr;
-        return true;
-    }
-
-    return false;
-}
-
-//------------------------------------------------------------------------------
-
 bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
                                 libhei::Signature& o_rootCause,
                                 const RasDataParser& i_rasData)
@@ -107,7 +86,6 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
     static const auto mc_dstl_fir = __hash("MC_DSTL_FIR");
     static const auto mc_ustl_fir = __hash("MC_USTL_FIR");
     static const auto mc_omi_dl_err_rpt = __hash("MC_OMI_DL_ERR_RPT");
-    static const auto srqfir = __hash("SRQFIR");
 
     // First, look for any chip checkstops from the connected OCMBs.
     for (const auto& s : i_list)
@@ -124,18 +102,6 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
         if (libhei::ATTN_TYPE_CHIP_CS == s.getAttnType() ||
             libhei::ATTN_TYPE_UNIT_CS == s.getAttnType())
         {
-            // Special Case:
-            // If the channel fail was specifically a firmware initiated
-            // channel fail (SRQFIR[25]) check for any IUE bits that are on
-            // that would have caused that (RDFFIR[17,37]).
-            // TODO: These bit values probably changed in Odyssey. Will need to
-            //       consider flags instead of arbitrary values.
-            if ((srqfir == s.getId() && 25 == s.getBit()) &&
-                __findIueTh(i_list, o_rootCause))
-            {
-                return true;
-            }
-
             o_rootCause = s;
             return true;
         }
@@ -671,10 +637,9 @@ bool __findTiRootCause(const std::vector<libhei::Signature>& i_list,
 
 //------------------------------------------------------------------------------
 
-bool filterRootCause(AnalysisType i_type,
-                     const libhei::IsolationData& i_isoData,
-                     libhei::Signature& o_rootCause,
-                     const RasDataParser& i_rasData)
+bool findRootCause(AnalysisType i_type, const libhei::IsolationData& i_isoData,
+                   libhei::Signature& o_rootCause,
+                   const RasDataParser& i_rasData)
 {
     // We'll need to make a copy of the list so that the original list is
     // maintained for the PEL.
@@ -772,6 +737,99 @@ bool filterRootCause(AnalysisType i_type,
     // END WORKAROUND
 
     return false; // default, no active attentions found.
+}
+
+//------------------------------------------------------------------------------
+
+bool __findIueTh(const std::vector<libhei::Signature>& i_list,
+                 libhei::Signature& o_rootCause)
+{
+    auto itr = std::find_if(i_list.begin(), i_list.end(), [&](const auto& t) {
+        return (libhei::hash<libhei::NodeId_t>("RDFFIR") == t.getId() &&
+                (17 == t.getBit() || 37 == t.getBit())) ||
+               (libhei::hash<libhei::NodeId_t>("RDF_FIR") == t.getId() &&
+                (18 == t.getBit() || 38 == t.getBit()));
+    });
+
+    if (i_list.end() != itr)
+    {
+        o_rootCause = *itr;
+        return true;
+    }
+
+    return false;
+}
+
+//------------------------------------------------------------------------------
+
+void rootCauseSpecialCases(const libhei::IsolationData& i_isoData,
+                           libhei::Signature& o_rootCause,
+                           const RasDataParser& i_rasData)
+{
+    using func = libhei::NodeId_t (*)(const std::string& i_str);
+    func __hash = libhei::hash<libhei::NodeId_t>;
+
+    // Check for any special cases that exist for specific FIR bits.
+
+    // If the channel fail was specifically a firmware initiated channel fail
+    // (SRQFIR[25] for Explorer OCMBs, SRQ_FIR[46] for Odyssey OCMBs) check for
+    // any IUE bits that are on that would have caused the channel fail
+    // (RDFFIR[17,37] for Explorer OCMBs, RDF_FIR_0[18,38] or RDF_FIR_1[18,38]
+    // for Odyssey OCMBs).
+
+    // Explorer SRQFIR
+    static const auto srqfir = __hash("SRQFIR");
+    // Odyssey SRQ_FIR
+    static const auto srq_fir = __hash("SRQ_FIR");
+
+    std::vector<libhei::Signature> list{i_isoData.getSignatureList()};
+
+    if (((srqfir == o_rootCause.getId() && 25 == o_rootCause.getBit()) ||
+         (srq_fir == o_rootCause.getId() && 46 == o_rootCause.getBit())) &&
+        __findIueTh(list, o_rootCause))
+    {
+        // If __findIueTh returned true, o_rootCause was updated, return.
+        return;
+    }
+
+    // Check if the root cause found was a potential side effect of an
+    // ODP data corruption error. If it was, check if any other signature
+    // in the signature list was a potential root cause.
+    auto OdpSide = RasDataParser::RasDataFlags::ODP_DATA_CORRUPT_SIDE_EFFECT;
+    auto OdpRoot = RasDataParser::RasDataFlags::ODP_DATA_CORRUPT_ROOT_CAUSE;
+    if (i_rasData.isFlagSet(o_rootCause, OdpSide))
+    {
+        for (const auto& s : list)
+        {
+            if (i_rasData.isFlagSet(s, OdpRoot))
+            {
+                // ODP data corruption root cause found, return.
+                o_rootCause = s;
+                return;
+            }
+        }
+    }
+}
+
+//------------------------------------------------------------------------------
+
+bool filterRootCause(AnalysisType i_type,
+                     const libhei::IsolationData& i_isoData,
+                     libhei::Signature& o_rootCause,
+                     const RasDataParser& i_rasData)
+{
+    // Find the initial root cause attention based on common rules for FIR
+    // isolation.
+    bool rc = findRootCause(i_type, i_isoData, o_rootCause, i_rasData);
+
+    // If some root cause was found, handle any special cases for specific FIR
+    // bits that require additional logic to determine the root cause.
+    if (true == rc)
+    {
+        rootCauseSpecialCases(i_isoData, o_rootCause, i_rasData);
+    }
+
+    return rc;
 }
 
 //------------------------------------------------------------------------------
