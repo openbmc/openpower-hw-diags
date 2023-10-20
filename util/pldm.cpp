@@ -346,7 +346,7 @@ bool hresetSbe(unsigned int sbeInstance)
                 }
             }
         }
-            });
+    });
 
     // send request to issue hreset of sbe
     int pldmFd = -1; // mctp socket file descriptor

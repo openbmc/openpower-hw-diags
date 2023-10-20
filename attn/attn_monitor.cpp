@@ -23,7 +23,7 @@ void AttnMonitor::scheduleGPIOEvent()
             handleGPIOEvent(); // gpio trigger detected
         }
         return;
-        }); // register async callback
+    }); // register async callback
 }
 
 /** @brief Handle the GPIO state change event */
