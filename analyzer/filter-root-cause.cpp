@@ -809,6 +809,23 @@ void rootCauseSpecialCases(const libhei::IsolationData& i_isoData,
             }
         }
     }
+
+    // Odyssey RDF_FIR
+    static const auto rdf_fir = __hash("RDF_FIR");
+
+    // RDF_FIR[41] can be the root cause of RDF_FIR[16], so if bit 16 is on,
+    // check if bit 41 is also on.
+    if (rdf_fir == o_rootCause.getId() && 16 == o_rootCause.getBit())
+    {
+        // Look for RDF_FIR[41]
+        auto itr = std::find_if(list.begin(), list.end(), [&](const auto& t) {
+            return (rdf_fir == t.getId() && 41 == t.getBit());
+        });
+        if (list.end() != itr)
+        {
+            o_rootCause = *itr;
+        }
+    }
 }
 
 //------------------------------------------------------------------------------
