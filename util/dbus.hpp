@@ -141,6 +141,7 @@ enum class MachineType
     Rainier_1S4U,
     Rainier_1S2U,
     Everest,
+    Bonnell,
 };
 
 /**
