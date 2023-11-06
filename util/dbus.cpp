@@ -437,6 +437,7 @@ MachineType getMachineType()
                     {"0x50001002", MachineType::Rainier_1S4U},
                     {"0x50001003", MachineType::Rainier_1S2U},
                     {"0x50003000", MachineType::Everest},
+                    {"0x50004000", MachineType::Bonnell},
                 };
 
                 machineType = typeMap.at(hexId);

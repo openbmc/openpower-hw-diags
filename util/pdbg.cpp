@@ -261,6 +261,11 @@ pdbg_target* getTargetAcrossBus(pdbg_target* i_rxTarget)
             filePath = fs::path{PACKAGE_DIR
                                 "util-data/peer-targets-everest.json"};
             break;
+        // Bonnell
+        case util::dbus::MachineType::Bonnell:
+            filePath = fs::path{PACKAGE_DIR
+                                "util-data/peer-targets-bonnell.json"};
+            break;
         default:
             trace::err("Invalid machine type found %d",
                        static_cast<uint8_t>(machineType));

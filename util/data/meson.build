@@ -1,6 +1,7 @@
 # Install the data files
 
 data_files = files(
+    'peer-targets-bonnell.json',
     'peer-targets-everest.json',
     'peer-targets-rainier-2u.json',
     'peer-targets-rainier-4u.json',
