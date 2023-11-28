@@ -30444,7 +30444,8 @@
                 "04": "downstream_attn",
                 "05": "downstream_attn",
                 "06": "downstream_attn",
-                "07": "downstream_attn"
+                "07": "downstream_attn",
+                "flags": ["attn_from_ocmb"]
             },
             "03": {
                 "00": "level2_M_th_1",
@@ -30454,7 +30455,8 @@
                 "04": "level2_M_th_1",
                 "05": "level2_M_th_1",
                 "06": "level2_M_th_1",
-                "07": "level2_M_th_1"
+                "07": "level2_M_th_1",
+                "flags": ["attn_from_ocmb"]
             },
             "04": {
                 "00": "ocmb1_and_attached_dimms",
@@ -30486,7 +30488,8 @@
                 "04": "downstream_attn",
                 "05": "downstream_attn",
                 "06": "downstream_attn",
-                "07": "downstream_attn"
+                "07": "downstream_attn",
+                "flags": ["attn_from_ocmb"]
             },
             "07": {
                 "00": "level2_M_th_1",
@@ -30496,7 +30499,8 @@
                 "04": "level2_M_th_1",
                 "05": "level2_M_th_1",
                 "06": "level2_M_th_1",
-                "07": "level2_M_th_1"
+                "07": "level2_M_th_1",
+                "flags": ["attn_from_ocmb"]
             },
             "08": {
                 "00": "mcc0_M_th_1",
