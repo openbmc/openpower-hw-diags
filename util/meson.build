@@ -18,7 +18,7 @@ util_deps = [
     phosphor_logging_dep,
 ]
 
-if get_option('phal').enabled()
+if get_option('phal').allowed()
     util_deps += dependency('libdt-api')
 endif
 

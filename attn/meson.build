@@ -10,7 +10,7 @@ libgpiod = dependency('libgpiod', version : '>=1.4.1')
 attn_conf = configuration_data()
 
 # conditionally define ENABLE_PHAL_TRUE
-if (get_option('phal').enabled())
+if (get_option('phal').allowed())
     attn_conf.set('ENABLE_PHAL_TRUE', '')
 else
     attn_conf.set('ENABLE_PHAL_TRUE', '#')
@@ -71,7 +71,7 @@ attn_deps = [
 ]
 
 # conditional library dependencies
-if get_option('phal').enabled()
+if get_option('phal').allowed()
   attn_deps += libphal_dep
 endif
 
