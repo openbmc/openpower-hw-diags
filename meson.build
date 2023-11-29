@@ -36,7 +36,7 @@ cmplr = meson.get_compiler('cpp')
 
 conf = configuration_data()
 
-conf.set('CONFIG_PHAL_API', get_option('phal').enabled())
+conf.set('CONFIG_PHAL_API', get_option('phal').allowed())
 
 configure_file(input: 'config.h.in', output: 'config.h', configuration: conf)
 
@@ -66,7 +66,7 @@ libpdbg_dep = cmplr.find_library('pdbg')
 
 fmt_dep = dependency('fmt')
 
-if get_option('phal').enabled()
+if get_option('phal').allowed()
   libphal_dep = cmplr.find_library('phal')
 endif
 
