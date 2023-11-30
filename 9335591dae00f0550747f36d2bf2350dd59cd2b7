@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8f7744d9_a7fd8174",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2023-11-30T17:34:51Z",
+      "side": 1,
+      "message": "Copy over 1.0 as well",
+      "revId": "9335591dae00f0550747f36d2bf2350dd59cd2b7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
