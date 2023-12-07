@@ -76,18 +76,7 @@ pthread = declare_dependency(link_args : '-pthread')
 lrt = declare_dependency(link_args : '-lrt')
 
 # JSON parser
-if cmplr.has_header('nlohmann/json.hpp')
-    nlohmann_json_dep = declare_dependency()
-else
-    subproject('nlohmann', required: false)
-    nlohmann_json_dep = declare_dependency(
-        include_directories: [
-            'subprojects/nlohmann/single_include',
-            'subprojects/nlohmann/single_include/nlohmann',
-        ]
-    )
-    nlohmann_json_dep = nlohmann_json_dep.as_system('system')
-endif
+nlohmann_json_dep = dependency('nlohmann_json', include_type: 'system')
 
 # JSON validator
 if cmplr.has_header('valijson/validator.hpp')
