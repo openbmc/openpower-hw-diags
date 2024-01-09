@@ -732,7 +732,8 @@
                 "00": "level2_M_th_1"
             },
             "09": {
-                "00": "mem_port0_M_th_1"
+                "00": "mem_port0_M_th_1",
+                "flags": ["sue_source"]
             },
             "0a": {
                 "00": "mem_port0_M_th_1",
@@ -826,7 +827,8 @@
                 "00": "level2_M_th_1"
             },
             "24": {
-                "00": "mem_port1_M_th_1"
+                "00": "mem_port1_M_th_1",
+                "flags": ["sue_source"]
             },
             "25": {
                 "00": "mem_port1_M_th_1",
@@ -1666,7 +1668,8 @@
                 "flags": ["crc_root_cause", "mask_but_dont_clear"]
             },
             "16": {
-                "00": "omi_bus_th_32perDay"
+                "00": "omi_bus_th_32perDay",
+                "flags": ["mnfg_informational_only"]
             },
             "17": {
                 "00": "level2_M_th_1"
