@@ -1,8 +1,8 @@
-#include <fmt/format.h>
-
 #include <util/dbus.hpp>
 #include <util/trace.hpp>
 #include <xyz/openbmc_project/State/Boot/Progress/server.hpp>
+
+#include <format>
 
 namespace util
 {
@@ -428,7 +428,7 @@ MachineType getMachineType()
             try
             {
                 // Format the vector into a single hex string to compare to.
-                std::string hexId = fmt::format("0x{:02x}{:02x}{:02x}{:02x}",
+                std::string hexId = std::format("0x{:02x}{:02x}{:02x}{:02x}",
                                                 ids.at(0), ids.at(1), ids.at(2),
                                                 ids.at(3));
 

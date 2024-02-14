@@ -19,7 +19,6 @@ plugins_src = files(
 # Library dependencies.
 analyzer_deps = [
     dbus_interfaces_dep,
-    fmt_dep,
     libhei_dep,
     nlohmann_json_dep,
     sdbusplus_dep,

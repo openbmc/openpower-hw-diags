@@ -1,5 +1,3 @@
-#include <fmt/format.h>
-
 #include <attn/attn_common.hpp>
 #include <attn/attn_dbus.hpp>
 #include <attn/attn_dump.hpp>
@@ -11,6 +9,7 @@
 #include <util/dbus.hpp>
 #include <util/trace.hpp>
 
+#include <format>
 #include <iomanip>
 #include <iostream>
 
@@ -187,7 +186,7 @@ void handleHbTiWithSrc(TiDataArea* i_tiDataArea)
             // Translate hex src value to ascii. This results in an 8
             // character SRC (hostboot SRC is 32 bits)
             tiAdditionalData["SrcAscii"] =
-                fmt::format("{:08X}", be32toh(i_tiDataArea->srcWord12HbWord0));
+                std::format("{:08X}", be32toh(i_tiDataArea->srcWord12HbWord0));
 
             // dump flag is only valid for TI with EID (not TI with SRC)
             trace::inf("Ignoring TI info dump flag for HB TI with SRC");
@@ -260,60 +259,60 @@ void parsePhypOpalTiInfo(std::map<std::string, std::string>& i_map,
         return;
     }
 
-    i_map["0x00 TI Area Valid"] = fmt::format("{:02x}",
+    i_map["0x00 TI Area Valid"] = std::format("{:02x}",
                                               i_tiDataArea->tiAreaValid);
-    i_map["0x01 Command"] = fmt::format("{:02x}", i_tiDataArea->command);
+    i_map["0x01 Command"] = std::format("{:02x}", i_tiDataArea->command);
     i_map["0x02 Num. Data Bytes"] =
-        fmt::format("{:04x}", be16toh(i_tiDataArea->numDataBytes));
-    i_map["0x04 Reserved"] = fmt::format("{:02x}", i_tiDataArea->reserved1);
+        std::format("{:04x}", be16toh(i_tiDataArea->numDataBytes));
+    i_map["0x04 Reserved"] = std::format("{:02x}", i_tiDataArea->reserved1);
     i_map["0x06 HWDump Type"] =
-        fmt::format("{:04x}", be16toh(i_tiDataArea->hardwareDumpType));
-    i_map["0x08 SRC Format"] = fmt::format("{:02x}", i_tiDataArea->srcFormat);
-    i_map["0x09 SRC Flags"] = fmt::format("{:02x}", i_tiDataArea->srcFlags);
-    i_map["0x0a Num. ASCII Words"] = fmt::format("{:02x}",
+        std::format("{:04x}", be16toh(i_tiDataArea->hardwareDumpType));
+    i_map["0x08 SRC Format"] = std::format("{:02x}", i_tiDataArea->srcFormat);
+    i_map["0x09 SRC Flags"] = std::format("{:02x}", i_tiDataArea->srcFlags);
+    i_map["0x0a Num. ASCII Words"] = std::format("{:02x}",
                                                  i_tiDataArea->numAsciiWords);
-    i_map["0x0b Num. Hex Words"] = fmt::format("{:02x}",
+    i_map["0x0b Num. Hex Words"] = std::format("{:02x}",
                                                i_tiDataArea->numHexWords);
-    i_map["0x0e Length of SRC"] = fmt::format("{:04x}",
+    i_map["0x0e Length of SRC"] = std::format("{:04x}",
                                               be16toh(i_tiDataArea->lenSrc));
     i_map["0x10 SRC Word 12"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord12HbWord0));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord12HbWord0));
     i_map["0x14 SRC Word 13"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord13HbWord2));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord13HbWord2));
     i_map["0x18 SRC Word 14"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord14HbWord3));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord14HbWord3));
     i_map["0x1c SRC Word 15"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord15HbWord4));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord15HbWord4));
     i_map["0x20 SRC Word 16"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord16HbWord5));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord16HbWord5));
     i_map["0x24 SRC Word 17"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord17HbWord6));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord17HbWord6));
     i_map["0x28 SRC Word 18"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord18HbWord7));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord18HbWord7));
     i_map["0x2c SRC Word 19"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord19HbWord8));
-    i_map["0x30 ASCII Data"] = fmt::format("{:08x}",
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord19HbWord8));
+    i_map["0x30 ASCII Data"] = std::format("{:08x}",
                                            be32toh(i_tiDataArea->asciiData0));
-    i_map["0x34 ASCII Data"] = fmt::format("{:08x}",
+    i_map["0x34 ASCII Data"] = std::format("{:08x}",
                                            be32toh(i_tiDataArea->asciiData1));
-    i_map["0x38 ASCII Data"] = fmt::format("{:08x}",
+    i_map["0x38 ASCII Data"] = std::format("{:08x}",
                                            be32toh(i_tiDataArea->asciiData2));
-    i_map["0x3c ASCII Data"] = fmt::format("{:08x}",
+    i_map["0x3c ASCII Data"] = std::format("{:08x}",
                                            be32toh(i_tiDataArea->asciiData3));
-    i_map["0x40 ASCII Data"] = fmt::format("{:08x}",
+    i_map["0x40 ASCII Data"] = std::format("{:08x}",
                                            be32toh(i_tiDataArea->asciiData4));
-    i_map["0x44 ASCII Data"] = fmt::format("{:08x}",
+    i_map["0x44 ASCII Data"] = std::format("{:08x}",
                                            be32toh(i_tiDataArea->asciiData5));
-    i_map["0x48 ASCII Data"] = fmt::format("{:08x}",
+    i_map["0x48 ASCII Data"] = std::format("{:08x}",
                                            be32toh(i_tiDataArea->asciiData6));
-    i_map["0x4c ASCII Data"] = fmt::format("{:08x}",
+    i_map["0x4c ASCII Data"] = std::format("{:08x}",
                                            be32toh(i_tiDataArea->asciiData7));
-    i_map["0x50 Location"] = fmt::format("{:02x}", i_tiDataArea->location);
-    i_map["0x51 Code Sections"] = fmt::format("{:02x}",
+    i_map["0x50 Location"] = std::format("{:02x}", i_tiDataArea->location);
+    i_map["0x51 Code Sections"] = std::format("{:02x}",
                                               i_tiDataArea->codeSection);
-    i_map["0x52 Additional Size"] = fmt::format("{:02x}",
+    i_map["0x52 Additional Size"] = std::format("{:02x}",
                                                 i_tiDataArea->additionalSize);
-    i_map["0x53 Additional Data"] = fmt::format("{:02x}",
+    i_map["0x53 Additional Data"] = std::format("{:02x}",
                                                 i_tiDataArea->andData);
 }
 
@@ -326,32 +325,32 @@ void parseHbTiInfo(std::map<std::string, std::string>& i_map,
         return;
     }
 
-    i_map["0x00 TI Area Valid"] = fmt::format("{:02x}",
+    i_map["0x00 TI Area Valid"] = std::format("{:02x}",
                                               i_tiDataArea->tiAreaValid);
-    i_map["0x04 Reserved"] = fmt::format("{:02x}", i_tiDataArea->reserved1);
-    i_map["0x05 HB_Term. Type"] = fmt::format("{:02x}",
+    i_map["0x04 Reserved"] = std::format("{:02x}", i_tiDataArea->reserved1);
+    i_map["0x05 HB_Term. Type"] = std::format("{:02x}",
                                               i_tiDataArea->hbTerminateType);
-    i_map["0x0c HB Flags"] = fmt::format("{:02x}", i_tiDataArea->hbFlags);
-    i_map["0x0d Source"] = fmt::format("{:02x}", i_tiDataArea->source);
+    i_map["0x0c HB Flags"] = std::format("{:02x}", i_tiDataArea->hbFlags);
+    i_map["0x0d Source"] = std::format("{:02x}", i_tiDataArea->source);
     i_map["0x10 HB Word 0"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord12HbWord0));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord12HbWord0));
     i_map["0x14 HB Word 2"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord13HbWord2));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord13HbWord2));
     i_map["0x18 HB Word 3"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord14HbWord3));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord14HbWord3));
     i_map["0x1c HB Word 4"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord15HbWord4));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord15HbWord4));
     i_map["0x20 HB Word 5"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord16HbWord5));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord16HbWord5));
     i_map["0x24 HB Word 6"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord17HbWord6));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord17HbWord6));
     i_map["0x28 HB Word 7"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord18HbWord7));
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord18HbWord7));
     i_map["0x2c HB Word 8"] =
-        fmt::format("{:08x}", be32toh(i_tiDataArea->srcWord19HbWord8));
-    i_map["0x30 error_data"] = fmt::format("{:08x}",
+        std::format("{:08x}", be32toh(i_tiDataArea->srcWord19HbWord8));
+    i_map["0x30 error_data"] = std::format("{:08x}",
                                            be32toh(i_tiDataArea->asciiData0));
-    i_map["0x34 EID"] = fmt::format("{:08x}",
+    i_map["0x34 EID"] = std::format("{:08x}",
                                     be32toh(i_tiDataArea->asciiData1));
 }
 

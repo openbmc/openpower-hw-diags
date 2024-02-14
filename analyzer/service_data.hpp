@@ -1,12 +1,12 @@
 #pragma once
 
-#include <fmt/format.h>
-
 #include <analyzer/analyzer_main.hpp>
 #include <analyzer/callout.hpp>
 #include <hei_main.hpp>
 #include <nlohmann/json.hpp>
 #include <util/pdbg.hpp>
+
+#include <format>
 
 namespace analyzer
 {
@@ -165,7 +165,7 @@ class ServiceData
     void addSrcSubsystem(
         std::map<std::string, std::string>& io_additionalData) const
     {
-        io_additionalData["PEL_SUBSYSTEM"] = fmt::format(
+        io_additionalData["PEL_SUBSYSTEM"] = std::format(
             "0x{:02x}", static_cast<uint8_t>(iv_srcSubsystem.first));
     }
 
