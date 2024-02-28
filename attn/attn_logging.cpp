@@ -478,8 +478,16 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
 
     trace::inf("TI info size = %u", tiInfoSize);
 
-    event(EventType::Terminate, i_additionalData,
-          createFFDCFiles(i_tiInfoData, tiInfoSize));
+    auto userData = createFFDCFiles(i_tiInfoData, tiInfoSize);
+
+    // Per request from the Hostboot team. Add a level 2 callout.
+    userData.emplace_back(util::FFDCFormat::Custom, 0xCA, 0x01);
+    std::ofstream o{io_userDataFiles.back().getPath()};
+    o << nlohmann::json::parse(R"(
+        [ { "Procedure": "next_level_support", "Priority": "L" } ]
+    )");
+
+    event(EventType::Terminate, i_additionalData, userData);
 }
 
 /** @brief Commit SBE vital event to log, returns event log ID */
