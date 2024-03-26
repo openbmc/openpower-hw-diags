@@ -484,7 +484,7 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
     auto userData = createFFDCFiles(i_tiInfoData, tiInfoSize);
 
     // Per request from the Hostboot team. Add a level 2 callout.
-    userData.emplace_back(util::FFDCFormat::Custom, 0xCA, 0x01);
+    userData.emplace_back(util::FFDCFormat::JSON, 0xCA, 0x01);
     std::ofstream o{userData.back().getPath()};
     o << nlohmann::json::parse(R"(
         [ { "Procedure": "next_level_support", "Priority": "L" } ]
