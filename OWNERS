@@ -36,7 +36,6 @@ owners:
 
 reviewers:
 - austinfcui@gmail.com
-- ben.tyner@ibm.com
 - cnpalmer@us.ibm.com
 
 matchers:
@@ -45,9 +44,6 @@ openbmc:
 - name: Austin Cui
   email: austinfcui@gmail.com
   discord: austinfcui#2519
-- name: Ben Tyner
-  email: ben.tyner@ibm.com
-  discord: bentyner
 - name: Caleb Palmer
   email: cnpalmer@us.ibm.com
   discord: NA
