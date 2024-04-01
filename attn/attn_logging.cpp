@@ -6,13 +6,10 @@
 #include <attn/attn_dump.hpp>
 #include <attn/attn_logging.hpp>
 #include <attn/pel/pel_minimal.hpp>
-#include <nlohmann/json.hpp>
 #include <phosphor-logging/log.hpp>
 #include <util/dbus.hpp>
 #include <util/ffdc.hpp>
 #include <util/trace.hpp>
-
-#include <fstream>
 
 namespace attn
 {
@@ -481,16 +478,8 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
 
     trace::inf("TI info size = %u", tiInfoSize);
 
-    auto userData = createFFDCFiles(i_tiInfoData, tiInfoSize);
-
-    // Per request from the Hostboot team. Add a level 2 callout.
-    userData.emplace_back(util::FFDCFormat::Custom, 0xCA, 0x01);
-    std::ofstream o{userData.back().getPath()};
-    o << nlohmann::json::parse(R"(
-        [ { "Procedure": "next_level_support", "Priority": "L" } ]
-    )");
-
-    event(EventType::Terminate, i_additionalData, userData);
+    event(EventType::Terminate, i_additionalData,
+          createFFDCFiles(i_tiInfoData, tiInfoSize));
 }
 
 /** @brief Commit SBE vital event to log, returns event log ID */
