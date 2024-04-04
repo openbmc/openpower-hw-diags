@@ -26589,12 +26589,13 @@
                 "flags": ["cs_possible"]
             },
             "2b": {
-                "00": "level2_M_th_1",
-                "03": "level2_M_th_1",
-                "04": "level2_M_th_1",
-                "05": "level2_M_th_1",
-                "06": "level2_M_th_1",
-                "07": "level2_M_th_1"
+                "00": "pau0_M_th_1",
+                "03": "pau3_M_th_1",
+                "04": "pau4_M_th_1",
+                "05": "pau5_M_th_1",
+                "06": "pau6_M_th_1",
+                "07": "pau7_M_th_1",
+                "flags": ["cs_possible"]
             },
             "2c": {
                 "00": "level2_M_th_1",
@@ -26605,12 +26606,13 @@
                 "07": "level2_M_th_1"
             },
             "2d": {
-                "00": "level2_M_th_1",
-                "03": "level2_M_th_1",
-                "04": "level2_M_th_1",
-                "05": "level2_M_th_1",
-                "06": "level2_M_th_1",
-                "07": "level2_M_th_1"
+                "00": "pau0_M_th_1",
+                "03": "pau3_M_th_1",
+                "04": "pau4_M_th_1",
+                "05": "pau5_M_th_1",
+                "06": "pau6_M_th_1",
+                "07": "pau7_M_th_1",
+                "flags": ["cs_possible"]
             },
             "2e": {
                 "00": "level2_M_th_1",
