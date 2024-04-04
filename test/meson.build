@@ -71,6 +71,11 @@ testcases = [
   'test-cli',
 ]
 
+# allow more time for long running tests
+longtests = {
+  'test-pll-unlock': 2,
+}
+
 foreach tc : testcases
 
   exe = executable(tc.underscorify(),
@@ -81,7 +86,7 @@ foreach tc : testcases
     link_with           : test_libs,
   )
 
-  test(tc, exe, env: test_vars)
+  test(tc, exe, env: test_vars, timeout: 30 * longtests.get(tc, 1))
 
 endforeach
 
