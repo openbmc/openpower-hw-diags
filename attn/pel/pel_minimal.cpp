@@ -52,7 +52,7 @@ size_t PelMinimal::size() const
     // size of primary SRC section
     if (_ps)
     {
-        size += _ph->header().size;
+        size += _ps->header().size;
     }
 
     // size of extended user section
