@@ -3,6 +3,7 @@
 #include <attn/attn_logging.hpp>
 #include <sdbusplus/bus.hpp>
 #include <sdbusplus/exception.hpp>
+#include <util/dbus.hpp>
 #include <util/trace.hpp>
 
 constexpr uint64_t dumpTimeout = 3600000000; // microseconds
@@ -99,6 +100,16 @@ void monitorDump(const std::string& i_path)
     trace::inf("dump status: %s", dumpStatus.c_str());
 }
 
+/** Api used to enable or disable watchdog dbus property */
+void enableWatchdog(bool enable)
+{
+    constexpr auto service = "xyz.openbmc_project.Watchdog";
+    constexpr auto object = "/xyz/openbmc_project/watchdog/host0";
+    constexpr auto interface = "xyz.openbmc_project.State.Watchdog";
+    constexpr auto property = "Enabled";
+    util::dbus::setProperty<bool>(service, object, interface, property, enable);
+}
+
 /** Request a dump from the dump manager */
 void requestDump(uint32_t i_logId, const DumpParameters& i_dumpParameters)
 {
@@ -112,6 +123,17 @@ void requestDump(uint32_t i_logId, const DumpParameters& i_dumpParameters)
     {
         try
         {
+            // During a checkstop attention, the system is not functioning
+            // normally. So a hardware or hostboot dump is collected and it
+            // could take a while to get completed. So disable the watchdog when
+            // the dump collection is in progress.
+            if (DumpType::Hostboot == i_dumpParameters.dumpType ||
+                DumpType::Hardware == i_dumpParameters.dumpTyp)
+            {
+                // While the dump is being collected, the watchdog could get
+                // triggered. So diable it
+                enableWatchdog(false);
+            }
             // dbus call arguments
             std::map<std::string, std::variant<std::string, uint64_t>>
                 createParams;
@@ -155,6 +177,13 @@ void requestDump(uint32_t i_logId, const DumpParameters& i_dumpParameters)
         {
             trace::err("requestDump exception");
             trace::err(e.what());
+        }
+
+        if (DumpType::Hostboot == i_dumpParameters.dumpType ||
+            DumpType::Hardware == i_dumpParameters.dumpTyp)
+        {
+            // Dump collection is over, enable the watchdog
+            enableWatchdog(true);
         }
     }
 }
