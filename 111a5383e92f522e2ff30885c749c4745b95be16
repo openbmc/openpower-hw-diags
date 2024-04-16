@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "76710292_92af0ad7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2024-04-16T18:53:22Z",
+      "side": 1,
+      "message": "\"host watchdog\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 8,
+        "endLine": 7,
+        "endChar": 17
+      },
+      "revId": "111a5383e92f522e2ff30885c749c4745b95be16",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc2576e2_41ffcc15",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2024-04-16T18:53:22Z",
+      "side": 1,
+      "message": "Tested: ?",
+      "revId": "111a5383e92f522e2ff30885c749c4745b95be16",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bf944e64_be423041",
+        "filename": "attn/attn_dump.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2024-04-16T18:53:22Z",
+      "side": 1,
+      "message": "nit: \"host watchdog\"\nThere is also a BMC watchdog so good to be specific.",
+      "range": {
+        "startLine": 35,
+        "startChar": 21,
+        "endLine": 35,
+        "endChar": 30
+      },
+      "revId": "111a5383e92f522e2ff30885c749c4745b95be16",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5acdd349_bf2660d8",
+        "filename": "attn/attn_dump.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2024-04-16T18:53:22Z",
+      "side": 1,
+      "message": "nit: I\u0027d strike this, seems a bit redundant.",
+      "range": {
+        "startLine": 37,
+        "startChar": 63,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "111a5383e92f522e2ff30885c749c4745b95be16",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d2b81c48_c325ec3e",
+        "filename": "attn/attn_dump.hpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2024-04-16T18:53:22Z",
+      "side": 1,
+      "message": "nit: \"Whether to enable (True) or disable (False) the watchdog\"",
+      "range": {
+        "startLine": 40,
+        "startChar": 24,
+        "endLine": 40,
+        "endChar": 52
+      },
+      "revId": "111a5383e92f522e2ff30885c749c4745b95be16",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
