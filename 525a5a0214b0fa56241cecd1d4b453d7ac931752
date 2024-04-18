@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0ccff0a6_241728f0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2024-04-18T14:24:13Z",
+      "side": 1,
+      "message": "hw and hostboot collection",
+      "range": {
+        "startLine": 7,
+        "startChar": 29,
+        "endLine": 7,
+        "endChar": 36
+      },
+      "revId": "525a5a0214b0fa56241cecd1d4b453d7ac931752",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "731a91cc_f4e88158",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2024-04-18T14:24:13Z",
+      "side": 1,
+      "message": "Please be sure to respond to the comments in gerrit (i.e. Done)",
+      "revId": "525a5a0214b0fa56241cecd1d4b453d7ac931752",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c9e7505c_20c23d1b",
+        "filename": "attn/attn_dump.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2024-04-18T14:24:13Z",
+      "side": 1,
+      "message": "nit: Comment is redundant with what you have up in 126-129",
+      "revId": "525a5a0214b0fa56241cecd1d4b453d7ac931752",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e33e5ef7_c3c36409",
+        "filename": "attn/attn_dump.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000004
+      },
+      "writtenOn": "2024-04-18T14:24:13Z",
+      "side": 1,
+      "message": "Lots of bugs happen when you have 2 checks which must be updated in lockstep in 2 different places in the code. I slightly prefer a new variable for this function, bool wdDisabled \u003d false. It gets set to True if you enable up above and then this check us just a \"if wdDisabled\" and we don\u0027t have to worry about someone added a new dump type above and forgetting to add here.",
+      "revId": "525a5a0214b0fa56241cecd1d4b453d7ac931752",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
