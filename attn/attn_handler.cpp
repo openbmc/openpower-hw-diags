@@ -187,10 +187,10 @@ void attnHandler(Config* i_config)
                                                            target, i_config);
                         }
                     } // cfam 0x100d valid
-                }     // cfam 0x1007 valid
-            }         // fsi target enabled
-        }             // pib target enabled
-    }                 // next processor
+                } // cfam 0x1007 valid
+            } // fsi target enabled
+        } // pib target enabled
+    } // next processor
 
     // convert to heap, highest priority is at front
     if (!std::is_heap(active_attentions.begin(), active_attentions.end()))

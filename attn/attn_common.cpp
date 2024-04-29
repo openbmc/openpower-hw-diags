@@ -201,8 +201,8 @@ bool recoverableErrors()
                     break;
                 }
             } // fsi target enabled
-        }     // pib target enabled
-    }         // next processor
+        } // pib target enabled
+    } // next processor
 
     return recoverableErrors;
 }
