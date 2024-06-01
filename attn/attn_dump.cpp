@@ -1,3 +1,5 @@
+#include "config.h"
+
 #include <attn/attn_dbus.hpp>
 #include <attn/attn_dump.hpp>
 #include <attn/attn_logging.hpp>
@@ -113,14 +115,14 @@ void enableWatchdog(bool enable)
 /** Request a dump from the dump manager */
 void requestDump(uint32_t i_logId, const DumpParameters& i_dumpParameters)
 {
-    constexpr auto path = "/org/openpower/dump";
     constexpr auto interface = "xyz.openbmc_project.Dump.Create";
     constexpr auto function = "CreateDump";
 
     sdbusplus::message_t method;
+
     bool watchdogDisabled = false;
 
-    if (0 == dbusMethod(path, interface, function, method))
+    if (0 == dbusMethod(OP_DUMP_OBJ_PATH, interface, function, method))
     {
         try
         {
