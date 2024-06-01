@@ -5,3 +5,5 @@ option('phal', type : 'feature', value : 'disabled',
                          Systems device tree''')
 option('attn_config', type : 'string', value : '',
         description : '''Attention handler default configuration override''')
+option('op_dump_obj_path', type: 'string', value: '/org/openpower/dump',
+        description : '''Object path requesting OpenPOWER dumps''')

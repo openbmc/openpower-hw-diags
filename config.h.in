@@ -20,4 +20,7 @@
 
 #mesondefine CONFIG_PHAL_API
 
+// D-Bus path for requesting dumps
+constexpr auto OP_DUMP_OBJ_PATH = @OP_DUMP_OBJ_PATH@;
+
 // clang-format on
