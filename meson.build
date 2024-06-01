@@ -36,6 +36,9 @@ cmplr = meson.get_compiler('cpp')
 
 conf = configuration_data()
 
+# OpenPOWER dump object path override
+conf.set_quoted('OP_DUMP_OBJ_PATH', get_option('op_dump_obj_path'))
+
 conf.set('CONFIG_PHAL_API', get_option('phal').allowed())
 
 configure_file(input: 'config.h.in', output: 'config.h', configuration: conf)
