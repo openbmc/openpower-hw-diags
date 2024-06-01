@@ -18,6 +18,7 @@
 // IMPORTANT:
 //   Avoid using #define whenever possible. See note above for reason.
 
+#mesondefine OP_DUMP_OBJ_PATH 
 #mesondefine CONFIG_PHAL_API
 
 // clang-format on
