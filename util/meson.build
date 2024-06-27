@@ -15,7 +15,9 @@ util_deps = [
     libhei_dep,
     libpdbg_dep,
     libpldm_dep,
+    nlohmann_json_dep,
     phosphor_logging_dep,
+    valijson_dep,
 ]
 
 if get_option('phal').allowed()

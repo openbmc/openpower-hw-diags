@@ -109,14 +109,14 @@ no_listener_mode = get_option('nlmode')
 if not no_listener_mode.disabled()
   executable('openpower-hw-diags',
               sources : [ 'main_nl.cpp', 'cli.cpp', buildinfo, plugins_src ],
-              dependencies : [ libhei_dep ],
+              dependencies : [ libhei_dep, nlohmann_json_dep, phosphor_logging_dep ],
               link_with : hwdiags_libs,
               install : true)
 else
   executable('openpower-hw-diags',
               sources : [ 'main.cpp', 'cli.cpp', 'listener.cpp', buildinfo,
                           plugins_src ],
-              dependencies : [lrt, pthread, libhei_dep],
+              dependencies : [lrt, pthread, libhei_dep, nlohmann_json_dep, phosphor_logging_dep ],
               link_with : hwdiags_libs,
               install : true)
 endif
@@ -166,7 +166,9 @@ if not build_tests.disabled()
   test_util_deps = [
     libhei_dep,
     libpdbg_dep,
+    nlohmann_json_dep,
     phosphor_logging_dep,
+    valijson_dep,
   ]
 
   test_util_lib = static_library('test_util_lib',
