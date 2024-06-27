@@ -65,7 +65,7 @@ phosphor_logging_dep = dependency('phosphor-logging',
 sdbusplus_dep       = dependency('sdbusplus', version : '>=1.0')
 dbus_interfaces_dep = dependency('phosphor-dbus-interfaces')
 
-libpdbg_dep = cmplr.find_library('pdbg')
+libpdbg_dep = dependency('pdbg')
 
 if get_option('phal').allowed()
   libphal_dep = cmplr.find_library('phal')
