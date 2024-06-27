@@ -1,0 +1,10 @@
+Code-Review+1: ManojKiran Eda <manojkiran.eda@gmail.com>
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+2: Zane Shelley <zshelle@us.ibm.com>
+Code-Review+1: Austin Cui <austinfcui@gmail.com>
+Code-Review+1: Caleb N. Palmer <cnpalmer@us.ibm.com>
+Submitted-by: Zane Shelley <zshelle@us.ibm.com>
+Submitted-at: Thu, 27 Jun 2024 16:23:45 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/openpower-hw-diags/+/72436
+Project: openbmc/openpower-hw-diags
+Branch: refs/heads/master
