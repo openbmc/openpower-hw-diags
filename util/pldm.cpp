@@ -1,6 +1,6 @@
 #include <libpldm/platform.h>
 #include <libpldm/pldm.h>
-#include <libpldm/state_set_oem_ibm.h>
+#include <libpldm/oem/ibm/state_set.h>
 
 #include <util/dbus.hpp>
 #include <util/trace.hpp>
