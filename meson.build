@@ -83,11 +83,7 @@ nlohmann_json_dep = dependency('nlohmann_json', include_type: 'system')
 if cmplr.has_header('valijson/validator.hpp')
     valijson_dep = declare_dependency()
 else
-    subproject('valijson', required: false)
-    valijson_dep = declare_dependency(
-        include_directories: 'subprojects/valijson/include'
-    )
-    valijson_dep = valijson_dep.as_system('system')
+    valijson_dep = dependency('valijson', required: false, include_type: 'system')
 endif
 
 #-------------------------------------------------------------------------------
