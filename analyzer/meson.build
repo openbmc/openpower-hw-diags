@@ -21,6 +21,7 @@ analyzer_deps = [
     dbus_interfaces_dep,
     libhei_dep,
     nlohmann_json_dep,
+    phosphor_logging_dep,
     sdbusplus_dep,
     valijson_dep,
 ]
