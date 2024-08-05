@@ -28,7 +28,7 @@ version is `2`.
 The value of this keyword is a JSON object representing all of the guardable
 unit targets on this chip. Each element of this object will have the format:
 
-```
+```text
 "<unit_name>" : "<relative_devtree_path>"
 ```
 
@@ -43,7 +43,7 @@ devtree path of the unit to get the full devtree path of the unit.
 The value of this keyword is a JSON object representing all of the buses
 connected to this chip. Each element of this object will have the format:
 
-```
+```text
 "<bus_name>" : { <bus_details> }
 ```
 
@@ -68,7 +68,7 @@ The value of this keyword is a JSON object representing all of the defined
 actions available for the file. Each element of this object contains an array of
 RAS actions, to be performed in order, with the format:
 
-```
+```text
 "<action_name>" : [ { <action_element> }, ... ]
 ```
 
@@ -261,7 +261,7 @@ The value of this keyword is a JSON object representing all of the signatures
 from this chip requiring RAS actions. Each element of this object will have the
 format:
 
-```
+```text
 "<sig_id>" : { "<sig_bit>" : { "<sig_inst>" : "<action_name>", ... }, ... }
 ```
 
