@@ -1,4 +1,6 @@
-# Introduction
+# Attention Handler
+
+## Introduction
 
 An attention is a hardware, firmware or software alert mechanism used to request
 service from an Attention Handler via an attention signal (e.g. a GPIO). An
@@ -12,7 +14,7 @@ mode openpower hardware diags may be referred to as the analyzer. Both modes
 executing simultaneously is supported however. There can be at most one instance
 of the attention handler service, per attention signal.
 
-# Overview
+## Overview
 
 The main role of the attention handler is a long running process monitoring the
 attention interrupt signal and delegating tasks to external components to aid in
@@ -38,9 +40,9 @@ The general handling of attentions is as follows:
 - checkstop: log an event, call the analyzer, request a system dump and request
   a re-ipl of the host.
 
-# Implementation Details
+## Implementation Details
 
-## External Components
+### External Components
 
 The attention handler relies on several external components and BMC services for
 the handling of attentions. Among these are systemd, dbus, phosphor-logging and
@@ -54,14 +56,14 @@ The general use of these components are as follows:
 - phosphor-logging: debug tracing and logging platform events.
 - PDBG: querying host hardware.
 
-## Component Usage
+### Component Usage
 
 - Platform Event Log (PEL) entry creation and debug tracing: phosphor-logging
   component.
 - Host Transition (re-IPL, MPIPL request): dbus interface.
 - Attention handler starting and stopping: systemd.
 
-## Starting and Stopping
+### Starting and Stopping
 
 The attention handler service is started via the BMC systemd infrastructure when
 the host is started. When the attention handler is started it will register
@@ -74,7 +76,7 @@ automatically be restarted by systemd. The attention handler restart policy is
 based on the BMC default restart policy (n-number of restarts in n-seconds
 maximum).
 
-## Attentions
+### Attentions
 
 When the attention signal becomes active the attention handler will begin
 handling attentions. Using the PDBG interface the attention handler will query
@@ -85,7 +87,7 @@ serviced (see Overview for attention type and priority). The Global Interrupt
 Status Register in combination with an associated attention mask register is
 used to determine active attentions.
 
-### Vital Attention
+#### Vital Attention
 
 A vital attention is handled by generating an event log via the phosphor-logging
 inteface and then using the dump manager dbus interface to request a hardware
@@ -94,7 +96,7 @@ and then use the systemd interface to request a re-IPL of the host. This type of
 attention indicates that there was a problem with the Self Boot Engine (SBE)
 hardware.
 
-### Special Attentions
+#### Special Attentions
 
 Three types of attentions, HBTI, PHYPTI and BP, share a single attention status
 flag (special attention) in the global interrupt status register. In order to
@@ -104,7 +106,7 @@ The attention handler gains access to this memory region by submitting a request
 for its memory address through the PDBG interface. The request is via a Chip
 Operation (chipop) command.
 
-#### HBTI
+##### HBTI
 
 These attention types are indications from hostboot that an error has occurred
 or a shutdown has been requested. When servicing a HBTI the attention handler
@@ -122,13 +124,13 @@ of the dump the attention handler will request a re-IPL of the host via the dbus
 interface. For a TI with EID the attention handler will forgo creating a PEL
 entry (hostboot has already done this).
 
-#### PHYPTI
+##### PHYPTI
 
 These attentions are indications from the hypervisor that an error has occurred.
 When servicing a PHYPTI the attention handler will generate a PEL entry and then
 request a host MPIPL using the PDBG interface (chipop).
 
-#### BP (breakpoint)
+##### BP (breakpoint)
 
 These attentions are used to signal to the attention handler that it should
 notify the debug agent (e.g. Cronus) that a debug breakpoint has been
@@ -139,7 +141,7 @@ the dbus interface to notify the debug agent that a breakpoint condition was
 encountered. The attention handler will then go back to listening for
 attentions.
 
-#### Recoverables
+##### Recoverables
 
 These attentions are indications that recoverable errors have been encountered.
 These attentions do not generate an attention GPIO event however when servicing
@@ -148,7 +150,7 @@ recoverable errors. If recoverable errors are present the attention handler will
 call the analyzer before requesting a dump or IPL. The check for recoverable
 errors is done using the PDBG interface (the Global Interrupt Status Register).
 
-### Checkstop
+#### Checkstop
 
 These attentions indicate that a hardware error has occurred and further
 hardware analyses is required to determine root cause. When servicing a
@@ -157,7 +159,7 @@ for analyses to complete. Once analyses have completed the attention handler
 will use the dbus interface to request a system dump and upon completetion, or
 timeout, will request a re-IPL of the host.
 
-## Configuration
+### Configuration
 
 Some attention handler behavior can be configured by passing parameters to the
 service using the service file or using the command line. Currently the
@@ -169,7 +171,7 @@ following behaviors are configurable:
 - checkstop handling enable/disable, default enable
 - special attention default BP/TI, default BP
 
-## Additional Considerations
+### Additional Considerations
 
 Regardless of the type of special attention the attention handler will always
 create at least one PEL entry containing attention handler specific FFDC. In
