@@ -272,75 +272,15 @@ bool __findNonExternalCs(const std::vector<libhei::Signature>& i_list,
 //------------------------------------------------------------------------------
 
 bool __findTiRootCause(const std::vector<libhei::Signature>& i_list,
-                       libhei::Signature& o_rootCause)
+                       libhei::Signature& o_rootCause,
+                       const RasDataParser& i_rasData)
 {
     using namespace util::pdbg;
-
-    using func = libhei::NodeId_t (*)(const std::string& i_str);
-    func __hash = libhei::hash<libhei::NodeId_t>;
-
-    // PROC registers
-    static const auto tp_local_fir = __hash("TP_LOCAL_FIR");
-    static const auto occ_fir = __hash("OCC_FIR");
-    static const auto pbao_fir = __hash("PBAO_FIR");
-    static const auto n0_local_fir = __hash("N0_LOCAL_FIR");
-    static const auto int_cq_fir = __hash("INT_CQ_FIR");
-    static const auto nx_cq_fir = __hash("NX_CQ_FIR");
-    static const auto nx_dma_eng_fir = __hash("NX_DMA_ENG_FIR");
-    static const auto vas_fir = __hash("VAS_FIR");
-    static const auto n1_local_fir = __hash("N1_LOCAL_FIR");
-    static const auto mcd_fir = __hash("MCD_FIR");
-    static const auto pb_station_fir_en_1 = __hash("PB_STATION_FIR_EN_1");
-    static const auto pb_station_fir_en_2 = __hash("PB_STATION_FIR_EN_2");
-    static const auto pb_station_fir_en_3 = __hash("PB_STATION_FIR_EN_3");
-    static const auto pb_station_fir_en_4 = __hash("PB_STATION_FIR_EN_4");
-    static const auto pb_station_fir_es_1 = __hash("PB_STATION_FIR_ES_1");
-    static const auto pb_station_fir_es_2 = __hash("PB_STATION_FIR_ES_2");
-    static const auto pb_station_fir_es_3 = __hash("PB_STATION_FIR_ES_3");
-    static const auto pb_station_fir_es_4 = __hash("PB_STATION_FIR_ES_4");
-    static const auto pb_station_fir_eq = __hash("PB_STATION_FIR_EQ");
-    static const auto psihb_fir = __hash("PSIHB_FIR");
-    static const auto pbaf_fir = __hash("PBAF_FIR");
-    static const auto lpc_fir = __hash("LPC_FIR");
-    static const auto eq_core_fir = __hash("EQ_CORE_FIR");
-    static const auto eq_l2_fir = __hash("EQ_L2_FIR");
-    static const auto eq_l3_fir = __hash("EQ_L3_FIR");
-    static const auto eq_ncu_fir = __hash("EQ_NCU_FIR");
-    static const auto eq_local_fir = __hash("EQ_LOCAL_FIR");
-    static const auto eq_qme_fir = __hash("EQ_QME_FIR");
-    static const auto iohs_local_fir = __hash("IOHS_LOCAL_FIR");
-    static const auto iohs_dlp_fir_oc = __hash("IOHS_DLP_FIR_OC");
-    static const auto iohs_dlp_fir_smp = __hash("IOHS_DLP_FIR_SMP");
-    static const auto mc_local_fir = __hash("MC_LOCAL_FIR");
-    static const auto mc_fir = __hash("MC_FIR");
-    static const auto mc_dstl_fir = __hash("MC_DSTL_FIR");
-    static const auto mc_ustl_fir = __hash("MC_USTL_FIR");
-    static const auto nmmu_cq_fir = __hash("NMMU_CQ_FIR");
-    static const auto nmmu_fir = __hash("NMMU_FIR");
-    static const auto mc_omi_dl = __hash("MC_OMI_DL");
-    static const auto pau_local_fir = __hash("PAU_LOCAL_FIR");
-    static const auto pau_ptl_fir = __hash("PAU_PTL_FIR");
-    static const auto pau_phy_fir = __hash("PAU_PHY_FIR");
-    static const auto pau_fir_0 = __hash("PAU_FIR_0");
-    static const auto pau_fir_2 = __hash("PAU_FIR_2");
-    static const auto pci_local_fir = __hash("PCI_LOCAL_FIR");
-    static const auto pci_iop_fir = __hash("PCI_IOP_FIR");
-    static const auto pci_nest_fir = __hash("PCI_NEST_FIR");
-
-    // OCMB registers
-    static const auto ocmb_lfir = __hash("OCMB_LFIR");
-    static const auto mmiofir = __hash("MMIOFIR");
-    static const auto srqfir = __hash("SRQFIR");
-    static const auto rdffir = __hash("RDFFIR");
-    static const auto tlxfir = __hash("TLXFIR");
-    static const auto omi_dl = __hash("OMI_DL");
+    using rdf = RasDataParser::RasDataFlags;
 
     for (const auto& signature : i_list)
     {
-        const auto targetType = getTrgtType(getTrgt(signature.getChip()));
         const auto attnType = signature.getAttnType();
-        const auto id = signature.getId();
-        const auto bit = signature.getBit();
 
         // Only looking for recoverable or unit checkstop attentions.
         if (libhei::ATTN_TYPE_RECOVERABLE != attnType &&
@@ -349,281 +289,13 @@ bool __findTiRootCause(const std::vector<libhei::Signature>& i_list,
             continue;
         }
 
-        // Ignore attentions that should not be blamed as root cause of a TI.
-        // This would include informational only FIRs or correctable errors.
-        if (TYPE_PROC == targetType)
+        // Skip any signature with the 'recovered_error' or 'informational_only'
+        // flags.
+        if (i_rasData.isFlagSet(signature, rdf::RECOVERED_ERROR) ||
+            i_rasData.isFlagSet(signature, rdf::INFORMATIONAL_ONLY) ||
+            i_rasData.isFlagSet(signature, rdf::MNFG_INFORMATIONAL_ONLY))
         {
-            if (tp_local_fir == id &&
-                (0 == bit || 1 == bit || 2 == bit || 3 == bit || 4 == bit ||
-                 5 == bit || 7 == bit || 8 == bit || 9 == bit || 10 == bit ||
-                 11 == bit || 20 == bit || 22 == bit || 23 == bit ||
-                 24 == bit || 38 == bit || 40 == bit || 41 == bit ||
-                 46 == bit || 47 == bit || 48 == bit || 55 == bit ||
-                 56 == bit || 57 == bit || 58 == bit || 59 == bit))
-            {
-                continue;
-            }
-
-            if (occ_fir == id &&
-                (9 == bit || 10 == bit || 15 == bit || 20 == bit || 21 == bit ||
-                 22 == bit || 23 == bit || 32 == bit || 33 == bit ||
-                 34 == bit || 36 == bit || 42 == bit || 43 == bit ||
-                 46 == bit || 47 == bit || 48 == bit || 51 == bit ||
-                 52 == bit || 53 == bit || 54 == bit || 57 == bit))
-            {
-                continue;
-            }
-
-            if (pbao_fir == id &&
-                (0 == bit || 1 == bit || 2 == bit || 8 == bit || 11 == bit ||
-                 13 == bit || 15 == bit || 16 == bit || 17 == bit))
-            {
-                continue;
-            }
-
-            if ((n0_local_fir == id || n1_local_fir == id ||
-                 iohs_local_fir == id || mc_local_fir == id ||
-                 pau_local_fir == id || pci_local_fir == id) &&
-                (0 == bit || 1 == bit || 2 == bit || 3 == bit || 4 == bit ||
-                 5 == bit || 6 == bit || 7 == bit || 8 == bit || 9 == bit ||
-                 10 == bit || 11 == bit || 20 == bit || 21 == bit))
-            {
-                continue;
-            }
-
-            if (int_cq_fir == id &&
-                (0 == bit || 3 == bit || 5 == bit || 7 == bit || 36 == bit ||
-                 47 == bit || 48 == bit || 49 == bit || 50 == bit ||
-                 58 == bit || 59 == bit || 60 == bit))
-            {
-                continue;
-            }
-
-            if (nx_cq_fir == id &&
-                (1 == bit || 4 == bit || 18 == bit || 32 == bit || 33 == bit))
-            {
-                continue;
-            }
-
-            if (nx_dma_eng_fir == id &&
-                (4 == bit || 6 == bit || 9 == bit || 10 == bit || 11 == bit ||
-                 34 == bit || 35 == bit || 36 == bit || 37 == bit || 39 == bit))
-            {
-                continue;
-            }
-
-            if (vas_fir == id &&
-                (8 == bit || 9 == bit || 11 == bit || 12 == bit || 13 == bit))
-            {
-                continue;
-            }
-
-            if (mcd_fir == id && (0 == bit))
-            {
-                continue;
-            }
-
-            if ((pb_station_fir_en_1 == id || pb_station_fir_en_2 == id ||
-                 pb_station_fir_en_3 == id || pb_station_fir_en_4 == id ||
-                 pb_station_fir_es_1 == id || pb_station_fir_es_2 == id ||
-                 pb_station_fir_es_3 == id || pb_station_fir_es_4 == id ||
-                 pb_station_fir_eq == id) &&
-                (9 == bit))
-            {
-                continue;
-            }
-
-            if (psihb_fir == id && (0 == bit || 23 == bit))
-            {
-                continue;
-            }
-
-            if (pbaf_fir == id &&
-                (0 == bit || 1 == bit || 3 == bit || 4 == bit || 5 == bit ||
-                 6 == bit || 7 == bit || 8 == bit || 9 == bit || 10 == bit ||
-                 11 == bit || 19 == bit || 20 == bit || 21 == bit ||
-                 28 == bit || 29 == bit || 30 == bit || 31 == bit ||
-                 32 == bit || 33 == bit || 34 == bit || 35 == bit || 36 == bit))
-            {
-                continue;
-            }
-
-            if (lpc_fir == id && (5 == bit))
-            {
-                continue;
-            }
-
-            if (eq_core_fir == id &&
-                (0 == bit || 2 == bit || 4 == bit || 7 == bit || 9 == bit ||
-                 11 == bit || 13 == bit || 18 == bit || 21 == bit ||
-                 24 == bit || 29 == bit || 31 == bit || 37 == bit ||
-                 43 == bit || 56 == bit || 57 == bit))
-            {
-                continue;
-            }
-
-            if (eq_l2_fir == id &&
-                (0 == bit || 6 == bit || 11 == bit || 19 == bit || 36 == bit))
-            {
-                continue;
-            }
-
-            if (eq_l3_fir == id &&
-                (3 == bit || 4 == bit || 7 == bit || 10 == bit || 13 == bit))
-            {
-                continue;
-            }
-
-            if (eq_ncu_fir == id && (9 == bit))
-            {
-                continue;
-            }
-
-            if (eq_local_fir == id &&
-                (0 == bit || 1 == bit || 2 == bit || 3 == bit || 5 == bit ||
-                 6 == bit || 7 == bit || 8 == bit || 9 == bit || 10 == bit ||
-                 11 == bit || 12 == bit || 13 == bit || 14 == bit ||
-                 15 == bit || 16 == bit || 20 == bit || 21 == bit ||
-                 22 == bit || 23 == bit || 24 == bit || 25 == bit ||
-                 26 == bit || 27 == bit || 28 == bit || 29 == bit ||
-                 30 == bit || 31 == bit || 32 == bit || 33 == bit ||
-                 34 == bit || 35 == bit || 36 == bit || 37 == bit ||
-                 38 == bit || 39 == bit))
-            {
-                continue;
-            }
-
-            if (eq_qme_fir == id && (7 == bit || 25 == bit))
-            {
-                continue;
-            }
-
-            if (iohs_dlp_fir_oc == id &&
-                (6 == bit || 7 == bit || 8 == bit || 9 == bit || 10 == bit ||
-                 48 == bit || 49 == bit || 52 == bit || 53 == bit))
-            {
-                continue;
-            }
-
-            if (iohs_dlp_fir_smp == id &&
-                (6 == bit || 7 == bit || 14 == bit || 15 == bit || 16 == bit ||
-                 17 == bit || 38 == bit || 39 == bit || 44 == bit ||
-                 45 == bit || 50 == bit || 51 == bit))
-            {
-                continue;
-            }
-
-            if (mc_fir == id &&
-                (5 == bit || 8 == bit || 15 == bit || 16 == bit))
-            {
-                continue;
-            }
-
-            if (mc_dstl_fir == id &&
-                (0 == bit || 1 == bit || 2 == bit || 3 == bit || 4 == bit ||
-                 5 == bit || 6 == bit || 7 == bit || 14 == bit || 15 == bit))
-            {
-                continue;
-            }
-
-            if (mc_ustl_fir == id &&
-                (6 == bit || 20 == bit || 33 == bit || 34 == bit))
-            {
-                continue;
-            }
-
-            if (nmmu_cq_fir == id && (8 == bit || 11 == bit || 14 == bit))
-            {
-                continue;
-            }
-
-            if (nmmu_fir == id &&
-                (0 == bit || 3 == bit || 8 == bit || 9 == bit || 10 == bit ||
-                 11 == bit || 12 == bit || 13 == bit || 14 == bit ||
-                 15 == bit || 30 == bit || 31 == bit || 41 == bit))
-            {
-                continue;
-            }
-
-            if (mc_omi_dl == id && (2 == bit || 3 == bit || 6 == bit ||
-                                    7 == bit || 9 == bit || 10 == bit))
-            {
-                continue;
-            }
-
-            if (pau_ptl_fir == id && (5 == bit || 9 == bit))
-            {
-                continue;
-            }
-
-            if (pau_phy_fir == id &&
-                (2 == bit || 3 == bit || 6 == bit || 7 == bit || 15 == bit))
-            {
-                continue;
-            }
-
-            if (pau_fir_0 == id && (13 == bit || 30 == bit || 41 == bit))
-            {
-                continue;
-            }
-
-            if (pau_fir_2 == id && (19 == bit || 46 == bit || 49 == bit))
-            {
-                continue;
-            }
-
-            if (pci_iop_fir == id &&
-                (0 == bit || 2 == bit || 4 == bit || 6 == bit || 7 == bit ||
-                 8 == bit || 10 == bit))
-            {
-                continue;
-            }
-
-            if (pci_nest_fir == id && (2 == bit || 5 == bit))
-            {
-                continue;
-            }
-        }
-        else if (TYPE_OCMB == targetType)
-        {
-            if (ocmb_lfir == id &&
-                (0 == bit || 1 == bit || 2 == bit || 8 == bit || 23 == bit ||
-                 37 == bit || 63 == bit))
-            {
-                continue;
-            }
-
-            if (mmiofir == id && (2 == bit))
-            {
-                continue;
-            }
-
-            if (srqfir == id &&
-                (2 == bit || 4 == bit || 14 == bit || 15 == bit || 23 == bit ||
-                 25 == bit || 28 == bit))
-            {
-                continue;
-            }
-
-            if (rdffir == id &&
-                (0 == bit || 1 == bit || 2 == bit || 3 == bit || 4 == bit ||
-                 5 == bit || 6 == bit || 7 == bit || 8 == bit || 9 == bit ||
-                 18 == bit || 38 == bit || 40 == bit || 41 == bit ||
-                 45 == bit || 46 == bit))
-            {
-                continue;
-            }
-
-            if (tlxfir == id && (0 == bit || 9 == bit || 26 == bit))
-            {
-                continue;
-            }
-
-            if (omi_dl == id && (2 == bit || 3 == bit || 6 == bit || 7 == bit ||
-                                 9 == bit || 10 == bit))
-            {
-                continue;
-            }
+            continue;
         }
 
         // At this point, the attention has not been explicitly ignored. So
@@ -720,7 +392,7 @@ bool findRootCause(AnalysisType i_type, const libhei::IsolationData& i_isoData,
         // No system checkstop root cause attentions were found. Next, look for
         // any recoverable or unit checkstop attentions that could be associated
         // with a TI.
-        if (__findTiRootCause(list, o_rootCause))
+        if (__findTiRootCause(list, o_rootCause, i_rasData))
         {
             return true;
         }
