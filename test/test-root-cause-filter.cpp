@@ -159,4 +159,26 @@ TEST(RootCauseFilter, Filter1)
 
     EXPECT_TRUE(attnFound);
     EXPECT_EQ(odpRootCause.toUint32(), rootCause.toUint32());
+
+    // Test 7: Test a Terminate Immediate with recoverable attentions, one which
+    // can be blamed as a root cause, and one that can't.
+
+    // MC_DSTL_FIR[14]: Subchannel A valid cmd timeout error
+    libhei::Signature unrelatedRe{procChip0, mc_dstl_fir, 0, 14,
+                                  libhei::ATTN_TYPE_RECOVERABLE};
+
+    // MC_DSTL_FIR[16]: Subchannel A buffer overuse error
+    libhei::Signature rootCauseRe{procChip0, mc_dstl_fir, 0, 16,
+                                  libhei::ATTN_TYPE_RECOVERABLE};
+
+    isoData.flush();
+    isoData.addSignature(unrelatedRe);
+    isoData.addSignature(rootCauseRe);
+
+    attnFound = filterRootCause(AnalysisType::TERMINATE_IMMEDIATE, isoData,
+                                rootCause, rasData);
+
+    EXPECT_TRUE(attnFound);
+    EXPECT_EQ(rootCauseRe.toUint32(), rootCause.toUint32());
+
 }
