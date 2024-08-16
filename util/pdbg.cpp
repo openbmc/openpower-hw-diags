@@ -145,8 +145,8 @@ pdbg_target* getParentProcessor(pdbg_target* i_target)
     // There should always be a parent chip. Throw an error if not found.
     if (nullptr == parentChip)
     {
-        throw std::logic_error("No parent chip found: i_target=" +
-                               std::string{getPath(i_target)});
+        throw std::logic_error(
+            "No parent chip found: i_target=" + std::string{getPath(i_target)});
     }
 
     return parentChip;
@@ -200,8 +200,8 @@ pdbg_target* getChipUnit(pdbg_target* i_parentChip, TargetType_t i_unitType,
     }
     else
     {
-        throw std::logic_error("Unexpected parent chip: " +
-                               std::string{getPath(i_parentChip)});
+        throw std::logic_error(
+            "Unexpected parent chip: " + std::string{getPath(i_parentChip)});
     }
 
     // Iterate all children of the parent and match the unit position.
@@ -247,24 +247,24 @@ pdbg_target* getTargetAcrossBus(pdbg_target* i_rxTarget)
         // Rainier 4U
         case util::dbus::MachineType::Rainier_2S4U:
         case util::dbus::MachineType::Rainier_1S4U:
-            filePath = fs::path{PACKAGE_DIR
-                                "util-data/peer-targets-rainier-4u.json"};
+            filePath =
+                fs::path{PACKAGE_DIR "util-data/peer-targets-rainier-4u.json"};
             break;
         // Rainier 2U
         case util::dbus::MachineType::Rainier_2S2U:
         case util::dbus::MachineType::Rainier_1S2U:
-            filePath = fs::path{PACKAGE_DIR
-                                "util-data/peer-targets-rainier-2u.json"};
+            filePath =
+                fs::path{PACKAGE_DIR "util-data/peer-targets-rainier-2u.json"};
             break;
         // Everest
         case util::dbus::MachineType::Everest:
-            filePath = fs::path{PACKAGE_DIR
-                                "util-data/peer-targets-everest.json"};
+            filePath =
+                fs::path{PACKAGE_DIR "util-data/peer-targets-everest.json"};
             break;
         // Bonnell
         case util::dbus::MachineType::Bonnell:
-            filePath = fs::path{PACKAGE_DIR
-                                "util-data/peer-targets-bonnell.json"};
+            filePath =
+                fs::path{PACKAGE_DIR "util-data/peer-targets-bonnell.json"};
             break;
         default:
             trace::err("Invalid machine type found %d",
@@ -490,8 +490,8 @@ bool __isMaskedOcmb(const libhei::Chip& i_chip)
     auto mcc = pdbg_target_parent("mcc", ocmb);
     if (nullptr == mcc)
     {
-        throw std::logic_error("No parent MCC found for " +
-                               std::string{getPath(ocmb)});
+        throw std::logic_error(
+            "No parent MCC found for " + std::string{getPath(ocmb)});
     }
 
     // Read the associated DSTL_FIR_MASK.

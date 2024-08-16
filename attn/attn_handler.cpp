@@ -129,8 +129,8 @@ void attnHandler(Config* i_config)
                 {
                     // log cfam read error
                     trace::err("cfam read 0x1007 FAILED");
-                    eventAttentionFail((int)AttnSection::attnHandler |
-                                       ATTN_PDBG_CFAM);
+                    eventAttentionFail(
+                        (int)AttnSection::attnHandler | ATTN_PDBG_CFAM);
                 }
                 else if (0xffffffff == isr_val)
                 {
@@ -149,8 +149,8 @@ void attnHandler(Config* i_config)
                     {
                         // log cfam read error
                         trace::err("cfam read 0x100d FAILED");
-                        eventAttentionFail((int)AttnSection::attnHandler |
-                                           ATTN_PDBG_CFAM);
+                        eventAttentionFail(
+                            (int)AttnSection::attnHandler | ATTN_PDBG_CFAM);
                     }
                     else if (0xffffffff == isr_mask)
                     {
@@ -187,10 +187,10 @@ void attnHandler(Config* i_config)
                                                            target, i_config);
                         }
                     } // cfam 0x100d valid
-                }     // cfam 0x1007 valid
-            }         // fsi target enabled
-        }             // pib target enabled
-    }                 // next processor
+                } // cfam 0x1007 valid
+            } // fsi target enabled
+        } // pib target enabled
+    } // next processor
 
     // convert to heap, highest priority is at front
     if (!std::is_heap(active_attentions.begin(), active_attentions.end()))

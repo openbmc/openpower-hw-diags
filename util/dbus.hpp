@@ -65,9 +65,9 @@ void setProperty(const std::string& service, const std::string& object,
     try
     {
         auto bus = sdbusplus::bus::new_default();
-        auto method = bus.new_method_call(service.c_str(), object.c_str(),
-                                          "org.freedesktop.DBus.Properties",
-                                          "Set");
+        auto method =
+            bus.new_method_call(service.c_str(), object.c_str(),
+                                "org.freedesktop.DBus.Properties", "Set");
         method.append(interface);
         method.append(propertyName);
         method.append(propertyValue);

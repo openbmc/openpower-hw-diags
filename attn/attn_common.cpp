@@ -185,8 +185,8 @@ bool recoverableErrors()
                 {
                     // log cfam read error
                     trace::err("cfam read 0x1007 FAILED");
-                    eventAttentionFail((int)AttnSection::attnHandler |
-                                       ATTN_PDBG_CFAM);
+                    eventAttentionFail(
+                        (int)AttnSection::attnHandler | ATTN_PDBG_CFAM);
                 }
                 // check for invalid/stale value
                 else if (0xffffffff == isr_val)
@@ -201,8 +201,8 @@ bool recoverableErrors()
                     break;
                 }
             } // fsi target enabled
-        }     // pib target enabled
-    }         // next processor
+        } // pib target enabled
+    } // next processor
 
     return recoverableErrors;
 }

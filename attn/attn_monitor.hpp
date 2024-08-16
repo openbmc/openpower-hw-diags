@@ -30,8 +30,7 @@ class AttnMonitor
      */
     AttnMonitor(gpiod_line* line, gpiod_line_request_config& config,
                 boost::asio::io_context& io, Config* i_attnConfig) :
-        iv_gpioLine(line),
-        iv_gpioConfig(config), iv_gpioEventDescriptor(io),
+        iv_gpioLine(line), iv_gpioConfig(config), iv_gpioEventDescriptor(io),
         iv_config(i_attnConfig)
     {
         requestGPIOEvent(); // registers the event handler

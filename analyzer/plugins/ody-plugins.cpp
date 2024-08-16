@@ -35,11 +35,12 @@ void pll_unlock(unsigned int, const libhei::Chip& i_ocmbChip,
     // Copy all signatures PLL signatures that match the node ID and parent
     // processor chip.
     auto procTrgt = getParentProcessor(getTrgt(i_ocmbChip));
-    auto itr = std::copy_if(sigList.begin(), sigList.end(), pllList.begin(),
-                            [&nodeId, &procTrgt](const auto& s) {
-        return (nodeId == s.getId() &&
-                procTrgt == getParentProcessor(getTrgt(s.getChip())));
-    });
+    auto itr = std::copy_if(
+        sigList.begin(), sigList.end(), pllList.begin(),
+        [&nodeId, &procTrgt](const auto& s) {
+            return (nodeId == s.getId() &&
+                    procTrgt == getParentProcessor(getTrgt(s.getChip())));
+        });
 
     // Shrink the size of the PLL list if necessary.
     pllList.resize(std::distance(pllList.begin(), itr));

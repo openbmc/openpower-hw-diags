@@ -33,16 +33,17 @@ void pll_unlock(unsigned int i_instance, const libhei::Chip&,
     // in this case the bit position is the same as the plugin instance.
     auto itr = std::copy_if(sigList.begin(), sigList.end(), pllList.begin(),
                             [&nodeId, &i_instance](const auto& s) {
-        return (nodeId == s.getId() && i_instance == s.getBit());
-    });
+                                return (nodeId == s.getId() &&
+                                        i_instance == s.getBit());
+                            });
 
     // Shrink the size of the PLL list if necessary.
     pllList.resize(std::distance(pllList.begin(), itr));
 
     // The clock callout priority is dependent on the number of chips with PLL
     // unlock attentions.
-    auto clockPriority = (1 < pllList.size()) ? callout::Priority::HIGH
-                                              : callout::Priority::MED;
+    auto clockPriority =
+        (1 < pllList.size()) ? callout::Priority::HIGH : callout::Priority::MED;
 
     // Callout the clock.
     auto clockCallout = (0 == i_instance) ? callout::ClockType::OSC_REF_CLOCK_0
@@ -136,8 +137,8 @@ void callout_attached_dimms(unsigned int i_instance, const libhei::Chip& i_chip,
 {
     // Get the OMI target for this instance
     auto procTarget = util::pdbg::getTrgt(i_chip);
-    auto omiTarget = util::pdbg::getChipUnit(procTarget, util::pdbg::TYPE_OMI,
-                                             i_instance);
+    auto omiTarget =
+        util::pdbg::getChipUnit(procTarget, util::pdbg::TYPE_OMI, i_instance);
 
     if (nullptr != omiTarget)
     {

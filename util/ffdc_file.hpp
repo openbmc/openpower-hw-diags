@@ -164,9 +164,10 @@ inline void transformFFDC(const std::vector<FFDCFile>& i_files,
 
     std::transform(i_files.begin(), i_files.end(), std::back_inserter(o_tuples),
                    [](const auto& e) {
-        return FFDCTuple(e.getFormat(), e.getSubType(), e.getVersion(),
-                         sdbusplus::message::unix_fd(e.getFileDescriptor()));
-    });
+                       return FFDCTuple(
+                           e.getFormat(), e.getSubType(), e.getVersion(),
+                           sdbusplus::message::unix_fd(e.getFileDescriptor()));
+                   });
 }
 
 } // namespace util

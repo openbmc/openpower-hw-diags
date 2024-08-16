@@ -37,8 +37,7 @@ class HardwareCalloutResolution : public Resolution
      */
     HardwareCalloutResolution(const std::string& i_unitPath,
                               callout::Priority i_priority, bool i_guard) :
-        iv_unitPath(i_unitPath),
-        iv_priority(i_priority), iv_guard(i_guard)
+        iv_unitPath(i_unitPath), iv_priority(i_priority), iv_guard(i_guard)
     {}
 
   private:
@@ -72,8 +71,8 @@ class ConnectedCalloutResolution : public Resolution
     ConnectedCalloutResolution(const callout::BusType& i_busType,
                                const std::string& i_unitPath,
                                callout::Priority i_priority, bool i_guard) :
-        iv_busType(i_busType),
-        iv_unitPath(i_unitPath), iv_priority(i_priority), iv_guard(i_guard)
+        iv_busType(i_busType), iv_unitPath(i_unitPath), iv_priority(i_priority),
+        iv_guard(i_guard)
     {}
 
   private:
@@ -114,8 +113,8 @@ class BusCalloutResolution : public Resolution
     BusCalloutResolution(const callout::BusType& i_busType,
                          const std::string& i_unitPath,
                          callout::Priority i_priority, bool i_guard) :
-        iv_busType(i_busType),
-        iv_unitPath(i_unitPath), iv_priority(i_priority), iv_guard(i_guard)
+        iv_busType(i_busType), iv_unitPath(i_unitPath), iv_priority(i_priority),
+        iv_guard(i_guard)
     {}
 
   private:
@@ -149,8 +148,7 @@ class ClockCalloutResolution : public Resolution
      */
     ClockCalloutResolution(const callout::ClockType& i_clockType,
                            callout::Priority i_priority, bool i_guard) :
-        iv_clockType(i_clockType),
-        iv_priority(i_priority), iv_guard(i_guard)
+        iv_clockType(i_clockType), iv_priority(i_priority), iv_guard(i_guard)
     {}
 
   private:
@@ -178,8 +176,7 @@ class ProcedureCalloutResolution : public Resolution
      */
     ProcedureCalloutResolution(const callout::Procedure& i_procedure,
                                callout::Priority i_priority) :
-        iv_procedure(i_procedure),
-        iv_priority(i_priority)
+        iv_procedure(i_procedure), iv_priority(i_priority)
     {}
 
   private:
@@ -204,8 +201,7 @@ class PartCalloutResolution : public Resolution
      */
     PartCalloutResolution(const callout::PartType& i_part,
                           callout::Priority i_priority) :
-        iv_part(i_part),
-        iv_priority(i_priority)
+        iv_part(i_part), iv_priority(i_priority)
     {}
 
   private:

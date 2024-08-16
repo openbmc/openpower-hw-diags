@@ -7,8 +7,8 @@ namespace attn
 /** @brief Main constructor. */
 Attention::Attention(AttentionType i_type, int (*i_handler)(Attention*),
                      pdbg_target* i_target, Config* i_config) :
-    iv_type(i_type),
-    iv_handler(i_handler), iv_target(i_target), iv_config(i_config)
+    iv_type(i_type), iv_handler(i_handler), iv_target(i_target),
+    iv_config(i_config)
 
 {}
 

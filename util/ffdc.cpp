@@ -61,9 +61,8 @@ std::string sdjGetFieldValue(sd_journal* journal, const char* field)
  * @param   max - Maximum number of messages fetch
  * @return  Vector of journal entry data
  */
-std::vector<std::string> sdjGetMessages(const std::string& field,
-                                        const std::string& fieldValue,
-                                        unsigned int max)
+std::vector<std::string> sdjGetMessages(
+    const std::string& field, const std::string& fieldValue, unsigned int max)
 {
     sd_journal* journal;
     std::vector<std::string> messages;
@@ -79,8 +78,8 @@ std::vector<std::string> sdjGetMessages(const std::string& field,
             if (value == fieldValue)
             {
                 // Get SYSLOG_IDENTIFIER field (process that logged message)
-                std::string syslog = sdjGetFieldValue(journal,
-                                                      "SYSLOG_IDENTIFIER");
+                std::string syslog =
+                    sdjGetFieldValue(journal, "SYSLOG_IDENTIFIER");
 
                 // Get _PID field
                 std::string pid = sdjGetFieldValue(journal, "_PID");
