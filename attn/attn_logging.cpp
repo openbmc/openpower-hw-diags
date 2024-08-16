@@ -71,8 +71,8 @@ util::FFDCFile createFFDCRawFile(void* i_buffer, size_t i_size)
  * @param   i_buffer - raw data (if creating raw dump ffdc entry in log)
  * @return  vector of FFDCFile objects
  */
-std::vector<util::FFDCFile> createFFDCFiles(char* i_buffer = nullptr,
-                                            size_t i_size = 0)
+std::vector<util::FFDCFile>
+    createFFDCFiles(char* i_buffer = nullptr, size_t i_size = 0)
 {
     std::vector<util::FFDCFile> files{};
 
@@ -175,8 +175,8 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
             // The entry with key "Subsystem" does not exist in the additional
             // map. Log the error, create failure event, and return.
             trace::err("Error the key SrcAscii does not exist in the map.");
-            eventAttentionFail((int)AttnSection::attnLogging |
-                               ATTN_INVALID_KEY);
+            eventAttentionFail(
+                (int)AttnSection::attnLogging | ATTN_INVALID_KEY);
             return;
         }
 
@@ -234,8 +234,8 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
             // The entry with key "Subsystem" does not exist in the additional
             // map. Log the error, create failure event, and return.
             trace::err("Error the key SrcAscii does not exist in the map.");
-            eventAttentionFail((int)AttnSection::attnLogging |
-                               ATTN_INVALID_KEY);
+            eventAttentionFail(
+                (int)AttnSection::attnLogging | ATTN_INVALID_KEY);
             return;
         }
 
@@ -405,8 +405,8 @@ uint32_t event(EventType i_event,
                 // return.
                 trace::err(
                     "Error the key Subsystem does not exist in the map.");
-                eventAttentionFail((int)AttnSection::attnLogging |
-                                   ATTN_INVALID_KEY);
+                eventAttentionFail(
+                    (int)AttnSection::attnLogging | ATTN_INVALID_KEY);
                 return 0;
             }
 
@@ -456,8 +456,8 @@ void eventTerminate(std::map<std::string, std::string> i_additionalData,
             // The entry with key "Subsystem" does not exist in the additional
             // map. Log the error, create failure event, and return.
             trace::err("Error the key Subsystem does not exist in the map.");
-            eventAttentionFail((int)AttnSection::attnLogging |
-                               ATTN_INVALID_KEY);
+            eventAttentionFail(
+                (int)AttnSection::attnLogging | ATTN_INVALID_KEY);
             return;
         }
 

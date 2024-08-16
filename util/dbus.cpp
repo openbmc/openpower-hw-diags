@@ -428,9 +428,9 @@ MachineType getMachineType()
             try
             {
                 // Format the vector into a single hex string to compare to.
-                std::string hexId = std::format("0x{:02x}{:02x}{:02x}{:02x}",
-                                                ids.at(0), ids.at(1), ids.at(2),
-                                                ids.at(3));
+                std::string hexId =
+                    std::format("0x{:02x}{:02x}{:02x}{:02x}", ids.at(0),
+                                ids.at(1), ids.at(2), ids.at(3));
 
                 std::map<std::string, MachineType> typeMap = {
                     {"0x50001000", MachineType::Rainier_2S4U},
@@ -479,8 +479,8 @@ bool getStateEffecterPdrs(std::vector<std::vector<uint8_t>>& pdrList,
     {
         // create dbus method
         auto bus = sdbusplus::bus::new_default();
-        sdbusplus::message_t method = bus.new_method_call(service, path,
-                                                          interface, function);
+        sdbusplus::message_t method =
+            bus.new_method_call(service, path, interface, function);
 
         // append additional method data
         method.append(terminusIdZero, PLDM_ENTITY_PROC, stateSetId);
@@ -514,8 +514,8 @@ bool getStateSensorPdrs(std::vector<std::vector<uint8_t>>& pdrList,
     {
         // create dbus method
         auto bus = sdbusplus::bus::new_default();
-        sdbusplus::message_t method = bus.new_method_call(service, path,
-                                                          interface, function);
+        sdbusplus::message_t method =
+            bus.new_method_call(service, path, interface, function);
 
         // append additional method data
         method.append(terminusIdZero, PLDM_ENTITY_PROC, stateSetId);
@@ -546,8 +546,8 @@ bool getMctpInstance(uint8_t& mctpInstance, uint8_t Eid)
     {
         // create dbus method
         auto bus = sdbusplus::bus::new_default();
-        sdbusplus::message_t method = bus.new_method_call(service, path,
-                                                          interface, function);
+        sdbusplus::message_t method =
+            bus.new_method_call(service, path, interface, function);
 
         // append endpoint ID
         method.append(Eid);

@@ -62,8 +62,8 @@ TEST(TodStepCheckFault, MdmtFault)
     ServiceData sd{sig1, AnalysisType::SYSTEM_CHECKSTOP, isoData};
 
     // Call the plugin.
-    auto plugin = PluginMap::getSingleton().get(chip1.getType(),
-                                                "tod_step_check_fault");
+    auto plugin =
+        PluginMap::getSingleton().get(chip1.getType(), "tod_step_check_fault");
 
     plugin(0, chip1, sd);
 

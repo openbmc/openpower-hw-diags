@@ -291,9 +291,8 @@ void RasDataParser::initDataFiles()
 
 //------------------------------------------------------------------------------
 
-std::string
-    RasDataParser::parseSignature(const nlohmann::json& i_data,
-                                  const libhei::Signature& i_signature) const
+std::string RasDataParser::parseSignature(
+    const nlohmann::json& i_data, const libhei::Signature& i_signature) const
 {
     // Get the signature keys. All are hex (lower case) with no prefix.
     char buf[5];
@@ -328,9 +327,8 @@ std::string
 
 //------------------------------------------------------------------------------
 
-std::tuple<callout::BusType, std::string>
-    RasDataParser::parseBus(const nlohmann::json& i_data,
-                            const std::string& i_name)
+std::tuple<callout::BusType, std::string> RasDataParser::parseBus(
+    const nlohmann::json& i_data, const std::string& i_name)
 {
     auto bus = i_data.at("buses").at(i_name);
 
@@ -356,9 +354,8 @@ std::tuple<callout::BusType, std::string>
 
 //------------------------------------------------------------------------------
 
-std::shared_ptr<Resolution>
-    RasDataParser::parseAction(const nlohmann::json& i_data,
-                               const std::string& i_action)
+std::shared_ptr<Resolution> RasDataParser::parseAction(
+    const nlohmann::json& i_data, const std::string& i_action)
 {
     auto o_list = std::make_shared<ResolutionList>();
 

@@ -165,8 +165,8 @@ pdbg_target* getChipSourcingClock(pdbg_target* i_chipReportingError,
     auto iohsUnit = getChipUnit(i_chipReportingError, TYPE_IOHS, i_iohsPos);
     if (nullptr != iohsUnit)
     {
-        auto clockSourceUnit = getConnectedTarget(iohsUnit,
-                                                  callout::BusType::SMP_BUS);
+        auto clockSourceUnit =
+            getConnectedTarget(iohsUnit, callout::BusType::SMP_BUS);
         if (nullptr != clockSourceUnit)
         {
             chipSourcingClock = getParentChip(clockSourceUnit);
@@ -234,8 +234,8 @@ void collectTodFaultData(pdbg_target* i_chip, Data& o_data)
             // The master path selects are sourced from the oscilator reference
             // clocks. So, we'll need to determine which one was used at the
             // time of the failure.
-            auto masterPathSelect = statusReg.getFieldRight(isPriTop ? 12 : 16,
-                                                            1);
+            auto masterPathSelect =
+                statusReg.getFieldRight(isPriTop ? 12 : 16, 1);
 
             // Determine if there is a step check fault for this path select.
             if (errorReg.isBitSet((0 == masterPathSelect) ? 14 : 15))
@@ -254,8 +254,8 @@ void collectTodFaultData(pdbg_target* i_chip, Data& o_data)
             // The slave path selects are sourced from other processor chips.
             // So, we'll need to determine which one was used at the time of the
             // failure.
-            auto slavePathSelect = statusReg.getFieldRight(isPriTop ? 15 : 19,
-                                                           1);
+            auto slavePathSelect =
+                statusReg.getFieldRight(isPriTop ? 15 : 19, 1);
 
             // Determine if there is a step check fault for this path select.
             if (errorReg.isBitSet((0 == slavePathSelect) ? 16 : 21))

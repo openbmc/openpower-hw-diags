@@ -27,8 +27,8 @@ class ServiceData
     ServiceData(const libhei::Signature& i_rootCause,
                 AnalysisType i_analysisType,
                 const libhei::IsolationData& i_isoData) :
-        iv_rootCause(i_rootCause),
-        iv_analysisType(i_analysisType), iv_isoData(i_isoData)
+        iv_rootCause(i_rootCause), iv_analysisType(i_analysisType),
+        iv_isoData(i_isoData)
     {}
 
     /** @brief Destructor. */

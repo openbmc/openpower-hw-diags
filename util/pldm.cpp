@@ -46,11 +46,9 @@ bool sendPldm(const std::vector<uint8_t>& request, uint8_t mctpEid, int& pldmFd)
  *
  *  @return PLDM request message to be sent to host, empty message on error
  */
-std::vector<uint8_t> prepareSetEffecterReq(uint16_t effecterId,
-                                           uint8_t effecterCount,
-                                           uint8_t stateIdPos,
-                                           uint8_t stateSetValue,
-                                           uint8_t mctpEid)
+std::vector<uint8_t> prepareSetEffecterReq(
+    uint16_t effecterId, uint8_t effecterCount, uint8_t stateIdPos,
+    uint8_t stateSetValue, uint8_t mctpEid)
 {
     // get mctp instance associated with the endpoint ID
     uint8_t mctpInstance;
@@ -312,41 +310,42 @@ bool hresetSbe(unsigned int sbeInstance)
                 sdbusplus::bus::match::rules::path(path) +
                 sdbusplus::bus::match::rules::interface(interface),
             [&](auto& msg) {
-        uint8_t sensorTid{};
-        uint16_t sensorId{};
-        uint8_t msgSensorOffset{};
-        uint8_t eventState{};
-        uint8_t previousEventState{};
+                uint8_t sensorTid{};
+                uint16_t sensorId{};
+                uint8_t msgSensorOffset{};
+                uint8_t eventState{};
+                uint8_t previousEventState{};
 
-        // get sensor event details
-        msg.read(sensorTid, sensorId, msgSensorOffset, eventState,
-                 previousEventState);
+                // get sensor event details
+                msg.read(sensorTid, sensorId, msgSensorOffset, eventState,
+                         previousEventState);
 
-        // does sensor offset match?
-        if (sbeSensorOffset == msgSensorOffset)
-        {
-            // does sensor ID match?
-            auto sensorEntry = sensorToSbeInstance.find(sensorId);
-            if (sensorEntry != sensorToSbeInstance.end())
-            {
-                const uint8_t instance = sensorEntry->second;
-
-                // if instances matche check status
-                if (instance == sbeInstance)
+                // does sensor offset match?
+                if (sbeSensorOffset == msgSensorOffset)
                 {
-                    if (eventState == static_cast<uint8_t>(SBE_HRESET_READY))
+                    // does sensor ID match?
+                    auto sensorEntry = sensorToSbeInstance.find(sensorId);
+                    if (sensorEntry != sensorToSbeInstance.end())
                     {
-                        hresetStatus = "success";
-                    }
-                    else if (eventState ==
-                             static_cast<uint8_t>(SBE_HRESET_FAILED))
-                    {
-                        hresetStatus = "fail";
+                        const uint8_t instance = sensorEntry->second;
+
+                        // if instances matche check status
+                        if (instance == sbeInstance)
+                        {
+                            if (eventState ==
+                                static_cast<uint8_t>(SBE_HRESET_READY))
+                            {
+                                hresetStatus = "success";
+                            }
+                            else if (eventState ==
+                                     static_cast<uint8_t>(SBE_HRESET_FAILED))
+                            {
+                                hresetStatus = "fail";
+                            }
+                        }
                     }
                 }
-            }
-        }
-    });
+            });
 
     // send request to issue hreset of sbe
     int pldmFd = -1; // mctp socket file descriptor

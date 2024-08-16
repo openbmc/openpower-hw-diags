@@ -26,9 +26,9 @@ int dbusMethod(const std::string& i_path, const std::string& i_interface,
         if (0 == util::dbus::findService(i_interface, i_path, service))
         {
             // return the method
-            o_method = bus.new_method_call(service.c_str(), i_path.c_str(),
-                                           i_interface.c_str(),
-                                           i_function.c_str());
+            o_method =
+                bus.new_method_call(service.c_str(), i_path.c_str(),
+                                    i_interface.c_str(), i_function.c_str());
 
             rc = RC_SUCCESS;
         }
