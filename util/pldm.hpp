@@ -1,11 +1,15 @@
 #pragma once
 
 #include <libpldm/instance-id.h>
+#include <libpldm/transport.h>
+#include <libpldm/transport/mctp-demux.h>
 
 namespace util
 {
 namespace pldm
 {
+extern struct pldm_transport* pldmTransport;
+
 class PLDMInstanceManager
 {
   public:
@@ -31,7 +35,32 @@ class PLDMInstanceManager
     /** @brief PLDM instance ID database object used to get instance IDs
      */
     pldm_instance_db* pldmInstanceIdDb = nullptr;
+
+    /** pldm transport instance  */
+    pldm_transport* pldmTransport = nullptr;
+    
+    pldm_transport_mctp_demux* mctpDemux = nullptr;
+
 };
+
+/**
+ * @brief setup PLDM transport for sending and receiving messages
+ *
+ * @param[in] eid - MCTP endpoint ID
+ * @return file descriptor on success and throw
+ *         exception (xyz::openbmc_project::Common::Error::NotAllowed) on
+ *         failures.
+ */
+int openPLDM(mctp_eid_t eid);
+
+/** @brief Opens the MCTP socket for sending and receiving messages.
+ *
+ * @param[in] eid - MCTP endpoint ID
+ */
+int openMctpDemuxTransport(mctp_eid_t eid);
+
+/** @brief Close the PLDM file */
+void pldmClose();
 
 /**
  * @brief Get PLDM  instance ID associated with endpoint
