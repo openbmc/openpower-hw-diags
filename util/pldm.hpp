@@ -1,9 +1,47 @@
 #pragma once
 
+#include <libpldm/instance-id.h>
+
 namespace util
 {
 namespace pldm
 {
+class PLDMInstanceManager
+{
+  public:
+    PLDMInstanceManager(const PLDMInstanceManager&) = delete;
+    PLDMInstanceManager& operator=(const PLDMInstanceManager&) = delete;
+    PLDMInstanceManager();
+    ~PLDMInstanceManager();
+
+  private:
+    /**
+     * @brief Instantiates an instance ID database object
+     *
+     * @return void
+     **/
+    void initPLDMInstanceIdDb();
+    /**
+     * @brief Destroys an instance ID database object
+     *
+     * @return void
+     **/
+    void destroyPLDMInstanceIdDb();
+};
+
+/**
+ * @brief Get PLDM  instance ID associated with endpoint
+ *
+ * @param[out] pldmInstanceID - PLDM instance id
+ * @param[in] Eid - MCTP enpoint ID
+ *
+ * @return True on success otherwise False
+ */
+bool getPldmInstanceID(uint8_t& pldmInstanceID, uint8_t Eid);
+
+/** @brief Free PLDM requester instance id */
+void freePldmInstanceId();
+
 /*
  *  @brief HRESET the SBE
  *

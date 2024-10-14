@@ -9,6 +9,71 @@ namespace util
 {
 namespace pldm
 {
+
+pldm_instance_db* pldmInstanceIdDb = nullptr;
+
+PLDMInstanceManager::PLDMInstanceManager()
+{
+    initPLDMInstanceIdDb();
+}
+
+PLDMInstanceManager::~PLDMInstanceManager()
+{
+    destroyPLDMInstanceIdDb();
+}
+void PLDMInstanceManager::initPLDMInstanceIdDb()
+{
+    auto rc = pldm_instance_db_init_default(&pldmInstanceIdDb);
+    if (rc)
+    {
+        trace::err("Error calling pldm_instance_db_init_default, rc = %d",
+                   (unsigned)rc);
+    }
+}
+void PLDMInstanceManager::destroyPLDMInstanceIdDb()
+{
+    auto rc = pldm_instance_db_destroy(pldmInstanceIdDb);
+    if (rc)
+    {
+        trace::err("pldm_instance_db_destroy failed rc = %d", (unsigned)rc);
+    }
+}
+
+bool getPldmInstanceID(uint8_t& pldmInstanceID, uint8_t Eid)
+{
+    pldm_instance_id_t id;
+    int rc = pldm_instance_id_alloc(pldmInstanceIdDb, tid, &id);
+    if (rc == -EAGAIN)
+    {
+        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        rc = pldm_instance_id_alloc(pldmInstanceIdDb, tid, &id);
+    }
+    if (rc)
+    {
+        trace::err("getPldmInstanceId: Failed to alloc ID for TID = %d, RC= %d",
+                   (unsigned)tid, (unsigned)rc);
+        return false;
+    }
+    pldmInstanceID.emplace(id);
+    if (!throttleTraces)
+    {
+        trace::inf("Got instanceId: %d, from PLDM EID: %d", (unsigned)id,
+                   (unsigned)eid);
+    }
+    return true;
+}
+
+void freePLDMInstanceID(pldm_instance_id_t instanceID, uint8_t tid)
+{
+    auto rc = pldm_instance_id_free(pldmInstanceIdDb, tid, instanceID);
+    if (rc)
+    {
+        trace::err(
+            "pldm_instance_id_free failed to free id=%d of TID=%d with rc= %d",
+            (unsigned)id, (unsigned)tid, (unsigned)rc);
+    }
+}
+
 /** @brief Send PLDM request
  *
  * @param[in] request - the request data
@@ -25,6 +90,7 @@ bool sendPldm(const std::vector<uint8_t>& request, uint8_t mctpEid, int& pldmFd)
     if (-1 == pldmFd)
     {
         trace::err("failed to connect to pldm");
+        freePldmInstanceId();
         return false;
     }
 
@@ -52,7 +118,7 @@ std::vector<uint8_t> prepareSetEffecterReq(
 {
     // get mctp instance associated with the endpoint ID
     uint8_t pldmInstanceID;
-    if (!util::dbus::getPldmInstanceID(pldmInstanceID, mctpEid))
+    if (!getPldmInstanceID(pldmInstanceID, mctpEid))
     {
         return std::vector<uint8_t>();
     }
@@ -87,6 +153,7 @@ std::vector<uint8_t> prepareSetEffecterReq(
     if (rc != PLDM_SUCCESS)
     {
         trace::err("encode set effecter states request failed");
+        freePldmInstanceId();
         request.clear();
     }
 
@@ -355,6 +422,7 @@ bool hresetSbe(unsigned int sbeInstance)
         trace::err("send pldm request failed");
         if (-1 != pldmFd)
         {
+            freePldmInstanceId();
             close(pldmFd);
         }
         return false;
