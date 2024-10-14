@@ -534,8 +534,8 @@ bool getStateSensorPdrs(std::vector<std::vector<uint8_t>>& pdrList,
     return true;
 }
 
-/** @brief Get MCTP instance associated with endpoint */
-bool getMctpInstance(uint8_t& mctpInstance, uint8_t Eid)
+/** @brief Get PLDM instance associated with endpoint */
+bool getPldmInstanceID(uint8_t& pldmInstanceID, uint8_t Eid)
 {
     constexpr auto service = "xyz.openbmc_project.PLDM";
     constexpr auto path = "/xyz/openbmc_project/pldm";
@@ -552,13 +552,13 @@ bool getMctpInstance(uint8_t& mctpInstance, uint8_t Eid)
         // append endpoint ID
         method.append(Eid);
 
-        // request MCTP instance ID
+        // request PLDM instance ID
         auto reply = bus.call(method);
-        reply.read(mctpInstance);
+        reply.read(pldmInstanceID);
     }
     catch (const sdbusplus::exception_t& e)
     {
-        trace::err("get MCTP instance exception");
+        trace::err("get PLDM instance exception");
         trace::err(e.what());
         return false;
     }

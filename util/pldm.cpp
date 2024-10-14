@@ -50,9 +50,9 @@ std::vector<uint8_t> prepareSetEffecterReq(
     uint16_t effecterId, uint8_t effecterCount, uint8_t stateIdPos,
     uint8_t stateSetValue, uint8_t mctpEid)
 {
-    // get mctp instance associated with the endpoint ID
-    uint8_t mctpInstance;
-    if (!util::dbus::getMctpInstance(mctpInstance, mctpEid))
+    // get pldm instance associated with the endpoint ID
+    uint8_t pldmInstanceID;
+    if (!util::dbus::getPldmInstanceID(pldmInstanceID, mctpEid))
     {
         return std::vector<uint8_t>();
     }
@@ -81,7 +81,8 @@ std::vector<uint8_t> prepareSetEffecterReq(
     // encode the message with state data
     auto requestMsg = reinterpret_cast<pldm_msg*>(request.data());
     auto rc = encode_set_state_effecter_states_req(
-        mctpInstance, effecterId, effecterCount, stateField.data(), requestMsg);
+        pldmInstanceID, effecterId, effecterCount, stateField.data(),
+        requestMsg);
 
     if (rc != PLDM_SUCCESS)
     {
