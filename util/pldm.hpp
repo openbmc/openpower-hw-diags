@@ -1,5 +1,7 @@
 #pragma once
 
+#include <libpldm/instance-id.h>
+
 namespace util
 {
 namespace pldm
