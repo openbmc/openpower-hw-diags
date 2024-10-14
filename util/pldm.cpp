@@ -1,6 +1,8 @@
 #include <libpldm/oem/ibm/state_set.h>
 #include <libpldm/platform.h>
 #include <libpldm/pldm.h>
+#include <libpldm/transport/mctp-demux.h>
+#include <poll.h>
 
 #include <util/dbus.hpp>
 #include <util/pldm.hpp>
@@ -12,6 +14,8 @@ namespace pldm
 {
 
 pldm_instance_db* pldmInstanceIdDb = nullptr;
+pldm_transport* pldmTransport = nullptr;
+pldm_transport_mctp_demux* mctpDemux = nullptr;
 
 PLDMInstanceManager::PLDMInstanceManager()
 {
@@ -72,6 +76,53 @@ void freePLDMInstanceID(pldm_instance_id_t instanceID, uint8_t tid)
     }
 }
 
+int openPLDM(mctp_eid_t eid)
+{
+    auto fd = -1;
+    if (pldmTransport)
+    {
+        trace::inf("open: pldmTransport already setup!");
+        return fd;
+    }
+    fd = openMctpDemuxTransport(eid);
+    if (fd < 0)
+    {
+        auto e = errno;
+        trace::err("openPLDM failed, fd = %d", (unsigned)fd);
+    }
+    return fd;
+}
+
+int openMctpDemuxTransport(mctp_eid_t eid)
+{
+    int rc = pldm_transport_mctp_demux_init(&mctpDemux);
+    if (rc)
+    {
+        trace::err(
+            "openMctpDemuxTransport: Failed to setup tid to eid mapping. rc = %d",
+            (unsigned)rc);
+        pldmClose();
+        return rc;
+    }
+    pldmTransport = pldm_transport_mctp_demux_core(mctpDemux);
+    struct pollfd pollfd;
+    rc = pldm_transport_mctp_demux_init_pollfd(pldmTransport, &pollfd);
+    if (rc)
+    {
+        trace::err("openMctpDemuxTransport: Failed to get pollfd. rc= %d",
+                   (unsigned)rc);
+        pldmClose();
+        return rc;
+    }
+    return pollfd.fd;
+}
+void pldmClose()
+{
+    pldm_transport_mctp_demux_destroy(mctpDemux);
+    mctpDemux = nullptr;
+    pldmTransport = nullptr;
+}
+
 /** @brief Send PLDM request
  *
  * @param[in] request - the request data
@@ -83,17 +134,18 @@ void freePLDMInstanceID(pldm_instance_id_t instanceID, uint8_t tid)
  */
 bool sendPldm(const std::vector<uint8_t>& request, uint8_t mctpEid, int& pldmFd)
 {
-    // connect to socket
-    pldmFd = pldm_open();
-    if (-1 == pldmFd)
+    auto rc = pldmOpen();
+    if (rc)
     {
         trace::err("failed to connect to pldm");
         freePLDMInstanceID(pldmInstanceID, mctpEid);
         return false;
     }
 
+    pldm_tid_t pldmTID = static_cast<pldm_tid_t>(mctpEid);
     // send PLDM request
-    auto pldmRc = pldm_send(mctpEid, pldmFd, request.data(), request.size());
+    auto pldmRc = pldm_transport_send_msg(pldmTransport, pldmTID,
+                                          request.data(), request.size());
 
     trace::inf("sent pldm request");
 
