@@ -51,6 +51,10 @@ configure_file(input: 'config.h.in', output: 'config.h', configuration: conf)
 # path from the base directory.
 incdir = include_directories('.')
 
+if cmplr.has_header('poll.h')
+    conf_data.set('PLDM_HAS_POLL', 1)
+endif
+
 #-------------------------------------------------------------------------------
 # External library dependencies
 #-------------------------------------------------------------------------------
