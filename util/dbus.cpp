@@ -534,38 +534,6 @@ bool getStateSensorPdrs(std::vector<std::vector<uint8_t>>& pdrList,
     return true;
 }
 
-/** @brief Get PLDM instance associated with endpoint */
-bool getPldmInstanceID(uint8_t& pldmInstanceID, uint8_t Eid)
-{
-    constexpr auto service = "xyz.openbmc_project.PLDM";
-    constexpr auto path = "/xyz/openbmc_project/pldm";
-    constexpr auto interface = "xyz.openbmc_project.PLDM.Requester";
-    constexpr auto function = "GetInstanceId";
-
-    try
-    {
-        // create dbus method
-        auto bus = sdbusplus::bus::new_default();
-        sdbusplus::message_t method =
-            bus.new_method_call(service, path, interface, function);
-
-        // append endpoint ID
-        method.append(Eid);
-
-        // request PLDM instance ID
-        auto reply = bus.call(method);
-        reply.read(pldmInstanceID);
-    }
-    catch (const sdbusplus::exception_t& e)
-    {
-        trace::err("get PLDM instance exception");
-        trace::err(e.what());
-        return false;
-    }
-
-    return true;
-}
-
 /** @brief Determine if power fault was detected */
 bool powerFault()
 {

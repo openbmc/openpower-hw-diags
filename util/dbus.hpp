@@ -198,16 +198,6 @@ bool getStateEffecterPdrs(std::vector<std::vector<uint8_t>>& pdrList,
                           uint16_t stateSetId);
 
 /**
- * @brief Get PLDM instance ID associated with endpoint
- *
- * @param[out] pldmInstanceID - PLDM instance id
- * @param[in] Eid - MCTP enpoint ID
- *
- * @return True on success otherwise False
- */
-bool getPldmInstanceID(uint8_t& pldmInstanceID, uint8_t Eid);
-
-/**
  * @brief Determine if power fault was detected
  *
  * @return true if power fault or unknown, false otherwise
