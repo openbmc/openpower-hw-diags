@@ -1,6 +1,11 @@
+#include "config.h"
+
 #include <libpldm/oem/ibm/state_set.h>
 #include <libpldm/platform.h>
 #include <libpldm/pldm.h>
+#include <libpldm/transport.h>
+#include <libpldm/transport/mctp-demux.h>
+#include <poll.h>
 
 #include <util/dbus.hpp>
 #include <util/pldm.hpp>
@@ -24,6 +29,24 @@ class PLDMInstanceManager
     bool getPldmInstanceID(uint8_t& pldmInstance, uint8_t tid);
     void freePLDMInstanceID(pldm_instance_id_t instanceID, uint8_t tid);
 
+    /**
+     * @brief setup PLDM transport for sending and receiving messages
+     *
+     * @param[in] eid - MCTP endpoint ID
+     * @return file descriptor on success and throw
+     *         exception (xyz::openbmc_project::Common::Error::NotAllowed) on
+     *         failures.
+     */
+    int openPLDM(mctp_eid_t eid);
+    /** @brief Opens the MCTP socket for sending and receiving messages.
+     *
+     * @param[in] eid - MCTP endpoint ID
+     */
+    int openMctpDemuxTransport(mctp_eid_t eid);
+
+    /** @brief Close the PLDM file */
+    void closePLDM();
+
   private:
     // Private constructor and destructor to prevent creating multiple instances
     PLDMInstanceManager();
@@ -35,6 +58,11 @@ class PLDMInstanceManager
 
     // Private member for the instance database
     pldm_instance_db* pldmInstanceIdDb;
+
+    /** pldm transport instance  */
+    struct pldm_transport* pldmTransport = NULL;
+
+    pldm_transport_mctp_demux* mctpDemux;
 };
 
 PLDMInstanceManager::PLDMInstanceManager() : pldmInstanceIdDb(nullptr)
@@ -100,27 +128,85 @@ void PLDMInstanceManager::freePLDMInstanceID(pldm_instance_id_t instanceID,
     }
 }
 
+int PLDMInstanceManager::openPLDM(mctp_eid_t eid)
+{
+    auto fd = -1;
+    if (pldmTransport)
+    {
+        trace::inf("open: pldmTransport already setup!");
+        return fd;
+    }
+    fd = openMctpDemuxTransport(eid);
+    if (fd < 0)
+    {
+        auto e = errno;
+        trace::err("openPLDM failed, fd = %d and error= %d", (unsigned)fd, e);
+    }
+    return fd;
+}
+
+int PLDMInstanceManager::openMctpDemuxTransport(mctp_eid_t eid)
+{
+    int rc = pldm_transport_mctp_demux_init(&mctpDemux);
+    if (rc)
+    {
+        trace::err(
+            "openMctpDemuxTransport: Failed to setup tid to eid mapping. rc = %d",
+            (unsigned)rc);
+        closePLDM();
+        return rc;
+    }
+
+    rc = pldm_transport_mctp_demux_map_tid(mctpDemux, eid, eid);
+    if (rc)
+    {
+        trace::err(
+            "openMctpDemuxTransport: Failed to setup tid to eid mapping. rc = %d",
+            (unsigned)rc);
+        closePLDM();
+        return rc;
+    }
+
+    pldmTransport = pldm_transport_mctp_demux_core(mctpDemux);
+    struct pollfd pollfd;
+    rc = pldm_transport_mctp_demux_init_pollfd(pldmTransport, &pollfd);
+    if (rc)
+    {
+        trace::err("openMctpDemuxTransport: Failed to get pollfd. rc= %d",
+                   (unsigned)rc);
+        closePLDM();
+        return rc;
+    }
+    return pollfd.fd;
+}
+void closePLDM()
+{
+    pldm_transport_mctp_demux_destroy(mctpDemux);
+    mctpDemux = NULL;
+    pldmTransport = NULL;
+}
+
 /** @brief Send PLDM request
  *
  * @param[in] request - the request data
  * @param[in] mcptEid - the mctp endpoint ID
- * @param[out] pldmFd - pldm socket file descriptor
  *
  * @pre a mctp instance must have been
  * @return true if send is successful false otherwise
  */
-bool sendPldm(const std::vector<uint8_t>& request, uint8_t mctpEid, int& pldmFd)
+bool sendPldm(const std::vector<uint8_t>& request, uint8_t mctpEid)
 {
-    // connect to socket
-    pldmFd = pldm_open();
-    if (-1 == pldmFd)
+    auto rc = openPLDM(mctpEid);
+    if (rc)
     {
         trace::err("failed to connect to pldm");
         return false;
     }
 
+    pldm_tid_t pldmTID = static_cast<pldm_tid_t>(mctpEid);
     // send PLDM request
-    auto pldmRc = pldm_send(mctpEid, pldmFd, request.data(), request.size());
+    auto pldmRc = pldm_transport_send_msg(pldmTransport, pldmTID,
+                                          request.data(), request.size());
 
     trace::inf("sent pldm request");
 
@@ -446,8 +532,7 @@ bool hresetSbe(unsigned int sbeInstance)
             });
 
     // send request to issue hreset of sbe
-    int pldmFd = -1; // mctp socket file descriptor
-    if (!sendPldm(request, hbrtMctpEid, pldmFd))
+    if (!sendPldm(request, hbrtMctpEid))
     {
         trace::err("send pldm request failed");
         if (-1 != pldmFd)
@@ -491,7 +576,7 @@ bool hresetSbe(unsigned int sbeInstance)
     PLDMInstanceManager& manager = PLDMInstanceManager::getInstance();
     auto reqhdr = reinterpret_cast<const pldm_msg_hdr*>(&request);
     manager.freePLDMInstanceID(reqhdr->instance_id, hbrtMctpEid);
-    close(pldmFd); // close pldm socket
+    closePLDM();
 
     return hresetStatus == "success" ? true : false;
 }
