@@ -134,11 +134,16 @@ void handleHbTiWithEid(TiDataArea* i_tiDataArea)
 
     if (nullptr != i_tiDataArea)
     {
+        // Retrieve log ID from TI info data.
+        uint32_t logId = be32toh(i_tiDataArea->asciiData1);
+
+        // Trace relevant TI data.
+        trace::inf("TI data EID = 0x%08x", logid);
+        trace::inf("TI data HB flags = 0x%02x", tiDataArea->hbFlags);
+
         // see if HB dump is requested
         if (i_tiDataArea->hbFlags & hbDumpFlag)
         {
-            // retrieve log ID from TI info data
-            uint32_t logId = be32toh(i_tiDataArea->asciiData1);
             requestDump(logId, DumpParameters{0, DumpType::Hostboot});
         }
     }
