@@ -134,6 +134,28 @@ void handleHbTiWithEid(TiDataArea* i_tiDataArea)
 
     if (nullptr != i_tiDataArea)
     {
+        // Trace relevant TI data.
+        trace::inf("TI data HB Flags = 0x%02x", i_tiDataArea->hbFlags);
+        trace::inf("TI data HB Word 0 = 0x%08x",
+                   be32toh(i_tiDataArea->srcWord12HbWord0));
+        trace::inf("TI data HB Word 2 = 0x%08x",
+                   be32toh(i_tiDataArea->srcWord13HbWord2));
+        trace::inf("TI data HB Word 3 = 0x%08x",
+                   be32toh(i_tiDataArea->srcWord14HbWord3));
+        trace::inf("TI data HB Word 4 = 0x%08x",
+                   be32toh(i_tiDataArea->srcWord15HbWord4));
+        trace::inf("TI data HB Word 5 = 0x%08x",
+                   be32toh(i_tiDataArea->srcWord16HbWord5));
+        trace::inf("TI data HB Word 6 = 0x%08x",
+                   be32toh(i_tiDataArea->srcWord17HbWord6));
+        trace::inf("TI data HB Word 7 = 0x%08x",
+                   be32toh(i_tiDataArea->srcWord18HbWord7));
+        trace::inf("TI data HB Word 8 = 0x%08x",
+                   be32toh(i_tiDataArea->srcWord19HbWord8));
+        trace::inf("TI data Error Data = 0x%08x",
+                   be32toh(i_tiDataArea->asciiData0));
+        trace::inf("TI data EID = 0x%08x", be32toh(i_tiDataArea->asciiData1));
+
         // see if HB dump is requested
         if (i_tiDataArea->hbFlags & hbDumpFlag)
         {
