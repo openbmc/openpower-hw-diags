@@ -35,15 +35,11 @@ owners:
 - zshelle@us.ibm.com
 
 reviewers:
-- austinfcui@gmail.com
 - cnpalmer@us.ibm.com
 
 matchers:
 
 openbmc:
-- name: Austin Cui
-  email: austinfcui@gmail.com
-  discord: austinfcui#2519
 - name: Caleb Palmer
   email: cnpalmer@us.ibm.com
   discord: NA
