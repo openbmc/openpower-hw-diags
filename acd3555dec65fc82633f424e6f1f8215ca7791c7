@@ -47,6 +47,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "455a9c4c_87ffc812",
+        "filename": "util/dbus.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-10-24T05:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "657f292b_58ee6865",
+      "range": {
+        "startLine": 537,
+        "startChar": 15,
+        "endLine": 537,
+        "endChar": 19
+      },
+      "revId": "acd3555dec65fc82633f424e6f1f8215ca7791c7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a98b56cb_ed1fb3b0",
@@ -60,6 +84,30 @@
       "writtenOn": "2024-10-17T13:08:39Z",
       "side": 1,
       "message": "This too?",
+      "range": {
+        "startLine": 555,
+        "startChar": 19,
+        "endLine": 555,
+        "endChar": 23
+      },
+      "revId": "acd3555dec65fc82633f424e6f1f8215ca7791c7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "a14953d1_80e84381",
+        "filename": "util/dbus.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-10-24T05:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a98b56cb_ed1fb3b0",
       "range": {
         "startLine": 555,
         "startChar": 19,
@@ -93,6 +141,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "4ae25a85_6e955984",
+        "filename": "util/dbus.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-10-24T05:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d7f8eb97_4dbdb46d",
+      "range": {
+        "startLine": 561,
+        "startChar": 24,
+        "endLine": 561,
+        "endChar": 28
+      },
+      "revId": "acd3555dec65fc82633f424e6f1f8215ca7791c7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b182360c_5357e880",
@@ -116,6 +188,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "cdb263b9_8aa11c30",
+        "filename": "util/dbus.hpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-10-24T05:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b182360c_5357e880",
+      "range": {
+        "startLine": 201,
+        "startChar": 14,
+        "endLine": 201,
+        "endChar": 55
+      },
+      "revId": "acd3555dec65fc82633f424e6f1f8215ca7791c7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e33b6100_434a655c",
@@ -129,6 +225,30 @@
       "writtenOn": "2024-10-17T13:08:39Z",
       "side": 1,
       "message": "this too?",
+      "range": {
+        "startLine": 53,
+        "startChar": 11,
+        "endLine": 53,
+        "endChar": 15
+      },
+      "revId": "acd3555dec65fc82633f424e6f1f8215ca7791c7",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "69974904_105c7125",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-10-24T05:27:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e33b6100_434a655c",
       "range": {
         "startLine": 53,
         "startChar": 11,
