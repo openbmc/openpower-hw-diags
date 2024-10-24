@@ -1,0 +1,136 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0c25626e_a3e5378c",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2024-10-24T16:23:05Z",
+      "side": 1,
+      "message": "These probably shouldn\u0027t be defined as global variables. Should they be defined in the PLDMInstanceManager class? Should that class be a singleton for accessing them? Or can they just be passed into the functions they\u0027re needed?",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bd3164f1_88eeb521",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2024-10-24T16:23:05Z",
+      "side": 1,
+      "message": "If this is replacing the util::dbus::getPldmInstanceID function, might as well remove the old one to avoid confusion.",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 22
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b60d6b1f_fa1915c5",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2024-10-24T16:23:05Z",
+      "side": 1,
+      "message": "This seems redundant with the other call to freePLDMInstanceID being made if sendPldm fails.",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 52
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "3a9424f4_3ab867e9",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2024-10-24T16:23:05Z",
+      "side": 1,
+      "message": "This local variable would just be used in this context over the global one added above.",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 27
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c53ef229_82cb5c09",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2024-10-24T16:23:05Z",
+      "side": 1,
+      "message": "Does freePLDMInstanceID also need to be called somewhere here in the good path? Currently it\u0027s only being called in error paths.",
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "035b5b45_384bc9db",
+        "filename": "util/pldm.hpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2024-10-24T16:23:05Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of this class? It looks like it\u0027s just defining the two functions to be used in it\u0027s constructor and destructor and I don\u0027t see an instance of the class being created anywhere.",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
