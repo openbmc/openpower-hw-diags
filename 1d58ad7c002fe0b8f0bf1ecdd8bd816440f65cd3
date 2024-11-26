@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0ef2550_f847de67",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-11-26T10:07:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "0c25626e_a3e5378c",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "bd3164f1_88eeb521",
@@ -37,6 +61,30 @@
       "writtenOn": "2024-10-24T16:23:05Z",
       "side": 1,
       "message": "If this is replacing the util::dbus::getPldmInstanceID function, might as well remove the old one to avoid confusion.",
+      "range": {
+        "startLine": 45,
+        "startChar": 5,
+        "endLine": 45,
+        "endChar": 22
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "d8d84d2a_72d8d64e",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-11-26T10:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd3164f1_88eeb521",
       "range": {
         "startLine": 45,
         "startChar": 5,
@@ -70,6 +118,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "79059e2d_be2ab29f",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-11-26T10:07:00Z",
+      "side": 1,
+      "message": "I believe it is needed as \nthe negative sign is part of the return value convention used by system calls to indicate failure. The error codes like EAGAIN are set in the global errno variable when the return value is -1, and these error codes help you determine the exact reason for the failure.\nWithout the negative sign, it would be difficult to differentiate between success (positive values or 0) and failure (negative values), so it is indeed needed for proper error reporting and handling.",
+      "parentUuid": "eb79409f_1d885418",
+      "range": {
+        "startLine": 49,
+        "startChar": 14,
+        "endLine": 49,
+        "endChar": 15
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b60d6b1f_fa1915c5",
@@ -83,6 +155,30 @@
       "writtenOn": "2024-10-24T16:23:05Z",
       "side": 1,
       "message": "This seems redundant with the other call to freePLDMInstanceID being made if sendPldm fails.",
+      "range": {
+        "startLine": 93,
+        "startChar": 8,
+        "endLine": 93,
+        "endChar": 52
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8608f0bc_d5177be9",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-11-26T10:07:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "b60d6b1f_fa1915c5",
       "range": {
         "startLine": 93,
         "startChar": 8,
@@ -116,6 +212,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "fa6f8c9f_50d34eaa",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-11-26T10:07:00Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "3a9424f4_3ab867e9",
+      "range": {
+        "startLine": 120,
+        "startChar": 4,
+        "endLine": 120,
+        "endChar": 27
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "c53ef229_82cb5c09",
@@ -133,6 +253,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6ee08d6a_751a7d2b",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-11-26T10:07:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c53ef229_82cb5c09",
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "035b5b45_384bc9db",
@@ -146,6 +284,30 @@
       "writtenOn": "2024-10-24T16:23:05Z",
       "side": 1,
       "message": "What\u0027s the purpose of this class? It looks like it\u0027s just defining the two functions to be used in it\u0027s constructor and destructor and I don\u0027t see an instance of the class being created anywhere.",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "1d58ad7c002fe0b8f0bf1ecdd8bd816440f65cd3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae93eb8d_744cb572",
+        "filename": "util/pldm.hpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2024-11-26T10:07:00Z",
+      "side": 1,
+      "message": "My bad, missed creating the class instance and yes I  created the instance of the class.",
+      "parentUuid": "035b5b45_384bc9db",
       "range": {
         "startLine": 9,
         "startChar": 6,
