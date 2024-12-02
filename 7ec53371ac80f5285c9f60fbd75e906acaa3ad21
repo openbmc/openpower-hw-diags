@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a96f21ae_8a4ee856",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2024-12-02T17:51:08Z",
+      "side": 1,
+      "message": "Ideally, I\u0027d rather these not be globals. If possible, I\u0027d rather pldmInstanceIdDb be an instance variable of the PLDMInstanceManager class and the instanceManager just be passed into the functions where it\u0027s needed.\n\nIf they do need to be kept as globals and separate here, it\u0027d be nice to have a comment explaining the reason why. Also, in that case, might just want to move the entire PLDMInstanceManager class into the .cpp since it\u0027d have no purpose anywhere else.\n\nAlternatively, if these do need to be at a global level, and if we want to ensure only one instance of PLDMInstanceManager, consider making the class a singleton by making the contructors and destructor private and having an accessor function something like this:\n\nstatic PLDMInstanceManager\u0026 getSingleton()\n{\n    static PLDMInstanceManager thePldmInstanceManager;\n    return thePldmInstanceManager;\n}",
+      "range": {
+        "startLine": 14,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "7ec53371ac80f5285c9f60fbd75e906acaa3ad21",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
