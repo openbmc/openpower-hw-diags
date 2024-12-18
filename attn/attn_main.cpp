@@ -15,10 +15,8 @@ int attnDaemon(Config* i_config)
     boost::asio::io_context io; // async io monitoring service
 
     // GPIO line configuration (falling edge, active low)
-    struct gpiod_line_request_config config
-    {
-        "attention", GPIOD_LINE_REQUEST_EVENT_FALLING_EDGE, 0
-    };
+    struct gpiod_line_request_config config{
+        "attention", GPIOD_LINE_REQUEST_EVENT_FALLING_EDGE, 0};
 
     // get handle to attention GPIO line
     line = gpiod_line_find("checkstop");
