@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a07a8bd4_fb966347",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2025-01-16T17:49:33Z",
+      "side": 1,
+      "message": "These are already included in the .hpp",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 41
+      },
+      "revId": "02f9c196877a970568d638d681cd988d5bb371c8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb7b4e84_4ccc8833",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2025-01-16T17:49:33Z",
+      "side": 1,
+      "message": "This and openPLDM seem like they could just be combined into one function as all openPLDM is doing is checking pldmTransport and then calling this.",
+      "range": {
+        "startLine": 106,
+        "startChar": 0,
+        "endLine": 106,
+        "endChar": 42
+      },
+      "revId": "02f9c196877a970568d638d681cd988d5bb371c8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
