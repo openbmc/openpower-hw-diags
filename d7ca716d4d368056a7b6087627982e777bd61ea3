@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "95e92c98_02973320",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T19:46:38Z",
+      "side": 1,
+      "message": "The logic of this function could move into the constructor. No need for an extra function.",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 46
+      },
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "909deb7c_b292860a",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T19:46:38Z",
+      "side": 1,
+      "message": "same for the destructor",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 49
+      },
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "e51fe87f_ad279e82",
         "filename": "util/pldm.cpp",
         "patchSetId": 17
@@ -71,6 +117,52 @@
       "writtenOn": "2025-01-16T17:28:33Z",
       "side": 1,
       "message": "Do you need to free here?",
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c5eeb082_1c58f16d",
+        "filename": "util/pldm.hpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T19:46:38Z",
+      "side": 1,
+      "message": "This can all be moved to the .cpp because it that is the only place it would be used. No need to define in this header.",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a2ce3261_5da4ff60",
+        "filename": "util/pldm.hpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T19:46:38Z",
+      "side": 1,
+      "message": "When using the singleton design pattern, these should all be private.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 27
+      },
       "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
