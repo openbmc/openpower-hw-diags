@@ -26,6 +26,29 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "83f60cb2_1bb06ae8",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T20:28:03Z",
+      "side": 1,
+      "message": "Prefer not to have global variable just to make it easy to pass between functions. Maybe wrap this with the logic of openPldm(), closePldm(), and sendPldm() in a class that will automatically close when the instantiated object in hresetSbe() goes out of scope.",
+      "range": {
+        "startLine": 27,
+        "startChar": 27,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "02f9c196877a970568d638d681cd988d5bb371c8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "cb7b4e84_4ccc8833",
         "filename": "util/pldm.cpp",
         "patchSetId": 24
@@ -42,6 +65,98 @@
         "startChar": 0,
         "endLine": 106,
         "endChar": 42
+      },
+      "revId": "02f9c196877a970568d638d681cd988d5bb371c8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "38fa7ffb_fd22d7b5",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T20:28:03Z",
+      "side": 1,
+      "message": "This is just a pointer to a member of the mctpDemux struct. Is there any need to make this a global variable like you did at line 25? At line 92, you can instead check if mctpDemux is null. Then remove the very confusing line 144, which looked like a memory leak until I looked at the definition of pldm_transport_mctp_demux_core().",
+      "range": {
+        "startLine": 128,
+        "startChar": 4,
+        "endLine": 128,
+        "endChar": 17
+      },
+      "revId": "02f9c196877a970568d638d681cd988d5bb371c8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fba051f7_fe03ef75",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T20:28:03Z",
+      "side": 1,
+      "message": "This is minor, but the function names are inconsistent: openPLDM, pldmClose, sendPldm. Prefer something like openPldm, closePldm, and sendPldm.",
+      "range": {
+        "startLine": 140,
+        "startChar": 5,
+        "endLine": 140,
+        "endChar": 14
+      },
+      "revId": "02f9c196877a970568d638d681cd988d5bb371c8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78d43449_6685f86b",
+        "filename": "util/pldm.hpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T20:28:03Z",
+      "side": 1,
+      "message": "This is for a global variable that is only using in the .cpp. Does it really need to be declared in this header?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 44
+      },
+      "revId": "02f9c196877a970568d638d681cd988d5bb371c8",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87520bd6_c4e58a40",
+        "filename": "util/pldm.hpp",
+        "patchSetId": 24
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T20:28:03Z",
+      "side": 1,
+      "message": "All three of these new functions appear to be only used as local functions in the cpp. Do they really need to be in this header?",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 12
       },
       "revId": "02f9c196877a970568d638d681cd988d5bb371c8",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
