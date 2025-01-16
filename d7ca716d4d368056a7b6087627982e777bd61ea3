@@ -22,6 +22,57 @@
       },
       "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0dcfe01f_29482272",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T17:28:33Z",
+      "side": 1,
+      "message": "Do you need to free here?",
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1b3f573_e1597f7b",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T17:28:33Z",
+      "side": 1,
+      "message": "Do you need to free here?",
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ebb37cb9_c6a3dd66",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-16T17:28:33Z",
+      "side": 1,
+      "message": "Do you need to free here?",
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
