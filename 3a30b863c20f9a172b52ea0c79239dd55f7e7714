@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "6d959462_2c61ac59",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2025-01-17T16:58:31Z",
+      "side": 1,
+      "message": "This returns -1 when pldmTransport is already setup. I\u0027m guessing we want to return 0 for a success instead.",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 18
+      },
+      "revId": "3a30b863c20f9a172b52ea0c79239dd55f7e7714",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
