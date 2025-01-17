@@ -24,6 +24,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "57dfb999_04c0f99a",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2025-01-17T05:11:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95e92c98_02973320",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 46
+      },
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "909deb7c_b292860a",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-01-16T19:46:38Z",
       "side": 1,
       "message": "same for the destructor",
+      "range": {
+        "startLine": 37,
+        "startChar": 26,
+        "endLine": 37,
+        "endChar": 49
+      },
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "1878e7d5_f3c886f3",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2025-01-17T05:11:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "909deb7c_b292860a",
       "range": {
         "startLine": 37,
         "startChar": 26,
@@ -70,6 +118,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "04a85451_e8c02c7a",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2025-01-17T05:11:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "e51fe87f_ad279e82",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 158,
+        "endChar": 74
+      },
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0dcfe01f_29482272",
@@ -83,6 +155,24 @@
       "writtenOn": "2025-01-16T17:28:33Z",
       "side": 1,
       "message": "Do you need to free here?",
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "3d94bc6d_9cf23df3",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2025-01-17T05:11:12Z",
+      "side": 1,
+      "message": "I believe it is handled in `prepareSetEffecterReq` method when request is empty",
+      "parentUuid": "0dcfe01f_29482272",
       "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -104,6 +194,24 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "609661e5_e37e42f3",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2025-01-17T05:11:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1b3f573_e1597f7b",
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ebb37cb9_c6a3dd66",
@@ -117,6 +225,24 @@
       "writtenOn": "2025-01-16T17:28:33Z",
       "side": 1,
       "message": "Do you need to free here?",
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb070c95_c9795664",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 432,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2025-01-17T05:11:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebb37cb9_c6a3dd66",
       "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
@@ -144,6 +270,30 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "60096430_0c940fbd",
+        "filename": "util/pldm.hpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2025-01-17T05:11:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "c5eeb082_1c58f16d",
+      "range": {
+        "startLine": 9,
+        "startChar": 6,
+        "endLine": 9,
+        "endChar": 25
+      },
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a2ce3261_5da4ff60",
@@ -157,6 +307,30 @@
       "writtenOn": "2025-01-16T19:46:38Z",
       "side": 1,
       "message": "When using the singleton design pattern, these should all be private.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 27
+      },
+      "revId": "d7ca716d4d368056a7b6087627982e777bd61ea3",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "cb1c1d7c_1556ff01",
+        "filename": "util/pldm.hpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2025-01-17T05:11:12Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "a2ce3261_5da4ff60",
       "range": {
         "startLine": 12,
         "startChar": 0,
