@@ -39,6 +39,30 @@
       },
       "revId": "3a30b863c20f9a172b52ea0c79239dd55f7e7714",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7fa89fd2_783f190d",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000938
+      },
+      "writtenOn": "2025-01-20T07:40:23Z",
+      "side": 1,
+      "message": "no, the default necessary when the transport is already set up which means the fd was in use and not destroyed, should be less than 0 hence -1 is preffered.",
+      "parentUuid": "6d959462_2c61ac59",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 18
+      },
+      "revId": "3a30b863c20f9a172b52ea0c79239dd55f7e7714",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
