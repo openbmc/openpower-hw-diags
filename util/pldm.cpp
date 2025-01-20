@@ -4,6 +4,7 @@
 #include <libpldm/platform.h>
 #include <libpldm/pldm.h>
 #include <libpldm/transport.h>
+#include <libpldm/transport/af-mctp.h>
 #include <libpldm/transport/mctp-demux.h>
 #include <poll.h>
 
@@ -50,6 +51,18 @@ class PLDMInstanceManager
     /** @brief sending PLDM file */
     bool sendPldm(const std::vector<uint8_t>& request, uint8_t mctpEid);
 
+    /** @brief Opens the MCTP AF_MCTP for sending and receiving messages.
+     *
+     * @param[in] eid - MCTP endpoint ID
+     */
+    int openAfMctpTransport(mctp_eid_t eid);
+
+    union TransportImpl
+    {
+        pldm_transport_mctp_demux* mctpDemux;
+        pldm_transport_af_mctp* afMctp;
+    };
+
   private:
     // Private constructor and destructor to prevent creating multiple instances
     PLDMInstanceManager();
@@ -66,6 +79,9 @@ class PLDMInstanceManager
     struct pldm_transport* pldmTransport = NULL;
 
     pldm_transport_mctp_demux* mctpDemux;
+
+    // type of transport implementation instance
+    TransportImpl impl;
 };
 
 PLDMInstanceManager::PLDMInstanceManager() : pldmInstanceIdDb(nullptr)
@@ -139,7 +155,13 @@ int PLDMInstanceManager::openPLDM(mctp_eid_t eid)
         trace::inf("open: pldmTransport already setup!");
         return fd;
     }
+#if defined(PLDM_TRANSPORT_WITH_MCTP_DEMUX)
     fd = openMctpDemuxTransport(eid);
+#elif defined(PLDM_TRANSPORT_WITH_AF_MCTP)
+    fd = openAfMctpTransport(eid);
+#else
+    trace::err("open: No valid transport defined!");
+#endif
     if (fd < 0)
     {
         auto e = errno;
@@ -148,9 +170,10 @@ int PLDMInstanceManager::openPLDM(mctp_eid_t eid)
     return fd;
 }
 
-int PLDMInstanceManager::openMctpDemuxTransport(mctp_eid_t eid)
+[[maybe_unused]] int PLDMInstanceManager::openMctpDemuxTransport(mctp_eid_t eid)
 {
-    int rc = pldm_transport_mctp_demux_init(&mctpDemux);
+    impl.mctpDemux = nullptr;
+    int rc = pldm_transport_mctp_demux_init(&impl.mctpDemux);
     if (rc)
     {
         trace::err(
@@ -160,7 +183,7 @@ int PLDMInstanceManager::openMctpDemuxTransport(mctp_eid_t eid)
         return rc;
     }
 
-    rc = pldm_transport_mctp_demux_map_tid(mctpDemux, eid, eid);
+    rc = pldm_transport_mctp_demux_map_tid(impl.mctpDemux, eid, eid);
     if (rc)
     {
         trace::err(
@@ -170,7 +193,7 @@ int PLDMInstanceManager::openMctpDemuxTransport(mctp_eid_t eid)
         return rc;
     }
 
-    pldmTransport = pldm_transport_mctp_demux_core(mctpDemux);
+    pldmTransport = pldm_transport_mctp_demux_core(impl.mctpDemux);
     struct pollfd pollfd;
     rc = pldm_transport_mctp_demux_init_pollfd(pldmTransport, &pollfd);
     if (rc)
@@ -182,10 +205,49 @@ int PLDMInstanceManager::openMctpDemuxTransport(mctp_eid_t eid)
     }
     return pollfd.fd;
 }
+
+[[maybe_unused]] int PLDMInstanceManager::openAfMctpTransport(mctp_eid_t eid)
+{
+    impl.afMctp = nullptr;
+    int rc = pldm_transport_af_mctp_init(&impl.afMctp);
+    if (rc)
+    {
+        trace::err(
+            "openAfMctpTransport: Failed to init AF MCTP transport. rc = %d",
+            (unsigned)rc);
+        return rc;
+    }
+    rc = pldm_transport_af_mctp_map_tid(impl.afMctp, eid, eid);
+    if (rc)
+    {
+        trace::err(
+            "openAfMctpTransport: Failed to setup tid to eid mapping. rc = %d",
+            (unsigned)rc);
+        closePLDM();
+        return rc;
+    }
+    pldmTransport = pldm_transport_af_mctp_core(impl.afMctp);
+    struct pollfd pollfd;
+    rc = pldm_transport_af_mctp_init_pollfd(pldmTransport, &pollfd);
+    if (rc)
+    {
+        trace::err("openAfMctpTransport: Failed to get pollfd. rc = %d",
+                   (unsigned)rc);
+        closePLDM();
+        return rc;
+    }
+    return pollfd.fd;
+}
+
 void PLDMInstanceManager::closePLDM()
 {
-    pldm_transport_mctp_demux_destroy(mctpDemux);
-    mctpDemux = NULL;
+#if defined(PLDM_TRANSPORT_WITH_MCTP_DEMUX)
+    pldm_transport_mctp_demux_destroy(impl.mctpDemux);
+    impl.mctpDemux = nullptr;
+#elif defined(PLDM_TRANSPORT_WITH_AF_MCTP)
+    pldm_transport_af_mctp_destroy(impl.afMctp);
+    impl.afMctp = nullptr;
+#endif
     pldmTransport = NULL;
 }
 
