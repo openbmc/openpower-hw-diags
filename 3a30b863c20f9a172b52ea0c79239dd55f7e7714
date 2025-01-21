@@ -63,6 +63,30 @@
       },
       "revId": "3a30b863c20f9a172b52ea0c79239dd55f7e7714",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "590ab7ac_4baab065",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 28
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2025-01-21T14:32:41Z",
+      "side": 1,
+      "message": "So, if pldmTransport is already setup we want to return a failure, is that correct?",
+      "parentUuid": "7fa89fd2_783f190d",
+      "range": {
+        "startLine": 140,
+        "startChar": 0,
+        "endLine": 140,
+        "endChar": 18
+      },
+      "revId": "3a30b863c20f9a172b52ea0c79239dd55f7e7714",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
