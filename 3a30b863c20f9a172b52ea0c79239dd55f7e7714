@@ -18,6 +18,23 @@
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e2b2654c_f3a2d61c",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 28
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-01-22T17:30:43Z",
+      "side": 1,
+      "message": "Looks good. Will merged after confirmation of test.",
+      "revId": "3a30b863c20f9a172b52ea0c79239dd55f7e7714",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "6d959462_2c61ac59",
