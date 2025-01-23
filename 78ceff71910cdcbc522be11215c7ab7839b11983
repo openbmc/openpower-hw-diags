@@ -16,6 +16,29 @@
       "message": "Will merge after confirmation of test.",
       "revId": "78ceff71910cdcbc522be11215c7ab7839b11983",
       "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a42f37de_fe8f3580",
+        "filename": "util/pldm.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000360
+      },
+      "writtenOn": "2025-01-23T16:55:33Z",
+      "side": 1,
+      "message": "Can remove this mctpDemux since the one in the union is being used now.",
+      "range": {
+        "startLine": 81,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 41
+      },
+      "revId": "78ceff71910cdcbc522be11215c7ab7839b11983",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
     }
   ]
 }
