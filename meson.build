@@ -108,7 +108,7 @@ hwdiags_libs = [analyzer_lib, attn_lib, util_lib]
 
 no_listener_mode = get_option('nlmode')
 
-if not no_listener_mode.disabled()
+if no_listener_mode.allowed()
     executable(
         'openpower-hw-diags',
         sources: ['main_nl.cpp', 'cli.cpp', buildinfo, plugins_src],
@@ -138,7 +138,7 @@ endif
 
 build_tests = get_option('tests')
 
-if not build_tests.disabled()
+if build_tests.allowed()
 
     # IMPORTANT NOTE:
     # We cannot link the test executables to `util_lib` because:
