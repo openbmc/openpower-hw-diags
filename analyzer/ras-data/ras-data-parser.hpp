@@ -48,8 +48,8 @@ class RasDataParser
      *        signature.
      * @param i_signature The target error signature.
      */
-    std::shared_ptr<Resolution>
-        getResolution(const libhei::Signature& i_signature);
+    std::shared_ptr<Resolution> getResolution(
+        const libhei::Signature& i_signature);
 
     /**
      * @brief Initializes the signature list within the input isolation data
@@ -95,8 +95,8 @@ class RasDataParser
      * @param  i_name The name of the target bus.
      * @return A tuple containing the bus type and unit path.
      */
-    std::tuple<callout::BusType, std::string>
-        parseBus(const nlohmann::json& i_data, const std::string& i_name);
+    std::tuple<callout::BusType, std::string> parseBus(
+        const nlohmann::json& i_data, const std::string& i_name);
 
     /**
      * @brief  Parses an action in the given data file and returns the

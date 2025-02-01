@@ -13,8 +13,8 @@ namespace analyzer
 {
 //------------------------------------------------------------------------------
 
-std::shared_ptr<Resolution>
-    RasDataParser::getResolution(const libhei::Signature& i_signature)
+std::shared_ptr<Resolution> RasDataParser::getResolution(
+    const libhei::Signature& i_signature)
 {
     nlohmann::json data;
 
@@ -176,8 +176,8 @@ bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
 
 //------------------------------------------------------------------------------
 
-unsigned int
-    RasDataParser::getVersion(const libhei::Signature& i_signature) const
+unsigned int RasDataParser::getVersion(
+    const libhei::Signature& i_signature) const
 {
     unsigned int o_version = 0;
 

@@ -26,8 +26,8 @@ using FFDCTuple =
  * @param   files - FFDC files
  * @return  vector of FFDCTuple objects
  */
-std::vector<FFDCTuple>
-    createFFDCTuples(const std::vector<util::FFDCFile>& files)
+std::vector<FFDCTuple> createFFDCTuples(
+    const std::vector<util::FFDCFile>& files)
 {
     std::vector<FFDCTuple> ffdcTuples{};
     util::transformFFDC(files, ffdcTuples);
@@ -71,8 +71,8 @@ util::FFDCFile createFFDCRawFile(void* i_buffer, size_t i_size)
  * @param   i_buffer - raw data (if creating raw dump ffdc entry in log)
  * @return  vector of FFDCFile objects
  */
-std::vector<util::FFDCFile>
-    createFFDCFiles(char* i_buffer = nullptr, size_t i_size = 0)
+std::vector<util::FFDCFile> createFFDCFiles(char* i_buffer = nullptr,
+                                            size_t i_size = 0)
 {
     std::vector<util::FFDCFile> files{};
 
