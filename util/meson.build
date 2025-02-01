@@ -4,8 +4,8 @@ util_src = files(
     'dbus.cpp',
     'ffdc.cpp',
     'ffdc_file.cpp',
-    'pdbg.cpp',
     'pdbg-no-sim.cpp',
+    'pdbg.cpp',
     'pldm.cpp',
     'temporary_file.cpp',
 )
@@ -28,10 +28,10 @@ endif
 util_lib = static_library(
     'util_lib',
     util_src,
-    include_directories : incdir,
-    dependencies : util_deps,
-    cpp_args : [ package_args ],
-    install : false,
+    include_directories: incdir,
+    dependencies: util_deps,
+    cpp_args: [package_args],
+    install: false,
 )
 
 # Install the util data files

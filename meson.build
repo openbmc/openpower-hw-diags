@@ -1,28 +1,32 @@
 # See README.md for details.
-project('openpower-hw-diags', 'cpp',
-        version: '0.1', meson_version: '>=1.1.1',
-        default_options: [
-          'warning_level=3',
-          'werror=true',
-          'cpp_std=c++23',
-        ])
+project(
+    'openpower-hw-diags',
+    'cpp',
+    version: '0.1',
+    meson_version: '>=1.1.1',
+    default_options: ['warning_level=3', 'werror=true', 'cpp_std=c++23'],
+)
 
 # Package directory root, which will contain required data files.
-package_dir = join_paths( get_option('prefix'),
-                          get_option('datadir'),
-                          meson.project_name() )
+package_dir = join_paths(
+    get_option('prefix'),
+    get_option('datadir'),
+    meson.project_name(),
+)
 
 # Compiler option so that source knows the package directory.
-package_args = [ '-DPACKAGE_DIR="' + package_dir + '/"' ]
+package_args = ['-DPACKAGE_DIR="' + package_dir + '/"']
 
 #-------------------------------------------------------------------------------
 # Versioning
 #-------------------------------------------------------------------------------
-buildinfo = vcs_tag(command: ['git', 'describe', '--always', '--long'],
-                  input: 'buildinfo.hpp.in',
-                  output: 'buildinfo.hpp',
-                  replace_string:'@BUILDINFO@',
-                  fallback: '0')
+buildinfo = vcs_tag(
+    command: ['git', 'describe', '--always', '--long'],
+    input: 'buildinfo.hpp.in',
+    output: 'buildinfo.hpp',
+    replace_string: '@BUILDINFO@',
+    fallback: '0',
+)
 
 #-------------------------------------------------------------------------------
 # Compiler
@@ -57,24 +61,26 @@ incdir = include_directories('.')
 
 # Look if the libhei library has already been built and installed. If not,
 # default to the subproject.
-libhei_dep = dependency('hei', fallback : ['libhei', 'libhei_dep'])
+libhei_dep = dependency('hei', fallback: ['libhei', 'libhei_dep'])
 
-phosphor_logging_dep = dependency('phosphor-logging',
-    fallback: ['phosphor-logging', 'phosphor_logging_dep'])
+phosphor_logging_dep = dependency(
+    'phosphor-logging',
+    fallback: ['phosphor-logging', 'phosphor_logging_dep'],
+)
 
-sdbusplus_dep       = dependency('sdbusplus', version : '>=1.0')
+sdbusplus_dep = dependency('sdbusplus', version: '>=1.0')
 dbus_interfaces_dep = dependency('phosphor-dbus-interfaces')
 
 libpdbg_dep = dependency('pdbg')
 
 if get_option('phal').allowed()
-  libphal_dep = cmplr.find_library('phal')
+    libphal_dep = cmplr.find_library('phal')
 endif
 
 libpldm_dep = dependency('libpldm')
 
-pthread = declare_dependency(link_args : '-pthread')
-lrt = declare_dependency(link_args : '-lrt')
+pthread = declare_dependency(link_args: '-pthread')
+lrt = declare_dependency(link_args: '-lrt')
 
 # JSON parser
 nlohmann_json_dep = dependency('nlohmann_json', include_type: 'system')
@@ -94,11 +100,7 @@ subdir('analyzer')
 subdir('attn')
 subdir('util')
 
-hwdiags_libs = [
-    analyzer_lib,
-    attn_lib,
-    util_lib,
-]
+hwdiags_libs = [analyzer_lib, attn_lib, util_lib]
 
 #-------------------------------------------------------------------------------
 # Build the executable
@@ -107,18 +109,27 @@ hwdiags_libs = [
 no_listener_mode = get_option('nlmode')
 
 if not no_listener_mode.disabled()
-  executable('openpower-hw-diags',
-              sources : [ 'main_nl.cpp', 'cli.cpp', buildinfo, plugins_src ],
-              dependencies : [ libhei_dep, nlohmann_json_dep, phosphor_logging_dep ],
-              link_with : hwdiags_libs,
-              install : true)
+    executable(
+        'openpower-hw-diags',
+        sources: ['main_nl.cpp', 'cli.cpp', buildinfo, plugins_src],
+        dependencies: [libhei_dep, nlohmann_json_dep, phosphor_logging_dep],
+        link_with: hwdiags_libs,
+        install: true,
+    )
 else
-  executable('openpower-hw-diags',
-              sources : [ 'main.cpp', 'cli.cpp', 'listener.cpp', buildinfo,
-                          plugins_src ],
-              dependencies : [lrt, pthread, libhei_dep, nlohmann_json_dep, phosphor_logging_dep ],
-              link_with : hwdiags_libs,
-              install : true)
+    executable(
+        'openpower-hw-diags',
+        sources: ['main.cpp', 'cli.cpp', 'listener.cpp', buildinfo, plugins_src],
+        dependencies: [
+            lrt,
+            pthread,
+            libhei_dep,
+            nlohmann_json_dep,
+            phosphor_logging_dep,
+        ],
+        link_with: hwdiags_libs,
+        install: true,
+    )
 endif
 
 #-------------------------------------------------------------------------------
@@ -129,61 +140,55 @@ build_tests = get_option('tests')
 
 if not build_tests.disabled()
 
-  # IMPORTANT NOTE:
-  # We cannot link the test executables to `util_lib` because:
-  #   - It is built without `-DTEST_TRACE` and any of the util functions that
-  #     use `trace.hpp` will throw a linker error because we don't have access
-  #     to phosphor-logging in test ... yet. This issue will go away once we
-  #     have converted all of our trace to use the `lg2` interfaces.
-  #   - Some functions related to pdbg and dbus simply cannot be built in the
-  #     test environment. Instead, there are alternate implementation of those
-  #     functions to simulate them for testing (see `test/*-sim-only.cpp`).
-  # Instead we will build a `test_util_lib` that will contain the `util` files
-  # that we need in test along with simulated versions of some util functions.
+    # IMPORTANT NOTE:
+    # We cannot link the test executables to `util_lib` because:
+    #   - It is built without `-DTEST_TRACE` and any of the util functions that
+    #     use `trace.hpp` will throw a linker error because we don't have access
+    #     to phosphor-logging in test ... yet. This issue will go away once we
+    #     have converted all of our trace to use the `lg2` interfaces.
+    #   - Some functions related to pdbg and dbus simply cannot be built in the
+    #     test environment. Instead, there are alternate implementation of those
+    #     functions to simulate them for testing (see `test/*-sim-only.cpp`).
+    # Instead we will build a `test_util_lib` that will contain the `util` files
+    # that we need in test along with simulated versions of some util functions.
 
-  # IMPORTANT NOTE:
-  # When running GCOV reports, the Jenkins CI script explicitly ignores any
-  # libraries and executables built in the `test/` directory. Therefore, this
-  # `test_util_lib` library must be built here instead in order to get any GCOV
-  # credit for the code.
+    # IMPORTANT NOTE:
+    # When running GCOV reports, the Jenkins CI script explicitly ignores any
+    # libraries and executables built in the `test/` directory. Therefore, this
+    # `test_util_lib` library must be built here instead in order to get any GCOV
+    # credit for the code.
 
-  test_args = [
-    '-DTEST_TRACE',
-    package_args,
-  ]
+    test_args = ['-DTEST_TRACE', package_args]
 
-  test_util_srcs = [
-    files(
-      'util/data_file.cpp',
-      'util/ffdc_file.cpp',
-      'util/pdbg.cpp',
-      'util/temporary_file.cpp',
-      'test/dbus-sim-only.cpp',
-      'test/pdbg-sim-only.cpp',
-    ),
-  ]
+    test_util_srcs = [
+        files(
+            'test/dbus-sim-only.cpp',
+            'test/pdbg-sim-only.cpp',
+            'util/data_file.cpp',
+            'util/ffdc_file.cpp',
+            'util/pdbg.cpp',
+            'util/temporary_file.cpp',
+        ),
+    ]
 
-  test_util_deps = [
-    libhei_dep,
-    libpdbg_dep,
-    nlohmann_json_dep,
-    phosphor_logging_dep,
-    valijson_dep,
-  ]
+    test_util_deps = [
+        libhei_dep,
+        libpdbg_dep,
+        nlohmann_json_dep,
+        phosphor_logging_dep,
+        valijson_dep,
+    ]
 
-  test_util_lib = static_library('test_util_lib',
-    sources             : test_util_srcs,
-    include_directories : incdir,
-    dependencies        : test_util_deps,
-    cpp_args            : test_args,
-    install             : true,
-  )
+    test_util_lib = static_library(
+        'test_util_lib',
+        sources: test_util_srcs,
+        include_directories: incdir,
+        dependencies: test_util_deps,
+        cpp_args: test_args,
+        install: true,
+    )
 
-  test_libs = [
-    analyzer_lib,
-    attn_lib,
-    test_util_lib,
-  ]
+    test_libs = [analyzer_lib, attn_lib, test_util_lib]
 
-  subdir('test')
+    subdir('test')
 endif

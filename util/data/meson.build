@@ -7,4 +7,4 @@ data_files = files(
     'peer-targets-rainier-4u.json',
 )
 
-install_data( data_files, install_dir: join_paths(package_dir, 'util-data') )
+install_data(data_files, install_dir: join_paths(package_dir, 'util-data'))
