@@ -244,25 +244,30 @@ pdbg_target* getTargetAcrossBus(pdbg_target* i_rxTarget)
     util::dbus::MachineType machineType = util::dbus::getMachineType();
     switch (machineType)
     {
-        // Rainier 4U
+        // Rainier/Blue Ridge 4U
         case util::dbus::MachineType::Rainier_2S4U:
         case util::dbus::MachineType::Rainier_1S4U:
+        case util::dbus::MachineType::BlueRidge_2S4U:
+        case util::dbus::MachineType::BlueRidge_1S4U:
             filePath =
                 fs::path{PACKAGE_DIR "util-data/peer-targets-rainier-4u.json"};
             break;
-        // Rainier 2U
+        // Rainier/Blue Ridge 2U
         case util::dbus::MachineType::Rainier_2S2U:
         case util::dbus::MachineType::Rainier_1S2U:
+        case util::dbus::MachineType::BlueRidge_2S2U:
             filePath =
                 fs::path{PACKAGE_DIR "util-data/peer-targets-rainier-2u.json"};
             break;
-        // Everest
+        // Everest/Fuji
         case util::dbus::MachineType::Everest:
+        case util::dbus::MachineType::Fuji:
             filePath =
                 fs::path{PACKAGE_DIR "util-data/peer-targets-everest.json"};
             break;
-        // Bonnell
+        // Bonnell/Balcones
         case util::dbus::MachineType::Bonnell:
+        case util::dbus::MachineType::Balcones:
             filePath =
                 fs::path{PACKAGE_DIR "util-data/peer-targets-bonnell.json"};
             break;

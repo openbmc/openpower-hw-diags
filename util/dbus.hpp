@@ -168,6 +168,11 @@ enum class MachineType
     Rainier_1S2U,
     Everest,
     Bonnell,
+    BlueRidge_2S4U,
+    BlueRidge_2S2U,
+    BlueRidge_1S4U,
+    Fuji,
+    Balcones,
 };
 
 /**
