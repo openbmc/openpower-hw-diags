@@ -1,0 +1,9 @@
+Verified+1: OpenBMC CI <openbmcbump-ci@yahoo.com>
+Code-Review+1: Caleb N. Palmer <cnpalmer@us.ibm.com>
+Code-Review+2: Zane Shelley <zshelle@us.ibm.com>
+Submitted-by: Zane Shelley <zshelle@us.ibm.com>
+Submitted-at: Tue, 18 Feb 2025 20:17:45 +0000
+Reviewed-on: https://gerrit.openbmc.org/c/openbmc/openpower-hw-diags/+/75300
+Comments-Total: 32
+Project: openbmc/openpower-hw-diags
+Branch: refs/heads/master
