@@ -74,10 +74,11 @@ testcases = [
     'test-root-cause-filter',
     'test-tod-step-check-fault',
     'test-cli',
+    'test-chnl-timeout',
 ]
 
 # allow more time for long running tests
-longtests = {'test-pll-unlock': 2}
+longtests = {'test-pll-unlock': 2, 'test-chnl-timeout': 2}
 
 foreach tc : testcases
 
