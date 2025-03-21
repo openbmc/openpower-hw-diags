@@ -74,6 +74,7 @@ testcases = [
     'test-root-cause-filter',
     'test-tod-step-check-fault',
     'test-cli',
+    'test-chnl-timeout',
 ]
 
 # allow more time for long running tests
