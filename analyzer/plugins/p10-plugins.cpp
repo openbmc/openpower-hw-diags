@@ -160,6 +160,60 @@ void callout_attached_dimms(unsigned int i_instance, const libhei::Chip& i_chip,
     }
 }
 
+/**
+ * @brief Performs channel timeout callouts.
+ */
+void channel_timeout(unsigned int i_instance, const libhei::Chip& i_chip,
+                     ServiceData& io_servData)
+{
+    // Get the OMI target for this instance
+    auto procTarget = util::pdbg::getTrgt(i_chip);
+    auto omiTarget =
+        util::pdbg::getChipUnit(procTarget, util::pdbg::TYPE_OMI, i_instance);
+
+    if (nullptr != omiTarget)
+    {
+        // Callout the bus and both endpoints, low priority
+        io_servData.calloutBus(omiTarget, callout::BusType::OMI_BUS,
+                               callout::Priority::LOW, false);
+
+        auto sigs = io_servData.getIsolationData().getSignatureList();
+
+        // Check if both channel timeout bits (MC_DSTL_FIR[22,23]) are on.
+        const auto dstlfir = libhei::hash<libhei::NodeId_t>("MC_DSTL_FIR");
+
+        auto itr = std::find_if(sigs.begin(), sigs.end(), [&](const auto& t) {
+            return (dstlfir == t.getId() && 22 == t.getBit());
+        });
+        if (sigs.end() != itr)
+        {
+            itr = std::find_if(sigs.begin(), sigs.end(), [&](const auto& t) {
+                return (dstlfir == t.getId() && 23 == t.getBit());
+            });
+        }
+
+        // Multiple chnl timeouts found, callout the proc side high priority
+        if (sigs.end() != itr)
+        {
+            io_servData.calloutTarget(omiTarget, callout::Priority::HIGH, true);
+        }
+        // Only one chnl timeout, callout the OCMB side high priority
+        else
+        {
+            // Get the connected OCMB from the OMI
+            auto ocmbTarget = util::pdbg::getConnectedTarget(
+                omiTarget, callout::BusType::OMI_BUS);
+            io_servData.calloutTarget(ocmbTarget, callout::Priority::HIGH,
+                                      true);
+        }
+    }
+    else
+    {
+        trace::err("channel_timeout: Failed to get OMI target %d on %s",
+                   i_instance, util::pdbg::getPath(procTarget));
+    }
+}
+
 } // namespace P10
 
 PLUGIN_DEFINE_NS(P10_10, P10, pll_unlock);
@@ -173,5 +227,8 @@ PLUGIN_DEFINE_NS(P10_20, P10, lpc_timeout_workaround);
 
 PLUGIN_DEFINE_NS(P10_10, P10, callout_attached_dimms);
 PLUGIN_DEFINE_NS(P10_20, P10, callout_attached_dimms);
+
+PLUGIN_DEFINE_NS(P10_10, P10, channel_timeout);
+PLUGIN_DEFINE_NS(P10_20, P10, channel_timeout);
 
 } // namespace analyzer
