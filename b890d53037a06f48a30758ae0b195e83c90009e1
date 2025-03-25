@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f248a21d_7aebeec8",
+        "filename": "analyzer/plugins/p10-plugins.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000359
+      },
+      "writtenOn": "2025-03-25T14:51:51Z",
+      "side": 1,
+      "message": "Can we now do this instead?\n\n```\n            return (i_chip \u003d\u003d t.getChip() \u0026\u0026 dstlfir \u003d\u003d t.getId() \u0026\u0026\n                    (22 \u003d\u003d t.getBit() || 23 \u003d\u003d t.getBit()));\n```",
+      "range": {
+        "startLine": 187,
+        "startChar": 0,
+        "endLine": 190,
+        "endChar": 43
+      },
+      "revId": "b890d53037a06f48a30758ae0b195e83c90009e1",
+      "serverId": "adbd0a64-1f21-4d83-b585-671fe73cb6e4"
+    }
+  ]
+}
