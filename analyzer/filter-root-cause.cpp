@@ -289,11 +289,12 @@ bool __findTiRootCause(const std::vector<libhei::Signature>& i_list,
             continue;
         }
 
-        // Skip any signature with the 'recovered_error' or 'informational_only'
-        // flags.
+        // Skip any signature with the 'recovered_error', 'informational_only',
+        // or 'attn_from_ocmb' flags.
         if (i_rasData.isFlagSet(signature, rdf::RECOVERED_ERROR) ||
             i_rasData.isFlagSet(signature, rdf::INFORMATIONAL_ONLY) ||
-            i_rasData.isFlagSet(signature, rdf::MNFG_INFORMATIONAL_ONLY))
+            i_rasData.isFlagSet(signature, rdf::MNFG_INFORMATIONAL_ONLY) ||
+            i_rasData.isFlagSet(signature, rdf::ATTN_FROM_OCMB))
         {
             continue;
         }
