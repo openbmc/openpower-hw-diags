@@ -14,16 +14,37 @@ namespace analyzer
 {
 //------------------------------------------------------------------------------
 
-bool __findRcsOscError(const std::vector<libhei::Signature>& i_list,
-                       libhei::Signature& o_rootCause)
+bool __lookForBits(const std::vector<libhei::Signature>& i_sigList,
+                   libhei::Signature& o_rootCause,
+                   std::vector<libhei::ChipType_t> i_chipTypes,
+                   const char* i_fir, std::vector<uint8_t> i_bitList)
 {
-    // TODO: Consider returning all of them instead of one as root cause.
-    auto itr = std::find_if(i_list.begin(), i_list.end(), [&](const auto& t) {
-        return (libhei::hash<libhei::NodeId_t>("TP_LOCAL_FIR") == t.getId() &&
-                (42 == t.getBit() || 43 == t.getBit()));
-    });
+    libhei::NodeId_t hashId = Util::hashString(i_fir);
 
-    if (i_list.end() != itr)
+    auto itr =
+        std::find_if(i_sigList.begin(), i_sigList.end(), [&](const auto& sig) {
+            for (const auto& type : i_chipTypes)
+            {
+                if (type != sig.getChip().getType())
+                {
+                    continue;
+                }
+                for (const auto& bit : i_bitList)
+                {
+                    if (hashId == sig.getId() && bit == sig.getBit())
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
+            }
+            return false;
+        });
+
+    if (i_sigList.end() != itr)
     {
         o_rootCause = *itr;
         return true;
@@ -125,6 +146,8 @@ bool __findMemoryChannelFailure(const std::vector<libhei::Signature>& i_list,
         //       configuration registers for a more accurate analysis.
         if (libhei::ATTN_TYPE_UNIT_CS == s.getAttnType() &&
             (mc_dstl_fir == s.getId() || mc_ustl_fir == s.getId()) &&
+            (s.getChip().getType() == P10_10 ||
+             s.getChip().getType() == P10_20) &&
             !i_rasData.isFlagSet(s,
                                  RasDataParser::RasDataFlags::ATTN_FROM_OCMB))
         {
@@ -330,7 +353,8 @@ bool findRootCause(AnalysisType i_type, const libhei::IsolationData& i_isoData,
 
     // First, look for any RCS OSC errors. This must always be first because
     // they can cause downstream PLL unlock attentions.
-    if (__findRcsOscError(list, o_rootCause))
+    if (__lookForBits(list, o_rootCause, {P10_10, P10_20}, "TP_LOCAL_FIR",
+                      {42, 43}))
     {
         return true;
     }
