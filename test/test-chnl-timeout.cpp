@@ -39,7 +39,9 @@ TEST(ChnlTimeout, MultipleTimeouts)
     s = R"([
     {
         "Deconfigured": false,
-        "Guarded": false,
+        "EntityPath": [],
+        "GuardType": "GARD_Unrecoverable",
+        "Guarded": true,
         "LocationCode": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0",
         "Priority": "H"
     },
@@ -105,7 +107,9 @@ TEST(ChnlTimeout, DifferentInst)
     s = R"([
     {
         "Deconfigured": false,
-        "Guarded": false,
+        "EntityPath": [],
+        "GuardType": "GARD_Unrecoverable",
+        "Guarded": true,
         "LocationCode": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0",
         "Priority": "H"
     },
@@ -178,7 +182,9 @@ TEST(ChnlTimeout, DifferentProc)
     },
     {
         "Deconfigured": false,
-        "Guarded": false,
+        "EntityPath": [],
+        "GuardType": "GARD_Unrecoverable",
+        "Guarded": true,
         "LocationCode": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0/ocmb0",
         "Priority": "H"
     },
@@ -244,7 +250,9 @@ TEST(ChnlTimeout, SingleTimeout)
     },
     {
         "Deconfigured": false,
-        "Guarded": false,
+        "EntityPath": [],
+        "GuardType": "GARD_Unrecoverable",
+        "Guarded": true,
         "LocationCode": "/proc0/pib/perv12/mc0/mi0/mcc0/omi0/ocmb0",
         "Priority": "H"
     },
