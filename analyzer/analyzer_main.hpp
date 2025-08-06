@@ -5,6 +5,7 @@
 namespace analyzer
 {
 
+// TMP - checking CI
 enum class AnalysisType
 {
     /**
