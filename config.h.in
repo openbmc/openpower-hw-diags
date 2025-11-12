@@ -20,6 +20,9 @@
 
 #mesondefine CONFIG_PHAL_API
 
+// Defined if attentions are monitored via a GPIO line, otherwise FSI is used.
+#mesondefine CONFIG_ATTN_GPIO
+
 // D-Bus path for requesting dumps
 constexpr auto OP_DUMP_OBJ_PATH = @OP_DUMP_OBJ_PATH@;
 

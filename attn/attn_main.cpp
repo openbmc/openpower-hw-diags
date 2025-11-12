@@ -1,4 +1,10 @@
+#include <config.h>
+
+#ifdef CONFIG_ATTN_GPIO
 #include <attn/gpio_attn_monitor.hpp>
+#else
+#include <attn/fsi_attn_monitor.hpp>
+#endif
 
 namespace attn
 {
@@ -8,7 +14,9 @@ namespace attn
  */
 int attnDaemon(Config* i_config)
 {
-    int rc = 0;                 // assume success
+    int rc = 0; // assume success
+
+#ifdef CONFIG_ATTN_GPIO
 
     gpiod_line* line;           // gpio line to monitor
 
@@ -37,6 +45,13 @@ int attnDaemon(Config* i_config)
         // done with line, manually close chip (per gpiod api comments)
         gpiod_line_close_chip(line);
     }
+
+#else
+
+    std::unique_ptr<attn::FsiAttnMonitor> fsiMonitor =
+        std::make_unique<attn::FsiAttnMonitor>(i_config);
+
+#endif
 
     return rc;
 }

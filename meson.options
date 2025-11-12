@@ -25,3 +25,11 @@ option(
     choices: ['mctp-demux', 'af-mctp'],
     description: 'transport via af-mctp or mctp-demux',
 )
+
+option(
+    'attn_monitor',
+    type: 'combo',
+    choices: ['gpio', 'fsi'],
+    value: 'gpio',
+    description: 'Mechanism used to monitor for hardware attentions',
+)
