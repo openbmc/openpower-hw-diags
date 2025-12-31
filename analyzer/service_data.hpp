@@ -38,7 +38,7 @@ class ServiceData
     ServiceData(const ServiceData&) = default;
 
     /** @brief Assignment operator. */
-    ServiceData& operator=(const ServiceData&) = default;
+    ServiceData& operator=(const ServiceData&) = delete;
 
   private:
     /** The signature of the root cause attention. */
