@@ -76,7 +76,7 @@ class PLDMInstanceManager
     pldm_instance_db* pldmInstanceIdDb;
 
     /** pldm transport instance  */
-    struct pldm_transport* pldmTransport = NULL;
+    struct pldm_transport* pldmTransport = nullptr;
 
     // type of transport implementation instance
     TransportImpl impl;
@@ -246,7 +246,7 @@ void PLDMInstanceManager::closePLDM()
     pldm_transport_af_mctp_destroy(impl.afMctp);
     impl.afMctp = nullptr;
 #endif
-    pldmTransport = NULL;
+    pldmTransport = nullptr;
 }
 
 /** @brief Send PLDM request

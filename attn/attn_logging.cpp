@@ -149,14 +149,15 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
     {
         // populate hypervisor SRC words
         tiPel->setSrcWords(std::array<uint32_t, pel::numSrcWords>{
-            (uint32_t)std::stoul(i_additional["0x10 SRC Word 12"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x14 SRC Word 13"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x18 SRC Word 14"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x1c SRC Word 15"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x20 SRC Word 16"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x24 SRC Word 17"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x28 SRC Word 18"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x2c SRC Word 19"], 0, 16)});
+            (uint32_t)std::stoul(i_additional["0x10 SRC Word 12"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x14 SRC Word 13"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x18 SRC Word 14"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x1c SRC Word 15"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x20 SRC Word 16"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x24 SRC Word 17"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x28 SRC Word 18"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x2c SRC Word 19"], nullptr,
+                                 16)});
 
         // Populate phyp primary SRC
 
@@ -209,13 +210,13 @@ void createPelCustom(std::vector<uint8_t>& i_rawPel,
         // in this group of words starts at word 0 and word 1 does not exits.
         tiPel->setSrcWords(std::array<uint32_t, pel::numSrcWords>{
             (uint32_t)0x00000000,
-            (uint32_t)std::stoul(i_additional["0x14 HB Word 2"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x18 HB Word 3"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x1c HB Word 4"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x20 HB Word 5"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x24 HB Word 6"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x28 HB Word 7"], 0, 16),
-            (uint32_t)std::stoul(i_additional["0x2c HB Word 8"], 0, 16)});
+            (uint32_t)std::stoul(i_additional["0x14 HB Word 2"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x18 HB Word 3"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x1c HB Word 4"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x20 HB Word 5"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x24 HB Word 6"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x28 HB Word 7"], nullptr, 16),
+            (uint32_t)std::stoul(i_additional["0x2c HB Word 8"], nullptr, 16)});
 
         // Populate hostboot primary SRC
 

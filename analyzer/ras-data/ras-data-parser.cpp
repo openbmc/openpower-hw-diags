@@ -275,7 +275,7 @@ void RasDataParser::initDataFiles()
             // stored as a string representation of the hex value. So it will
             // have to be converted to an integer.
             libhei::ChipType_t chipType =
-                std::stoul(data.at("model_ec").get<std::string>(), 0, 16);
+                std::stoul(data.at("model_ec").get<std::string>(), nullptr, 16);
 
             // So far, so good. Add the entry.
             auto ret = iv_dataFiles.emplace(chipType, data);

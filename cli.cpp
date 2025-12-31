@@ -13,7 +13,7 @@ bool getCliOption(char** i_begin, char** i_end, const std::string& i_option)
 char* getCliSetting(char** i_begin, char** i_end, const std::string& i_setting)
 {
     char** value = std::find(i_begin, i_end, i_setting);
-    return (value != i_end && ++value != i_end) ? *value : 0;
+    return (value != i_end && ++value != i_end) ? *value : nullptr;
 }
 
 /** @brief Parse command line for configuration flags */
