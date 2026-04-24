@@ -40,7 +40,7 @@ int dbusMethod(const std::string& i_path, const std::string& i_interface,
             trace::inf(i_interface.c_str());
         }
     }
-    catch (const sdbusplus::exception::SdBusError& e)
+    catch (const sdbusplus::exception::internal_exception& e)
     {
         trace::err("dbusMethod exception");
         trace::err(e.what());
@@ -89,7 +89,7 @@ void createPelRaw(const std::vector<uint8_t>& i_buffer)
             auto bus = sdbusplus::bus::new_system();
             bus.call_noreply(method);
         }
-        catch (const sdbusplus::exception::SdBusError& e)
+        catch (const sdbusplus::exception::internal_exception& e)
         {
             trace::err("createPelRaw exception");
             trace::err(e.what());
@@ -128,7 +128,7 @@ int getPel(const uint32_t i_pelId)
 
             fd = dup(reply); // need to copy (dup) the file descriptor
         }
-        catch (const sdbusplus::exception::SdBusError& e)
+        catch (const sdbusplus::exception::internal_exception& e)
         {
             trace::err("getPel exception");
             trace::err(e.what());

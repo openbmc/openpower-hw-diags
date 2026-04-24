@@ -173,7 +173,7 @@ void requestDump(uint32_t i_logId, const DumpParameters& i_dumpParameters)
             // monitor dump progress
             monitorDump(reply);
         }
-        catch (const sdbusplus::exception::SdBusError& e)
+        catch (const sdbusplus::exception::internal_exception& e)
         {
             trace::err("requestDump exception");
             trace::err(e.what());
