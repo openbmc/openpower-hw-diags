@@ -49,7 +49,7 @@ int find(const std::string& i_interface, std::string& o_path,
             rc = 0;                                   // success
         }
     }
-    catch (const sdbusplus::exception::SdBusError& e)
+    catch (const sdbusplus::exception::internal_exception& e)
     {
         trace::err("util::dbus::find exception");
         std::string traceMsg = std::string(e.what());
@@ -92,7 +92,7 @@ int findService(const std::string& i_interface, const std::string& i_path,
             rc = 0; // success
         }
     }
-    catch (const sdbusplus::exception::SdBusError& e)
+    catch (const sdbusplus::exception::internal_exception& e)
     {
         trace::err("util::dbus::map exception");
         std::string traceMsg = std::string(e.what());
@@ -128,7 +128,7 @@ int getProperty(const std::string& i_interface, const std::string& i_path,
 
         rc = 0; // success
     }
-    catch (const sdbusplus::exception::SdBusError& e)
+    catch (const sdbusplus::exception::internal_exception& e)
     {
         trace::err("util::dbus::getProperty exception");
         std::string traceMsg = std::string(e.what());
@@ -200,7 +200,7 @@ void transitionHost(const HostState i_hostState)
 
         bus.call_noreply(method); // start the service
     }
-    catch (const sdbusplus::exception::SdBusError& e)
+    catch (const sdbusplus::exception::internal_exception& e)
     {
         trace::err("util::dbus::transitionHost exception");
         std::string traceMsg = std::string(e.what());
@@ -380,7 +380,7 @@ uint32_t createPel(const std::string& i_message, const std::string& i_severity,
             response.read(reply);
             plid = std::get<1>(reply); // platform log id is tuple "second"
         }
-        catch (const sdbusplus::exception::SdBusError& e)
+        catch (const sdbusplus::exception::internal_exception& e)
         {
             trace::err("createPel exception");
             trace::err(e.what());

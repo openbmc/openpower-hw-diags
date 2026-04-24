@@ -31,7 +31,7 @@ int bpHandler()
 
         msg.signal_send();
     }
-    catch (const sdbusplus::exception::SdBusError& e)
+    catch (const sdbusplus::exception::internal_exception& e)
     {
         trace::inf("bpHandler() exception");
         trace::err(e.what());

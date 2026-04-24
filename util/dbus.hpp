@@ -74,7 +74,7 @@ void setProperty(const std::string& service, const std::string& object,
 
         bus.call(method);
     }
-    catch (const sdbusplus::exception::SdBusError& e)
+    catch (const sdbusplus::exception::internal_exception& e)
     {
         trace::err("util::dbus::setProperty exception");
         std::string traceMsg = std::string(e.what());
