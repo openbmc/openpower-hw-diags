@@ -550,8 +550,8 @@ bool hresetSbe(unsigned int sbeInstance)
     constexpr auto member = "StateSensorEvent";
 
     auto bus = sdbusplus::bus::new_default();
-    std::unique_ptr<sdbusplus::bus::match_t> match =
-        std::make_unique<sdbusplus::bus::match_t>(
+    std::unique_ptr<sdbusplus::match> match =
+        std::make_unique<sdbusplus::match>(
             bus,
             sdbusplus::bus::match::rules::type::signal() +
                 sdbusplus::bus::match::rules::member(member) +

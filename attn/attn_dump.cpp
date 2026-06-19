@@ -61,8 +61,8 @@ void monitorDump(const std::string& i_path)
 
     // monitor dump status change property, will update dumpStatus
     std::string dumpStatus = "requested";
-    std::unique_ptr<sdbusplus::bus::match_t> match =
-        std::make_unique<sdbusplus::bus::match_t>(
+    std::unique_ptr<sdbusplus::match> match =
+        std::make_unique<sdbusplus::match>(
             bus,
             sdbusplus::bus::match::rules::propertiesChanged(
                 i_path.c_str(), matchInterface.c_str()),
