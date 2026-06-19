@@ -2,10 +2,10 @@
 
 #include <analyzer/analyzer_main.hpp>
 #include <attn/attention.hpp>
+#include <attn/attn-daemon.hpp>
 #include <attn/attn_config.hpp>
 #include <attn/attn_dump.hpp>
 #include <attn/attn_handler.hpp>
-#include <attn/attn_main.hpp>
 #include <buildinfo.hpp>
 #include <cli.hpp>
 #include <hei_buildinfo.hpp>
@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
 
                 attn::attnHandler(&attnConfig); // handle pending attentions
 
-                attn::attnDaemon(&attnConfig);  // start daemon
+                attn::startDaemon(&attnConfig); // start daemon
             }
         }
     }
