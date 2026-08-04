@@ -24,7 +24,7 @@ void* threadGpioMon(void* i_config)
     // Configure and start attention monitor
     attn::attnDaemon((attn::Config*)i_config);
 
-    pthread_exit(NULL);
+    pthread_exit(nullptr);
 }
 
 /** @brief Start a thread to listen for attention handler messages */
@@ -104,7 +104,7 @@ void* threadListener(void* i_params)
             {
                 if (false == gpioMonEnabled)
                 {
-                    if (0 == pthread_create(&ptidGpio, NULL, &threadGpioMon,
+                    if (0 == pthread_create(&ptidGpio, nullptr, &threadGpioMon,
                                             &attnConfig))
                     {
                         gpioMonEnabled = true;
@@ -129,7 +129,7 @@ void* threadListener(void* i_params)
         pthread_cancel(ptidGpio);
     }
 
-    pthread_exit(NULL);
+    pthread_exit(nullptr);
 }
 
 /** @brief Send command line to a threadi */

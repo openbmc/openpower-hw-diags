@@ -89,8 +89,8 @@ int main(int argc, char* argv[])
             if (false == listenerStarted)
             {
                 // create listener thread
-                if (0 ==
-                    pthread_create(&ptidListener, NULL, &threadListener, NULL))
+                if (0 == pthread_create(&ptidListener, nullptr, &threadListener,
+                                        nullptr))
                 {
                     listenerStarted = true;
                     newListener = true;
@@ -130,7 +130,7 @@ int main(int argc, char* argv[])
                 // if this is a new listener let it run until "stopped"
                 if (true == newListener)
                 {
-                    pthread_join(ptidListener, NULL);
+                    pthread_join(ptidListener, nullptr);
                 }
             }
         }
