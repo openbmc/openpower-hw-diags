@@ -211,7 +211,7 @@ void transitionHost(const HostState i_hostState)
 /** @brief Read state of autoRebootEnabled property via dbus */
 bool autoRebootEnabled()
 {
-    // Assume true in case autoRebootEnbabled property is not available
+    // Assume true in case autoRebootEnabled property is not available
     bool autoReboot = true;
 
     constexpr auto interface = "xyz.openbmc_project.Control.Boot.RebootPolicy";

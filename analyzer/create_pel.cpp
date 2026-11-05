@@ -437,7 +437,7 @@ uint32_t commitPel(const ServiceData& i_servData)
         trace::err("Error while creating event log entry");
     }
 
-    // Return the platorm log ID of the error.
+    // Return the platform log ID of the error.
     return o_plid;
 }
 

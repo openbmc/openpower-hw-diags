@@ -151,7 +151,7 @@ bool RasDataParser::isFlagSet(const libhei::Signature& i_signature,
     {
         // Do nothing. Assume there is no flag defined. If for some reason
         // the `id` or `bit` were not defined, that will be cause below when the
-        // signture is parsed.
+        // signature is parsed.
     }
 
     // If the flag hasn't been found, check if it was defined as part of the

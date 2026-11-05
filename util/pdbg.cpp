@@ -673,7 +673,7 @@ std::vector<uint8_t> getPhysBinPath(pdbg_target* target)
         ATTR_PHYS_BIN_PATH_Type value;
         if (DT_GET_PROP(ATTR_PHYS_BIN_PATH, target, value))
         {
-            // The attrirbute for this target does not exist. Get the
+            // The attribute for this target does not exist. Get the
             // immediate parent in the devtree path and try again. Note that
             // if there is no parent target, nullptr will be returned and
             // that will be checked above.
